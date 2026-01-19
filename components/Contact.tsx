@@ -6,10 +6,31 @@ const Contact: React.FC = () => {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // --- REPLACE YOUR OLD handleSubmit WITH THIS ---
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 5000);
+    
+    // This sends the data to Web3Forms in the background
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        access_key: "Yb33391f2-bcb7-471d-a4b5-076d32f8c8fc", // PUT YOUR KEY HERE
+        name: formState.name,
+        email: formState.email,
+        message: formState.message,
+      }),
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      setIsSubmitted(true);
+      setFormState({ name: '', email: '', message: '' }); // Clear the form
+      setTimeout(() => setIsSubmitted(false), 5000);
+    }
   };
 
   return (
@@ -45,12 +66,14 @@ const Contact: React.FC = () => {
                 <p className="text-gray-400">{t.contact.successDesc}</p>
               </div>
             ) : (
+              // --- ENSURE YOUR FORM USES THE handleSubmit ABOVE ---
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-sm font-bold mb-2 uppercase tracking-wide opacity-60">{t.contact.formName}</label>
                   <input 
                     required
                     type="text" 
+                    name="name" // IMPORTANT
                     className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                     placeholder={t.contact.placeholderName}
                     value={formState.name}
@@ -62,6 +85,7 @@ const Contact: React.FC = () => {
                   <input 
                     required
                     type="email" 
+                    name="email" // IMPORTANT
                     className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                     placeholder={t.contact.placeholderEmail}
                     value={formState.email}
@@ -71,6 +95,7 @@ const Contact: React.FC = () => {
                 <div>
                   <label className="block text-sm font-bold mb-2 uppercase tracking-wide opacity-60">{t.contact.formHelp}</label>
                   <textarea 
+                    name="message" // IMPORTANT
                     rows={4}
                     className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                     placeholder={t.contact.placeholderMessage}
