@@ -6,10 +6,12 @@ const Contact: React.FC = () => {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMessage(null);
     
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -23,26 +25,30 @@ const Contact: React.FC = () => {
           name: formState.name,
           email: formState.email,
           message: formState.message,
-          subject: "New Inquiry from Orbis Website",
-          from_name: "Orbis Accounting Web-Form",
-          botcheck: "" // Honeypot to prevent spam/429 errors
+          from_name: "Orbis Accounting Website",
+          subject: "New Contact Form Submission",
+          // Adding botcheck to help prevent future rate-limiting blocks
+          botcheck: "" 
         }),
       });
 
       const result = await response.json();
       
+      if (response.status === 429) {
+        setErrorMessage("Too many attempts. Please wait 30 minutes and try again.");
+        return;
+      }
+
       if (result.success) {
         setIsSubmitted(true);
         setFormState({ name: '', email: '', message: '' });
-        // Automatically hide success message after 5 seconds
         setTimeout(() => setIsSubmitted(false), 5000);
       } else {
-        // If Web3Forms returns an error (like rate limit), show it
-        alert("Submission failed: " + (result.message || "Please try again later."));
+        setErrorMessage(result.message || "Something went wrong. Please try again.");
       }
     } catch (error) {
-      console.error("Form error:", error);
-      alert("Network error. Please check your connection or try again later.");
+      // This catches the "NetworkError" seen in your console logs
+      setErrorMessage("Network error: The submission was blocked. Try using a different internet connection (like mobile data).");
     } finally {
       setIsSubmitting(false);
     }
@@ -82,8 +88,14 @@ const Contact: React.FC = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Honeypot field (hidden from users) */}
+                {/* Honeypot field for bot protection */}
                 <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+                
+                {errorMessage && (
+                  <div className="p-4 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm font-medium">
+                    {errorMessage}
+                  </div>
+                )}
 
                 <div>
                   <label className="block text-sm font-bold mb-2 uppercase tracking-wide opacity-60">{t.contact.formName}</label>
@@ -91,7 +103,8 @@ const Contact: React.FC = () => {
                     required
                     type="text" 
                     name="name"
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50"
                     placeholder={t.contact.placeholderName}
                     value={formState.name}
                     onChange={e => setFormState({...formState, name: e.target.value})}
@@ -103,7 +116,8 @@ const Contact: React.FC = () => {
                     required
                     type="email" 
                     name="email"
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50"
                     placeholder={t.contact.placeholderEmail}
                     value={formState.email}
                     onChange={e => setFormState({...formState, email: e.target.value})}
@@ -114,19 +128,25 @@ const Contact: React.FC = () => {
                   <textarea 
                     name="message"
                     required
+                    disabled={isSubmitting}
                     rows={4}
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all disabled:opacity-50"
                     placeholder={t.contact.placeholderMessage}
                     value={formState.message}
                     onChange={e => setFormState({...formState, message: e.target.value})}
                   />
                 </div>
                 <button 
-                  disabled={isSubmitting}
                   type="submit" 
-                  className={`w-full py-4 bg-primary text-gray-900 font-extrabold rounded-xl transition-all shadow-lg shadow-primary/20 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:brightness-110'}`}
+                  disabled={isSubmitting}
+                  className="w-full py-4 bg-primary text-gray-900 font-extrabold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  {isSubmitting ? "Sending..." : t.contact.formBtn}
+                  {isSubmitting ? (
+                    <>
+                      <span className="w-5 h-5 border-2 border-gray-900 border-t-transparent rounded-full animate-spin"></span>
+                      Sending...
+                    </>
+                  ) : t.contact.formBtn}
                 </button>
               </form>
             )}
