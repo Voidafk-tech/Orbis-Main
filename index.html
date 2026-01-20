@@ -9,6 +9,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons-Outlined" rel="stylesheet">
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // https://github.com/rafgraph/spa-github-pages
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&') 
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
     <script type="importmap">
 {
   "imports": {
@@ -76,14 +90,12 @@
         font-family: 'Plus Jakarta Sans', sans-serif;
       }
 
-      /* Better Chinese typography */
       html[lang="zh"] .font-display,
       html[lang="zh"] body {
         font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "system-ui", sans-serif;
         letter-spacing: 0.01em;
       }
 
-      /* Fix for potentially weird line breaks in CJK */
       html[lang="zh"] p {
         word-break: break-all;
         text-align: justify;
