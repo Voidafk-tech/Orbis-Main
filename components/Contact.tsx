@@ -59,7 +59,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <div className="text-sm text-gray-400">{t.contact.emailUs}</div>
-                  <div className="font-bold">hello@orbisaccounting.com</div>
+                  <div className="font-bold">info@orbisaccounting.com</div>
                 </div>
               </div>
             </div>
