@@ -13,75 +13,60 @@ const AboutPage: React.FC = () => {
   ];
 
   return (
-    <div className="py-20 animate-in fade-in duration-500">
+    <div className="py-20 animate-in fade-in duration-500 bg-background-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+        <div className="grid lg:grid-cols-2 gap-20 items-center mb-32">
           <div>
             <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.2em] rounded mb-6">
               {t.about.badge}
             </div>
-            <h1 className="text-5xl lg:text-7xl font-display font-extrabold mb-8 leading-tight">
+            <h1 className="text-6xl lg:text-8xl font-display font-extrabold mb-8 leading-tight text-white">
               {t.about.title}<span className="text-primary">{t.about.titleAccent}</span>
             </h1>
-            <p className="text-xl text-gray-400 leading-relaxed mb-6">
+            <p className="text-xl text-gray-400 leading-relaxed mb-6 font-medium">
               {t.about.desc1}
             </p>
-            <p className="text-gray-400 leading-relaxed">
+            <p className="text-gray-400 leading-relaxed font-sans">
               {t.about.desc2}
             </p>
           </div>
           <div className="relative">
-             <div className="absolute inset-0 bg-primary/20 blur-[100px] -z-10"></div>
+             <div className="absolute inset-0 bg-primary/20 blur-[120px] -z-10"></div>
              <img 
-              alt="Professional business environment" 
-              className="rounded-3xl shadow-2xl border-4 border-white dark:border-gray-800 aspect-[4/3] object-cover" 
+              alt="Professional accounting team" 
+              className="rounded-[3rem] shadow-2xl border border-white/10 aspect-[4/3] object-cover grayscale brightness-75 hover:grayscale-0 transition-all duration-700" 
               src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200" 
             />
           </div>
         </div>
 
         {/* Remote Advantage Section */}
-        <div className="py-24 border-y border-gray-100 dark:border-gray-800 my-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-display font-bold mb-8">{t.about.remoteTitle}</h2>
-            <p className="text-gray-400 leading-relaxed text-lg mb-12">
+        <div className="py-24 border-y border-white/5 my-20">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl lg:text-5xl font-display font-black mb-8 text-white">{t.about.remoteTitle}</h2>
+            <p className="text-gray-400 leading-relaxed text-xl mb-16 max-w-2xl mx-auto font-sans">
               {t.about.remoteDesc}
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {t.about.icons.map((item, i) => (
-                <div key={i} className="p-6 bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
-                  <div className="text-primary mb-3 flex justify-center">
+                <div key={i} className="p-8 bg-[#1A1A1A] rounded-[2rem] border border-white/5 group hover:border-primary/30 transition-all">
+                  <div className="text-primary mb-4 flex justify-center group-hover:scale-110 transition-transform">
                     {advantageSvgs[i]}
                   </div>
-                  <div className="text-xs font-bold uppercase tracking-widest">{item.label}</div>
+                  <div className="text-xs font-black uppercase tracking-widest text-gray-300">{item.label}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 text-center py-20">
-          <div>
-            <h4 className="text-4xl font-extrabold text-primary mb-2">10+</h4>
-            <p className="text-sm uppercase tracking-widest text-gray-400">{t.stats.exp}</p>
-          </div>
-          <div>
-            <h4 className="text-4xl font-extrabold text-primary mb-2">10+</h4>
-            <p className="text-sm uppercase tracking-widest text-gray-400">{t.stats.clients}</p>
-          </div>
-          <div>
-            <h4 className="text-4xl font-extrabold text-primary mb-2">$10M+</h4>
-            <p className="text-sm uppercase tracking-widest text-gray-400">{t.stats.managed}</p>
-          </div>
-        </div>
-
-        <div className="mt-20 text-center">
-          <h2 className="text-3xl font-bold mb-8">{t.about.readyTitle}</h2>
-          <div className="flex gap-4 justify-center">
-            <Link to="/pricing" className="px-8 py-4 bg-primary text-gray-900 font-bold rounded-xl transition-all">
+        <div className="mt-32 text-center">
+          <h2 className="text-4xl lg:text-5xl font-display font-black mb-12 text-white">{t.about.readyTitle}</h2>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <Link to="/pricing" className="px-12 py-5 bg-primary text-gray-900 font-black rounded-2xl transition-all shadow-xl uppercase tracking-wider">
               {t.about.readyBtn}
             </Link>
-            <Link to="/contact" className="px-8 py-4 border-2 border-primary text-primary hover:bg-primary hover:text-gray-900 font-bold rounded-xl transition-all text-center">
+            <Link to="/contact" className="px-12 py-5 border-2 border-white/20 text-white hover:bg-white hover:text-gray-900 font-black rounded-2xl transition-all uppercase tracking-wider">
               {t.about.meetPartners}
             </Link>
           </div>
