@@ -12,8 +12,8 @@ export const translations = {
       contact: 'Contact'
     },
     hero: {
-      badge: 'Expert Remote Accounting', 
-      title: 'Remote Bookkeeping solutions for every ',
+      badge: 'Expert Remote Staff Accounting', 
+      title: 'Remote Staff Accounting solutions for every ',
       titleAccent: 'stage of business.',
       subtitle_part1: 'Accounting, payroll, and financial insights that scale with you',
       subtitle_price: '',
