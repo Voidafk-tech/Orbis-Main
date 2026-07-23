@@ -1,15 +1,44 @@
 import React, { useState } from 'react';
 import { useLanguage } from './App';
 
+const WEB3FORMS_ACCESS_KEY = '47a2f9ae-8824-40f2-be79-f1be7deb2465';
+
 const Contact: React.FC = () => {
   const { t } = useLanguage();
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 5000);
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `New contact form submission from ${formState.name}`,
+          ...formState,
+        }),
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        setFormState({ name: '', email: '', message: '' });
+        setIsSubmitted(true);
+        setTimeout(() => setIsSubmitted(false), 5000);
+      } else {
+        setError(result.message || 'Something went wrong. Please try again.');
+      }
+    } catch {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -86,8 +115,15 @@ const Contact: React.FC = () => {
                     onChange={e => setFormState({...formState, message: e.target.value})}
                   />
                 </div>
-                <button type="submit" className="w-full py-4 bg-primary text-gray-900 font-extrabold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-primary/20">
-                  {t.contact.formBtn}
+                {error && (
+                  <p className="text-red-400 text-sm">{error}</p>
+                )}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-4 bg-primary text-gray-900 font-extrabold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-primary/20 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? '...' : t.contact.formBtn}
                 </button>
               </form>
             )}
