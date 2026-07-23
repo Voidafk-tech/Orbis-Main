@@ -121,35 +121,30 @@
 }
 </script>
     <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              primary: "#82E05E",
-              "background-light": "#0A0A0A",
-              "background-dark": "#0A0A0A",
-              gray: {
-                900: "#121212",
-                800: "#1A1A1A",
-                700: "#2D2D2D",
-                400: "#A1A1AA",
-                100: "#F4F4F5",
-              }
-            },
-            fontFamily: {
-              display: ["Plus Jakarta Sans", "Inter", "system-ui", "sans-serif"],
-              sans: ["Inter", "system-ui", "-apple-system", "BlinkMacSystemFont", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
-              zh: ["PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "system-ui", "sans-serif"],
-            },
-            borderRadius: {
-              DEFAULT: "0.75rem",
-              "xl": "1.5rem",
-            },
-          },
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          primary: "#C3FE84",
+          blue: "#076CFC",
+          "background-dark": "#141414",
+          gray: {
+            900: "#121212",
+            800: "#1A1A1A",
+            700: "#2D2D2D",
+            400: "#9A9A9F",
+            100: "#F4F4F5",
+          }
         },
-      };
-    </script>
+        fontFamily: {
+          display: ["Barlow Condensed", "Inter", "system-ui", "sans-serif"],
+          sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+        },
+      },
+    },
+  };
+</script>
     <style>
       :root {
         --base-line-height: 1.5;
