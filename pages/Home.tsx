@@ -9,7 +9,7 @@ const Home: React.FC = () => {
     <>
       <Hero />
       <Services />
-      <Pricing compact />
+      <Pricing compact hidePrice />
       <Contact />
     </>
   );

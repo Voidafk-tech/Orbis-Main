@@ -6,9 +6,11 @@ interface PricingProps {
   showTitle?: boolean;
   /** Hides the "Specialized Solutions" add-on grid for use in condensed layouts like Home. */
   compact?: boolean;
+  /** Hides the per-plan dollar amount, showing just the plan name/description/feature list. */
+  hidePrice?: boolean;
 }
 
-const Pricing: React.FC<PricingProps> = ({ showTitle = true, compact = false }) => {
+const Pricing: React.FC<PricingProps> = ({ showTitle = true, compact = false, hidePrice = false }) => {
   const { t, lang } = useLanguage();
 
   const coreTiers = [
@@ -46,11 +48,14 @@ const Pricing: React.FC<PricingProps> = ({ showTitle = true, compact = false }) 
   const isNumeric = (val: string) => /^\d+/.test(val.replace(/[^0-9]/g, ''));
 
   return (
-    <section className="py-24 border-t border-white/[0.06] bg-white dark:bg-background-dark" id="pricing">
+    <section
+      className={`${compact ? 'pt-0 pb-24' : 'py-24 border-t border-white/[0.06]'} bg-white dark:bg-background-dark`}
+      id="pricing"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {showTitle && (
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl lg:text-4xl font-display font-bold text-[#1A1A1A] dark:text-white">
+          <div className={`text-center space-y-4 ${compact ? 'mb-10' : 'mb-16'}`}>
+            <h2 className={`font-display font-bold text-[#1A1A1A] dark:text-white ${compact ? 'text-2xl lg:text-3xl' : 'text-3xl lg:text-4xl'}`}>
               {t.pricing.title}<span className="text-primary">{t.pricing.titleAccent}</span>
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto text-lg font-sans text-center">
@@ -91,13 +96,15 @@ const Pricing: React.FC<PricingProps> = ({ showTitle = true, compact = false }) 
                 )}
 
                 <div className="mt-auto pt-6 border-t border-primary/20 dark:border-white/10">
-                  <div className={`text-lg font-display italic font-bold text-[#1A1A1A] dark:text-white mb-6 ${lang === 'zh' ? 'text-center' : ''}`}>
-                    <span className="text-2xl text-primary">
-                      {isNumeric(tier.price) ? `$${tier.price}` : tier.price}
-                    </span>{' '}
-                    <span className="text-xs opacity-60">{tier.period}</span>
-                  </div>
-                  <Link 
+                  {!hidePrice && (
+                    <div className={`text-lg font-display italic font-bold text-[#1A1A1A] dark:text-white mb-6 ${lang === 'zh' ? 'text-center' : ''}`}>
+                      <span className="text-2xl text-primary">
+                        {isNumeric(tier.price) ? `$${tier.price}` : tier.price}
+                      </span>{' '}
+                      <span className="text-xs opacity-60">{tier.period}</span>
+                    </div>
+                  )}
+                  <Link
                     to="/contact"
                     className={`inline-block w-full text-center px-6 py-4 font-display font-black rounded-full transition-all border-2 uppercase tracking-wider text-[10px] shadow-md ${
                       tier.featured

@@ -13,8 +13,8 @@ const Hero: React.FC = () => {
         style={{ background: 'radial-gradient(circle, rgba(163,236,109,.10), transparent 62%)' }}
       />
 
-      <div className="relative orbit-float w-40 h-40">
-        <svg width="160" height="160" viewBox="0 0 200 200">
+      <div className="relative orbit-float w-[176px] h-[176px]">
+        <svg width="176" height="176" viewBox="0 0 200 200">
           <circle cx="100" cy="100" r="86" fill="none" stroke="#1c1c20" strokeWidth="1.4" />
           <circle cx="100" cy="100" r="62" fill="none" stroke="#161618" strokeWidth="1.4" />
           <circle cx="100" cy="100" r="38" fill="none" stroke="#141416" strokeWidth="1.4" />
@@ -33,16 +33,16 @@ const Hero: React.FC = () => {
         Remote Bookkeeping · British Columbia
       </span>
 
-      <h1 className="mt-[18px] mx-auto max-w-[640px] font-semibold text-[clamp(38px,7vw,46px)]
+      <h1 className="mt-[18px] mx-auto max-w-[640px] font-semibold text-[clamp(36px,6.65vw,43.7px)]
         leading-[1.04] tracking-[-0.032em] text-gray-100">
         Your books,<br />handled in orbit.
       </h1>
 
       <p className="mt-[18px] mx-auto max-w-[420px] text-[16.5px] leading-[1.5] text-gray-400">
-        Remote accounting and bookkeeping for BC businesses.
+        Remote accounting and bookkeeping for businesses.
       </p>
 
-      <div className="mt-[26px] flex flex-col items-center gap-3.5">
+      <div className="mt-[26px] flex flex-col items-center gap-4">
         <a
           href="#contact"
           className="inline-flex items-center gap-2 font-semibold text-[17px] text-white
@@ -51,9 +51,11 @@ const Hero: React.FC = () => {
         >
           Get Started →
         </a>
-        <span className="text-sm text-[#6e6e73]">
-          from <span className="text-primary font-semibold">$299</span>/month
-        </span>
+        <div className="flex items-baseline gap-2">
+          <span className="text-base text-[#86868b]">from</span>
+          <span className="text-[38px] font-extrabold text-primary tracking-tight leading-none">$499</span>
+          <span className="text-base text-[#86868b]">/month</span>
+        </div>
       </div>
     </header>
   );
