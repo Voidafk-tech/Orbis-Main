@@ -9,7 +9,11 @@ const Home: React.FC = () => {
     <>
       <Hero />
       <Services />
-      <Pricing compact hidePrice />
+      <Pricing
+        compact
+        hidePrice
+        subheading="Plans that flex with your business, from monthly bookkeeping to annual compliance. Every quote is custom, with no setup fees and no surprises."
+      />
       <Contact />
     </>
   );

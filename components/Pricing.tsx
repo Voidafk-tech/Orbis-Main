@@ -8,9 +8,11 @@ interface PricingProps {
   compact?: boolean;
   /** Hides the per-plan dollar amount, showing just the plan name/description/feature list. */
   hidePrice?: boolean;
+  /** Overrides the default subtitle copy, e.g. to avoid a "transparent pricing" claim when hidePrice is set. */
+  subheading?: string;
 }
 
-const Pricing: React.FC<PricingProps> = ({ showTitle = true, compact = false, hidePrice = false }) => {
+const Pricing: React.FC<PricingProps> = ({ showTitle = true, compact = false, hidePrice = false, subheading }) => {
   const { t, lang } = useLanguage();
 
   const coreTiers = [
@@ -49,17 +51,17 @@ const Pricing: React.FC<PricingProps> = ({ showTitle = true, compact = false, hi
 
   return (
     <section
-      className={`${compact ? 'pt-0 pb-24' : 'py-24 border-t border-white/[0.06]'} bg-white dark:bg-background-dark`}
+      className={`${compact ? 'pt-0 pb-24 px-10' : 'py-24 px-4 sm:px-6 lg:px-8 border-t border-white/[0.06]'} bg-white dark:bg-background-dark`}
       id="pricing"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className={`mx-auto ${compact ? 'max-w-[1080px]' : 'max-w-7xl'}`}>
         {showTitle && (
           <div className={`text-center space-y-4 ${compact ? 'mb-10' : 'mb-16'}`}>
             <h2 className={`font-display font-bold text-[#1A1A1A] dark:text-white ${compact ? 'text-2xl lg:text-3xl' : 'text-3xl lg:text-4xl'}`}>
               {t.pricing.title}<span className="text-primary">{t.pricing.titleAccent}</span>
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto text-lg font-sans text-center">
-              {t.pricing.subtitle}
+              {subheading ?? t.pricing.subtitle}
             </p>
           </div>
         )}
