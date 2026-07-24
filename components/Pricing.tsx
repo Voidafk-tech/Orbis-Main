@@ -4,9 +4,11 @@ import { useLanguage } from './App';
 
 interface PricingProps {
   showTitle?: boolean;
+  /** Hides the "Specialized Solutions" add-on grid for use in condensed layouts like Home. */
+  compact?: boolean;
 }
 
-const Pricing: React.FC<PricingProps> = ({ showTitle = true }) => {
+const Pricing: React.FC<PricingProps> = ({ showTitle = true, compact = false }) => {
   const { t, lang } = useLanguage();
 
   const coreTiers = [
@@ -44,7 +46,7 @@ const Pricing: React.FC<PricingProps> = ({ showTitle = true }) => {
   const isNumeric = (val: string) => /^\d+/.test(val.replace(/[^0-9]/g, ''));
 
   return (
-    <section className="py-24 bg-white dark:bg-background-dark" id="pricing">
+    <section className="py-24 border-t border-white/[0.06] bg-white dark:bg-background-dark" id="pricing">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {showTitle && (
           <div className="text-center mb-16 space-y-4">
@@ -62,7 +64,7 @@ const Pricing: React.FC<PricingProps> = ({ showTitle = true }) => {
           {coreTiers.map((tier, idx) => (
             <div 
               key={idx} 
-              className={`relative rounded-[2rem] overflow-hidden flex flex-col shadow-2xl transition-all duration-300 group hover:translate-y-[-4px] border-2 ${
+              className={`relative rounded-3xl overflow-hidden flex flex-col shadow-2xl transition-all duration-300 group hover:translate-y-[-4px] border-2 ${
                 tier.featured 
                 ? 'bg-primary/5 dark:bg-primary/10 border-primary scale-105 z-10' 
                 : 'bg-white dark:bg-gray-800/80 border-primary/30 dark:border-primary/20'
@@ -111,66 +113,70 @@ const Pricing: React.FC<PricingProps> = ({ showTitle = true }) => {
           ))}
         </div>
 
-        {/* Specialized Section Header */}
-        <div className="mt-40 text-center mb-16">
-          <h2 className="text-3xl lg:text-4xl font-display font-black text-[#1A1A1A] dark:text-white mb-4">{t.pricing.additionalTitle}</h2>
-          <p className="text-gray-400 max-w-3xl mx-auto text-lg font-sans text-center">
-            {t.pricing.additionalSubtitle}
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          <div className="relative bg-[#CFD9D6] dark:bg-gray-800/80 rounded-[2rem] overflow-hidden flex flex-col shadow-xl border border-black/5 dark:border-white/5 group hover:translate-y-[-4px] transition-all duration-300">
-            <div className="p-10 flex flex-col flex-grow">
-              <h3 className={`text-2xl font-display font-black text-[#1A1A1A] dark:text-white mb-4 ${lang === 'zh' ? 'text-center' : ''}`}>
-                {t.pricing.launchpad.name}
-              </h3>
-              <p className={`text-[#333333] dark:text-gray-300 mb-8 leading-relaxed text-base font-sans font-medium ${lang === 'zh' ? 'text-center' : ''}`}>
-                {t.pricing.launchpad.desc}
+        {!compact && (
+          <>
+            {/* Specialized Section Header */}
+            <div className="mt-40 text-center mb-16">
+              <h2 className="text-3xl lg:text-4xl font-display font-black text-[#1A1A1A] dark:text-white mb-4">{t.pricing.additionalTitle}</h2>
+              <p className="text-gray-400 max-w-3xl mx-auto text-lg font-sans text-center">
+                {t.pricing.additionalSubtitle}
               </p>
-              <ul className={`space-y-3 mb-10 list-none text-[#1A1A1A] dark:text-gray-200 font-sans text-sm ${lang === 'zh' ? 'text-center' : 'ml-4'}`}>
-                {t.pricing.launchpad.items.map((item, i) => (
-                  <li key={i}>{item}</li>
-                ))}
-              </ul>
-              <div className="mt-auto pt-8 border-t border-black/10 dark:border-white/10">
-                <div className={`text-lg font-display italic font-bold text-[#1A1A1A] dark:text-white mb-6 ${lang === 'zh' ? 'text-center' : ''}`}>
-                  <span className="text-2xl text-primary">
-                    {isNumeric(t.pricing.launchpad.price) ? `$${t.pricing.launchpad.price}` : t.pricing.launchpad.price}
-                  </span>{' '}
-                  <span className="text-xs opacity-60">{t.pricing.once}</span>
-                </div>
-                <Link 
-                  to="/contact"
-                  className="inline-block px-10 py-4 bg-gray-900 dark:bg-gray-700 text-white font-display font-black rounded-full hover:brightness-110 transition-all border border-black/10 uppercase tracking-wider text-xs shadow-md text-center"
-                >
-                  {t.pricing.launchpad.cta}
-                </Link>
-              </div>
             </div>
-          </div>
 
-          {t.pricing.additional.map((service, idx) => (
-            <div key={idx} className="relative bg-[#CFD9D6] dark:bg-gray-800/80 rounded-[2rem] overflow-hidden flex flex-col shadow-xl border border-black/5 dark:border-white/5 group hover:translate-y-[-4px] transition-all duration-300">
-              <div className="p-10 flex flex-col flex-grow">
-                <h3 className={`text-2xl font-display font-black text-[#1A1A1A] dark:text-white mb-6 ${lang === 'zh' ? 'text-center' : ''}`}>
-                  {service.title}
-                </h3>
-                <p className={`text-[#333333] dark:text-gray-300 mb-10 leading-relaxed text-base font-sans font-medium flex-grow ${lang === 'zh' ? 'text-center' : ''}`}>
-                  {service.desc}
-                </p>
-                <div className="mt-auto pt-8 border-t border-black/10 dark:border-white/10">
-                  <Link 
-                    to="/contact"
-                    className="inline-block px-10 py-4 bg-primary text-gray-900 font-display font-black rounded-full hover:brightness-110 transition-all border border-black/10 uppercase tracking-wider text-xs shadow-md text-center w-full"
-                  >
-                    {t.pricing.additionalCta}
-                  </Link>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+              <div className="relative bg-[#CFD9D6] dark:bg-gray-800/80 rounded-3xl overflow-hidden flex flex-col shadow-xl border border-black/5 dark:border-white/5 group hover:translate-y-[-4px] transition-all duration-300">
+                <div className="p-10 flex flex-col flex-grow">
+                  <h3 className={`text-2xl font-display font-black text-[#1A1A1A] dark:text-white mb-4 ${lang === 'zh' ? 'text-center' : ''}`}>
+                    {t.pricing.launchpad.name}
+                  </h3>
+                  <p className={`text-[#333333] dark:text-gray-300 mb-8 leading-relaxed text-base font-sans font-medium ${lang === 'zh' ? 'text-center' : ''}`}>
+                    {t.pricing.launchpad.desc}
+                  </p>
+                  <ul className={`space-y-3 mb-10 list-none text-[#1A1A1A] dark:text-gray-200 font-sans text-sm ${lang === 'zh' ? 'text-center' : 'ml-4'}`}>
+                    {t.pricing.launchpad.items.map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ul>
+                  <div className="mt-auto pt-8 border-t border-black/10 dark:border-white/10">
+                    <div className={`text-lg font-display italic font-bold text-[#1A1A1A] dark:text-white mb-6 ${lang === 'zh' ? 'text-center' : ''}`}>
+                      <span className="text-2xl text-primary">
+                        {isNumeric(t.pricing.launchpad.price) ? `$${t.pricing.launchpad.price}` : t.pricing.launchpad.price}
+                      </span>{' '}
+                      <span className="text-xs opacity-60">{t.pricing.once}</span>
+                    </div>
+                    <Link
+                      to="/contact"
+                      className="inline-block px-10 py-4 bg-gray-900 dark:bg-gray-700 text-white font-display font-black rounded-full hover:brightness-110 transition-all border border-black/10 uppercase tracking-wider text-xs shadow-md text-center"
+                    >
+                      {t.pricing.launchpad.cta}
+                    </Link>
+                  </div>
                 </div>
               </div>
+
+              {t.pricing.additional.map((service, idx) => (
+                <div key={idx} className="relative bg-[#CFD9D6] dark:bg-gray-800/80 rounded-3xl overflow-hidden flex flex-col shadow-xl border border-black/5 dark:border-white/5 group hover:translate-y-[-4px] transition-all duration-300">
+                  <div className="p-10 flex flex-col flex-grow">
+                    <h3 className={`text-2xl font-display font-black text-[#1A1A1A] dark:text-white mb-6 ${lang === 'zh' ? 'text-center' : ''}`}>
+                      {service.title}
+                    </h3>
+                    <p className={`text-[#333333] dark:text-gray-300 mb-10 leading-relaxed text-base font-sans font-medium flex-grow ${lang === 'zh' ? 'text-center' : ''}`}>
+                      {service.desc}
+                    </p>
+                    <div className="mt-auto pt-8 border-t border-black/10 dark:border-white/10">
+                      <Link
+                        to="/contact"
+                        className="inline-block px-10 py-4 bg-primary text-gray-900 font-display font-black rounded-full hover:brightness-110 transition-all border border-black/10 uppercase tracking-wider text-xs shadow-md text-center w-full"
+                      >
+                        {t.pricing.additionalCta}
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
       </div>
     </section>
   );

@@ -1,54 +1,61 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative pt-40 pb-28 overflow-hidden bg-background-dark text-center">
+    <header
+      id="top"
+      className="relative flex flex-col items-center justify-center text-center px-6 pt-5 pb-8
+        min-h-[calc(100svh-80px)]"
+    >
+      {/* Ambient lime glow */}
+      <div
+        className="absolute top-[8%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] max-w-[92vw] pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(163,236,109,.10), transparent 62%)' }}
+      />
 
-      {/* Subtle green glow behind headline */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[420px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(195,254,132,0.055) 0%, transparent 65%)' }} />
-
-      <div className="relative z-10 max-w-5xl mx-auto px-6">
-
-        <span className="inline-block text-[11px] font-semibold tracking-[0.14em] uppercase text-primary
-          bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full mb-9">
-          Remote Bookkeeping · British Columbia
-        </span>
-
-        <h1 className="font-display font-extrabold uppercase leading-[0.93]
-          text-[clamp(58px,10.5vw,106px)] tracking-tight text-white mb-7">
-          Books handled.<br />
-          <span className="text-primary">Focus on growth.</span>
-        </h1>
-
-        <p className="text-lg text-gray-400 leading-relaxed max-w-md mx-auto mb-10">
-          Professional remote accounting and bookkeeping for BC businesses — so you can stop worrying about the numbers.
-        </p>
-
-        <div className="mb-10">
-          <p className="text-sm text-gray-400 tracking-wide mb-1">Pricing starts at</p>
-          <p className="font-display font-extrabold uppercase text-primary
-            text-[clamp(28px,4.5vw,44px)] tracking-tight">
-            $299/month
-          </p>
-        </div>
-
-        <Link
-          to="/contact"
-          className="inline-flex items-center gap-2.5 px-9 py-4 rounded-full font-semibold text-[15px]
-            text-white transition-all hover:opacity-85 hover:-translate-y-0.5"
-          style={{ background: '#076CFC' }}
-        >
-          Contact Us
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </Link>
-
+      <div className="relative orbit-float w-40 h-40">
+        <svg width="160" height="160" viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="86" fill="none" stroke="#1c1c20" strokeWidth="1.4" />
+          <circle cx="100" cy="100" r="62" fill="none" stroke="#161618" strokeWidth="1.4" />
+          <circle cx="100" cy="100" r="38" fill="none" stroke="#141416" strokeWidth="1.4" />
+          <circle cx="100" cy="100" r="86" fill="none" stroke="#a3ec6d" strokeWidth="2.4"
+            strokeLinecap="round" strokeDasharray="64 480" className="orbit-arc-outer" />
+          <circle cx="100" cy="100" r="62" fill="none" stroke="#0a84ff" strokeWidth="2.4"
+            strokeLinecap="round" strokeDasharray="44 350" className="orbit-arc-inner" />
+          <circle cx="100" cy="14" r="4.6" fill="#a3ec6d" className="orbit-dot-outer" />
+          <circle cx="162" cy="100" r="3.4" fill="#0a84ff" className="orbit-dot-inner" />
+          <circle cx="100" cy="100" r="7.5" fill="#f5f5f7" />
+        </svg>
       </div>
-    </section>
+
+      <span className="inline-flex items-center mt-[22px] px-4 py-2 rounded-full font-semibold
+        text-[11px] tracking-[0.14em] uppercase text-primary bg-primary/5 border border-primary/[0.32]">
+        Remote Bookkeeping · British Columbia
+      </span>
+
+      <h1 className="mt-[18px] mx-auto max-w-[640px] font-semibold text-[clamp(38px,7vw,46px)]
+        leading-[1.04] tracking-[-0.032em] text-gray-100">
+        Your books,<br />handled in orbit.
+      </h1>
+
+      <p className="mt-[18px] mx-auto max-w-[420px] text-[16.5px] leading-[1.5] text-gray-400">
+        Remote accounting and bookkeeping for BC businesses.
+      </p>
+
+      <div className="mt-[26px] flex flex-col items-center gap-3.5">
+        <a
+          href="#contact"
+          className="inline-flex items-center gap-2 font-semibold text-[17px] text-white
+            px-12 py-[19px] rounded-full transition-all hover:opacity-85 hover:-translate-y-0.5"
+          style={{ background: '#0a84ff', boxShadow: '0 8px 28px rgba(10,132,255,.32)' }}
+        >
+          Get Started →
+        </a>
+        <span className="text-sm text-[#6e6e73]">
+          from <span className="text-primary font-semibold">$299</span>/month
+        </span>
+      </div>
+    </header>
   );
 };
 
