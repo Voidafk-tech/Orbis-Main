@@ -33,13 +33,13 @@ const Hero: React.FC = () => {
         Remote Bookkeeping · British Columbia
       </span>
 
-      <h1 className="mt-[18px] mx-auto max-w-[640px] font-semibold text-[clamp(36px,6.65vw,43.7px)]
+      <h1 className="mt-[18px] mx-auto max-w-[640px] font-display font-semibold text-[clamp(36px,6.65vw,43.7px)]
         leading-[1.04] tracking-[-0.032em] text-gray-100">
         Your books,<br />handled in orbit.
       </h1>
 
       <p className="mt-[18px] mx-auto max-w-[420px] text-[16.5px] leading-[1.5] text-gray-400">
-        Remote accounting and bookkeeping for businesses.
+        Dedicated remote bookkeeping and accounting, saving growing businesses up to $40,000 a year over an in-house hire.
       </p>
 
       <div className="mt-[26px] flex flex-col items-center gap-4">

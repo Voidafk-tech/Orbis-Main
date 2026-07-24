@@ -4,13 +4,13 @@ import { LogoGraphic } from './Navbar';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-background-dark border-t border-white/[0.07] py-11">
+    <footer className="bg-background-dark border-t border-white/[0.06] py-9">
       <div className="max-w-6xl mx-auto px-6 flex flex-wrap items-center
         justify-between gap-5">
 
         <Link to="/" className="flex items-center gap-2.5" aria-label="Orbis Accounting">
-          <LogoGraphic className="h-8 w-8" />
-          <span className="font-display font-extrabold text-[17px] tracking-[0.1em] text-white uppercase">
+          <LogoGraphic className="h-5 w-5" />
+          <span className="font-display font-extrabold text-[17px] tracking-[0.16em] text-white uppercase">
             Orbis
           </span>
         </Link>

@@ -9,7 +9,7 @@ const services = [
       </svg>
     ),
     name: 'Bookkeeping',
-    desc: 'Monthly reconciliation and clean, up-to-date books you can actually trust.',
+    desc: 'Monthly reconciliations in QuickBooks Online or Sage 50, so your books stay accurate and ready anytime.',
   },
   {
     icon: (
@@ -19,7 +19,7 @@ const services = [
       </svg>
     ),
     name: 'Payroll & WCB',
-    desc: 'On-time payroll and WorkSafeBC compliance handled for your whole team.',
+    desc: 'Accurate, on-time payroll and full WorkSafeBC compliance for your whole team, every pay period.',
   },
   {
     icon: (
@@ -28,7 +28,7 @@ const services = [
       </svg>
     ),
     name: 'AP / AR',
-    desc: 'Bills paid and invoices collected — steady cash flow without the chasing.',
+    desc: "We pay your bills and collect what you're owed, keeping cash flow steady without the chasing.",
   },
   {
     icon: (
@@ -37,7 +37,7 @@ const services = [
       </svg>
     ),
     name: 'Compliance',
-    desc: 'GST/PST filings and CRA remittances filed accurately and on schedule.',
+    desc: 'GST, PST, and CRA filings submitted accurately and on time, so tax season never catches you off guard.',
   },
   {
     icon: (
@@ -47,7 +47,7 @@ const services = [
       </svg>
     ),
     name: 'Reporting',
-    desc: 'Monthly financial statements that make sense of where your business stands.',
+    desc: 'Clear monthly financial statements that show exactly where your business stands.',
   },
   {
     icon: (
@@ -57,7 +57,7 @@ const services = [
       </svg>
     ),
     name: 'Fractional CFO',
-    desc: 'Strategic guidance when you need it — without a full-time salary.',
+    desc: 'Senior financial guidance when big decisions come up, without the cost of a full-time hire.',
   },
 ];
 
@@ -70,7 +70,7 @@ const Services: React.FC = () => {
           <div className="font-semibold text-[11px] tracking-[0.14em] uppercase text-primary">
             What we handle
           </div>
-          <h2 className="mt-4 font-semibold text-[clamp(30px,5vw,40px)] leading-[1.08] tracking-[-0.028em] text-gray-100">
+          <h2 className="mt-4 font-display font-semibold text-[clamp(30px,5vw,40px)] leading-[1.08] tracking-[-0.028em] text-gray-100">
             Everything your books need, in one place.
           </h2>
         </div>
@@ -83,7 +83,7 @@ const Services: React.FC = () => {
                 transition-all duration-300 hover:border-primary/25 hover:-translate-y-1"
             >
               {s.icon}
-              <h3 className="mt-[18px] mb-[7px] font-semibold text-[18px] leading-[1.2] text-gray-100">
+              <h3 className="mt-[18px] mb-[7px] font-display font-semibold text-[18px] leading-[1.2] text-gray-100">
                 {s.name}
               </h3>
               <p className="text-[14.5px] leading-[1.55] text-gray-400">{s.desc}</p>

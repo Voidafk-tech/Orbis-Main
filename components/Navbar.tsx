@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav className="fixed w-full top-0 z-50 h-[70px]
-        bg-[#141414]/80 backdrop-blur-xl border-b border-white/[0.07]">
+        bg-[#0b0b0d]/[0.72] backdrop-blur-xl border-b border-white/[0.06]">
         <div className="max-w-6xl mx-auto px-6 h-full flex items-center justify-between gap-5">
 
           {/* Logo */}
@@ -84,8 +84,8 @@ const Navbar: React.FC = () => {
 
       {/* Mobile menu */}
       {open && (
-        <div className="fixed inset-0 top-[70px] z-40 bg-[#141414]
-          border-t border-white/[0.07] flex flex-col gap-5 p-7 md:hidden">
+        <div className="fixed inset-0 top-[70px] z-40 bg-[#0b0b0d]
+          border-t border-white/[0.06] flex flex-col gap-5 p-7 md:hidden">
           {links.map((l) => (
             <Link
               key={l.to}

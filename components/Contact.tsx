@@ -81,7 +81,7 @@ const Contact: React.FC = () => {
               <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                 <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               </div>
-              <h3 className="text-2xl font-bold text-gray-100">{t.contact.success}</h3>
+              <h3 className="font-display text-2xl font-bold text-gray-100">{t.contact.success}</h3>
               <p className="text-gray-400">{t.contact.successDesc}</p>
             </div>
           ) : (
@@ -116,7 +116,7 @@ const Contact: React.FC = () => {
                 rows={3}
                 aria-label={t.contact.formHelp}
                 className="bg-gray-900 border border-white/10 rounded-xl px-4 py-3.5 text-[15px] text-gray-100 outline-none focus:border-primary/50 transition-colors resize-none"
-                placeholder={t.contact.formHelp}
+                placeholder={t.contact.placeholderMessage}
                 value={formState.message}
                 onChange={e => setFormState({ ...formState, message: e.target.value })}
               />

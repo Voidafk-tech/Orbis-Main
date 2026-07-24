@@ -124,7 +124,7 @@ export const translations = {
       headerAccent: 'pricing.',
       headerSubtitle: 'Choose the accounting plan that fits your current business needs and scale as you grow.',
       remoteTitle: 'The Remote-First Advantage',
-      remoteDesc: 'Our virtual bookkeeping model isn\'t just about convenience—it\'s about delivering senior-level expertise without traditional firm markups.',
+      remoteDesc: 'Our virtual bookkeeping model isn\'t just about convenience. It\'s about delivering senior-level expertise without traditional firm markups.',
       remoteList: [
         'Up to 60% cost reduction',
         'Direct access to senior partners',
@@ -217,12 +217,12 @@ export const translations = {
       formBusiness: 'Business name',
       formHelp: 'What do you need help with?',
       formBtn: 'Send my request →',
-      success: "Thanks — we'll be in touch ✓",
+      success: "You're all set.",
       successDesc: "We'll send a clear quote within one business day.",
       placeholderName: 'Your name',
       placeholderEmail: 'you@company.ca',
       placeholderBusiness: 'Your business name',
-      placeholderMessage: 'Tell us about your accounting challenges...',
+      placeholderMessage: "e.g. We need monthly bookkeeping and payroll for a 12-person team",
       phone: '604-203-7799',
       phoneUrl: 'tel:6042037799',
       wechat: null
