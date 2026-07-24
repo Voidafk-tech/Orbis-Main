@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export const LogoGraphic: React.FC<{ className?: string }> = ({ className = 'h-9 w-9' }) => (
-  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="50" cy="50" r="50" fill="#C3FE84" />
-    <circle cx="50" cy="50" r="32" fill="#141414" />
-    <circle cx="15" cy="50" r="21" fill="#141414" />
-    <circle cx="15" cy="50" r="9" fill="white" />
+  <svg viewBox="0 0 40 40" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="20" r="14" fill="none" stroke="#2c2c30" strokeWidth="3.2" />
+    <circle cx="20" cy="20" r="14" fill="none" stroke="#a3ec6d" strokeWidth="3.2"
+      strokeLinecap="round" strokeDasharray="26 200" className="orbit-arc" />
+    <circle cx="20" cy="20" r="3.6" fill="#a3ec6d" />
   </svg>
 );
 
@@ -16,6 +16,7 @@ const Navbar: React.FC = () => {
 
   const links = [
     { label: 'Services', to: '/services' },
+    { label: 'Pricing',  to: '/pricing'  },
     { label: 'Contact',  to: '/contact'  },
   ];
 
@@ -27,8 +28,8 @@ const Navbar: React.FC = () => {
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 outline-none" aria-label="Orbis Accounting">
-            <LogoGraphic className="h-8 w-8" />
-            <span className="font-display font-extrabold text-[18px] tracking-[0.1em] text-white uppercase hidden sm:block">
+            <LogoGraphic className="h-6 w-6" />
+            <span className="font-display font-extrabold text-[18px] tracking-[0.16em] text-white uppercase hidden sm:block">
               Orbis
             </span>
           </Link>
@@ -54,7 +55,7 @@ const Navbar: React.FC = () => {
             to="/contact"
             className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full
               text-white text-[13.5px] font-semibold transition-all hover:opacity-85"
-            style={{ background: '#076CFC' }}
+            style={{ background: '#0a84ff' }}
           >
             Free Quote
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
@@ -100,7 +101,7 @@ const Navbar: React.FC = () => {
             onClick={() => setOpen(false)}
             className="w-full text-center py-4 rounded-full text-white font-semibold text-[15px]
               transition-all hover:opacity-85 mt-2"
-            style={{ background: '#076CFC' }}
+            style={{ background: '#0a84ff' }}
           >
             Get a Free Quote
           </Link>
