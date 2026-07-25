@@ -17,6 +17,17 @@ export const CONTACT = {
 /** Date stamp on the published GST/PST rates. Review on a set cadence. */
 export const RATES_AS_OF = 'July 2026';
 
+/**
+ * The Intuit-issued Advanced ProAdvisor badge, in `public/`. Certification
+ * marks carry usage rules, so this must be the file Intuit issued — never a
+ * redrawn copy. Until the file is in place the Trust section falls back to a
+ * neutral placeholder rather than showing a broken image.
+ */
+export const PROADVISOR_BADGE = {
+  src: '/badge-quickbooks-advanced-proadvisor.png',
+  alt: 'Intuit QuickBooks Certified Advanced QuickBooks Online ProAdvisor',
+} as const;
+
 export const TRUST_STRIP = [
   { label: 'Certified', lines: ['QuickBooks Online', 'Advanced ProAdvisor'] },
   { label: 'Based in', lines: ['West Vancouver, BC', 'Serving all of BC'] },

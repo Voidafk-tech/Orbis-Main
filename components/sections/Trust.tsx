@@ -1,6 +1,39 @@
-import React from 'react';
-import { INDUSTRIES_SERVED } from '../../content/site';
+import React, { useEffect, useRef, useState } from 'react';
+import { INDUSTRIES_SERVED, PROADVISOR_BADGE } from '../../content/site';
 import { revealDelay } from '../useScrollReveal';
+
+/**
+ * Shows the issued certification badge, and degrades to a neutral placeholder
+ * if the file is not in place yet — a broken image would be worse than none.
+ */
+const CertificationBadge: React.FC = () => {
+  const [missing, setMissing] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // The prerendered markup can fail to load before React attaches onError,
+  // so re-check the element once on mount.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img && img.complete && img.naturalWidth === 0) setMissing(true);
+  }, []);
+
+  if (missing) {
+    return (
+      <p className="badge-box__placeholder">
+        QuickBooks Advanced ProAdvisor badge to be supplied
+      </p>
+    );
+  }
+
+  return (
+    <img
+      ref={imgRef}
+      src={PROADVISOR_BADGE.src}
+      alt={PROADVISOR_BADGE.alt}
+      onError={() => setMissing(true)}
+    />
+  );
+};
 
 /**
  * No testimonials, no client logos, no counts. The practice is new and
@@ -11,11 +44,8 @@ const Trust: React.FC = () => (
     <div className="inner trust">
       <div className="reveal">
         <p className="eyebrow trust__eyebrow">Certification</p>
-        {/* Placeholder until the client supplies the Intuit-issued badge file. */}
         <div className="badge-box">
-          <p className="badge-box__placeholder">
-            QuickBooks Advanced ProAdvisor badge to be supplied
-          </p>
+          <CertificationBadge />
         </div>
         <p className="trust__p">
           QuickBooks Online Advanced ProAdvisor, the certification level above the standard one. We
