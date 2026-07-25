@@ -1,229 +1,202 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Remote Staff Accountant & Bookkeeping Vancouver | Orbis Accounting </title>
-    <meta name="description" content="Save $40,000/year vs. an in-house hire. Orbis Accounting provides professional Staff Accountant expertise, WCB compliance, and payroll for Vancouver businesses." />
-    <meta name="keywords" content="Remote Bookkeeping, Staff Accountant, Sage50, QuickBooks Online, Compliance, Fractional Accounting, Small Business Payroll, Virtual Accountant" />
+    <title>Bookkeeping for BC Small Business | Orbis Accounting</title>
+    <meta
+      name="description"
+      content="Fixed-price bookkeeping for BC small business, from West Vancouver. GST to the CRA, PST to the province, and monthly reports you can read. Plans from $299/mo."
+    />
+    <meta name="theme-color" content="#0A0C0A" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='18' fill='%236DC64F'/%3E%3Ccircle cx='22.5' cy='20' r='13.4' fill='%230A0C0A'/%3E%3Ccircle cx='7.6' cy='20' r='4.1' fill='%23fff'/%3E%3C/svg%3E"
+    />
 
     <script type="text/javascript">
       // Single Page Apps for GitHub Pages
       // https://github.com/rafgraph/spa-github-pages
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) {
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
+      (function (l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search
+            .slice(1)
+            .split('&')
+            .map(function (s) {
+              return s.replace(/~and~/g, '&');
+            })
+            .join('?');
+          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
         }
-      }(window.location))
+      })(window.location);
     </script>
 
     <!-- Open Graph / Social Media -->
-    <meta property="og:title" content="Remote Staff Accountant & Bookkeeping Vancouver | Orbis Accounting" />
-    <meta property="og:description" content="Expert remote staff accountants. Specialized bookkeeping, AR/AP, and payroll services for modern businesses." />
+    <meta property="og:title" content="Bookkeeping for BC Small Business | Orbis Accounting" />
+    <meta
+      property="og:description"
+      content="Fixed-price bookkeeping for BC small business, from West Vancouver. GST and PST both filed, and a written quote within one business day."
+    />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.orbisaccounting.ca" />
     <link rel="canonical" href="https://www.orbisaccounting.ca" />
 
-    <!-- Structured Data -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured data: the practice itself. -->
     <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "AccountingService",
-  "name": "Orbis Accounting",
-  "image": "https://www.orbisaccounting.ca/logo.png",
-  "@id": "https://www.orbisaccounting.ca",
-  "url": "https://www.orbisaccounting.ca",
-  "telephone": "604-203-7799",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "333 Seymour St",
-    "addressLocality": "Vancouver",
-    "addressRegion": "BC",
-    "postalCode": "V6B 1P1",
-    "addressCountry": "CA"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 49.2852,
-    "longitude": -123.1118
-  },
-  "areaServed": {
-    "@type": "AdministrativeArea",
-    "name": "British Columbia"
-  },
-  "priceRange": "$$",
-  "description": "Orbis Accounting provides professional remote Staff Accountant expertise for small business owners across British Columbia. Specializing in full-cycle bookkeeping, payroll, and WCB compliance, we offer a high-tier, cost-effective alternative to in-house hires. Optimize your cash flow with remote solutions for AR/AP management and CRA tax readiness, designed to scale with your business.",
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    "opens": "09:00",
-    "closes": "17:00"
-  },
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Orbis Accounting Service Plans",
-    "itemListElement": [
       {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Monthly Bookkeeping",
-          "description": "Recurring monthly management including AR/AP, bank reconciliations, and PST/GST/HST filing."
+        "@context": "https://schema.org",
+        "@type": "AccountingService",
+        "name": "Orbis Accounting",
+        "@id": "https://www.orbisaccounting.ca",
+        "url": "https://www.orbisaccounting.ca",
+        "email": "info@orbisaccounting.ca",
+        "telephone": "604-203-7799",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "West Vancouver",
+          "addressRegion": "BC",
+          "addressCountry": "CA"
         },
-        "price": "499.00",
-        "priceCurrency": "CAD"
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Catch-up Bookkeeping",
-          "description": "One-time historical ledger cleanup and data restoration to get your records back in order."
+        "areaServed": {
+          "@type": "AdministrativeArea",
+          "name": "British Columbia"
         },
-        "price": "1200.00",
-        "priceCurrency": "CAD"
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Quarterly Review",
-          "description": "Periodic upkeep for smaller businesses needing GST/PST compliance and financial snapshots."
+        "priceRange": "$$",
+        "description": "Bookkeeping for BC small business, based in West Vancouver and serving all of British Columbia. Monthly bookkeeping, GST and PST filing, payroll and T4s, financial reporting, software setup and catch-up work, at a fixed monthly price.",
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "17:00"
         },
-        "price": "900.00",
-        "priceCurrency": "CAD"
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Year-end Prep",
-          "description": "Annual account reconciliation and tax package preparation for corporate accountants."
-        },
-        "price": "1800.00",
-        "priceCurrency": "CAD"
-      }
-    ]
-  }
-}
-</script>
-
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react-dom": "https://esm.sh/react-dom@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^6.22.3",
-    "@google/genai": "https://esm.sh/@google/genai",
-    "@/": "./",
-    "path": "https://esm.sh/path@^0.12.7",
-    "vite": "https://esm.sh/vite@^7.3.1",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "url": "https://esm.sh/url@^0.11.4"
-  }
-}
-</script>
-    <script>
-  tailwind.config = {
-    darkMode: 'class',
-    theme: {
-      extend: {
-        colors: {
-          primary: "#a3ec6d",
-          blue: "#0a84ff",
-          "background-dark": "#0b0b0d",
-          gray: {
-            900: "#0b0b0d",
-            800: "#111114",
-            700: "#2D2D2D",
-            400: "#86868b",
-            100: "#f5f5f7",
-          }
-        },
-        fontFamily: {
-          display: ["Barlow Condensed", "Inter", "system-ui", "sans-serif"],
-          sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
-        },
-      },
-    },
-  };
-</script>
-    <style>
-      :root {
-        --base-line-height: 1.5;
-      }
-
-      html[lang="zh"] {
-        --base-line-height: 1.7;
-      }
-
-      body {
-        font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        line-height: var(--base-line-height);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        background-color: #0b0b0d;
-        color: #f5f5f7;
-      }
-
-      .font-display {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-      }
-
-      /* Fix for potentially weird line breaks in CJK and force centering */
-      html[lang="zh"] p {
-        word-break: break-all;
-      }
-
-      html[lang="zh"] .text-center {
-        text-align: center !important;
-      }
-
-      .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        font-family: 'Material Symbols Outlined' !important;
-      }
-
-      ::selection {
-        background: #a3ec6d;
-        color: #0b0b0d;
-      }
-
-      /* Orbit logo mark animation (see design_handoff_orbis_redesign/README.md) */
-      @keyframes orbSpin { to { transform: rotate(360deg); } }
-      @keyframes orbSpinRev { to { transform: rotate(-360deg); } }
-      @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
-      .orbit-arc { transform-origin: center; animation: orbSpin 3.2s linear infinite; }
-      .orbit-arc-outer { transform-origin: center; animation: orbSpin 6.5s linear infinite; }
-      .orbit-arc-inner { transform-origin: center; animation: orbSpinRev 5s linear infinite; }
-      .orbit-dot-outer { transform-origin: 100px 100px; animation: orbSpin 6.5s linear infinite; }
-      .orbit-dot-inner { transform-origin: 100px 100px; animation: orbSpinRev 5s linear infinite; }
-      .orbit-float { animation: floatY 7s ease-in-out infinite; }
-
-      @media (prefers-reduced-motion: reduce) {
-        .orbit-arc, .orbit-arc-outer, .orbit-arc-inner, .orbit-dot-outer, .orbit-dot-inner, .orbit-float {
-          animation: none;
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Monthly bookkeeping plans",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "name": "Foundation",
+              "price": "299.00",
+              "priceCurrency": "CAD",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Foundation monthly bookkeeping",
+                "description": "Bank and credit card reconciliation, transaction categorization, and a monthly profit and loss and balance sheet. Up to 50 transactions a month."
+              }
+            },
+            {
+              "@type": "Offer",
+              "name": "Standard",
+              "price": "499.00",
+              "priceCurrency": "CAD",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Standard monthly bookkeeping",
+                "description": "Everything in Foundation, plus GST filing to the CRA, PST filing to the BC Ministry of Finance, and Shopify and Stripe reconciled. Up to 150 transactions a month."
+              }
+            },
+            {
+              "@type": "Offer",
+              "name": "Complete",
+              "price": "899.00",
+              "priceCurrency": "CAD",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Complete monthly bookkeeping",
+                "description": "Everything in Standard, plus payroll, source deductions, T4s and ROEs, accounts payable, WorkSafeBC reporting and a quarterly review call. Up to 400 transactions a month."
+              }
+            },
+            {
+              "@type": "Offer",
+              "name": "Software setup and migration",
+              "price": "300.00",
+              "priceCurrency": "CAD",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Software setup and migration",
+                "description": "One-time setup on QuickBooks Online, Xero or Sage 50: chart of accounts, bank feeds, integrations and one training session."
+              }
+            }
+          ]
         }
       }
-    </style>
-  <link rel="stylesheet" href="/index.css">
-</head>
+    </script>
+
+    <!-- Structured data: FAQ. Keep in sync with FAQS in content/site.ts. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How much does a bookkeeper cost in Vancouver?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Local firms billing hourly are usually $75 to $150 an hour, which lands most small businesses between $600 and $2,000 in a typical month. Flat monthly plans in this market run roughly $300 to $2,000 depending on volume. Ours are $299, $499 and $899, fixed, with no hourly billing."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between a bookkeeper and an accountant, and which do I need?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A bookkeeper handles the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. An accountant steps in for corporate tax returns and higher level planning. Most BC small businesses work with a bookkeeper all year and bring in an accountant at year end. We hand your accountant a clean, closed set of books, which makes their bill smaller."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I have to register for PST in BC?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It depends on what you sell, not just on how much. Most businesses selling goods in BC need to register. Many service businesses do not. Because PST is separate from GST, plenty of owners register for one and not the other without realising. Tell us what you sell and we will confirm both in your quote."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What if my books are a year behind?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "That is the most common reason people get in touch. We look at how far behind you are and quote the catch-up as one number before starting. We clear it, file whatever is outstanding, then start the monthly plan from a clean position. You are not the first and there is no lecture."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you work with businesses outside West Vancouver?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. We are based in West Vancouver and work with businesses across British Columbia. Everything is done online, so there is nothing to drop off and no office visit required."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to use QuickBooks Online?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. We work in QuickBooks Online, Xero and Sage 50, so you can stay on whichever one you already use. If you are on Wave, spreadsheets or nothing at all, we will recommend one and the migration is part of setup. Shopify and Stripe connect to all three, so your sales reconcile automatically."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I switch from my current bookkeeper?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You give us access to your accounting file and we take it from the next month. You do not need to have an awkward conversation first, and you do not need to move anything yourself. If the handover reveals problems in the existing books, we will tell you what we found before doing extra work."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
-  <script type="module" src="/index.tsx"></script>
-</body>
+    <script type="module" src="/index.tsx"></script>
+  </body>
 </html>

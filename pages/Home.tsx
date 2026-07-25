@@ -1,18 +1,32 @@
 import React from 'react';
-import Hero from '../components/Hero';
-import Services from '../components/Services';
-import Pricing from '../components/Pricing';
-import Contact from '../components/Contact';
+import Hero from '../components/sections/Hero';
+import Pains from '../components/sections/Pains';
+import WhyOrbis from '../components/sections/WhyOrbis';
+import Services from '../components/sections/Services';
+import Steps from '../components/sections/Steps';
+import Pricing from '../components/sections/Pricing';
+import TaxExplainer from '../components/sections/TaxExplainer';
+import Trust from '../components/sections/Trust';
+import Faq from '../components/sections/Faq';
+import Intake from '../components/sections/Intake';
 
-const Home: React.FC = () => {
-  return (
-    <>
-      <Hero />
-      <Services />
-      <Pricing compact hidePrice />
-      <Contact />
-    </>
-  );
-};
+/**
+ * The order is the argument: problem, differentiation, offer, process,
+ * price, education, proof, objections, action.
+ */
+const Home: React.FC = () => (
+  <>
+    <Hero />
+    <Pains />
+    <WhyOrbis />
+    <Services />
+    <Steps />
+    <Pricing />
+    <TaxExplainer />
+    <Trust />
+    <Faq />
+    <Intake />
+  </>
+);
 
 export default Home;
