@@ -82,8 +82,10 @@ to its heading.
 
 ## Before launch
 
-1. **QuickBooks Advanced ProAdvisor badge** — the Trust section shows a
-   placeholder until the client supplies the official Intuit-issued file.
+1. **QuickBooks Advanced ProAdvisor badge** — in place at
+   `public/badge-quickbooks-advanced-proadvisor.png`, but the issued file is
+   186×210, and it displays 150px tall. A larger original would stop it
+   looking soft on retina screens.
 2. **Official vendor logos** — the five platform marks in `public/logos/` were
    derived from screenshots. Replace with vendor-issued SVG or 2× PNG.
 3. **Privacy policy** — the form claims your details are "used to write your
