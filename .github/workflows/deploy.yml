@@ -19,11 +19,14 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # react-router 8 requires >=22.22.0.
+          node-version: 22
+          cache: npm
 
       - name: Install dependencies
-        # Using 'install' instead of 'ci' since the lockfile is missing
-        run: npm install
+        # 'ci', not 'install': the deploy must get the exact versions the
+        # lockfile pins, or a transitive bump can ship an unreviewed package.
+        run: npm ci
 
       - name: Build
         run: npm run build

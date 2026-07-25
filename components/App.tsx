@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router';
 import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
 import { useScrollReveal } from './useScrollReveal';
