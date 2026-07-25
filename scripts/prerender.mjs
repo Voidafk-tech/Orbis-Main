@@ -16,13 +16,13 @@ const ROUTES = [
     path: '/',
     title: 'Bookkeeping for BC Small Business | Orbis Accounting',
     description:
-      'Fixed-price bookkeeping for BC small business, from West Vancouver. GST to the CRA, PST to the province, and monthly reports you can read. Plans from $299/mo.',
+      'Fixed monthly bookkeeping for BC small business, from West Vancouver. GST and PST both filed. Plans from $299/mo, with a written quote in one business day.',
   },
   {
     path: '/contact',
     title: 'Get a Plan and a Quote | Orbis Accounting',
     description:
-      'Tell us where your books actually stand. A written plan and a fixed monthly price within one business day. No sales call.',
+      'Tell us where your books stand and get a written plan and a fixed monthly price within one business day. No sales call, no obligation.',
   },
   {
     path: '/privacy-policy',
@@ -45,23 +45,57 @@ if (!template.includes(PLACEHOLDER)) {
   throw new Error('prerender: could not find the root div in dist/index.html');
 }
 
+/**
+ * Rewrites one head tag, tolerating the attributes being split across lines.
+ * Throws rather than silently leaving a route with the home page's metadata.
+ */
+const setTag = (html, { match, replacement, what }) => {
+  if (!match.test(html)) {
+    throw new Error(`prerender: no ${what} tag to rewrite in dist/index.html`);
+  }
+  return html.replace(match, replacement);
+};
+
+const metaPattern = (attr, value) =>
+  new RegExp(`<meta\\s+${attr}="${value}"\\s+content="[^"]*"\\s*/?>`);
+
 for (const route of ROUTES) {
   const url = route.path === '/' ? SITE : `${SITE}${route.path}`;
 
-  const html = template
-    .replace(PLACEHOLDER, `<div id="root">${render(route.path)}</div>`)
-    .replace(/<title>[\s\S]*?<\/title>/, `<title>${route.title}</title>`)
-    .replace(
-      /(<meta name="description" content=")[^"]*(")/,
-      `$1${route.description}$2`,
-    )
-    .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${route.title}$2`)
-    .replace(
-      /(<meta property="og:description" content=")[^"]*(")/,
-      `$1${route.description}$2`,
-    )
-    .replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${url}$2`)
-    .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${url}$2`);
+  let html = template.replace(PLACEHOLDER, `<div id="root">${render(route.path)}</div>`);
+
+  const tags = [
+    { what: 'title', match: /<title>[\s\S]*?<\/title>/, replacement: `<title>${route.title}</title>` },
+    {
+      what: 'description',
+      match: metaPattern('name', 'description'),
+      replacement: `<meta name="description" content="${route.description}" />`,
+    },
+    {
+      what: 'og:title',
+      match: metaPattern('property', 'og:title'),
+      replacement: `<meta property="og:title" content="${route.title}" />`,
+    },
+    {
+      what: 'og:description',
+      match: metaPattern('property', 'og:description'),
+      replacement: `<meta property="og:description" content="${route.description}" />`,
+    },
+    {
+      what: 'og:url',
+      match: metaPattern('property', 'og:url'),
+      replacement: `<meta property="og:url" content="${url}" />`,
+    },
+    {
+      what: 'canonical',
+      match: /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/,
+      replacement: `<link rel="canonical" href="${url}" />`,
+    },
+  ];
+
+  for (const tag of tags) {
+    html = setTag(html, tag);
+  }
 
   const outDir = route.path === '/' ? dist : path.join(dist, route.path);
   await mkdir(outDir, { recursive: true });

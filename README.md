@@ -44,6 +44,10 @@ pricing table, the GST/PST explainer and the FAQ have to be in the initial HTML
 payload. The client entry hydrates that markup rather than replacing it. If you
 add a route, add it to `ROUTES` in `scripts/prerender.mjs`.
 
+Per-route titles, descriptions, canonicals and Open Graph tags are rewritten by
+the prerender step, which throws if a tag it expects is missing rather than
+letting a route inherit the home page's metadata.
+
 GitHub Actions publishes `dist/` to GitHub Pages on every push to `main`
 (`.github/workflows/deploy.yml`). `public/404.html` keeps deep links working for
 any path that was not prerendered.
@@ -57,7 +61,8 @@ any path that was not prerendered.
 | `content/legal.ts` | Privacy and terms copy |
 | `components/sections/` | One file per block of the page, in page order |
 | `components/IntakeForm.tsx` | The form, its validation, and the Web3Forms submission |
-| `index.html` | Meta tags and the `AccountingService` + `FAQPage` structured data |
+| `index.html` | Meta tags, the site icons, and the `AccountingService` + `FAQPage` structured data |
+| `public/favicon.*` | The site icon — `favicon.svg` is the source, the PNG and ICO files are rendered from it |
 
 Editing copy should mostly mean editing `content/site.ts`. Two exceptions to
 keep in sync by hand: the FAQ answers are duplicated into the `FAQPage` JSON-LD
