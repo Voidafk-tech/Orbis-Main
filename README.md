@@ -83,9 +83,11 @@ to its heading.
 ## Before launch
 
 1. **QuickBooks Advanced ProAdvisor badge** — in place at
-   `public/badge-quickbooks-advanced-proadvisor.png`, but the issued file is
-   186×210, and it displays 150px tall. A larger original would stop it
-   looking soft on retina screens.
+   `public/badge-quickbooks-advanced-proadvisor.png`. The issued file is only
+   186×210, so it renders 105px tall (exactly 2:1 on a retina screen) rather
+   than the 150px the design specifies. If a larger issued file turns up,
+   replace it and raise `.badge-box img` back to 150px, with the box height
+   back to 186px.
 2. **Official vendor logos** — the five platform marks in `public/logos/` were
    derived from screenshots. Replace with vendor-issued SVG or 2× PNG.
 3. **Privacy policy** — the form claims your details are "used to write your
