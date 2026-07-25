@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom/server';
+import { StaticRouter } from 'react-router';
 import App from './components/App';
 
 /** Used by scripts/prerender.mjs to bake each route's HTML into dist/. */
