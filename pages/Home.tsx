@@ -12,7 +12,7 @@ import Intake from '../components/sections/Intake';
 
 /**
  * The order is the argument: problem, differentiation, offer, process,
- * price, education, proof, objections, action.
+ * plans, education, proof, objections, action.
  */
 const Home: React.FC = () => (
   <>

@@ -1,9 +1,12 @@
 /**
  * Single source of truth for the site's copy and figures.
  *
- * Anything a non-developer is likely to want changed lives here: prices, the
+ * Anything a non-developer is likely to want changed lives here: the plans, the
  * tax-rate date stamp, FAQ answers, form options. Keep the FAQ list in sync
  * with the FAQPage JSON-LD in index.html.
+ *
+ * No plan figures are published on the site. Every number reaches the client in
+ * the written quote instead, so nothing here should carry a monthly amount.
  */
 
 export const CONTACT = {
@@ -145,7 +148,6 @@ export const STEPS = [
 export interface Tier {
   name: string;
   audience: string;
-  price: string;
   cap: string;
   featured?: boolean;
   features: { text: string; included: boolean }[];
@@ -155,7 +157,6 @@ export const TIERS: Tier[] = [
   {
     name: 'Foundation',
     audience: 'Sole proprietors with simple books',
-    price: '$299',
     cap: 'Up to 50 transactions a month',
     features: [
       { text: 'Bank and credit card reconciliation', included: true },
@@ -168,7 +169,6 @@ export const TIERS: Tier[] = [
   {
     name: 'Standard',
     audience: 'Established small businesses',
-    price: '$499',
     cap: 'Up to 150 transactions a month',
     featured: true,
     features: [
@@ -182,7 +182,6 @@ export const TIERS: Tier[] = [
   {
     name: 'Complete',
     audience: 'Businesses with staff on payroll',
-    price: '$899',
     cap: 'Up to 400 transactions a month',
     features: [
       { text: 'Everything in Standard', included: true },
@@ -207,7 +206,7 @@ export const INDUSTRIES_SERVED = [
 export const FAQS = [
   {
     q: 'How much does a bookkeeper cost in Vancouver?',
-    a: 'Local firms billing hourly are usually $75 to $150 an hour, which lands most small businesses between $600 and $2,000 in a typical month. Flat monthly plans in this market run roughly $300 to $2,000 depending on volume. Ours are $299, $499 and $899, fixed, with no hourly billing.',
+    a: 'Local firms billing hourly are usually $75 to $150 an hour, which lands most small businesses between $600 and $2,000 in a typical month. Flat monthly plans in this market run roughly $300 to $2,000 depending on volume. We work on a fixed monthly plan rather than hourly billing. Tell us your transaction volume and what you need filed, and your number comes back in writing within one business day.',
   },
   {
     q: 'What is the difference between a bookkeeper and an accountant, and which do I need?',

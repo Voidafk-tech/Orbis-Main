@@ -16,7 +16,7 @@ const SiteHeader: React.FC = () => (
           <Anchor to="services">Services</Anchor>
         </li>
         <li>
-          <Anchor to="pricing">Pricing</Anchor>
+          <Anchor to="pricing">Plans</Anchor>
         </li>
         <li>
           <Anchor to="questions">Questions</Anchor>

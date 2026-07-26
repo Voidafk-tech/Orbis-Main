@@ -7,10 +7,10 @@ const Pricing: React.FC = () => (
   <section className="sec sec--paper" id="pricing">
     <div className="inner">
       <div className="reveal" style={{ maxWidth: '58ch' }}>
-        <p className="eyebrow eyebrow--paper intro__eyebrow">Pricing</p>
-        <h2 className="h2">Priced by how much work there is.</h2>
+        <p className="eyebrow eyebrow--paper intro__eyebrow">Plans</p>
+        <h2 className="h2">Scoped by how much work there is.</h2>
         <p className="lede lede--paper intro__p" style={{ fontSize: '17px' }}>
-          Pick the row that matches your transaction volume. If you are not sure, guess low and we
+          Pick the plan that matches your transaction volume. If you are not sure, guess low and we
           will tell you in the quote.
         </p>
       </div>
@@ -28,10 +28,6 @@ const Pricing: React.FC = () => (
             </div>
             <p className="tier__audience">{tier.audience}</p>
 
-            <p className="tier__price">
-              <span className="tier__amount">{tier.price}</span>
-              <span className="tier__per">/mo</span>
-            </p>
             <p className="tier__cap">{tier.cap}</p>
 
             <ul className="tier__features">
@@ -69,17 +65,16 @@ const Pricing: React.FC = () => (
         <div>
           <p className="micro micro--paper pricing-notes__label">One-time work</p>
           <p className="pricing-notes__body">
-            <strong>Software setup and migration</strong> — <span className="amount">$300</span>{' '}
-            once, on QuickBooks Online, Xero or Sage 50. Chart of accounts, bank feeds,
-            integrations, and one training session.
+            <strong>Software setup and migration</strong> — Quoted once, on QuickBooks Online, Xero
+            or Sage 50. Chart of accounts, bank feeds, integrations, and one training session.
           </p>
         </div>
         <div>
           <p className="micro micro--paper pricing-notes__label">The fine print</p>
           <p className="fine-print">
-            All plans are contract based, with the term set per client. No setup fee, no hourly
-            billing. Prices in CAD, plus GST. Over 400 transactions a month, ask and we will quote
-            it.
+            All plans are contract based, with the term set per client. Every plan is a fixed
+            monthly figure, quoted in writing before any work starts, in CAD plus GST. No hourly
+            billing. Over 400 transactions a month, ask and we will quote it.
           </p>
         </div>
       </div>

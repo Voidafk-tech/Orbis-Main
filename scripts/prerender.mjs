@@ -2,7 +2,7 @@
  * Bakes each route's markup into dist/ after the client build.
  *
  * This is an SEO-driven local-service page: the GST/PST explainer, the FAQ
- * and the pricing table have to be in the initial HTML payload, not rendered
+ * and the plans table have to be in the initial HTML payload, not rendered
  * after a bundle downloads. The client entry hydrates whatever is here.
  */
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -16,7 +16,7 @@ const ROUTES = [
     path: '/',
     title: 'Bookkeeping for BC Small Business | Orbis Accounting',
     description:
-      'Fixed monthly bookkeeping for BC small business, from West Vancouver. GST and PST both filed. Plans from $299/mo, with a written quote in one business day.',
+      'Fixed monthly bookkeeping for BC small business, from West Vancouver. GST and PST both filed. Three plans sized to your transaction volume, with a written quote in one business day.',
   },
   {
     path: '/contact',

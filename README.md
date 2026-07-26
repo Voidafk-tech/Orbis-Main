@@ -8,15 +8,21 @@ with design tokens, no UI framework).
 The page has one job: get a qualified small-business owner to fill in the
 intake form. A few choices look unusual and are deliberate:
 
-- **Prices are published.** Three fixed tiers, in dollars, on the page. This is
-  the main competitive differentiator — do not move it behind a form.
+- **Plans are published, prices are not.** Three named tiers with their
+  transaction caps and full included/excluded lists are on the page. None of
+  our own figures appear anywhere — not on a tier, not on the one-time work,
+  not in the meta description, not in the structured data. Every number reaches
+  the client in the written quote. Do not reintroduce one without being asked
+  to. Two sets of dollar figures on the page are deliberate and are *not* ours:
+  the competitor market ranges in FAQ 1, and the CRA's $30,000 GST registration
+  threshold in the GST/PST explainer. Leave both alone.
 - **There is no "book a call" CTA.** The single conversion action is the
   asynchronous intake form, and the promise is a written reply within one
   business day. No scheduler widget.
-- **Catch-up bookkeeping never carries a published per-month figure.** It is
-  quoted after seeing the backlog.
+- **One-time work reads "Quoted".** Both catch-up bookkeeping and software
+  setup and migration are quoted after we see the job, never listed at a figure.
 - **Engagements are "contract based, term set per client"** — in the hero trust
-  strip and the pricing fine print. Never "no contract".
+  strip and the plans fine print. Never "no contract".
 - **No testimonials, client logos or counts.** The practice is new; invented
   social proof would be worse than none.
 
@@ -40,7 +46,7 @@ npm run preview
    `dist/`, with per-route title, description, canonical and Open Graph tags.
 
 The prerender step matters: this is an SEO-driven local-service page, so the
-pricing table, the GST/PST explainer and the FAQ have to be in the initial HTML
+plans table, the GST/PST explainer and the FAQ have to be in the initial HTML
 payload. The client entry hydrates that markup rather than replacing it. If you
 add a route, add it to `ROUTES` in `scripts/prerender.mjs`.
 
@@ -57,7 +63,7 @@ any path that was not prerendered.
 | Path | What it is |
 |---|---|
 | `index.css` | The whole design system: tokens, components, responsive rules |
-| `content/site.ts` | Copy and figures — prices, FAQ, form options, the tax-rate date stamp |
+| `content/site.ts` | Copy and figures — the plans, FAQ, form options, the tax-rate date stamp |
 | `content/legal.ts` | Privacy and terms copy |
 | `components/sections/` | One file per block of the page, in page order |
 | `components/IntakeForm.tsx` | The form, its validation, and the Web3Forms submission |
@@ -66,8 +72,9 @@ any path that was not prerendered.
 
 Editing copy should mostly mean editing `content/site.ts`. Two exceptions to
 keep in sync by hand: the FAQ answers are duplicated into the `FAQPage` JSON-LD
-in `index.html`, and the tier prices appear in the JSON-LD offer catalog there
-too.
+in `index.html`, and the tiers appear again in the JSON-LD offer catalog there
+too. Those `Offer` entries deliberately carry no `price` or `priceCurrency` —
+leave them off.
 
 ## The intake form
 
