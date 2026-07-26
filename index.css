@@ -599,31 +599,17 @@ figure {
 .tier__audience {
   font: 400 13.5px/1.5 var(--sans);
   color: var(--paper-muted);
-  margin: 6px 0 22px;
+  margin: 6px 0 18px;
 }
 
-.tier__price {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-}
-
-.tier__amount {
-  font: 500 40px/1 var(--mono);
-  letter-spacing: -0.02em;
-}
-
-.tier__per {
-  font: 400 13px/1 var(--mono);
-  color: var(--paper-muted);
-}
-
+/* Volume, not price, is what separates the tiers, so it carries the weight the
+   monthly figure used to. */
 .tier__cap {
-  font: 400 11px/1.4 var(--mono);
+  font: 500 11px/1.4 var(--mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--paper-muted);
-  margin: 10px 0 26px;
+  color: var(--paper-ink);
+  margin: 0 0 26px;
 }
 
 .tier__features {
@@ -707,11 +693,6 @@ figure {
 
 .pricing-notes__body strong {
   font-weight: 600;
-  color: var(--paper-ink);
-}
-
-.pricing-notes__body .amount {
-  font: 500 14.5px/1.6 var(--mono);
   color: var(--paper-ink);
 }
 

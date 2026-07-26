@@ -48,6 +48,7 @@ const App: React.FC = () => {
           {/* The old standalone pages are now sections of the one page. */}
           <Route path="/services" element={<Navigate to="/#services" replace />} />
           <Route path="/pricing" element={<Navigate to="/#pricing" replace />} />
+          <Route path="/plans" element={<Navigate to="/#pricing" replace />} />
           <Route path="/process" element={<Navigate to="/#process" replace />} />
           <Route path="/about" element={<Navigate to="/#why" replace />} />
           <Route path="/growth-strategy" element={<Navigate to="/#pricing" replace />} />

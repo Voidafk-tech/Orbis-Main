@@ -8,7 +8,7 @@ The site has one job: get a qualified small-business owner to fill out the intak
 
 The commercial strategy encoded in this design is worth understanding before you build it, because several choices look unusual and are deliberate:
 
-- **Pricing is published, in dollars, above the fold-adjacent scroll.** Most local bookkeeping firms hide pricing behind a "book a discovery call" form. Publishing three fixed tiers is the primary competitive differentiator and must not be moved behind a gate.
+- **The plans are published in full; the figures are not.** Three named plans, each with its transaction cap and an itemised list of what is and is not included, are laid out on the page. What no longer appears anywhere on the site is a dollar amount: no monthly figure, no setup fee, no schema price. Every number reaches the client in the written quote instead. The scope is still ungated — only the pricing is.
 - **There is no "book a call" CTA anywhere.** The single conversion action is an asynchronous intake form. The promise is a written reply within one business day. Do not add a scheduler widget.
 - **The page teaches one thing (GST vs PST) in plain language.** This is both a trust device and the main organic-search asset. Keep it as real, indexable text — never an image.
 - **There are no testimonials and no client logos.** The practice is new. Fabricated or stock social proof would be worse than none. Trust is instead carried by the QuickBooks certification, the platform strip, and specific commitments.
@@ -135,14 +135,14 @@ Ten blocks in this order. The order is the argument: problem, differentiation, o
 4. Why Orbis (four differentiators)
 5. What we handle (six services + platform marquee)
 6. How it works (three steps)
-7. Pricing (three tiers + one-time work + fine print)
+7. Plans (three tiers + one-time work + fine print)
 8. GST vs PST explainer
 9. Trust (certification, industries, commitment)
 10. FAQ
 11. Intake form
 12. Footer
 
-Sections alternate ink and paper backgrounds. On `#F3F4EF`: Why Orbis, Pricing, FAQ. Everything else is on `#0A0C0A`. Two background colors total for the whole page — do not add a third.
+Sections alternate ink and paper backgrounds. On `#F3F4EF`: Why Orbis, Plans, FAQ. Everything else is on `#0A0C0A`. Two background colors total for the whole page — do not add a third.
 
 ---
 
@@ -159,7 +159,7 @@ Sections alternate ink and paper backgrounds. On `#F3F4EF`: Why Orbis, Pricing, 
 **Components, left to right:**
 
 - **Logo lockup** — links to `#top`. A `25×25` SVG plus the wordmark, `gap: 11px`, color `chart`.
-- **Nav** — pushed right with `margin-left: auto`, `gap: 30px`. Links: Services (`#services`), Pricing (`#pricing`), Questions (`#questions`). Archivo 500 `13.5px`, color `slate-light`, hover to `chart`.
+- **Nav** — pushed right with `margin-left: auto`, `gap: 30px`. Links: Services (`#services`), Plans (`#pricing`), Questions (`#questions`). Archivo 500 `13.5px`, color `slate-light`, hover to `chart`.
 - **CTA button** — "Get a plan and a quote", links to `#start`. Background `green`, text `ink`, Archivo 600 `13.5px`, padding `12px 20px`, radius `2px`, `white-space: nowrap`.
 
 **The logo mark** is three circles and should be inlined as SVG, not shipped as a raster image. On a `0 0 40 40` viewBox:
@@ -307,11 +307,11 @@ Each step: a `52×52` circular marker (`border-radius: 50%`, `1px` border in `ha
 
 ---
 
-### 7. Pricing
+### 7. Plans
 
-**Purpose:** the differentiator. Published, fixed, comparable prices.
+**Purpose:** the differentiator. Published, fixed, comparable *scope*. No figures — those come in the quote. The section keeps `id="pricing"` so existing inbound links and the `/pricing` redirect stay good.
 
-**Layout:** background `chart`, text `ink`, `padding: 104px 40px`. Intro (`max-width: 58ch`): eyebrow "Pricing" in `green-dark` → h2 "Priced by how much work there is." → paragraph `17px` in `#414A3F`: "Pick the row that matches your transaction volume. If you are not sure, guess low and we will tell you in the quote."
+**Layout:** background `chart`, text `ink`, `padding: 104px 40px`. Intro (`max-width: 58ch`): eyebrow "Plans" in `green-dark` → h2 "Scoped by how much work there is." → paragraph `17px` in `#414A3F`: "Pick the plan that matches your transaction volume. If you are not sure, guess low and we will tell you in the quote."
 
 **Tier grid:** three columns, `gap: 28px`, `margin-top: 60px`, `align-items: start`.
 
@@ -320,16 +320,14 @@ Each tier: `1px` top border in `hair-paper` and `padding-top: 26px` — **except
 Structure inside each tier:
 
 1. Name row — Archivo 600 `17px`. The middle tier adds a right-aligned "Most chosen" tag: JetBrains Mono 500 `9.5px`, letter-spacing `.14em`, uppercase, `green-dark`, `white-space: nowrap`.
-2. Audience line — Archivo 400 `13.5px`, `#5A6358`, `margin-bottom: 22px`.
-3. Price — JetBrains Mono 500 `40px` with a `13px` "/mo" in `#5A6358`, baseline-aligned, `gap: 6px`.
-4. Volume cap — JetBrains Mono 400 `11px`, letter-spacing `.1em`, uppercase, `#5A6358`, `margin-bottom: 26px`.
-5. Feature list — `list-style: none`, flex column, `gap: 11px`, `1px` top border in `hair-paper-light`, `padding-top: 22px`. Each item is a `16px 1fr` grid with `gap: 11px`. **Included** features use a `·` marker in `green-dark`. **Excluded** features use a `—` marker and the whole row is set in `#6B7469`.
-6. CTA → `#start`, full width, `text-align: center`, `margin-top: 28px`, `padding: 14px`, Archivo 600 `14px`. Outer tiers: transparent with a `1px` `ink` border and `ink` text. Middle tier: filled `green-dark` with `chart` text.
+2. Audience line — Archivo 400 `13.5px`, `#5A6358`, `margin-bottom: 18px`.
+3. Volume cap — JetBrains Mono 500 `11px`, letter-spacing `.1em`, uppercase, `ink`, `margin-bottom: 26px`. With no monthly figure above it, the cap is what separates the tiers, so it is set in the ink colour rather than the muted one.
+4. Feature list — `list-style: none`, flex column, `gap: 11px`, `1px` top border in `hair-paper-light`, `padding-top: 22px`. Each item is a `16px 1fr` grid with `gap: 11px`. **Included** features use a `·` marker in `green-dark`. **Excluded** features use a `—` marker and the whole row is set in `#6B7469`.
+5. CTA → `#start`, full width, `text-align: center`, `margin-top: 28px`, `padding: 14px`, Archivo 600 `14px`. Outer tiers: transparent with a `1px` `ink` border and `ink` text. Middle tier: filled `green-dark` with `chart` text.
 
 | | Foundation | Standard | Complete |
 |---|---|---|---|
 | Audience | Sole proprietors with simple books | Established small businesses | Businesses with staff on payroll |
-| Price | \$299/mo | \$499/mo | \$899/mo |
 | Cap | Up to 50 transactions a month | Up to 150 transactions a month | Up to 400 transactions a month |
 | Features | · Bank and credit card reconciliation<br>· Transaction categorization<br>· Monthly profit and loss, balance sheet<br>— GST and PST filing<br>— Payroll and T4s | · Everything in Foundation<br>· GST filing to the CRA<br>· PST filing to the BC Ministry of Finance<br>· Sales channels reconciled: Shopify, Stripe<br>— Payroll and T4s | · Everything in Standard<br>· Payroll, source deductions, T4s and ROEs<br>· Accounts payable managed<br>· WorkSafeBC reporting<br>· Quarterly review call |
 
@@ -338,15 +336,16 @@ Structure inside each tier:
 | Label | Content |
 |---|---|
 | One-time work | **Catch-up bookkeeping** — Quoted after we see how far behind you are. One number, agreed before any work starts. |
-| One-time work | **Software setup and migration** — \$300 once, on QuickBooks Online, Xero or Sage 50. Chart of accounts, bank feeds, integrations, and one training session. |
-| The fine print | All plans are contract based, with the term set per client. No setup fee, no hourly billing. Prices in CAD, plus GST. Over 400 transactions a month, ask and we will quote it. |
+| One-time work | **Software setup and migration** — Quoted once, on QuickBooks Online, Xero or Sage 50. Chart of accounts, bank feeds, integrations, and one training session. |
+| The fine print | All plans are contract based, with the term set per client. Every plan is a fixed monthly figure, quoted in writing before any work starts, in CAD plus GST. No hourly billing. Over 400 transactions a month, ask and we will quote it. |
 
-Two pricing rules that matter commercially:
+Three pricing rules that matter commercially:
 
-- **Catch-up bookkeeping must never carry a published per-month figure.** An earlier draft said "\$150 per month of backlog" and it was removed deliberately, in the pricing block and in the FAQ. Backlog work varies too much to price sight-unseen.
+- **No dollar figure appears anywhere on the site.** Not in the tiers, not in the one-time work, not in the meta description, not in the `Offer` structured data. Both one-time items read "Quoted"; the monthly plans carry a transaction cap and nothing else. This is a deliberate reversal of the earlier published-price strategy — do not reintroduce a figure without being asked to.
+- **Catch-up bookkeeping must never carry a published per-month figure.** An earlier draft said "\$150 per month of backlog" and it was removed deliberately, here and in the FAQ. Backlog work varies too much to price sight-unseen. The same reasoning now applies to every plan.
 - The fine print must say **contract based with the term set per client**, matching the hero trust strip. It must not say "no contract."
 
-Within the fine print, only the dollar figure is set in JetBrains Mono; the surrounding sentence is Archivo. The fine-print paragraph itself is entirely JetBrains Mono `13px`/`1.6`.
+The fine-print paragraph is entirely JetBrains Mono `13px`/`1.6`. The `.amount` mono span that used to set the one-time figure is gone with it.
 
 ---
 
@@ -412,7 +411,7 @@ Answers: Archivo 400 `15px`/`1.65`, `#4A5348`, `margin: 0 0 24px`, `max-width: 6
 
 Questions and answers, in order:
 
-1. **How much does a bookkeeper cost in Vancouver?** — "Local firms billing hourly are usually \$75 to \$150 an hour, which lands most small businesses between \$600 and \$2,000 in a typical month. Flat monthly plans in this market run roughly \$300 to \$2,000 depending on volume. Ours are \$299, \$499 and \$899, fixed, with no hourly billing."
+1. **How much does a bookkeeper cost in Vancouver?** — "Local firms billing hourly are usually \$75 to \$150 an hour, which lands most small businesses between \$600 and \$2,000 in a typical month. Flat monthly plans in this market run roughly \$300 to \$2,000 depending on volume. We work on a fixed monthly plan rather than hourly billing. Tell us your transaction volume and what you need filed, and your number comes back in writing within one business day."
 2. **What is the difference between a bookkeeper and an accountant, and which do I need?** — "A bookkeeper handles the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. An accountant steps in for corporate tax returns and higher level planning. Most BC small businesses work with a bookkeeper all year and bring in an accountant at year end. We hand your accountant a clean, closed set of books, which makes their bill smaller."
 3. **Do I have to register for PST in BC?** — "It depends on what you sell, not just on how much. Most businesses selling goods in BC need to register. Many service businesses do not. Because PST is separate from GST, plenty of owners register for one and not the other without realising. Tell us what you sell and we will confirm both in your quote."
 4. **What if my books are a year behind?** — "That is the most common reason people get in touch. We look at how far behind you are and quote the catch-up as one number before starting. We clear it, file whatever is outstanding, then start the monthly plan from a clean position. You are not the first and there is no lecture."
@@ -503,7 +502,7 @@ After switching to the success state, the page scrolls to `#start` offset by `-9
 
 Left: the `22px` logo lockup linking to `#top`, with the wordmark at Archivo 700 `13px`, letter-spacing `.24em`. Beside it, JetBrains Mono `12.5px` in `slate`: "Bookkeeping for BC small business · West Vancouver, BC".
 
-Right (`margin-left: auto`, flex, wrap, `gap: 24px`): the email as a mailto link, "Pricing" → `#pricing`, "Questions" → `#questions` (both `13px` in `slate-light`), and "© 2026 Orbis Accounting" in JetBrains Mono `12.5px` in `slate`.
+Right (`margin-left: auto`, flex, wrap, `gap: 24px`): the email as a mailto link, "Plans" → `#pricing`, "Questions" → `#questions` (both `13px` in `slate-light`), and "© 2026 Orbis Accounting" in JetBrains Mono `12.5px` in `slate`.
 
 **Missing and needed before launch:** a privacy policy link. The form collects business and contact data and the copy makes a data-use claim ("used to write your quote and nothing else"), so that claim should be backed by a real page. Flag this to the client.
 

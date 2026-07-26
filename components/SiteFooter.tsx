@@ -19,7 +19,7 @@ const SiteFooter: React.FC = () => (
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
         </li>
         <li>
-          <Anchor to="pricing">Pricing</Anchor>
+          <Anchor to="pricing">Plans</Anchor>
         </li>
         <li>
           <Anchor to="questions">Questions</Anchor>
