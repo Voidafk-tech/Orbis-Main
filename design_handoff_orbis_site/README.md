@@ -8,7 +8,7 @@ The site has one job: get a qualified small-business owner to fill out the intak
 
 The commercial strategy encoded in this design is worth understanding before you build it, because several choices look unusual and are deliberate:
 
-- **The plans are published in full; the figures are not.** Three named plans, each with its transaction cap and an itemised list of what is and is not included, are laid out on the page. What no longer appears anywhere on the site is a dollar amount: no monthly figure, no setup fee, no schema price. Every number reaches the client in the written quote instead. The scope is still ungated — only the pricing is.
+- **The plans are published in full; the figures are not.** Three named plans, each with its transaction cap and an itemised list of what is and is not included, are laid out on the page. What no longer appears is any figure of ours: no monthly amount, no setup fee, no schema price. Every number reaches the client in the written quote instead. The scope is still ungated — only the pricing is. (Dollar figures that are not ours do remain: the competitor market ranges in FAQ 1 and the CRA's \$30,000 GST registration threshold. Both are deliberate.)
 - **There is no "book a call" CTA anywhere.** The single conversion action is an asynchronous intake form. The promise is a written reply within one business day. Do not add a scheduler widget.
 - **The page teaches one thing (GST vs PST) in plain language.** This is both a trust device and the main organic-search asset. Keep it as real, indexable text — never an image.
 - **There are no testimonials and no client logos.** The practice is new. Fabricated or stock social proof would be worse than none. Trust is instead carried by the QuickBooks certification, the platform strip, and specific commitments.
@@ -341,7 +341,7 @@ Structure inside each tier:
 
 Three pricing rules that matter commercially:
 
-- **No dollar figure appears anywhere on the site.** Not in the tiers, not in the one-time work, not in the meta description, not in the `Offer` structured data. Both one-time items read "Quoted"; the monthly plans carry a transaction cap and nothing else. This is a deliberate reversal of the earlier published-price strategy — do not reintroduce a figure without being asked to.
+- **None of our own figures appear anywhere on the site.** Not in the tiers, not in the one-time work, not in the meta description, not in the `Offer` structured data. Both one-time items read "Quoted"; the monthly plans carry a transaction cap and nothing else. This is a deliberate reversal of the earlier published-price strategy — do not reintroduce a figure without being asked to. The competitor ranges in FAQ 1 stay, because they are market context rather than our price.
 - **Catch-up bookkeeping must never carry a published per-month figure.** An earlier draft said "\$150 per month of backlog" and it was removed deliberately, here and in the FAQ. Backlog work varies too much to price sight-unseen. The same reasoning now applies to every plan.
 - The fine print must say **contract based with the term set per client**, matching the hero trust strip. It must not say "no contract."
 

@@ -9,11 +9,13 @@ The page has one job: get a qualified small-business owner to fill in the
 intake form. A few choices look unusual and are deliberate:
 
 - **Plans are published, prices are not.** Three named tiers with their
-  transaction caps and full included/excluded lists are on the page. No dollar
-  figure appears anywhere on the site — not on a tier, not on the one-time work,
+  transaction caps and full included/excluded lists are on the page. None of
+  our own figures appear anywhere — not on a tier, not on the one-time work,
   not in the meta description, not in the structured data. Every number reaches
-  the client in the written quote. Do not reintroduce a figure without being
-  asked to.
+  the client in the written quote. Do not reintroduce one without being asked
+  to. Two sets of dollar figures on the page are deliberate and are *not* ours:
+  the competitor market ranges in FAQ 1, and the CRA's $30,000 GST registration
+  threshold in the GST/PST explainer. Leave both alone.
 - **There is no "book a call" CTA.** The single conversion action is the
   asynchronous intake form, and the promise is a written reply within one
   business day. No scheduler widget.
