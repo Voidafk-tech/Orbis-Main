@@ -9,7 +9,7 @@
  * To switch it on, put the property's GA4 measurement ID below. It looks like
  * `G-XXXXXXXXXX` and is not a secret: it ships in the page either way.
  */
-const MEASUREMENT_ID = '';
+const MEASUREMENT_ID: string = 'G-NWSJH604L3';
 
 type Params = Record<string, string | number | boolean>;
 

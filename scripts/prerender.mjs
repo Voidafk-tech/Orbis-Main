@@ -40,6 +40,7 @@ const {
   AREAS_SERVED,
   BUSINESS,
   CREDENTIALS,
+  PEOPLE,
   SAME_AS,
   CONTACT,
   FAQS,
@@ -78,6 +79,16 @@ const escapeHtml = (value) =>
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+
+/**
+ * Injects `value` at `pattern` without String.replace interpreting it.
+ *
+ * A replacement *string* gives `$$`, `$&`, `` $` `` and `$'` special meaning —
+ * so `$$` silently becomes a single `$`, which is exactly how priceRange: '$$'
+ * shipped as '$'. Copy on this site contains dollar figures, so this is not
+ * hypothetical. A replacer function is passed through verbatim.
+ */
+const inject = (html, pattern, value) => html.replace(pattern, () => value);
 
 /** JSON-LD sits inside a <script>, so a literal `</script>` in copy would end it early. */
 const jsonLd = (data) =>
@@ -175,6 +186,10 @@ const organisation = {
     name: 'Monthly bookkeeping plans',
     itemListElement: [...planOffers, ...oneTimeOffers],
   },
+  // A named, credentialled human is one of the strongest expertise signals a
+  // small professional practice has, and Google's quality guidance leans on it
+  // hard for anything financial.
+  employee: PEOPLE.map((person) => ({ '@type': 'Person', name: person.name })),
   hasCredential: CREDENTIALS.map((credential) => ({
     '@type': 'EducationalOccupationalCredential',
     credentialCategory: 'certification',
@@ -277,7 +292,7 @@ const setTag = (html, { match, replacement, what }) => {
   if (!match.test(html)) {
     throw new Error(`prerender: no ${what} tag to rewrite in dist/index.html`);
   }
-  return html.replace(match, replacement);
+  return inject(html, match, replacement);
 };
 
 const metaPattern = (attr, value) =>
@@ -286,7 +301,7 @@ const metaPattern = (attr, value) =>
 for (const route of ALL_ROUTES) {
   const url = urlFor(route.path);
 
-  let html = template.replace(ROOT_PLACEHOLDER, `<div id="root">${render(route.path)}</div>`);
+  let html = inject(template, ROOT_PLACEHOLDER, `<div id="root">${render(route.path)}</div>`);
 
   const schema = [
     organisation,
@@ -294,9 +309,9 @@ for (const route of ALL_ROUTES) {
     ...(route.crumb ? [breadcrumbFor(route)] : []),
     ...(route.faq ? [faqPageFor(route.faq, route.locale)] : []),
   ];
-  html = html.replace(SCHEMA_PLACEHOLDER, schema.map(jsonLd).join('\n\n    '));
-  html = html.replace(HREFLANG_PLACEHOLDER, hreflangFor(route.englishPath));
-  html = html.replace('<html lang="en-CA">', `<html lang="${LOCALE_TAGS[route.locale]}">`);
+  html = inject(html, SCHEMA_PLACEHOLDER, schema.map(jsonLd).join('\n\n    '));
+  html = inject(html, HREFLANG_PLACEHOLDER, hreflangFor(route.englishPath));
+  html = inject(html, '<html lang="en-CA">', `<html lang="${LOCALE_TAGS[route.locale]}">`);
 
   const title = escapeHtml(route.title);
   const description = escapeHtml(route.description);
@@ -352,11 +367,11 @@ for (const route of ALL_ROUTES) {
  */
 {
   const notFoundPath = '/__not-found__';
-  let html = template.replace(ROOT_PLACEHOLDER, `<div id="root">${render(notFoundPath)}</div>`);
+  let html = inject(template, ROOT_PLACEHOLDER, `<div id="root">${render(notFoundPath)}</div>`);
 
-  html = html.replace(SCHEMA_PLACEHOLDER, jsonLd(organisation));
+  html = inject(html, SCHEMA_PLACEHOLDER, jsonLd(organisation));
   // A 404 has no language alternates of its own.
-  html = html.replace(HREFLANG_PLACEHOLDER, '');
+  html = inject(html, HREFLANG_PLACEHOLDER, '');
   html = setTag(html, {
     what: 'title',
     match: /<title>[\s\S]*?<\/title>/,

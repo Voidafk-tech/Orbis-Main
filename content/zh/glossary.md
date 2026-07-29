@@ -80,10 +80,12 @@ a competent professional talking straight, not as marketing brochure language.
 Avoid 我们竭诚为您服务-style filler; it is exactly the register the English
 deliberately avoids.
 
-## Still to check by a native speaker
+## Review status
 
-This translation was produced by an AI and reviewed for terminology consistency
-and structural integrity, not by a native Simplified-Chinese speaker. Before
-this ships, someone fluent should read it for register and naturalness —
-particularly the hero lines and the FAQ answers, where the English is idiomatic
-and the risk of a stilted rendering is highest.
+The translation was produced by an AI, checked for terminology consistency and
+structural integrity, and then **reviewed by the client** before shipping.
+
+Any future edit to the Chinese copy needs the same treatment: the type system
+guarantees the *shape* matches the English, but nothing guarantees the register
+reads naturally. Add new Chinese copy in batches and have it read before it
+goes live, rather than one string at a time.

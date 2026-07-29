@@ -19,13 +19,13 @@ export const BUSINESS = {
   latitude: 49.329576,
   longitude: -123.139528,
   /**
-   * A band, not a quote — schema.org treats this as free text and Google reads
-   * it as a rough affordability signal, not a price list.
-   *
-   * Note this is the one place the practice's own figures are published. The
-   * rest of the site deliberately carries none; see the README.
+   * Deliberately the coarse `$$` band rather than a figure range. The technical
+   * handoff (§4.2, §5.5, §7) requires that no figure of ours appears anywhere,
+   * including in structured data, and a range in page source is published
+   * whether or not anything renders it. `$$` gives Google the affordability
+   * signal without publishing a number.
    */
-  priceRange: '$499-$1499',
+  priceRange: '$$',
 } as const;
 
 /**
@@ -68,10 +68,26 @@ export const SAME_AS: string[] = [
  * Only add a credential that is actually held and currently valid. Overstating
  * one is worse than listing none, and certifications lapse.
  */
+/**
+ * The people who do the work.
+ *
+ * Named at the client's direction, and exactly as directed: Tina by first name
+ * only, Kevin Feng in full. Do not expand or abbreviate either without asking —
+ * this is published page source and it concerns real people.
+ *
+ * They are emitted as `employee` rather than `founder` because that is true
+ * regardless of who incorporated the practice; switch it if `founder` is
+ * accurate. Certifications stay attached to the practice rather than to a
+ * person, since which of them holds which is not recorded here.
+ */
+export const PEOPLE = [{ name: 'Tina' }, { name: 'Kevin Feng' }] as const;
+
 export const CREDENTIALS = [
   { name: 'QuickBooks Online Advanced ProAdvisor', issuer: 'Intuit' },
   { name: 'Intuit Payroll Certification', issuer: 'Intuit' },
   { name: 'Xero Advisor Certification', issuer: 'Xero' },
+  { name: 'Xero Payroll Certification', issuer: 'Xero' },
+  { name: 'Xero Migration Certification', issuer: 'Xero' },
   { name: 'Sage 50 Certification', issuer: 'Sage' },
 ] as const;
 
