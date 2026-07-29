@@ -72,13 +72,26 @@ for (const [placeholder, what] of [
  */
 const urlFor = (routePath) => (routePath === '/' ? `${SITE}/` : `${SITE}${routePath}/`);
 
-/** Titles and descriptions go straight into markup, so `&` and quotes must not ride in raw. */
+/**
+ * Everything that goes straight into markup goes through here first: titles,
+ * descriptions and URLs all end up inside attributes or element text, so `&`,
+ * angle brackets and both kinds of quote must not ride in raw.
+ *
+ * Single quotes are escaped even though every attribute this file writes is
+ * double-quoted. The cost is nothing and it means the helper stays correct if
+ * a single-quoted attribute is ever added — the failure mode otherwise is an
+ * attribute break that looks like a typo and behaves like an injection.
+ *
+ * The entities produced are all valid XML as well as HTML, `&#39;` numerically
+ * rather than `&apos;` for that reason, so the sitemap can use this too.
+ */
 const escapeHtml = (value) =>
-  value
+  String(value)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 
 /**
  * Injects `value` at `pattern` without String.replace interpreting it.
@@ -234,12 +247,12 @@ const websiteFor = (locale) => ({
 const hreflangFor = (englishPath) => {
   const alternates = ALL_ROUTES.filter((candidate) => candidate.englishPath === englishPath).map(
     (candidate) =>
-      `<link rel="alternate" hreflang="${LOCALE_TAGS[candidate.locale]}" href="${urlFor(candidate.path)}" />`,
+      `<link rel="alternate" hreflang="${LOCALE_TAGS[candidate.locale]}" href="${escapeHtml(urlFor(candidate.path))}" />`,
   );
 
   // x-default is what a searcher gets when no language matches theirs.
   alternates.push(
-    `<link rel="alternate" hreflang="x-default" href="${urlFor(englishPath)}" />`,
+    `<link rel="alternate" hreflang="x-default" href="${escapeHtml(urlFor(englishPath))}" />`,
   );
 
   return alternates.join('\n    ');
@@ -299,7 +312,7 @@ const metaPattern = (attr, value) =>
   new RegExp(`<meta\\s+${attr}="${value}"\\s+content="[^"]*"\\s*/?>`);
 
 for (const route of ALL_ROUTES) {
-  const url = urlFor(route.path);
+  const url = escapeHtml(urlFor(route.path));
 
   let html = inject(template, ROOT_PLACEHOLDER, `<div id="root">${render(route.path)}</div>`);
 
@@ -395,14 +408,24 @@ for (const route of ALL_ROUTES) {
 }
 
 for (const redirect of REDIRECTS) {
-  const target = redirect.to.startsWith('/#')
+  const rawTarget = redirect.to.startsWith('/#')
     ? `${SITE}/${redirect.to.slice(1)}`
     : urlFor(redirect.to);
 
+  // Lands in an attribute, a title and element text, so it is escaped once here
+  // rather than at each of the five places below.
+  const target = escapeHtml(rawTarget);
+
+  // These stubs are written here rather than from dist/index.html, so the
+  // build-time policy injected by the `csp` plugin in vite.config.ts does not
+  // reach them. They load nothing and script nothing, so the strictest possible
+  // policy is also the correct one — it costs a line and keeps the redirect
+  // surface from being the one page on the site with no policy at all.
   const stub = `<!doctype html>
 <html lang="en-CA">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; form-action 'none'" />
     <meta http-equiv="refresh" content="0; url=${target}" />
     <link rel="canonical" href="${target}" />
     <title>Redirecting to ${target}</title>
@@ -433,15 +456,17 @@ ${ALL_ROUTES.map((route) => {
     (candidate) => candidate.englishPath === route.englishPath,
   ).map(
     (candidate) =>
-      `    <xhtml:link rel="alternate" hreflang="${LOCALE_TAGS[candidate.locale]}" href="${urlFor(candidate.path)}" />`,
+      `    <xhtml:link rel="alternate" hreflang="${LOCALE_TAGS[candidate.locale]}" href="${escapeHtml(urlFor(candidate.path))}" />`,
   );
 
+  // Same escaping as the HTML: an unescaped `&` in a URL is not merely unsafe
+  // here, it makes the sitemap ill-formed XML and Google rejects the file.
   return [
     '  <url>',
-    `    <loc>${urlFor(route.path)}</loc>`,
+    `    <loc>${escapeHtml(urlFor(route.path))}</loc>`,
     `    <lastmod>${lastmod}</lastmod>`,
     ...alternates,
-    `    <xhtml:link rel="alternate" hreflang="x-default" href="${urlFor(route.englishPath)}" />`,
+    `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeHtml(urlFor(route.englishPath))}" />`,
     '  </url>',
   ].join('\n');
 }).join('\n')}

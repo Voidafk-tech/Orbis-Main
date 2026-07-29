@@ -23,6 +23,28 @@ const TEXT_DEFAULTS: Values = {
   company_url: '', // honeypot
 };
 
+/**
+ * Caps on what each field will accept, kept here so the numbers are in one
+ * place rather than scattered through the markup.
+ *
+ * Set well above any real answer — the longest business name anyone types is
+ * not close to 120 characters, and `email` is the RFC 5321 maximum — so this
+ * cannot turn a genuine enquiry away. It is a ceiling, not validation.
+ *
+ * Worth being clear about the scope: this constrains the form, not the
+ * endpoint. The Web3Forms access key is public by design, so anything posting
+ * to the endpoint directly skips this and the honeypot both. Capping the
+ * fields is what can be done from here; a captcha on the Web3Forms side is
+ * what would bound the rest.
+ */
+const MAX_LENGTHS: Record<string, number> = {
+  name: 100,
+  email: 254,
+  business: 120,
+  phone: 40,
+  notes: 2000,
+};
+
 type Selects = ReturnType<typeof useCopy>['site']['FORM_SELECTS'];
 
 const initialValues = (selects: Selects): Values => {
@@ -194,6 +216,7 @@ const IntakeForm: React.FC = () => {
                 name="name"
                 type="text"
                 autoComplete="name"
+                maxLength={MAX_LENGTHS.name}
                 placeholder={t.namePlaceholder}
                 value={values.name}
                 onChange={set('name')}
@@ -205,6 +228,7 @@ const IntakeForm: React.FC = () => {
                 name="email"
                 type="email"
                 autoComplete="email"
+                maxLength={MAX_LENGTHS.email}
                 placeholder={t.emailPlaceholder}
                 value={values.email}
                 onChange={set('email')}
@@ -216,6 +240,7 @@ const IntakeForm: React.FC = () => {
                 name="business"
                 type="text"
                 autoComplete="organization"
+                maxLength={MAX_LENGTHS.business}
                 placeholder={t.businessPlaceholder}
                 value={values.business}
                 onChange={set('business')}
@@ -229,6 +254,7 @@ const IntakeForm: React.FC = () => {
                 name="phone"
                 type="tel"
                 autoComplete="tel"
+                maxLength={MAX_LENGTHS.phone}
                 placeholder={t.phonePlaceholder}
                 value={values.phone}
                 onChange={set('phone')}
@@ -269,6 +295,7 @@ const IntakeForm: React.FC = () => {
             <textarea
               name="notes"
               rows={3}
+              maxLength={MAX_LENGTHS.notes}
               placeholder={t.notesPlaceholder}
               value={values.notes}
               onChange={set('notes')}
