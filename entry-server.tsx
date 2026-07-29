@@ -11,3 +11,10 @@ export function render(url: string): string {
     </StaticRouter>,
   );
 }
+
+/**
+ * Re-exported so the prerender step can build the JSON-LD from the same copy
+ * the page renders. The FAQ answers and the plan list used to be duplicated by
+ * hand into index.html; going through here means they cannot drift.
+ */
+export { CONTACT, FAQS, SERVICES, TIERS } from './content/site';

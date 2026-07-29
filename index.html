@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-CA">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -42,8 +42,22 @@
       content="Fixed monthly bookkeeping for BC small business, from West Vancouver. GST and PST both filed. A written plan and a price within one business day."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.orbisaccounting.ca" />
-    <link rel="canonical" href="https://www.orbisaccounting.ca" />
+    <meta property="og:url" content="https://www.orbisaccounting.ca/" />
+    <meta property="og:site_name" content="Orbis Accounting" />
+    <meta property="og:locale" content="en_CA" />
+    <meta property="og:image" content="https://www.orbisaccounting.ca/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Orbis Accounting — bookkeeping for BC small business, West Vancouver"
+    />
+
+    <!-- X/Twitter, LinkedIn and iMessage fall back to the og: tags above for
+         title, description and image, so only the card type is needed here. -->
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="canonical" href="https://www.orbisaccounting.ca/" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -52,145 +66,8 @@
       rel="stylesheet"
     />
 
-    <!-- Structured data: the practice itself. -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "AccountingService",
-        "name": "Orbis Accounting",
-        "@id": "https://www.orbisaccounting.ca",
-        "url": "https://www.orbisaccounting.ca",
-        "logo": "https://www.orbisaccounting.ca/favicon-192.png",
-        "image": "https://www.orbisaccounting.ca/favicon-192.png",
-        "email": "info@orbisaccounting.ca",
-        "telephone": "604-203-7799",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "West Vancouver",
-          "addressRegion": "BC",
-          "addressCountry": "CA"
-        },
-        "areaServed": {
-          "@type": "AdministrativeArea",
-          "name": "British Columbia"
-        },
-        "description": "Bookkeeping for BC small business, based in West Vancouver and serving all of British Columbia. Monthly bookkeeping, GST and PST filing, payroll and T4s, financial reporting, software setup and catch-up work, at a fixed monthly price.",
-        "openingHoursSpecification": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "09:00",
-          "closes": "17:00"
-        },
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Monthly bookkeeping plans",
-          "itemListElement": [
-            {
-              "@type": "Offer",
-              "name": "Foundation",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Foundation monthly bookkeeping",
-                "description": "Bank and credit card reconciliation, transaction categorization, and a monthly profit and loss and balance sheet. Up to 50 transactions a month."
-              }
-            },
-            {
-              "@type": "Offer",
-              "name": "Standard",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Standard monthly bookkeeping",
-                "description": "Everything in Foundation, plus GST filing to the CRA, PST filing to the BC Ministry of Finance, and Shopify and Stripe reconciled. Up to 150 transactions a month."
-              }
-            },
-            {
-              "@type": "Offer",
-              "name": "Complete",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Complete monthly bookkeeping",
-                "description": "Everything in Standard, plus payroll, source deductions, T4s and ROEs, accounts payable, WorkSafeBC reporting and a quarterly review call. Up to 400 transactions a month."
-              }
-            },
-            {
-              "@type": "Offer",
-              "name": "Software setup and migration",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Software setup and migration",
-                "description": "One-time setup on QuickBooks Online, Xero or Sage 50: chart of accounts, bank feeds, integrations and one training session."
-              }
-            }
-          ]
-        }
-      }
-    </script>
-
-    <!-- Structured data: FAQ. Keep in sync with FAQS in content/site.ts. -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How much does a bookkeeper cost in Vancouver?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Local firms billing hourly are usually $75 to $150 an hour, which lands most small businesses between $600 and $2,000 in a typical month. Flat monthly plans in this market run roughly $300 to $2,000 depending on volume. We work on a fixed monthly plan rather than hourly billing. Tell us your transaction volume and what you need filed, and your number comes back in writing within one business day."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is the difference between a bookkeeper and an accountant, and which do I need?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A bookkeeper handles the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. An accountant steps in for corporate tax returns and higher level planning. Most BC small businesses work with a bookkeeper all year and bring in an accountant at year end. We hand your accountant a clean, closed set of books, which makes their bill smaller."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do I have to register for PST in BC?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "It depends on what you sell, not just on how much. Most businesses selling goods in BC need to register. Many service businesses do not. Because PST is separate from GST, plenty of owners register for one and not the other without realising. Tell us what you sell and we will confirm both in your quote."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What if my books are a year behind?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "That is the most common reason people get in touch. We look at how far behind you are and quote the catch-up as one number before starting. We clear it, file whatever is outstanding, then start the monthly plan from a clean position. You are not the first and there is no lecture."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do you work with businesses outside West Vancouver?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. We are based in West Vancouver and work with businesses across British Columbia. Everything is done online, so there is nothing to drop off and no office visit required."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do I need to use QuickBooks Online?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No. We work in QuickBooks Online, Xero and Sage 50, so you can stay on whichever one you already use. If you are on Wave, spreadsheets or nothing at all, we will recommend one and the migration is part of setup. Shopify and Stripe connect to all three, so your sales reconcile automatically."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How do I switch from my current bookkeeper?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "You give us access to your accounting file and we take it from the next month. You do not need to have an awkward conversation first, and you do not need to move anything yourself. If the handover reveals problems in the existing books, we will tell you what we found before doing extra work."
-            }
-          }
-        ]
-      }
-    </script>
+    <!-- Injected per route by scripts/prerender.mjs. -->
+    <!--structured-data-->
   </head>
   <body>
     <div id="root"></div>

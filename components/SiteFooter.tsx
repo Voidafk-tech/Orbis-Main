@@ -24,6 +24,12 @@ const SiteFooter: React.FC = () => (
         <li>
           <Anchor to="questions">Questions</Anchor>
         </li>
+        {/* The standalone intake route is prerendered for ad traffic. Without a
+            link somewhere on the site it is an orphan, reachable only from the
+            sitemap and accruing no internal link equity. */}
+        <li>
+          <Link to="/contact">Get a quote</Link>
+        </li>
         <li>
           <Link to="/privacy-policy">Privacy</Link>
         </li>
