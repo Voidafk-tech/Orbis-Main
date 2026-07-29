@@ -16,13 +16,21 @@ Every page has one job: get a qualified small-business owner to fill in the
 intake form. A few choices look unusual and are deliberate:
 
 - **Plans are published, prices are not.** Three named tiers with their
-  transaction caps and full included/excluded lists are on the page. None of
-  our own figures appear anywhere — not on a tier, not on the one-time work,
-  not in the meta description, not in the structured data. Every number reaches
-  the client in the written quote. Do not reintroduce one without being asked
-  to. Two sets of dollar figures on the page are deliberate and are *not* ours:
-  the competitor market ranges in FAQ 1, and the CRA's $30,000 GST registration
-  threshold in the GST/PST explainer. Leave both alone.
+  transaction caps and full included/excluded lists are on the page. No figure
+  of ours appears on a tier, on the one-time work, in the copy or in the meta
+  description. Every number reaches the client in the written quote. Do not
+  reintroduce one without being asked to. Two sets of dollar figures on the page
+  are deliberate and are *not* ours: the competitor market ranges in FAQ 1, and
+  the CRA's $30,000 GST registration threshold in the GST/PST explainer. Leave
+  both alone.
+
+  **One deliberate exception**, added on request: `priceRange` in
+  `content/business.ts` publishes a band — currently `$499-$1499` — in the
+  structured data. It is a rough affordability signal for local search, not a
+  quote, and it is the only figure of ours anywhere on the site. The per-plan
+  numbers stay out, and the generated `Offer` entries still carry no `price` or
+  `priceCurrency`. Note the band is visible to anyone reading the page source,
+  so treat it as public even though nothing renders it.
 - **There is no "book a call" CTA.** The single conversion action is the
   asynchronous intake form, and the promise is a written reply within one
   business day. No scheduler widget.
@@ -190,12 +198,17 @@ supply, and each one is a real ranking or measurement gap until it lands:
 3. **Google Business Profile** — the single biggest factor for "bookkeeper near
    me" style searches, and entirely outside this repo. Nothing on the site can
    substitute for it.
-4. **Structured-data gaps** — `scripts/prerender.mjs` documents the fields left
-   out for want of real values: `streetAddress` and `postalCode`, `geo`
-   coordinates, `priceRange`, and `sameAs` pointing at the Google Business
-   Profile. `sameAs` is what ties this site and that profile together as one
-   entity in Google's index.
-5. **`aggregateRating`** — only once there are real reviews behind it. Review
-   stars are the largest available lift to click-through rate from search
-   results, but inventing them is both a guidelines violation and against the
-   no-fabricated-proof rule above.
+4. **`sameAs`** — the one structured-data field still empty. It is what ties
+   this site and the Google Business Profile together as one entity in Google's
+   index, and `content/business.ts` has step-by-step instructions for getting
+   the URL. The address, coordinates, price band and service areas are all in
+   place.
+5. **`aggregateRating`** — only once there are real reviews behind it, and only
+   with the reviews shown on the page. Two things make inventing them a bad
+   trade rather than a shortcut: Google has not rendered review stars from a
+   site's own `LocalBusiness` markup since 2019, because self-serving ratings
+   were being gamed — so fabricated numbers buy no stars — and structured data
+   describing reviews that do not exist risks a manual action against the whole
+   property. The stars that do appear next to a local business in search come
+   from the Google Business Profile, which counts real reviews. Asking clients
+   to leave one there is the route to them.

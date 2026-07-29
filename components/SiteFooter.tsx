@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import Anchor from './Anchor';
 import { LogoMark } from './Logo';
 import { CONTACT } from '../content/site';
+import { BUSINESS } from '../content/business';
 
 const SiteFooter: React.FC = () => (
   <footer className="footer">
@@ -44,8 +45,11 @@ const SiteFooter: React.FC = () => (
         listings, and inconsistency between them suppresses local rankings. */}
     <div className="footer__row footer__nap">
       <address className="footer__address">
-        <strong>Orbis Accounting</strong>
-        <span>{CONTACT.locality}</span>
+        <strong>{BUSINESS.name}</strong>
+        <span>{BUSINESS.streetAddress}</span>
+        <span>
+          {BUSINESS.addressLocality}, {BUSINESS.addressRegion} {BUSINESS.postalCode}
+        </span>
         <span>Serving all of British Columbia</span>
       </address>
 

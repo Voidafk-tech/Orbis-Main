@@ -25,22 +25,6 @@ import { pathToFileURL } from 'node:url';
  */
 const SITE = 'https://www.orbisaccounting.ca';
 
-/**
- * Cities named individually in the structured data. Google matches a query's
- * implied location against these, so "serving all of BC" on its own leaves the
- * metro areas we actually want to appear in unstated.
- */
-const AREAS_SERVED = [
-  'West Vancouver',
-  'North Vancouver',
-  'Vancouver',
-  'Burnaby',
-  'Richmond',
-  'Surrey',
-  'Coquitlam',
-  'British Columbia',
-];
-
 const dist = path.resolve('dist');
 const template = await readFile(path.join(dist, 'index.html'), 'utf-8');
 const {
@@ -48,6 +32,10 @@ const {
   ROUTES,
   REDIRECTS,
   NOT_FOUND_META,
+  AGGREGATE_RATING,
+  AREAS_SERVED,
+  BUSINESS,
+  SAME_AS,
   CONTACT,
   FAQS,
   SERVICES,
@@ -129,31 +117,38 @@ const oneTimeOffers = ONE_TIME_WORK.map((heading) => {
 
 /**
  * The practice itself. Emitted on every route — organisation-level markup is
- * expected site-wide, unlike the page-specific FAQPage below.
+ * expected site-wide, unlike the page-specific blocks below.
  *
- * No Offer here carries `price` or `priceCurrency`, matching the rule that none
- * of our own figures are published. Deliberately absent for now, and worth
- * adding once the values exist: `streetAddress` and `postalCode`, `geo`
- * coordinates, `priceRange`, and `sameAs` pointing at the Google Business
- * Profile and directory listings — `sameAs` is how Google ties this site and
- * that profile together as one entity. `aggregateRating` belongs here too, but
- * only once the reviews behind it are real.
+ * The address, coordinates and price band come from content/business.ts, which
+ * is also where the note on keeping them in step with the Google Business
+ * Profile lives. No Offer here carries `price` or `priceCurrency`: `priceRange`
+ * is a deliberate, single exception to the no-published-figures rule, and the
+ * per-plan figures stay out.
  */
 const organisation = {
   '@context': 'https://schema.org',
   '@type': 'AccountingService',
-  name: 'Orbis Accounting',
+  name: BUSINESS.name,
   '@id': `${SITE}/#practice`,
   url: `${SITE}/`,
   logo: `${SITE}/favicon-192.png`,
   image: `${SITE}/og-card.png`,
   email: CONTACT.email,
   telephone: CONTACT.phone,
+  priceRange: BUSINESS.priceRange,
+  currenciesAccepted: 'CAD',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'West Vancouver',
-    addressRegion: 'BC',
-    addressCountry: 'CA',
+    streetAddress: BUSINESS.streetAddress,
+    addressLocality: BUSINESS.addressLocality,
+    addressRegion: BUSINESS.addressRegion,
+    postalCode: BUSINESS.postalCode,
+    addressCountry: BUSINESS.addressCountry,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: BUSINESS.latitude,
+    longitude: BUSINESS.longitude,
   },
   areaServed: AREAS_SERVED.map((name) => ({ '@type': 'AdministrativeArea', name })),
   description:
@@ -169,7 +164,33 @@ const organisation = {
     name: 'Monthly bookkeeping plans',
     itemListElement: [...planOffers, ...oneTimeOffers],
   },
+  // Both are omitted entirely rather than emitted empty: a `sameAs: []` or a
+  // zero-count rating is a worse signal than saying nothing.
+  ...(SAME_AS.length > 0 ? { sameAs: SAME_AS } : {}),
+  ...(AGGREGATE_RATING
+    ? {
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: AGGREGATE_RATING.ratingValue,
+          reviewCount: AGGREGATE_RATING.reviewCount,
+        },
+      }
+    : {}),
 };
+
+/**
+ * The trail Google prints in place of the raw URL under a search result. The
+ * hierarchy is flat — every page hangs directly off the home page — so this is
+ * always two steps, and the home page itself gets none.
+ */
+const breadcrumbFor = (route) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+    { '@type': 'ListItem', position: 2, name: route.crumb, item: urlFor(route.path) },
+  ],
+});
 
 const faqPage = {
   '@context': 'https://schema.org',
@@ -200,7 +221,11 @@ for (const route of ROUTES) {
 
   let html = template.replace(ROOT_PLACEHOLDER, `<div id="root">${render(route.path)}</div>`);
 
-  const schema = [organisation, ...(route.faq ? [faqPage] : [])];
+  const schema = [
+    organisation,
+    ...(route.crumb ? [breadcrumbFor(route)] : []),
+    ...(route.faq ? [faqPage] : []),
+  ];
   html = html.replace(SCHEMA_PLACEHOLDER, schema.map(jsonLd).join('\n\n    '));
 
   const title = escapeHtml(route.title);

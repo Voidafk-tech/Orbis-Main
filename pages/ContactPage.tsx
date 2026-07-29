@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import Intake from '../components/sections/Intake';
 import { CONTACT_EXPECT, CONTACT_STEPS } from '../content/pages';
 import { CONTACT } from '../content/site';
+import { BUSINESS } from '../content/business';
 import { revealDelay } from '../components/useScrollReveal';
 
 /**
@@ -82,9 +83,16 @@ const ContactPage: React.FC = () => (
 
         <div className="reveal" style={revealDelay(180)}>
           <p className="eyebrow intro__eyebrow">Where we work</p>
+          {/* The visible address has to match the structured data and the Google
+              Business Profile character for character — see content/business.ts. */}
+          <address className="contact-detail__p contact-address">
+            {BUSINESS.streetAddress}
+            <br />
+            {BUSINESS.addressLocality}, {BUSINESS.addressRegion} {BUSINESS.postalCode}
+          </address>
           <p className="contact-detail__p">
-            Based in West Vancouver, BC, working with businesses across British Columbia.
-            Everything is done online — there is nothing to drop off and no office visit required.
+            We work with businesses across British Columbia and everything is done online — there
+            is nothing to drop off and no office visit required.
           </p>
           <p className="contact-detail__p">
             <Link to="/services">What we handle</Link> ·{' '}

@@ -21,6 +21,12 @@ export interface RouteMeta {
   changefreq: 'monthly' | 'yearly';
   /** True only where the page actually renders the FAQ; drives the FAQPage JSON-LD. */
   faq?: boolean;
+  /**
+   * Short label for the BreadcrumbList JSON-LD, which is what Google shows in
+   * place of the raw URL under a search result. Omitted on the home page, which
+   * is the trail's root rather than a step in it.
+   */
+  crumb?: string;
 }
 
 export const ROUTES: RouteMeta[] = [
@@ -40,6 +46,7 @@ export const ROUTES: RouteMeta[] = [
       'Monthly bookkeeping, GST and PST filing, payroll and T4s, reporting, software setup and catch-up work for BC small business, at a fixed monthly price.',
     priority: '0.9',
     changefreq: 'monthly',
+    crumb: 'Services',
   },
   {
     path: '/pricing',
@@ -48,6 +55,7 @@ export const ROUTES: RouteMeta[] = [
       'What a bookkeeper costs in BC, what moves the number, and how our fixed monthly plans are scoped. A written quote within one business day, and no hourly billing.',
     priority: '0.9',
     changefreq: 'monthly',
+    crumb: 'Plans and pricing',
   },
   {
     path: '/contact',
@@ -56,6 +64,7 @@ export const ROUTES: RouteMeta[] = [
       'Tell us where your books stand and get a written plan and a fixed monthly price within one business day. No sales call, no obligation.',
     priority: '0.9',
     changefreq: 'monthly',
+    crumb: 'Contact',
   },
   {
     path: '/privacy-policy',
@@ -63,6 +72,7 @@ export const ROUTES: RouteMeta[] = [
     description: 'How Orbis Accounting collects, uses and protects your information.',
     priority: '0.2',
     changefreq: 'yearly',
+    crumb: 'Privacy policy',
   },
   {
     path: '/terms-of-service',
@@ -70,6 +80,7 @@ export const ROUTES: RouteMeta[] = [
     description: 'The terms that apply to bookkeeping engagements with Orbis Accounting.',
     priority: '0.2',
     changefreq: 'yearly',
+    crumb: 'Terms of service',
   },
 ];
 

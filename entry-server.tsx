@@ -19,3 +19,4 @@ export function render(url: string): string {
  */
 export { CONTACT, FAQS, SERVICES, TIERS } from './content/site';
 export { ROUTES, REDIRECTS, NOT_FOUND_META } from './content/routes';
+export { AGGREGATE_RATING, AREAS_SERVED, BUSINESS, SAME_AS } from './content/business';
