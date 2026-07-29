@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { PLATFORMS, SERVICES } from '../../content/site';
 import { revealDelay } from '../useScrollReveal';
 
@@ -30,6 +31,9 @@ const Services: React.FC = () => (
       <div className="reveal" style={{ maxWidth: '56ch' }}>
         <p className="eyebrow intro__eyebrow">What we handle</p>
         <h2 className="h2">Six things, off your desk.</h2>
+        <p className="lede intro__p">
+          <Link to="/services">What each of these actually involves →</Link>
+        </p>
       </div>
 
       <div className="grid services">

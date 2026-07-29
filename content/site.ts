@@ -2,8 +2,8 @@
  * Single source of truth for the site's copy and figures.
  *
  * Anything a non-developer is likely to want changed lives here: the plans, the
- * tax-rate date stamp, FAQ answers, form options. Keep the FAQ list in sync
- * with the FAQPage JSON-LD in index.html.
+ * tax-rate date stamp, FAQ answers, form options. The JSON-LD is generated from
+ * this file at build time, so editing here updates the structured data too.
  *
  * No plan figures are published on the site. Every number reaches the client in
  * the written quote instead, so nothing here should carry a monthly amount.
@@ -202,7 +202,7 @@ export const INDUSTRIES_SERVED = [
   'Import and distribution',
 ] as const;
 
-/** Keep in sync with the FAQPage JSON-LD block in index.html. */
+/** Also the source of the FAQPage JSON-LD, built in scripts/prerender.mjs. */
 export const FAQS = [
   {
     q: 'How much does a bookkeeper cost in Vancouver?',
