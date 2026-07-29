@@ -175,9 +175,18 @@ supply, and each one is a real ranking or measurement gap until it lands:
 1. **Google Search Console** — verify the property, submit
    `https://www.orbisaccounting.ca/sitemap.xml`. Until then there is no data on
    which queries the site appears for, and indexing problems are invisible.
-2. **Analytics** — nothing is installed. The site has no measurement of form
-   submissions, phone taps or email clicks, so there is no way to tell which
-   pages produce enquiries.
+2. **Analytics** — wired but switched off. `components/analytics.ts` sends a
+   `page_view` on every route change, `generate_lead` when the intake form
+   succeeds, and `click_phone` / `click_email` from a delegated listener that
+   catches those links anywhere on the site. All of it is inert until
+   `MEASUREMENT_ID` in that file is set to the GA4 property's ID, and no script
+   is loaded until then — a half-configured tag is worse than none, because it
+   looks like it is recording when it is not.
+
+   Switching it on means switching on the **Website analytics** section of the
+   privacy policy in `content/legal.ts` at the same time. That section describes
+   collection that does not happen while the ID is blank, so the two belong in
+   the same change in both directions.
 3. **Google Business Profile** — the single biggest factor for "bookkeeper near
    me" style searches, and entirely outside this repo. Nothing on the site can
    substitute for it.

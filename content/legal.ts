@@ -13,7 +13,7 @@ export interface LegalPage {
 
 export const PRIVACY: LegalPage = {
   title: 'Privacy Policy',
-  lastUpdated: 'Last updated: January 2024',
+  lastUpdated: 'Last updated: July 2026',
   sections: [
     {
       h: 'Information collection',
@@ -22,6 +22,12 @@ export const PRIVACY: LegalPage = {
     {
       h: 'Enquiries through this website',
       p: 'What you send through the form on this site is used to write your quote and to reply to you. It is not added to a mailing list and it is not sold or shared for marketing.',
+    },
+    {
+      // Accurate only while MEASUREMENT_ID in components/analytics.ts is set.
+      // The two are meant to be switched on and off together.
+      h: 'Website analytics',
+      p: 'We use Google Analytics to see which pages people visit and which of them lead to an enquiry, so we know what is worth keeping on the site. It records pages viewed, whether the enquiry form was submitted, and whether the phone or email link was tapped, along with the general information a browser sends such as approximate location, device type and referring site. It is not used to identify you personally, and what you type into the enquiry form is never sent to it. If you would rather not be counted, any browser-level tracking blocker will stop it.',
     },
     {
       h: 'Data protection',

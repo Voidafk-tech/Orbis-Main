@@ -135,3 +135,45 @@ export const PRICING_PRINCIPLES = [
     p: 'Engagements run on a contract with the term agreed up front. Every figure is in CAD plus GST.',
   },
 ];
+
+/**
+ * Copy for the standalone /contact route.
+ *
+ * The page used to be the intake form and almost nothing else, which is thin
+ * enough that Google will treat it as a soft 404 — the same verdict the page
+ * was already getting for an unrelated reason. It also has to work as an
+ * ordinary contact page for someone searching the practice by name, which
+ * means the hours, the service area and what happens next all belong here.
+ */
+export const CONTACT_STEPS = [
+  {
+    n: '1',
+    h: 'You send the form',
+    p: 'Ten short questions, about three minutes. Nothing you answer commits you to anything, and a rough answer is fine — "not sure" is a valid response to most of it.',
+  },
+  {
+    n: '2',
+    h: 'We read it properly',
+    p: 'We look at your transaction volume, what needs filing, which software you are on and how far behind the books are. If something in your answers changes the scope, we ask before quoting rather than guessing.',
+  },
+  {
+    n: '3',
+    h: 'You get a plan and a price',
+    p: 'Within one business day, in writing: what we would do each month and the fixed monthly figure for it. If catch-up work is needed, that is quoted separately as its own number. Nothing gets set up until you say yes.',
+  },
+] as const;
+
+export const CONTACT_EXPECT = [
+  {
+    h: 'No sales call',
+    p: 'There is no scheduler on this site on purpose. You get a written answer you can read on your own time and compare against anyone else you are talking to.',
+  },
+  {
+    h: 'A real answer, including no',
+    p: 'If we are not the right fit for your business, we say so in that first reply rather than booking a call to tell you.',
+  },
+  {
+    h: 'Nothing added to a list',
+    p: 'What you send is used to write your quote and to reply to you. It is not added to a mailing list and it is not sold or shared for marketing.',
+  },
+] as const;

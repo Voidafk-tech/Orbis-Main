@@ -1581,3 +1581,57 @@ figure {
     margin-top: 34px;
   }
 }
+
+/* ---------- Contact page -------------------------------------------------- */
+
+/* The bulleted variant carries a marker column; these rows have no bullet. */
+.why-row--plain {
+  grid-template-columns: 1fr;
+}
+
+.contact-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 44px;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.contact-list a {
+  font: 400 19px/1.4 var(--sans);
+}
+
+.contact-detail__p {
+  font: 400 15px/1.65 var(--sans);
+  color: var(--slate-light);
+  max-width: 40ch;
+}
+
+.contact-detail__p + .contact-detail__p {
+  margin-top: 14px;
+}
+
+@media (max-width: 1060px) {
+  .contact-details {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .contact-details {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+}

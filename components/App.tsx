@@ -11,6 +11,7 @@ import LegalPage from '../pages/LegalPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import { PRIVACY, TERMS } from '../content/legal';
 import { ROUTES, NOT_FOUND_META } from '../content/routes';
+import { trackPageView } from './analytics';
 
 /** Same list the prerender step reads, so a tab title cannot disagree with a search result. */
 const TITLES: Record<string, string> = Object.fromEntries(
@@ -31,7 +32,11 @@ const App: React.FC = () => {
   useScrollReveal(location.pathname);
 
   useEffect(() => {
-    document.title = TITLES[routeKey(location.pathname)] ?? NOT_FOUND_META.title;
+    const title = TITLES[routeKey(location.pathname)] ?? NOT_FOUND_META.title;
+    document.title = title;
+    // GA4's automatic page_view only fires on a full load, so client-side
+    // route changes would otherwise be invisible.
+    trackPageView(location.pathname, title);
   }, [location.pathname]);
 
   // Anchors arriving from another route need scrolling by hand; plain

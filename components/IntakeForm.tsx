@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { LogoMark } from './Logo';
 import { CONTACT, FORM_SELECTS } from '../content/site';
+import { EVENTS, trackEvent } from './analytics';
 
 /**
  * Web3Forms delivers the submission straight to the practice inbox.
@@ -122,8 +123,17 @@ const IntakeForm: React.FC = () => {
       if (!response.ok || !result?.success) {
         // Keep everything they typed — do not clear the form.
         setErr(`That did not send. Try again, or email ${CONTACT.email} directly.`);
+        trackEvent(EVENTS.formError, { reason: 'rejected' });
         return;
       }
+
+      // The one action on the site that is worth measuring.
+      trackEvent(EVENTS.lead, {
+        volume: values.volume,
+        software: values.software,
+        behind: values.behind,
+        industry: values.industry,
+      });
 
       setValues(initialValues());
       setErr('');
@@ -137,6 +147,7 @@ const IntakeForm: React.FC = () => {
       }, 40);
     } catch {
       setErr(`That did not send. Try again, or email ${CONTACT.email} directly.`);
+      trackEvent(EVENTS.formError, { reason: 'network' });
     } finally {
       setSending(false);
     }
