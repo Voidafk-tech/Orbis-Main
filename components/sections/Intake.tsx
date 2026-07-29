@@ -1,6 +1,6 @@
 import React from 'react';
 import IntakeForm from '../IntakeForm';
-import { CONTACT } from '../../content/site';
+import { useCopy } from '../LocaleContext';
 
 interface IntakeProps {
   /** The standalone contact route needs this heading to be the page h1. */
@@ -8,31 +8,32 @@ interface IntakeProps {
 }
 
 const Intake: React.FC<IntakeProps> = ({ headingLevel = 'h2' }) => {
+  const copy = useCopy();
+  const { intake } = copy.ui;
+  const { CONTACT } = copy.site;
   const Heading = headingLevel;
 
   return (
     <section className="intake" id="start">
       <div className="inner split split--intake">
         <div className="reveal">
-          <p className="eyebrow intro__eyebrow">Get a plan and a quote</p>
+          <p className="eyebrow intro__eyebrow">{intake.eyebrow}</p>
           <Heading className="h2 h2--intake">
-            Tell us where things
+            {intake.headline}
             <br />
-            actually stand.
+            {intake.headlineSecond}
           </Heading>
-          <p className="intake__p">
-            About three minutes. No sales call, and nothing gets set up until you say yes.
-          </p>
+          <p className="intake__p">{intake.p}</p>
 
           <div className="intake__contact">
             <div>
-              <p className="micro intake__contact-label">Or email us directly</p>
+              <p className="micro intake__contact-label">{intake.emailLabel}</p>
               <a className="intake__email" href={`mailto:${CONTACT.email}`}>
                 {CONTACT.email}
               </a>
             </div>
             <div>
-              <p className="micro intake__contact-label">Phone</p>
+              <p className="micro intake__contact-label">{intake.phoneLabel}</p>
               <a className="intake__phone" href={CONTACT.phoneHref}>
                 {CONTACT.phone}
               </a>

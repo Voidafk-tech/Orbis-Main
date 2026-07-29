@@ -6,23 +6,40 @@ design in `design_handoff_orbis_site` (React + Vite, plain CSS with design
 tokens, no UI framework).
 
 The home page carries the whole argument end to end and is where most visitors
-convert. `/services` and `/pricing` are separate pages rather than sections of
-it, because they are the URLs people search for and link to, and because one
-page cannot rank for a portfolio of queries. Each goes deeper than the matching
-home-page section rather than repeating it — two URLs carrying the same copy
-compete with each other instead of ranking.
+convert. `/services`, `/pricing`, `/remote-bookkeeping`, `/gst-pst-bc` and `/catch-up-bookkeeping` are separate pages
+rather than sections of it, because they are the URLs people search for and link
+to, and because one page cannot rank for a portfolio of queries. Each goes
+deeper than the matching home-page section rather than repeating it — two URLs
+carrying the same copy compete with each other instead of ranking.
+
+`/remote-bookkeeping` is the odd one out and worth understanding before editing.
+Queries like "bookkeeping near me" return a local pack, where ranking is decided
+mostly by proximity and by the Google Business Profile — the site can only
+influence them. "Remote bookkeeping" and "virtual bookkeeping" return no local
+pack at all, so that page competes on its own merits and its reach is not capped
+by where the practice sits. It answers *how* the work happens with nobody
+dropping anything off, which is the question behind the query; `/services`
+covers what gets done.
 
 Every page has one job: get a qualified small-business owner to fill in the
 intake form. A few choices look unusual and are deliberate:
 
 - **Plans are published, prices are not.** Three named tiers with their
-  transaction caps and full included/excluded lists are on the page. None of
-  our own figures appear anywhere — not on a tier, not on the one-time work,
-  not in the meta description, not in the structured data. Every number reaches
-  the client in the written quote. Do not reintroduce one without being asked
-  to. Two sets of dollar figures on the page are deliberate and are *not* ours:
-  the competitor market ranges in FAQ 1, and the CRA's $30,000 GST registration
-  threshold in the GST/PST explainer. Leave both alone.
+  transaction caps and full included/excluded lists are on the page. No figure
+  of ours appears on a tier, on the one-time work, in the copy or in the meta
+  description. Every number reaches the client in the written quote. Do not
+  reintroduce one without being asked to. Two sets of dollar figures on the page
+  are deliberate and are *not* ours: the competitor market ranges in FAQ 1, and
+  the CRA's $30,000 GST registration threshold in the GST/PST explainer. Leave
+  both alone.
+
+  **One deliberate exception**, added on request: `priceRange` in
+  `content/business.ts` publishes a band — currently `$499-$1499` — in the
+  structured data. It is a rough affordability signal for local search, not a
+  quote, and it is the only figure of ours anywhere on the site. The per-plan
+  numbers stay out, and the generated `Offer` entries still carry no `price` or
+  `priceCurrency`. Note the band is visible to anyone reading the page source,
+  so treat it as public even though nothing renders it.
 - **There is no "book a call" CTA.** The single conversion action is the
   asynchronous intake form, and the promise is a written reply within one
   business day. No scheduler widget.
@@ -32,6 +49,51 @@ intake form. A few choices look unusual and are deliberate:
   strip and the plans fine print. Never "no contract".
 - **No testimonials, client logos or counts.** The practice is new; invented
   social proof would be worse than none.
+
+## Two languages
+
+English lives at `/`, Simplified Chinese at `/zh/`. Prefixed URLs rather than an
+in-place text swap: a client-side toggle would leave the Chinese copy on the
+same URL as the English, where Google would never index it and nobody could
+share a link to it.
+
+Both languages render **the same components**. The words come from a locale
+bundle, not a parallel set of pages, so a layout fix lands in both at once and
+the two cannot drift apart visually.
+
+```
+content/ui.ts        chrome and page furniture      content/zh/ui.ts
+content/site.ts      home-page copy, plans, FAQ     content/zh/site.ts
+content/pages.ts     the standalone pages           content/zh/pages.ts
+content/legal.ts     privacy and terms              content/zh/legal.ts
+content/copy.ts      resolves a bundle per locale
+```
+
+Every Chinese module is typed as `Widen<typeof En>` — see `content/i18n.ts`. The
+English copy is declared `as const`, so its type is a tuple of string literals
+that no translation could satisfy; `Widen` relaxes the values to `string` while
+keeping every key, every level of nesting and every optional marker. The effect
+is that **a translation that drops a field, misspells a key or changes a nested
+shape fails the build**, rather than rendering `undefined` on a page nobody
+checked. `content/copy.ts` applies the same check at module level, so a
+translation file that forgets an export fails too.
+
+`content/zh/glossary.md` records the terminology decisions — the BC place-name
+conventions (卑诗省, not 不列颠哥伦比亚省), the rule that tax terms carry the
+English abbreviation in brackets, and what is deliberately left in English.
+Read it before editing the Chinese copy.
+
+A few things are deliberately *not* translated: the street address, the phone
+number, product names, and the service-area list, which uses the same labels as
+the structured data. The intake form shows Chinese labels but submits English
+values, so an enquiry from a Chinese-speaking visitor still arrives readable.
+
+The English legal pages govern; the Chinese ones carry a line saying so.
+
+CJK glyphs come from the system stack, not a webfont. Latin characters in
+Chinese pages still render in the brand faces — browsers fall back per glyph.
+Shipping a webfont with a full CJK character set would put megabytes on the
+critical path and fail LCP on mobile on its own.
 
 ## Run locally
 
@@ -68,12 +130,32 @@ type. GitHub Pages cannot issue a 301 and a client-side redirect only runs after
 a 404 has already been served, so each one is written out as a stub carrying a
 canonical to its destination and a zero-delay meta refresh.
 
+One thing `npm run preview` does not reproduce: for an unknown path it serves
+`index.html` with a 200, where GitHub Pages serves `404.html` with a real 404.
+Locally that shows up as the home page's markup hydrating into the 404
+component, which logs a hydration warning. It does not happen in production —
+check a deployed URL, not the preview server, when testing 404 behaviour.
+
 GitHub Actions publishes `dist/` to GitHub Pages on every push to `main`
 (`.github/workflows/deploy.yml`). `dist/404.html` is the app's own 404 page,
 rendered through the same layout, and GitHub Pages serves it with a real 404
 status for any path that was not prerendered. It replaced a redirect script that
 bounced unknown URLs to the home page — that made every dead link a soft 404,
 which Google reports as an error and which hides genuinely broken links.
+
+### GitHub Pages constraints
+
+Worth knowing before proposing anything that assumes a server:
+
+- **No server-side redirects.** A URL change needs a prerendered stub carrying a
+  canonical and a meta refresh (see `REDIRECTS`), which passes less signal than a
+  301. Choose URLs carefully the first time; changing them later is expensive.
+- **No custom response headers.** `Cache-Control` cannot be tuned. Vite's content
+  hashing covers the bundles; the files in `public/` are served unhashed, which
+  is why the font filenames are stable and safe to preload.
+- **`404.html` returns a real 404 status**, and prerendered routes return 200.
+  Verify that on the deployed site, not against `npm run preview`, which serves
+  `index.html` with a 200 for unknown paths.
 
 ### The canonical hostname
 
@@ -94,9 +176,10 @@ afterwards.
 | Path | What it is |
 |---|---|
 | `index.css` | The whole design system: tokens, components, responsive rules |
-| `content/routes.ts` | Every route with its title, description and sitemap hints — read by both the app and the prerender step |
+| `content/routes.ts` | Every route with its title, description, breadcrumb label and sitemap hints — read by both the app and the prerender step |
 | `content/site.ts` | Copy and figures — the plans, FAQ, form options, the tax-rate date stamp |
-| `content/pages.ts` | Copy for the `/services` and `/pricing` pages |
+| `content/pages.ts` | Copy for the `/services`, `/pricing`, `/contact` and `/remote-bookkeeping` pages |
+| `content/business.ts` | Address, coordinates, service areas and price band — must match the Google Business Profile |
 | `content/legal.ts` | Privacy and terms copy |
 | `components/sections/` | One file per block of the home page, in page order |
 | `pages/` | One file per route |
@@ -112,9 +195,34 @@ FAQ answers and the plan list can no longer drift out of sync with the page.
 The generated `Offer` entries deliberately carry no `price` or `priceCurrency`
 — keep it that way.
 
-The `FAQPage` block is only emitted on routes flagged `faq: true` in `ROUTES`.
-Structured data describing content the visitor cannot see is a guidelines
-violation, so it must not go on a route that does not render the FAQ.
+There is more than one FAQ: the home page answers the questions everyone asks,
+`/remote-bookkeeping` answers the ones remote raises. A route names its set with
+`faq: 'home' | 'remote'`, and the prerender step throws on a name it does not
+recognise. Set it only on a route that actually renders those questions —
+structured data describing content the visitor cannot see is a guidelines
+violation.
+
+## Fonts
+
+The three families are self-hosted in `public/fonts/`, Latin subset only, and
+declared in the generated `fonts.css` which `index.css` imports. Vite inlines
+that import into the bundled stylesheet, so it costs no extra request.
+
+They used to load from `fonts.googleapis.com`, which put a render-blocking
+stylesheet plus DNS and TLS to a second origin on the critical path before any
+glyph could paint — the most expensive thing on the page for LCP, on a design
+that is almost entirely type.
+
+```bash
+node scripts/fetch-fonts.mjs   # re-run only to add a weight or a family
+```
+
+Archivo and JetBrains Mono are variable fonts: one file each covers their whole
+weight range, which is why there are four files and not eight. Only
+`instrument-serif-latin.woff2` is preloaded — it sets the `h1`, the largest text
+above the fold. Preloading more would compete with it for bandwidth.
+
+All three families are OFL-1.1; see `public/fonts/OFL-NOTICE.txt`.
 
 ## The link-preview image
 
@@ -169,18 +277,32 @@ supply, and each one is a real ranking or measurement gap until it lands:
 1. **Google Search Console** — verify the property, submit
    `https://www.orbisaccounting.ca/sitemap.xml`. Until then there is no data on
    which queries the site appears for, and indexing problems are invisible.
-2. **Analytics** — nothing is installed. The site has no measurement of form
-   submissions, phone taps or email clicks, so there is no way to tell which
-   pages produce enquiries.
+2. **Analytics** — wired but switched off. `components/analytics.ts` sends a
+   `page_view` on every route change, `generate_lead` when the intake form
+   succeeds, and `click_phone` / `click_email` from a delegated listener that
+   catches those links anywhere on the site. All of it is inert until
+   `MEASUREMENT_ID` in that file is set to the GA4 property's ID, and no script
+   is loaded until then — a half-configured tag is worse than none, because it
+   looks like it is recording when it is not.
+
+   Switching it on means switching on the **Website analytics** section of the
+   privacy policy in `content/legal.ts` at the same time. That section describes
+   collection that does not happen while the ID is blank, so the two belong in
+   the same change in both directions.
 3. **Google Business Profile** — the single biggest factor for "bookkeeper near
    me" style searches, and entirely outside this repo. Nothing on the site can
    substitute for it.
-4. **Structured-data gaps** — `scripts/prerender.mjs` documents the fields left
-   out for want of real values: `streetAddress` and `postalCode`, `geo`
-   coordinates, `priceRange`, and `sameAs` pointing at the Google Business
-   Profile. `sameAs` is what ties this site and that profile together as one
-   entity in Google's index.
-5. **`aggregateRating`** — only once there are real reviews behind it. Review
-   stars are the largest available lift to click-through rate from search
-   results, but inventing them is both a guidelines violation and against the
-   no-fabricated-proof rule above.
+4. **`sameAs`** — the one structured-data field still empty. It is what ties
+   this site and the Google Business Profile together as one entity in Google's
+   index, and `content/business.ts` has step-by-step instructions for getting
+   the URL. The address, coordinates, price band and service areas are all in
+   place.
+5. **`aggregateRating`** — only once there are real reviews behind it, and only
+   with the reviews shown on the page. Two things make inventing them a bad
+   trade rather than a shortcut: Google has not rendered review stars from a
+   site's own `LocalBusiness` markup since 2019, because self-serving ratings
+   were being gamed — so fabricated numbers buy no stars — and structured data
+   describing reviews that do not exist risks a manual action against the whole
+   property. The stars that do appear next to a local business in search come
+   from the Google Business Profile, which counts real reviews. Asking clients
+   to leave one there is the route to them.

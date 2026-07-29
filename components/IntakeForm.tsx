@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { LogoMark } from './Logo';
-import { CONTACT, FORM_SELECTS } from '../content/site';
+import { useCopy } from './LocaleContext';
+import { FORM_SELECTS as EN_FORM_SELECTS } from '../content/site';
+import { EVENTS, trackEvent } from './analytics';
 
 /**
  * Web3Forms delivers the submission straight to the practice inbox.
@@ -21,11 +23,13 @@ const TEXT_DEFAULTS: Values = {
   company_url: '', // honeypot
 };
 
-const initialValues = (): Values => {
+type Selects = ReturnType<typeof useCopy>['site']['FORM_SELECTS'];
+
+const initialValues = (selects: Selects): Values => {
   const values: Values = { ...TEXT_DEFAULTS };
   // Selects show their first option, so every submission carries an answer.
-  FORM_SELECTS.forEach((select) => {
-    values[select.name] = select.options[0];
+  selects.forEach((select) => {
+    values[select.name] = select.options[0].value;
   });
   return values;
 };
@@ -44,7 +48,9 @@ const composeMessage = (v: Values): string => {
   lines.push(`Phone: ${v.phone.trim() || 'Not provided'}`);
   lines.push('');
   lines.push('THEIR BOOKS');
-  FORM_SELECTS.forEach((select) => {
+  // Always the English label. The visitor may have filled this in in Chinese,
+  // but the enquiry is read by the practice, so the email stays in English.
+  EN_FORM_SELECTS.forEach((select) => {
     lines.push(`${select.label}: ${v[select.name]}`);
   });
   lines.push('');
@@ -54,7 +60,10 @@ const composeMessage = (v: Values): string => {
 };
 
 const IntakeForm: React.FC = () => {
-  const [values, setValues] = useState<Values>(initialValues);
+  const copy = useCopy();
+  const { CONTACT, FORM_SELECTS } = copy.site;
+  const t = copy.ui.form;
+  const [values, setValues] = useState<Values>(() => initialValues(FORM_SELECTS));
   const [err, setErr] = useState('');
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
@@ -77,17 +86,17 @@ const IntakeForm: React.FC = () => {
     const email = values.email.trim();
 
     if (!name) {
-      setErr('We need a name to address the reply to.');
+      setErr(t.errorName);
       return;
     }
     if (!business) {
-      setErr('What is the business called? It goes on the quote.');
+      setErr(t.errorBusiness);
       return;
     }
     // Deliberately loose. A strict pattern rejects valid addresses and
     // a rejected address is a lost lead.
     if (!email || email.indexOf('@') < 1 || email.indexOf('.') < 3) {
-      setErr('That email address does not look right. Check for a typo?');
+      setErr(t.errorEmail);
       return;
     }
 
@@ -107,7 +116,7 @@ const IntakeForm: React.FC = () => {
       'What they need help with': values.notes.trim() || 'Not answered',
       message: composeMessage(values),
     };
-    FORM_SELECTS.forEach((select) => {
+    EN_FORM_SELECTS.forEach((select) => {
       payload[select.label] = values[select.name];
     });
 
@@ -121,11 +130,20 @@ const IntakeForm: React.FC = () => {
 
       if (!response.ok || !result?.success) {
         // Keep everything they typed — do not clear the form.
-        setErr(`That did not send. Try again, or email ${CONTACT.email} directly.`);
+        setErr(`${t.errorSendBefore}${CONTACT.email}${t.errorSendAfter}`);
+        trackEvent(EVENTS.formError, { reason: 'rejected' });
         return;
       }
 
-      setValues(initialValues());
+      // The one action on the site that is worth measuring.
+      trackEvent(EVENTS.lead, {
+        volume: values.volume,
+        software: values.software,
+        behind: values.behind,
+        industry: values.industry,
+      });
+
+      setValues(initialValues(FORM_SELECTS));
       setErr('');
       setSent(true);
       window.setTimeout(() => {
@@ -136,7 +154,8 @@ const IntakeForm: React.FC = () => {
         }
       }, 40);
     } catch {
-      setErr(`That did not send. Try again, or email ${CONTACT.email} directly.`);
+      setErr(`${t.errorSendBefore}${CONTACT.email}${t.errorSendAfter}`);
+      trackEvent(EVENTS.formError, { reason: 'network' });
     } finally {
       setSending(false);
     }
@@ -149,14 +168,15 @@ const IntakeForm: React.FC = () => {
           <LogoMark size={34} />
         </div>
         <h3 className="sent__h" tabIndex={-1} ref={confirmationRef}>
-          Got it.
+          {t.sentH}
         </h3>
         <p className="sent__p">
-          You will hear back within one business day with a written plan and a fixed monthly
-          price. It comes from {CONTACT.email}, so add that address if your inbox is strict.
+          {t.sentPBefore}
+          {CONTACT.email}
+          {t.sentPAfter}
         </p>
         <button type="button" className="btn btn--ghost" onClick={() => setSent(false)}>
-          Send another
+          {t.sentAgain}
         </button>
       </div>
     );
@@ -166,50 +186,50 @@ const IntakeForm: React.FC = () => {
     <div className="form-shell">
       <form className="form" onSubmit={handleSubmit} noValidate>
         <fieldset>
-          <legend>Your details</legend>
+          <legend>{t.detailsLegend}</legend>
           <div className="form__grid">
             <label className="field">
-              <span className="field__label">Full name</span>
+              <span className="field__label">{t.name}</span>
               <input
                 name="name"
                 type="text"
                 autoComplete="name"
-                placeholder="Jordan Reyes"
+                placeholder={t.namePlaceholder}
                 value={values.name}
                 onChange={set('name')}
               />
             </label>
             <label className="field">
-              <span className="field__label">Email</span>
+              <span className="field__label">{t.email}</span>
               <input
                 name="email"
                 type="email"
                 autoComplete="email"
-                placeholder="you@company.ca"
+                placeholder={t.emailPlaceholder}
                 value={values.email}
                 onChange={set('email')}
               />
             </label>
             <label className="field">
-              <span className="field__label">Business name</span>
+              <span className="field__label">{t.business}</span>
               <input
                 name="business"
                 type="text"
                 autoComplete="organization"
-                placeholder="Reyes Contracting Ltd."
+                placeholder={t.businessPlaceholder}
                 value={values.business}
                 onChange={set('business')}
               />
             </label>
             <label className="field">
               <span className="field__label">
-                Phone <span className="field__optional">optional</span>
+                {t.phone} <span className="field__optional">{t.phoneOptional}</span>
               </span>
               <input
                 name="phone"
                 type="tel"
                 autoComplete="tel"
-                placeholder="604-555-0134"
+                placeholder={t.phonePlaceholder}
                 value={values.phone}
                 onChange={set('phone')}
               />
@@ -218,7 +238,7 @@ const IntakeForm: React.FC = () => {
         </fieldset>
 
         <fieldset>
-          <legend>Your books</legend>
+          <legend>{t.booksLegend}</legend>
           <div className="form__grid">
             {FORM_SELECTS.map((select) => (
               <label
@@ -232,7 +252,9 @@ const IntakeForm: React.FC = () => {
                   onChange={set(select.name)}
                 >
                   {select.options.map((option) => (
-                    <option key={option}>{option}</option>
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
                   ))}
                 </select>
               </label>
@@ -241,15 +263,13 @@ const IntakeForm: React.FC = () => {
         </fieldset>
 
         <fieldset>
-          <legend>In your words</legend>
+          <legend>{t.wordsLegend}</legend>
           <label className="field">
-            <span className="field__label">
-              What is the main thing you need help with right now
-            </span>
+            <span className="field__label">{t.notes}</span>
             <textarea
               name="notes"
               rows={3}
-              placeholder="Two years of receipts in a box and a GST return I have not filed."
+              placeholder={t.notesPlaceholder}
               value={values.notes}
               onChange={set('notes')}
             />
@@ -274,13 +294,10 @@ const IntakeForm: React.FC = () => {
         </p>
 
         <button type="submit" className="btn btn--primary btn--block form__submit" disabled={sending}>
-          {sending ? 'Sending…' : 'Send my details'}
+          {sending ? t.sending : t.submit}
         </button>
 
-        <p className="form__note">
-          We reply within one business day. Your details are used to write your quote and nothing
-          else. No newsletter, no mailing list.
-        </p>
+        <p className="form__note">{t.note}</p>
       </form>
     </div>
   );

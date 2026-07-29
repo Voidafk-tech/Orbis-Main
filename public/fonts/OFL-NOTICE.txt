@@ -1,0 +1,15 @@
+Fonts in this directory
+=======================
+
+Archivo            https://fonts.google.com/specimen/Archivo
+Instrument Serif   https://fonts.google.com/specimen/Instrument+Serif
+JetBrains Mono     https://fonts.google.com/specimen/JetBrains+Mono
+
+All three are published under the SIL Open Font License, Version 1.1, which
+permits redistribution and self-hosting, including as part of a website.
+
+    https://openfontlicense.org/
+
+The files here are the Latin subset as served by the Google Fonts CDN, fetched
+by scripts/fetch-fonts.mjs. The full licence text and the original copyright
+notices accompany each family at the specimen pages above.

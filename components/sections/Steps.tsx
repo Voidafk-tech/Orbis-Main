@@ -1,28 +1,32 @@
 import React from 'react';
-import { STEPS } from '../../content/site';
+import { useCopy } from '../LocaleContext';
 import { revealDelay } from '../useScrollReveal';
 
-const Steps: React.FC = () => (
-  <section className="sec sec--rule" id="process">
-    <div className="inner">
-      <div className="reveal" style={{ maxWidth: '52ch' }}>
-        <p className="eyebrow intro__eyebrow">How it works</p>
-        <h2 className="h2">Three steps, and no sales call.</h2>
-      </div>
+const Steps: React.FC = () => {
+  const copy = useCopy();
 
-      <div className="grid steps">
-        {STEPS.map((step, i) => (
-          <article key={step.n} className="reveal" style={revealDelay(i * 120)}>
-            <div className="step__marker" aria-hidden="true">
-              {step.n}
-            </div>
-            <h3 className="step__h">{step.h}</h3>
-            <p className="step__p">{step.p}</p>
-          </article>
-        ))}
+  return (
+    <section className="sec sec--rule" id="process">
+      <div className="inner">
+        <div className="reveal" style={{ maxWidth: '52ch' }}>
+          <p className="eyebrow intro__eyebrow">{copy.ui.steps.eyebrow}</p>
+          <h2 className="h2">{copy.ui.steps.h2}</h2>
+        </div>
+
+        <div className="grid steps">
+          {copy.site.STEPS.map((step, i) => (
+            <article key={step.n} className="reveal" style={revealDelay(i * 120)}>
+              <div className="step__marker" aria-hidden="true">
+                {step.n}
+              </div>
+              <h3 className="step__h">{step.h}</h3>
+              <p className="step__p">{step.p}</p>
+            </article>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Steps;

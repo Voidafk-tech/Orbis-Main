@@ -25,41 +25,40 @@ import { pathToFileURL } from 'node:url';
  */
 const SITE = 'https://www.orbisaccounting.ca';
 
-/**
- * Cities named individually in the structured data. Google matches a query's
- * implied location against these, so "serving all of BC" on its own leaves the
- * metro areas we actually want to appear in unstated.
- */
-const AREAS_SERVED = [
-  'West Vancouver',
-  'North Vancouver',
-  'Vancouver',
-  'Burnaby',
-  'Richmond',
-  'Surrey',
-  'Coquitlam',
-  'British Columbia',
-];
+/** Matches content/i18n.ts. Duplicated here only because this file is plain JS. */
+const LOCALE_TAGS = { en: 'en-CA', zh: 'zh-Hans-CA' };
 
 const dist = path.resolve('dist');
 const template = await readFile(path.join(dist, 'index.html'), 'utf-8');
 const {
   render,
+  ALL_ROUTES,
   ROUTES,
   REDIRECTS,
   NOT_FOUND_META,
+  AGGREGATE_RATING,
+  AREAS_SERVED,
+  BUSINESS,
+  CREDENTIALS,
+  PEOPLE,
+  SAME_AS,
   CONTACT,
   FAQS,
+  REMOTE_FAQS,
+  ZH_FAQS,
+  ZH_REMOTE_FAQS,
   SERVICES,
   TIERS,
 } = await import(pathToFileURL(path.resolve('dist-ssr/entry-server.js')).href);
 
 const ROOT_PLACEHOLDER = '<div id="root"></div>';
 const SCHEMA_PLACEHOLDER = '<!--structured-data-->';
+const HREFLANG_PLACEHOLDER = '<!--hreflang-->';
 
 for (const [placeholder, what] of [
   [ROOT_PLACEHOLDER, 'root div'],
   [SCHEMA_PLACEHOLDER, 'structured-data placeholder'],
+  [HREFLANG_PLACEHOLDER, 'hreflang placeholder'],
 ]) {
   if (!template.includes(placeholder)) {
     throw new Error(`prerender: could not find the ${what} in dist/index.html`);
@@ -80,6 +79,16 @@ const escapeHtml = (value) =>
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+
+/**
+ * Injects `value` at `pattern` without String.replace interpreting it.
+ *
+ * A replacement *string* gives `$$`, `$&`, `` $` `` and `$'` special meaning —
+ * so `$$` silently becomes a single `$`, which is exactly how priceRange: '$$'
+ * shipped as '$'. Copy on this site contains dollar figures, so this is not
+ * hypothetical. A replacer function is passed through verbatim.
+ */
+const inject = (html, pattern, value) => html.replace(pattern, () => value);
 
 /** JSON-LD sits inside a <script>, so a literal `</script>` in copy would end it early. */
 const jsonLd = (data) =>
@@ -106,44 +115,64 @@ const planOffers = TIERS.map((tier) => ({
   },
 }));
 
-/** The two pieces of one-time work, taken from the same list the page renders. */
-const oneTimeOffers = SERVICES.filter((service) =>
-  ['Software setup and migration', 'Catch-up bookkeeping'].includes(service.h),
-).map((service) => ({
-  '@type': 'Offer',
-  name: service.h,
-  itemOffered: { '@type': 'Service', name: service.h, description: service.p },
-}));
+/**
+ * The two pieces of one-time work, taken from the same list the page renders.
+ * Matched by heading text, so this throws rather than silently dropping them
+ * from the catalogue if the wording in content/site.ts is edited.
+ */
+const ONE_TIME_WORK = ['Software setup and migration', 'Catch-up bookkeeping'];
+
+const oneTimeOffers = ONE_TIME_WORK.map((heading) => {
+  const service = SERVICES.find((candidate) => candidate.h === heading);
+  if (!service) {
+    throw new Error(
+      `prerender: no service headed "${heading}" in content/site.ts — update ONE_TIME_WORK to match`,
+    );
+  }
+  return {
+    '@type': 'Offer',
+    name: service.h,
+    itemOffered: { '@type': 'Service', name: service.h, description: service.p },
+  };
+});
 
 /**
  * The practice itself. Emitted on every route — organisation-level markup is
- * expected site-wide, unlike the page-specific FAQPage below.
+ * expected site-wide, unlike the page-specific blocks below.
  *
- * No Offer here carries `price` or `priceCurrency`, matching the rule that none
- * of our own figures are published. Deliberately absent for now, and worth
- * adding once the values exist: `streetAddress` and `postalCode`, `geo`
- * coordinates, `priceRange`, and `sameAs` pointing at the Google Business
- * Profile and directory listings — `sameAs` is how Google ties this site and
- * that profile together as one entity. `aggregateRating` belongs here too, but
- * only once the reviews behind it are real.
+ * The address, coordinates and price band come from content/business.ts, which
+ * is also where the note on keeping them in step with the Google Business
+ * Profile lives. No Offer here carries `price` or `priceCurrency`: `priceRange`
+ * is a deliberate, single exception to the no-published-figures rule, and the
+ * per-plan figures stay out.
  */
 const organisation = {
   '@context': 'https://schema.org',
   '@type': 'AccountingService',
-  name: 'Orbis Accounting',
+  name: BUSINESS.name,
   '@id': `${SITE}/#practice`,
   url: `${SITE}/`,
   logo: `${SITE}/favicon-192.png`,
   image: `${SITE}/og-card.png`,
   email: CONTACT.email,
   telephone: CONTACT.phone,
+  priceRange: BUSINESS.priceRange,
+  currenciesAccepted: 'CAD',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'West Vancouver',
-    addressRegion: 'BC',
-    addressCountry: 'CA',
+    streetAddress: BUSINESS.streetAddress,
+    addressLocality: BUSINESS.addressLocality,
+    addressRegion: BUSINESS.addressRegion,
+    postalCode: BUSINESS.postalCode,
+    addressCountry: BUSINESS.addressCountry,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: BUSINESS.latitude,
+    longitude: BUSINESS.longitude,
   },
   areaServed: AREAS_SERVED.map((name) => ({ '@type': 'AdministrativeArea', name })),
+  availableLanguage: LOCALE_TAGS,
   description:
     'Bookkeeping for BC small business, based in West Vancouver and serving all of British Columbia. Monthly bookkeeping, GST and PST filing, payroll and T4s, financial reporting, software setup and catch-up work, at a fixed monthly price.',
   openingHoursSpecification: {
@@ -157,16 +186,102 @@ const organisation = {
     name: 'Monthly bookkeeping plans',
     itemListElement: [...planOffers, ...oneTimeOffers],
   },
+  // A named, credentialled human is one of the strongest expertise signals a
+  // small professional practice has, and Google's quality guidance leans on it
+  // hard for anything financial.
+  employee: PEOPLE.map((person) => ({ '@type': 'Person', name: person.name })),
+  hasCredential: CREDENTIALS.map((credential) => ({
+    '@type': 'EducationalOccupationalCredential',
+    credentialCategory: 'certification',
+    name: credential.name,
+    recognizedBy: { '@type': 'Organization', name: credential.issuer },
+  })),
+  // Both are omitted entirely rather than emitted empty: a `sameAs: []` or a
+  // zero-count rating is a worse signal than saying nothing.
+  ...(SAME_AS.length > 0 ? { sameAs: SAME_AS } : {}),
+  ...(AGGREGATE_RATING
+    ? {
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: AGGREGATE_RATING.ratingValue,
+          reviewCount: AGGREGATE_RATING.reviewCount,
+        },
+      }
+    : {}),
 };
 
-const faqPage = {
+/**
+ * Emitted on the home page only. This is what lets Google show the site name
+ * above a result rather than a bare domain. No `potentialAction` search box:
+ * the site has no search, and claiming one that does not exist is a defect.
+ */
+const websiteFor = (locale) => ({
   '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: FAQS.map((item) => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: { '@type': 'Answer', text: item.a },
-  })),
+  '@type': 'WebSite',
+  '@id': `${SITE}/#website`,
+  url: `${SITE}/`,
+  name: BUSINESS.name,
+  inLanguage: LOCALE_TAGS[locale],
+  publisher: { '@id': `${SITE}/#practice` },
+});
+
+/**
+ * Tells Google the two language versions are translations of one page rather
+ * than duplicates competing with each other, and which to show by default.
+ * Every page in a set must link to every other one *and to itself*, or Google
+ * ignores the whole set.
+ */
+const hreflangFor = (englishPath) => {
+  const alternates = ALL_ROUTES.filter((candidate) => candidate.englishPath === englishPath).map(
+    (candidate) =>
+      `<link rel="alternate" hreflang="${LOCALE_TAGS[candidate.locale]}" href="${urlFor(candidate.path)}" />`,
+  );
+
+  // x-default is what a searcher gets when no language matches theirs.
+  alternates.push(
+    `<link rel="alternate" hreflang="x-default" href="${urlFor(englishPath)}" />`,
+  );
+
+  return alternates.join('\n    ');
+};
+
+/**
+ * The trail Google prints in place of the raw URL under a search result. The
+ * hierarchy is flat — every page hangs directly off the home page — so this is
+ * always two steps, and the home page itself gets none.
+ */
+const breadcrumbFor = (route) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+    { '@type': 'ListItem', position: 2, name: route.crumb, item: urlFor(route.path) },
+  ],
+});
+
+/**
+ * One FAQ set per page that has one. Keyed by the `faq` field on the route, so
+ * a page can only be given questions it actually renders.
+ */
+const FAQ_SETS = {
+  en: { home: FAQS, remote: REMOTE_FAQS },
+  zh: { home: ZH_FAQS, remote: ZH_REMOTE_FAQS },
+};
+
+const faqPageFor = (key, locale) => {
+  const questions = FAQ_SETS[locale]?.[key];
+  if (!questions) {
+    throw new Error(`prerender: no FAQ set named "${key}" — check the route's faq field`);
+  }
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: questions.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  };
 };
 
 /**
@@ -177,19 +292,26 @@ const setTag = (html, { match, replacement, what }) => {
   if (!match.test(html)) {
     throw new Error(`prerender: no ${what} tag to rewrite in dist/index.html`);
   }
-  return html.replace(match, replacement);
+  return inject(html, match, replacement);
 };
 
 const metaPattern = (attr, value) =>
   new RegExp(`<meta\\s+${attr}="${value}"\\s+content="[^"]*"\\s*/?>`);
 
-for (const route of ROUTES) {
+for (const route of ALL_ROUTES) {
   const url = urlFor(route.path);
 
-  let html = template.replace(ROOT_PLACEHOLDER, `<div id="root">${render(route.path)}</div>`);
+  let html = inject(template, ROOT_PLACEHOLDER, `<div id="root">${render(route.path)}</div>`);
 
-  const schema = [organisation, ...(route.faq ? [faqPage] : [])];
-  html = html.replace(SCHEMA_PLACEHOLDER, schema.map(jsonLd).join('\n\n    '));
+  const schema = [
+    organisation,
+    ...(route.englishPath === '/' ? [websiteFor(route.locale)] : []),
+    ...(route.crumb ? [breadcrumbFor(route)] : []),
+    ...(route.faq ? [faqPageFor(route.faq, route.locale)] : []),
+  ];
+  html = inject(html, SCHEMA_PLACEHOLDER, schema.map(jsonLd).join('\n\n    '));
+  html = inject(html, HREFLANG_PLACEHOLDER, hreflangFor(route.englishPath));
+  html = inject(html, '<html lang="en-CA">', `<html lang="${LOCALE_TAGS[route.locale]}">`);
 
   const title = escapeHtml(route.title);
   const description = escapeHtml(route.description);
@@ -245,9 +367,11 @@ for (const route of ROUTES) {
  */
 {
   const notFoundPath = '/__not-found__';
-  let html = template.replace(ROOT_PLACEHOLDER, `<div id="root">${render(notFoundPath)}</div>`);
+  let html = inject(template, ROOT_PLACEHOLDER, `<div id="root">${render(notFoundPath)}</div>`);
 
-  html = html.replace(SCHEMA_PLACEHOLDER, jsonLd(organisation));
+  html = inject(html, SCHEMA_PLACEHOLDER, jsonLd(organisation));
+  // A 404 has no language alternates of its own.
+  html = inject(html, HREFLANG_PLACEHOLDER, '');
   html = setTag(html, {
     what: 'title',
     match: /<title>[\s\S]*?<\/title>/,
@@ -297,18 +421,30 @@ for (const redirect of REDIRECTS) {
 
 const lastmod = new Date().toISOString().slice(0, 10);
 
+/**
+ * Every route in every language, each entry declaring its alternates. The
+ * xhtml:link elements say the same thing the in-page hreflang tags do; Google
+ * accepts either, and having both is the belt-and-braces recommendation.
+ */
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${ROUTES.map((route) =>
-  [
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${ALL_ROUTES.map((route) => {
+  const alternates = ALL_ROUTES.filter(
+    (candidate) => candidate.englishPath === route.englishPath,
+  ).map(
+    (candidate) =>
+      `    <xhtml:link rel="alternate" hreflang="${LOCALE_TAGS[candidate.locale]}" href="${urlFor(candidate.path)}" />`,
+  );
+
+  return [
     '  <url>',
     `    <loc>${urlFor(route.path)}</loc>`,
     `    <lastmod>${lastmod}</lastmod>`,
-    `    <changefreq>${route.changefreq}</changefreq>`,
-    `    <priority>${route.priority}</priority>`,
+    ...alternates,
+    `    <xhtml:link rel="alternate" hreflang="x-default" href="${urlFor(route.englishPath)}" />`,
     '  </url>',
-  ].join('\n'),
-).join('\n')}
+  ].join('\n');
+}).join('\n')}
 </urlset>
 `;
 
