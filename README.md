@@ -50,6 +50,51 @@ intake form. A few choices look unusual and are deliberate:
 - **No testimonials, client logos or counts.** The practice is new; invented
   social proof would be worse than none.
 
+## Two languages
+
+English lives at `/`, Simplified Chinese at `/zh/`. Prefixed URLs rather than an
+in-place text swap: a client-side toggle would leave the Chinese copy on the
+same URL as the English, where Google would never index it and nobody could
+share a link to it.
+
+Both languages render **the same components**. The words come from a locale
+bundle, not a parallel set of pages, so a layout fix lands in both at once and
+the two cannot drift apart visually.
+
+```
+content/ui.ts        chrome and page furniture      content/zh/ui.ts
+content/site.ts      home-page copy, plans, FAQ     content/zh/site.ts
+content/pages.ts     the standalone pages           content/zh/pages.ts
+content/legal.ts     privacy and terms              content/zh/legal.ts
+content/copy.ts      resolves a bundle per locale
+```
+
+Every Chinese module is typed as `Widen<typeof En>` — see `content/i18n.ts`. The
+English copy is declared `as const`, so its type is a tuple of string literals
+that no translation could satisfy; `Widen` relaxes the values to `string` while
+keeping every key, every level of nesting and every optional marker. The effect
+is that **a translation that drops a field, misspells a key or changes a nested
+shape fails the build**, rather than rendering `undefined` on a page nobody
+checked. `content/copy.ts` applies the same check at module level, so a
+translation file that forgets an export fails too.
+
+`content/zh/glossary.md` records the terminology decisions — the BC place-name
+conventions (卑诗省, not 不列颠哥伦比亚省), the rule that tax terms carry the
+English abbreviation in brackets, and what is deliberately left in English.
+Read it before editing the Chinese copy.
+
+A few things are deliberately *not* translated: the street address, the phone
+number, product names, and the service-area list, which uses the same labels as
+the structured data. The intake form shows Chinese labels but submits English
+values, so an enquiry from a Chinese-speaking visitor still arrives readable.
+
+The English legal pages govern; the Chinese ones carry a line saying so.
+
+CJK glyphs come from the system stack, not a webfont. Latin characters in
+Chinese pages still render in the brand faces — browsers fall back per glyph.
+Shipping a webfont with a full CJK character set would put megabytes on the
+critical path and fail LCP on mobile on its own.
+
 ## Run locally
 
 ```bash

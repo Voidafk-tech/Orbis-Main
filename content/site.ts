@@ -239,33 +239,73 @@ export const FAQS = [
   },
 ] as const;
 
-/** Intake form dropdowns. The label is what gets emailed with the submission. */
+/**
+ * Intake form dropdowns.
+ *
+ * `value` is what gets emailed to the practice; `label` is what the visitor
+ * reads. They are identical in English and diverge in Chinese, so an enquiry
+ * from a Chinese-language visitor still arrives in a readable form.
+ */
 export const FORM_SELECTS = [
   {
     name: 'structure',
     label: 'Business structure',
-    options: ['Sole proprietor', 'Incorporated', 'Partnership', 'Not sure'],
+    options: [
+      { value: 'Sole proprietor', label: 'Sole proprietor' },
+      { value: 'Incorporated', label: 'Incorporated' },
+      { value: 'Partnership', label: 'Partnership' },
+      { value: 'Not sure', label: 'Not sure' },
+    ],
   },
   {
     name: 'volume',
     label: 'Transactions a month',
-    options: ['Under 50', '50 to 150', '150 to 400', 'Over 400', 'Not sure'],
+    options: [
+      { value: 'Under 50', label: 'Under 50' },
+      { value: '50 to 150', label: '50 to 150' },
+      { value: '150 to 400', label: '150 to 400' },
+      { value: 'Over 400', label: 'Over 400' },
+      { value: 'Not sure', label: 'Not sure' },
+    ],
   },
-  { name: 'gst', label: 'Registered for GST', options: ['Yes', 'No', 'Not sure'] },
-  { name: 'pst', label: 'Registered for PST', options: ['Yes', 'No', 'Not sure'] },
+  {
+    name: 'gst',
+    label: 'Registered for GST',
+    options: [
+      { value: 'Yes', label: 'Yes' },
+      { value: 'No', label: 'No' },
+      { value: 'Not sure', label: 'Not sure' },
+    ],
+  },
+  {
+    name: 'pst',
+    label: 'Registered for PST',
+    options: [
+      { value: 'Yes', label: 'Yes' },
+      { value: 'No', label: 'No' },
+      { value: 'Not sure', label: 'Not sure' },
+    ],
+  },
   {
     name: 'software',
     label: 'Software you use now',
-    options: ['QuickBooks Online', 'Xero', 'Sage 50', 'Wave', 'Spreadsheets', 'Nothing yet'],
+    options: [
+      { value: 'QuickBooks Online', label: 'QuickBooks Online' },
+      { value: 'Xero', label: 'Xero' },
+      { value: 'Sage 50', label: 'Sage 50' },
+      { value: 'Wave', label: 'Wave' },
+      { value: 'Spreadsheets', label: 'Spreadsheets' },
+      { value: 'Nothing yet', label: 'Nothing yet' },
+    ],
   },
   {
     name: 'behind',
     label: 'How current are the books',
     options: [
-      'Up to date',
-      '1 to 3 months behind',
-      '3 to 12 months behind',
-      'Over a year behind',
+      { value: 'Up to date', label: 'Up to date' },
+      { value: '1 to 3 months behind', label: '1 to 3 months behind' },
+      { value: '3 to 12 months behind', label: '3 to 12 months behind' },
+      { value: 'Over a year behind', label: 'Over a year behind' },
     ],
   },
   {
@@ -274,14 +314,14 @@ export const FORM_SELECTS = [
     fullWidth: true,
     // Deliberately wider than the "who we work with" list on the page.
     options: [
-      'Construction and trades',
-      'Restaurants and food service',
-      'Retail and e-commerce',
-      'Professional services',
-      'Health and wellness',
-      'Real estate',
-      'Import and distribution',
-      'Other',
+      { value: 'Construction and trades', label: 'Construction and trades' },
+      { value: 'Restaurants and food service', label: 'Restaurants and food service' },
+      { value: 'Retail and e-commerce', label: 'Retail and e-commerce' },
+      { value: 'Professional services', label: 'Professional services' },
+      { value: 'Health and wellness', label: 'Health and wellness' },
+      { value: 'Real estate', label: 'Real estate' },
+      { value: 'Import and distribution', label: 'Import and distribution' },
+      { value: 'Other', label: 'Other' },
     ],
   },
 ] as const;

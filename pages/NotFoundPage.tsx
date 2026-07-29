@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { useLocale } from '../components/LocaleContext';
 
 /**
  * Shown for any URL that is not a real route. Deliberately a page rather than a
@@ -10,35 +11,37 @@ import { Link } from 'react-router';
  * were never prerendered, so this component is what a visitor sees after a
  * client-side navigation to a dead link.
  */
-const NotFoundPage: React.FC = () => (
-  <div className="hero">
-    <h1 className="h1">
-      <span className="eyebrow h1__eyebrow">404</span>
-      That page
-      <br />
-      <em>is not here.</em>
-    </h1>
+const NotFoundPage: React.FC = () => {
+  const { copy, path } = useLocale();
+  const t = copy.ui.notFound;
 
-    <p className="hero__sub">
-      The link may be out of date, or the page may have moved. Everything the site has is one of
-      these.
-    </p>
+  return (
+    <div className="hero">
+      <h1 className="h1">
+        <span className="eyebrow h1__eyebrow">{t.eyebrow}</span>
+        {t.headline}
+        <br />
+        <em>{t.headlineEm}</em>
+      </h1>
 
-    <ul className="notfound__links">
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/services">Bookkeeping services</Link>
-      </li>
-      <li>
-        <Link to="/pricing">Plans and pricing</Link>
-      </li>
-      <li>
-        <Link to="/contact">Get a plan and a quote</Link>
-      </li>
-    </ul>
-  </div>
-);
+      <p className="hero__sub">{t.sub}</p>
+
+      <ul className="notfound__links">
+        <li>
+          <Link to={path('/')}>{t.home}</Link>
+        </li>
+        <li>
+          <Link to={path('/services')}>{t.services}</Link>
+        </li>
+        <li>
+          <Link to={path('/pricing')}>{t.pricing}</Link>
+        </li>
+        <li>
+          <Link to={path('/contact')}>{t.contact}</Link>
+        </li>
+      </ul>
+    </div>
+  );
+};
 
 export default NotFoundPage;

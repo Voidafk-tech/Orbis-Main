@@ -1,3 +1,5 @@
+import { LOCALES, localizePath, type Locale } from './i18n';
+
 /**
  * Every route, and the metadata that describes it. One list, read twice:
  *
@@ -10,7 +12,18 @@
  * whose search result says another.
  */
 
+/** Title, description and breadcrumb label for one route in one language. */
+export interface RouteText {
+  /** Aim for under about 60 characters — Google truncates past that. */
+  title: string;
+  /** Aim for about 150 characters. English only; CJK truncates by width, not count. */
+  description: string;
+  /** Short label for the BreadcrumbList JSON-LD. Omitted on the home page. */
+  crumb?: string;
+}
+
 export interface RouteMeta {
+  /** The English path. The Chinese one is this prefixed with /zh. */
   path: string;
   /** Aim for under about 60 characters — Google truncates past that. */
   title: string;
@@ -36,6 +49,8 @@ export interface RouteMeta {
    * is the trail's root rather than a step in it.
    */
   crumb?: string;
+  /** The same three fields in Simplified Chinese, for the /zh/ counterpart. */
+  zh: RouteText;
 }
 
 export const ROUTES: RouteMeta[] = [
@@ -47,6 +62,11 @@ export const ROUTES: RouteMeta[] = [
     priority: '1.0',
     changefreq: 'monthly',
     faq: 'home',
+    zh: {
+      title: '卑诗省小型企业记账服务 | 固定月费 | Orbis',
+      description:
+        '西温哥华的卑诗省小型企业记账服务。GST 与 PST 都代为申报，方案按交易量划分，一个工作日内提供书面报价。',
+    },
   },
   {
     path: '/services',
@@ -56,6 +76,12 @@ export const ROUTES: RouteMeta[] = [
     priority: '0.9',
     changefreq: 'monthly',
     crumb: 'Services',
+    zh: {
+      title: '记账服务：GST、PST、薪资、补做旧账 | Orbis',
+      description:
+        '每月记账、GST 与 PST 申报、薪资与 T4、财务报表、软件设置与补做旧账，服务卑诗省小型企业，固定月费。',
+      crumb: '服务项目',
+    },
   },
   {
     path: '/remote-bookkeeping',
@@ -68,6 +94,12 @@ export const ROUTES: RouteMeta[] = [
     // The page renders its own FAQ, but deliberately carries no FAQPage markup.
     // Google stopped showing FAQ rich results on 7 May 2026, so adding the
     // schema to a new page buys nothing; the questions are there for readers.
+    zh: {
+      title: '远程与线上记账服务 · 全卑诗省 | Orbis',
+      description:
+        '面向卑诗省小型企业的远程记账。没有东西要送来，不必到访办公室——线上如何运作、一个月是什么样子，以及你放弃了什么。',
+      crumb: '远程记账',
+    },
   },
   {
     path: '/pricing',
@@ -77,6 +109,12 @@ export const ROUTES: RouteMeta[] = [
     priority: '0.9',
     changefreq: 'monthly',
     crumb: 'Plans and pricing',
+    zh: {
+      title: '在卑诗省请记账员要多少钱？方案与价格 | Orbis',
+      description:
+        '在卑诗省请记账员的费用、哪些因素会影响价格，以及我们的固定月费方案如何划分。一个工作日内书面报价，不按小时计费。',
+      crumb: '方案与价格',
+    },
   },
   {
     path: '/contact',
@@ -86,6 +124,12 @@ export const ROUTES: RouteMeta[] = [
     priority: '0.9',
     changefreq: 'monthly',
     crumb: 'Contact',
+    zh: {
+      title: '获取方案与报价 | Orbis Accounting',
+      description:
+        '告诉我们你的账目现况，一个工作日内获得书面方案与固定月费。没有销售电话，也没有任何义务。',
+      crumb: '联系我们',
+    },
   },
   {
     path: '/privacy-policy',
@@ -95,6 +139,12 @@ export const ROUTES: RouteMeta[] = [
     priority: '0.2',
     changefreq: 'yearly',
     crumb: 'Privacy policy',
+    zh: {
+      title: '隐私政策 | Orbis Accounting',
+      description:
+        'Orbis Accounting 如何收集、使用和保护你的信息，查询表格如何处理你发送的内容，以及网站分析记录了什么。',
+      crumb: '隐私政策',
+    },
   },
   {
     path: '/terms-of-service',
@@ -104,6 +154,12 @@ export const ROUTES: RouteMeta[] = [
     priority: '0.2',
     changefreq: 'yearly',
     crumb: 'Terms of service',
+    zh: {
+      title: '服务条款 | Orbis Accounting',
+      description:
+        '与 Orbis Accounting 合作时适用的条款：服务范围、费用、双方各自的责任，以及合作如何终止。',
+      crumb: '服务条款',
+    },
   },
 ];
 
@@ -128,3 +184,39 @@ export const REDIRECTS = [
   { from: '/about', to: '/#why' },
   { from: '/growth-strategy', to: '/pricing' },
 ] as const;
+
+/** One route in one language, with its path already localized. */
+export interface ResolvedRoute extends RouteText {
+  /** The localized path: `/services` in English, `/zh/services` in Chinese. */
+  path: string;
+  /** The English path, which is the identifier the two languages share. */
+  englishPath: string;
+  locale: Locale;
+  priority: string;
+  changefreq: 'monthly' | 'yearly';
+  faq?: 'home' | 'remote';
+}
+
+/**
+ * Every route in every language — the list the prerender step walks and the
+ * app reads titles from. Derived rather than hand-written, so adding a language
+ * or a page cannot leave one of the two halves behind.
+ */
+export const ALL_ROUTES: ResolvedRoute[] = ROUTES.flatMap((route) =>
+  LOCALES.map((locale) => {
+    const text: RouteText =
+      locale === 'en'
+        ? { title: route.title, description: route.description, crumb: route.crumb }
+        : route.zh;
+
+    return {
+      ...text,
+      path: localizePath(route.path, locale),
+      englishPath: route.path,
+      locale,
+      priority: route.priority,
+      changefreq: route.changefreq,
+      faq: route.faq,
+    };
+  }),
+);

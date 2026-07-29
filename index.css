@@ -1683,3 +1683,73 @@ figure {
 .remote-cta__links {
   margin-top: 6px;
 }
+
+/* ---------- Language toggle ----------------------------------------------- */
+
+.header__lang {
+  font: 500 13.5px/1 var(--sans);
+  color: var(--slate-light);
+  border: 1px solid var(--hair);
+  border-radius: var(--radius);
+  padding: 7px 12px;
+  white-space: nowrap;
+}
+
+.header__lang:hover {
+  color: var(--chart);
+  border-color: var(--green-text);
+}
+
+/* ---------- CJK ------------------------------------------------------------
+   Instrument Serif, Archivo and JetBrains Mono carry no CJK glyphs, so Chinese
+   characters fall through to the system stack while Latin ones — brand names,
+   GST, QuickBooks — still render in the brand faces. That per-glyph fallback is
+   deliberate: shipping a webfont with a full CJK character set would add
+   megabytes to the critical path and fail LCP on mobile on its own.
+   -------------------------------------------------------------------------- */
+
+:root {
+  --cjk-sans: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC',
+    'Source Han Sans SC', sans-serif;
+  --cjk-serif: 'Songti SC', 'Noto Serif CJK SC', 'Source Han Serif SC', 'SimSun', serif;
+}
+
+:root:lang(zh) {
+  --serif: 'Instrument Serif', var(--cjk-serif);
+  --sans: 'Archivo', var(--cjk-sans);
+  --mono: 'JetBrains Mono', var(--cjk-sans);
+}
+
+/* CJK has no ascenders/descenders to speak of and needs more room to breathe;
+   the display sizes are tuned for Latin and read as cramped otherwise. */
+:lang(zh) .h1 {
+  line-height: 1.18;
+  letter-spacing: 0;
+}
+
+:lang(zh) .h2 {
+  line-height: 1.28;
+  letter-spacing: 0;
+}
+
+/* Uppercasing and wide letter-spacing do nothing for Han characters and make
+   them harder to read, so the eyebrow treatment drops both. */
+:lang(zh) .eyebrow,
+:lang(zh) .micro,
+:lang(zh) .h1__eyebrow {
+  text-transform: none;
+  letter-spacing: 0.04em;
+}
+
+:lang(zh) .hero__reassure {
+  text-transform: none;
+  letter-spacing: 0.04em;
+  max-width: 30ch;
+}
+
+/* Han characters have no italic form, so `font-style: italic` makes the browser
+   synthesise a slant — which reads as a rendering fault, not as emphasis. The
+   colour already carries the distinction the italic carries in English. */
+:lang(zh) .h1 em {
+  font-style: normal;
+}
