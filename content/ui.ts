@@ -121,7 +121,7 @@ export const UI = {
 
   trust: {
     certEyebrow: 'Certification',
-    certP: 'QuickBooks Online Advanced ProAdvisor, the certification level above the standard one. We work in Xero and Sage 50 as well.',
+    certP: 'QuickBooks Online Advanced ProAdvisor — the level above the standard certification — plus Intuit payroll certification. Certified in Xero and Sage 50 as well, not just working in them.',
     badgePlaceholder: 'QuickBooks Advanced ProAdvisor badge to be supplied',
     whoEyebrow: 'Who we work with',
     commitEyebrow: 'What we commit to',

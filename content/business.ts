@@ -54,14 +54,26 @@ export const SAME_AS: string[] = [
 ];
 
 /**
- * The certification, described so it is machine-readable rather than only an
- * image with alt text. For a solo professional practice a verifiable credential
- * is one of the few hard expertise signals available.
+ * Certifications held by the practice, described so they are machine-readable
+ * rather than only an image with alt text. For a small professional practice a
+ * verifiable credential is one of the few hard expertise signals available, and
+ * Google's quality guidance leans heavily on demonstrable expertise for
+ * anything financial.
+ *
+ * These are the practice's, not a named individual's. There is deliberately no
+ * `Person` entry anywhere in the structured data: the practitioners are not
+ * listed on the site, and JSON-LD is published page source, so naming them
+ * there would publish them just as surely as printing them in the footer.
+ *
+ * Only add a credential that is actually held and currently valid. Overstating
+ * one is worse than listing none, and certifications lapse.
  */
-export const CREDENTIAL = {
-  name: 'QuickBooks Online Advanced ProAdvisor',
-  issuer: 'Intuit',
-} as const;
+export const CREDENTIALS = [
+  { name: 'QuickBooks Online Advanced ProAdvisor', issuer: 'Intuit' },
+  { name: 'Intuit Payroll Certification', issuer: 'Intuit' },
+  { name: 'Xero Advisor Certification', issuer: 'Xero' },
+  { name: 'Sage 50 Certification', issuer: 'Sage' },
+] as const;
 
 /**
  * Places named individually in the structured data. Google matches a query's

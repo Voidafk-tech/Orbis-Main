@@ -118,7 +118,7 @@ export const UI: Widen<typeof EnUI> = {
   trust: {
     certEyebrow: '认证资格',
     certP:
-      'QuickBooks Online 高级 ProAdvisor，是标准认证之上的一级。我们同样使用 Xero 和 Sage 50。',
+      'QuickBooks Online 高级 ProAdvisor，是标准认证之上的一级，另持有 Intuit 薪资认证。Xero 和 Sage 50 同样持有认证，而不只是会用。',
     badgePlaceholder: 'QuickBooks 高级 ProAdvisor 徽章待提供',
     whoEyebrow: '我们的客户类型',
     commitEyebrow: '我们的承诺',

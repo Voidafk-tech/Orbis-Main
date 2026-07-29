@@ -39,7 +39,7 @@ const {
   AGGREGATE_RATING,
   AREAS_SERVED,
   BUSINESS,
-  CREDENTIAL,
+  CREDENTIALS,
   SAME_AS,
   CONTACT,
   FAQS,
@@ -175,12 +175,12 @@ const organisation = {
     name: 'Monthly bookkeeping plans',
     itemListElement: [...planOffers, ...oneTimeOffers],
   },
-  hasCredential: {
+  hasCredential: CREDENTIALS.map((credential) => ({
     '@type': 'EducationalOccupationalCredential',
     credentialCategory: 'certification',
-    name: CREDENTIAL.name,
-    recognizedBy: { '@type': 'Organization', name: CREDENTIAL.issuer },
-  },
+    name: credential.name,
+    recognizedBy: { '@type': 'Organization', name: credential.issuer },
+  })),
   // Both are omitted entirely rather than emitted empty: a `sameAs: []` or a
   // zero-count rating is a worse signal than saying nothing.
   ...(SAME_AS.length > 0 ? { sameAs: SAME_AS } : {}),
