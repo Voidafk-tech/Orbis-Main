@@ -3,6 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Without this the full URL of the page being read is handed to
+         googletagmanager.com and to api.web3forms.com on every request. The
+         origin alone is all either one needs.
+
+         The other half of this, the Content-Security-Policy, is injected at
+         build time instead of living here — see the `csp` plugin in
+         vite.config.ts for why, and for what it does and does not cover. -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
     <title>Bookkeeping for BC Small Business | Orbis Accounting</title>
     <meta
       name="description"
