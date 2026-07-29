@@ -84,8 +84,9 @@ const ServicesPage: React.FC = () => (
         </ul>
         <p className="detail__p platform-list__note">
           We work in QuickBooks Online, Xero and Sage 50, so you can stay on whichever one you
-          already use. Shopify and Stripe connect to all three.{' '}
-          <Link to="/pricing">See how the plans are scoped</Link>, or{' '}
+          already use. Shopify and Stripe connect to all three, and{' '}
+          <Link to="/remote-bookkeeping">all of it is done remotely</Link> — there is nothing to
+          drop off. <Link to="/pricing">See how the plans are scoped</Link>, or{' '}
           <Anchor to="questions">read the questions people actually ask</Anchor>.
         </p>
       </div>

@@ -1640,3 +1640,42 @@ figure {
   font-style: normal;
   color: var(--chart);
 }
+
+/* ---------- Remote bookkeeping page --------------------------------------- */
+
+/* The one row that runs the other way; the marker is a minus, not a plus. */
+.factor--counter .factor__n {
+  color: var(--slate);
+}
+
+.area-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  list-style: none;
+  padding: 0;
+  margin-top: 46px;
+}
+
+.area-list li {
+  border: 1px solid var(--hair);
+  border-radius: var(--radius);
+  padding: 8px 15px;
+  font: 500 14px/1.2 var(--sans);
+  color: var(--slate-light);
+}
+
+.remote-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.remote-cta .hero__cta {
+  margin-top: 4px;
+}
+
+.remote-cta__links {
+  margin-top: 6px;
+}

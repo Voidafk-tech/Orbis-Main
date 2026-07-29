@@ -6,11 +6,20 @@ design in `design_handoff_orbis_site` (React + Vite, plain CSS with design
 tokens, no UI framework).
 
 The home page carries the whole argument end to end and is where most visitors
-convert. `/services` and `/pricing` are separate pages rather than sections of
-it, because they are the URLs people search for and link to, and because one
-page cannot rank for a portfolio of queries. Each goes deeper than the matching
-home-page section rather than repeating it — two URLs carrying the same copy
-compete with each other instead of ranking.
+convert. `/services`, `/pricing` and `/remote-bookkeeping` are separate pages
+rather than sections of it, because they are the URLs people search for and link
+to, and because one page cannot rank for a portfolio of queries. Each goes
+deeper than the matching home-page section rather than repeating it — two URLs
+carrying the same copy compete with each other instead of ranking.
+
+`/remote-bookkeeping` is the odd one out and worth understanding before editing.
+Queries like "bookkeeping near me" return a local pack, where ranking is decided
+mostly by proximity and by the Google Business Profile — the site can only
+influence them. "Remote bookkeeping" and "virtual bookkeeping" return no local
+pack at all, so that page competes on its own merits and its reach is not capped
+by where the practice sits. It answers *how* the work happens with nobody
+dropping anything off, which is the question behind the query; `/services`
+covers what gets done.
 
 Every page has one job: get a qualified small-business owner to fill in the
 intake form. A few choices look unusual and are deliberate:
@@ -108,9 +117,10 @@ afterwards.
 | Path | What it is |
 |---|---|
 | `index.css` | The whole design system: tokens, components, responsive rules |
-| `content/routes.ts` | Every route with its title, description and sitemap hints — read by both the app and the prerender step |
+| `content/routes.ts` | Every route with its title, description, breadcrumb label and sitemap hints — read by both the app and the prerender step |
 | `content/site.ts` | Copy and figures — the plans, FAQ, form options, the tax-rate date stamp |
-| `content/pages.ts` | Copy for the `/services` and `/pricing` pages |
+| `content/pages.ts` | Copy for the `/services`, `/pricing`, `/contact` and `/remote-bookkeeping` pages |
+| `content/business.ts` | Address, coordinates, service areas and price band — must match the Google Business Profile |
 | `content/legal.ts` | Privacy and terms copy |
 | `components/sections/` | One file per block of the home page, in page order |
 | `pages/` | One file per route |
@@ -126,9 +136,12 @@ FAQ answers and the plan list can no longer drift out of sync with the page.
 The generated `Offer` entries deliberately carry no `price` or `priceCurrency`
 — keep it that way.
 
-The `FAQPage` block is only emitted on routes flagged `faq: true` in `ROUTES`.
-Structured data describing content the visitor cannot see is a guidelines
-violation, so it must not go on a route that does not render the FAQ.
+There is more than one FAQ: the home page answers the questions everyone asks,
+`/remote-bookkeeping` answers the ones remote raises. A route names its set with
+`faq: 'home' | 'remote'`, and the prerender step throws on a name it does not
+recognise. Set it only on a route that actually renders those questions —
+structured data describing content the visitor cannot see is a guidelines
+violation.
 
 ## The link-preview image
 

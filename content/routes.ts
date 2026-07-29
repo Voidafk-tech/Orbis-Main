@@ -19,8 +19,12 @@ export interface RouteMeta {
   /** Sitemap hints. */
   priority: string;
   changefreq: 'monthly' | 'yearly';
-  /** True only where the page actually renders the FAQ; drives the FAQPage JSON-LD. */
-  faq?: boolean;
+  /**
+   * Which FAQ set this page renders, if any. Drives the FAQPage JSON-LD, and
+   * must only be set on a route that actually shows those questions —
+   * structured data describing content a visitor cannot see is a violation.
+   */
+  faq?: 'home' | 'remote';
   /**
    * Short label for the BreadcrumbList JSON-LD, which is what Google shows in
    * place of the raw URL under a search result. Omitted on the home page, which
@@ -37,7 +41,7 @@ export const ROUTES: RouteMeta[] = [
       'Fixed monthly bookkeeping for BC small business, from West Vancouver. GST and PST both filed. Three plans sized to your transaction volume, with a written quote in one business day.',
     priority: '1.0',
     changefreq: 'monthly',
-    faq: true,
+    faq: 'home',
   },
   {
     path: '/services',
@@ -47,6 +51,16 @@ export const ROUTES: RouteMeta[] = [
     priority: '0.9',
     changefreq: 'monthly',
     crumb: 'Services',
+  },
+  {
+    path: '/remote-bookkeeping',
+    title: 'Remote & Virtual Bookkeeping in BC | Orbis Accounting',
+    description:
+      'Remote bookkeeping for BC small business — no drop-offs, no office visit. How the work actually happens online, what a month looks like, and what it costs you to go remote.',
+    priority: '0.9',
+    changefreq: 'monthly',
+    crumb: 'Remote bookkeeping',
+    faq: 'remote',
   },
   {
     path: '/pricing',

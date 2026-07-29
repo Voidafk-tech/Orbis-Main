@@ -177,3 +177,107 @@ export const CONTACT_EXPECT = [
     p: 'What you send is used to write your quote and to reply to you. It is not added to a mailing list and it is not sold or shared for marketing.',
   },
 ] as const;
+
+/* ---------------------------------------------------------------------------
+ * /remote-bookkeeping
+ *
+ * Targets "remote bookkeeping", "virtual bookkeeping" and "online bookkeeper"
+ * — queries with no local pack attached, so they are won on the page rather
+ * than on proximity to the searcher. That makes this the one page whose
+ * ranking is not capped by where the practice happens to sit.
+ *
+ * The angle is deliberately the mechanics: how the work actually happens when
+ * nobody drops anything off. /services says what gets done; this says how.
+ * Nothing here describes a capability the practice does not already have.
+ * ------------------------------------------------------------------------- */
+
+export const REMOTE_MECHANICS = [
+  {
+    n: '01',
+    h: 'You grant access, not paperwork',
+    p: 'We work inside your accounting file as an invited user, the same way you would add an employee. You control that access from your own account and can withdraw it at any time, and your records stay in your platform rather than being copied into ours.',
+  },
+  {
+    n: '02',
+    h: 'Bank feeds do the fetching',
+    p: 'QuickBooks Online, Xero and Sage 50 all pull transactions from your bank and credit card accounts directly. Nobody is keying in a statement, which is where a lot of the errors in manual bookkeeping come from in the first place.',
+  },
+  {
+    n: '03',
+    h: 'Receipts go where you already are',
+    p: 'Email them, forward them, or attach them to the transaction in the app on your phone. There is no envelope to fill up and no monthly trip to hand it over.',
+  },
+  {
+    n: '04',
+    h: 'Filings are electronic anyway',
+    p: 'GST returns to the CRA and PST returns to the BC Ministry of Finance are filed online. That part of the job was never in-person, wherever your bookkeeper sits.',
+  },
+] as const;
+
+export const REMOTE_MONTH = [
+  {
+    n: '1',
+    h: 'Through the month',
+    p: 'Transactions come in through the bank feeds and get categorized as they land, rather than piling up into a month-end scramble. If something is ambiguous we ask about it while you still remember what it was.',
+  },
+  {
+    n: '2',
+    h: 'At month end',
+    p: 'Accounts are reconciled against the statements, the month is closed, and you get a profit and loss and a balance sheet with the figures that actually moved marked.',
+  },
+  {
+    n: '3',
+    h: 'When something is due',
+    p: 'GST, PST, payroll remittances, T4s, WorkSafeBC — whatever is in your plan is prepared and filed on schedule. You are not the one holding the deadline calendar.',
+  },
+] as const;
+
+/**
+ * The honest comparison. Being straight about what remote gives up is more
+ * persuasive than pretending it gives up nothing, and it is the objection
+ * everyone arrives with.
+ */
+export const REMOTE_TRADEOFF = {
+  gains: [
+    {
+      h: 'The same person every month',
+      p: 'Not whoever is free at the local firm this quarter. You are not re-explaining how your business works each time something changes hands.',
+    },
+    {
+      h: 'Questions answered when they come up',
+      p: 'A question does not have to wait for an appointment, and answering it does not cost you a trip across town or an hour of billable time.',
+    },
+    {
+      h: 'Your books are wherever you are',
+      p: 'The file is online, so you can open it from a job site, a kitchen table or somewhere else entirely. You are not waiting on an emailed PDF to know where you stand.',
+    },
+  ],
+  gives_up: {
+    h: 'What you give up',
+    p: 'Sitting across a desk. If a face-to-face meeting each month is the part you value most, a local firm is a reasonable choice and we will say so rather than talk you out of it. What we would push back on is paying a premium for proximity you never actually use — for most owners the drop-off visit was the worst part of the arrangement, not the point of it.',
+  },
+} as const;
+
+/** Distinct from the home page FAQ: these are the questions remote raises. */
+export const REMOTE_FAQS = [
+  {
+    q: 'Is remote bookkeeping secure?',
+    a: 'Your financial records stay in your own accounting platform — QuickBooks Online, Xero or Sage 50 — rather than being copied somewhere else. We work inside that file as an invited user, which is access you grant from your own account and can revoke yourself at any time, and every action taken in the file is attributed to that user. That is a tighter arrangement than emailing spreadsheets back and forth, which is what the alternative usually looks like in practice.',
+  },
+  {
+    q: 'How do I get my receipts and documents to you?',
+    a: 'Whichever way suits you. Email them as they arrive, forward them in a batch, or photograph and attach them to the transaction in your accounting app while you are standing there. QuickBooks Online, Xero and Sage 50 all support attachments against a transaction, which also means the receipt stays with the entry rather than in a folder somewhere.',
+  },
+  {
+    q: 'What if I want to talk to someone?',
+    a: 'You can call or email, and you get the same person rather than a queue. What we do not do is require a meeting before answering a question. If your plan includes a quarterly review call, that is scheduled; everything else is answered as it comes up.',
+  },
+  {
+    q: 'Does this work if my business is outside Metro Vancouver?',
+    a: 'Yes, and it is the same service at the same price. We are based in West Vancouver and work with businesses across British Columbia — the Interior, the Island and the north included. Because nothing depends on being nearby, where you are does not change the scope or the number.',
+  },
+  {
+    q: 'Do I need to be on cloud accounting software already?',
+    a: 'No. If you are on spreadsheets, on a desktop file, or on nothing at all, migrating you is part of setup and is quoted before it starts. We work in QuickBooks Online, Xero and Sage 50, and Shopify and Stripe connect to all three so your sales reconcile automatically.',
+  },
+] as const;

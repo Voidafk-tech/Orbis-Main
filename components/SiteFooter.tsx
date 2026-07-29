@@ -23,6 +23,9 @@ const SiteFooter: React.FC = () => (
           <Link to="/pricing">Plans</Link>
         </li>
         <li>
+          <Link to="/remote-bookkeeping">Remote</Link>
+        </li>
+        <li>
           <Anchor to="questions">Questions</Anchor>
         </li>
         {/* The standalone intake route is prerendered for ad traffic. Without a

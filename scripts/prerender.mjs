@@ -38,6 +38,7 @@ const {
   SAME_AS,
   CONTACT,
   FAQS,
+  REMOTE_FAQS,
   SERVICES,
   TIERS,
 } = await import(pathToFileURL(path.resolve('dist-ssr/entry-server.js')).href);
@@ -192,14 +193,26 @@ const breadcrumbFor = (route) => ({
   ],
 });
 
-const faqPage = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: FAQS.map((item) => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: { '@type': 'Answer', text: item.a },
-  })),
+/**
+ * One FAQ set per page that has one. Keyed by the `faq` field on the route, so
+ * a page can only be given questions it actually renders.
+ */
+const FAQ_SETS = { home: FAQS, remote: REMOTE_FAQS };
+
+const faqPageFor = (key) => {
+  const questions = FAQ_SETS[key];
+  if (!questions) {
+    throw new Error(`prerender: no FAQ set named "${key}" — check the route's faq field`);
+  }
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: questions.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  };
 };
 
 /**
@@ -224,7 +237,7 @@ for (const route of ROUTES) {
   const schema = [
     organisation,
     ...(route.crumb ? [breadcrumbFor(route)] : []),
-    ...(route.faq ? [faqPage] : []),
+    ...(route.faq ? [faqPageFor(route.faq)] : []),
   ];
   html = html.replace(SCHEMA_PLACEHOLDER, schema.map(jsonLd).join('\n\n    '));
 

@@ -6,6 +6,7 @@ import { useScrollReveal } from './useScrollReveal';
 import Home from '../pages/Home';
 import ServicesPage from '../pages/ServicesPage';
 import PricingPage from '../pages/PricingPage';
+import RemoteBookkeepingPage from '../pages/RemoteBookkeepingPage';
 import ContactPage from '../pages/ContactPage';
 import LegalPage from '../pages/LegalPage';
 import NotFoundPage from '../pages/NotFoundPage';
@@ -58,6 +59,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/remote-bookkeeping" element={<RemoteBookkeepingPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy-policy" element={<LegalPage content={PRIVACY} />} />
           <Route path="/terms-of-service" element={<LegalPage content={TERMS} />} />
