@@ -4,16 +4,18 @@ import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
 import { useScrollReveal } from './useScrollReveal';
 import Home from '../pages/Home';
+import ServicesPage from '../pages/ServicesPage';
+import PricingPage from '../pages/PricingPage';
 import ContactPage from '../pages/ContactPage';
 import LegalPage from '../pages/LegalPage';
+import NotFoundPage from '../pages/NotFoundPage';
 import { PRIVACY, TERMS } from '../content/legal';
+import { ROUTES, NOT_FOUND_META } from '../content/routes';
 
-const TITLES: Record<string, string> = {
-  '/': 'Bookkeeping for BC Small Business | Orbis Accounting',
-  '/contact': 'Get a Plan and a Quote | Orbis Accounting',
-  '/privacy-policy': 'Privacy Policy | Orbis Accounting',
-  '/terms-of-service': 'Terms of Service | Orbis Accounting',
-};
+/** Same list the prerender step reads, so a tab title cannot disagree with a search result. */
+const TITLES: Record<string, string> = Object.fromEntries(
+  ROUTES.map((route) => [route.path, route.title]),
+);
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -21,7 +23,7 @@ const App: React.FC = () => {
   useScrollReveal(location.pathname);
 
   useEffect(() => {
-    document.title = TITLES[location.pathname] ?? TITLES['/'];
+    document.title = TITLES[location.pathname] ?? NOT_FOUND_META.title;
   }, [location.pathname]);
 
   // Anchors arriving from another route need scrolling by hand; plain
@@ -41,18 +43,23 @@ const App: React.FC = () => {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy-policy" element={<LegalPage content={PRIVACY} />} />
           <Route path="/terms-of-service" element={<LegalPage content={TERMS} />} />
 
-          {/* The old standalone pages are now sections of the one page. */}
-          <Route path="/services" element={<Navigate to="/#services" replace />} />
-          <Route path="/pricing" element={<Navigate to="/#pricing" replace />} />
-          <Route path="/plans" element={<Navigate to="/#pricing" replace />} />
+          {/* Aliases. These are also emitted as redirect stubs at build time —
+              see REDIRECTS in scripts/prerender.mjs — because a client-side
+              Navigate only runs after a 404 has already been served. */}
+          <Route path="/plans" element={<Navigate to="/pricing" replace />} />
           <Route path="/process" element={<Navigate to="/#process" replace />} />
           <Route path="/about" element={<Navigate to="/#why" replace />} />
-          <Route path="/growth-strategy" element={<Navigate to="/#pricing" replace />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/growth-strategy" element={<Navigate to="/pricing" replace />} />
+
+          {/* A real page, not a bounce to the home page: redirecting every
+              unknown URL to / makes them soft 404s in Google's eyes. */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
       <SiteFooter />

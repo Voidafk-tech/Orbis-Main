@@ -16,10 +16,10 @@ const SiteFooter: React.FC = () => (
 
       <ul className="footer__links">
         <li>
-          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          <Link to="/services">Services</Link>
         </li>
         <li>
-          <Anchor to="pricing">Plans</Anchor>
+          <Link to="/pricing">Plans</Link>
         </li>
         <li>
           <Anchor to="questions">Questions</Anchor>
@@ -36,10 +36,29 @@ const SiteFooter: React.FC = () => (
         <li>
           <Link to="/terms-of-service">Terms</Link>
         </li>
+      </ul>
+    </div>
+
+    {/* Name, address and phone in crawlable markup on every page. Local search
+        cross-checks this against the Google Business Profile and directory
+        listings, and inconsistency between them suppresses local rankings. */}
+    <div className="footer__row footer__nap">
+      <address className="footer__address">
+        <strong>Orbis Accounting</strong>
+        <span>{CONTACT.locality}</span>
+        <span>Serving all of British Columbia</span>
+      </address>
+
+      <ul className="footer__contact">
         <li>
-          <span className="footer__copy">© 2026 Orbis Accounting</span>
+          <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+        </li>
+        <li>
+          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
         </li>
       </ul>
+
+      <span className="footer__copy">© 2026 Orbis Accounting</span>
     </div>
   </footer>
 );

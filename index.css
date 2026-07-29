@@ -310,6 +310,14 @@ figure {
   margin-bottom: 26px;
 }
 
+/* Sits inside the h1, so it has to reset the display face it inherits. */
+.h1__eyebrow {
+  display: block;
+  font: 500 11px/1.4 var(--mono);
+  letter-spacing: 0.16em;
+  margin-bottom: 26px;
+}
+
 .hero__sub {
   font: 400 19.5px/1.56 var(--sans);
   color: var(--slate-light);
@@ -1337,5 +1345,243 @@ figure {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Header phone and CTA labels ----------------------------------- */
+
+.header__tel {
+  font: 500 13.5px/1 var(--sans);
+  color: var(--chart);
+  white-space: nowrap;
+}
+
+.header__tel:hover {
+  color: var(--green-text);
+}
+
+/* The nav collapses below 720px, so the CTA has to share the row with the
+   phone link. Two labels, one shown at a time — see SiteHeader. */
+.header__cta-short {
+  display: none;
+}
+
+/* ---------- Footer NAP ---------------------------------------------------- */
+
+.footer__nap {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--hair-2);
+  align-items: flex-start;
+  gap: 26px;
+}
+
+.footer__address {
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font: 400 13.5px/1.5 var(--sans);
+  color: var(--slate);
+}
+
+.footer__address strong {
+  font-weight: 600;
+  color: var(--slate-light);
+}
+
+.footer__contact {
+  display: flex;
+  gap: 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font: 400 13.5px/1.5 var(--sans);
+}
+
+.footer__nap .footer__copy {
+  margin-left: auto;
+}
+
+/* ---------- Service detail rows (/services) ------------------------------- */
+
+.detail {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+  padding: 42px 0;
+  border-top: 1px solid var(--hair-2);
+}
+
+.detail:last-of-type {
+  border-bottom: 1px solid var(--hair-2);
+}
+
+.detail__aside {
+  position: sticky;
+  top: calc(var(--header-h) + 42px);
+  align-self: start;
+}
+
+.detail__h {
+  font: 400 clamp(24px, 2.6vw, 32px) / 1.15 var(--serif);
+  letter-spacing: -0.01em;
+  margin: 12px 0 10px;
+}
+
+.detail__who {
+  color: var(--slate);
+}
+
+.detail__summary {
+  font: 400 19px/1.55 var(--sans);
+  color: var(--chart);
+  margin: 0 0 18px;
+  max-width: 60ch;
+}
+
+.detail__p {
+  font: 400 16px/1.68 var(--sans);
+  color: var(--slate-light);
+  max-width: 66ch;
+  margin: 0 0 16px;
+}
+
+.detail__p:last-child {
+  margin-bottom: 0;
+}
+
+.sec--paper .detail__p {
+  color: var(--paper-body);
+}
+
+/* ---------- Platform list and price factors ------------------------------- */
+
+.platform-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 22px;
+  font: 500 17px/1.3 var(--sans);
+  color: var(--chart);
+}
+
+.platform-list__note {
+  max-width: 62ch;
+}
+
+/* Same shape as .why-row, but for the dark sections — that one's hairline and
+   body colour are both tuned for the paper background. */
+.factors {
+  margin-top: 46px;
+  max-width: 76ch;
+}
+
+.factor {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 18px;
+  border-top: 1px solid var(--hair-2);
+  padding: 20px 0 24px;
+}
+
+.factor:last-child {
+  border-bottom: 1px solid var(--hair-2);
+}
+
+.factor__n {
+  font: 500 12px/1.4 var(--mono);
+  color: var(--green-text);
+  letter-spacing: 0.08em;
+  padding-top: 4px;
+}
+
+.factor__h {
+  font: 600 17px/1.3 var(--sans);
+  margin: 0 0 7px;
+}
+
+.factor__p {
+  font: 400 15px/1.6 var(--sans);
+  color: var(--slate-light);
+  margin: 0;
+  max-width: 68ch;
+}
+
+/* ---------- 404 ----------------------------------------------------------- */
+
+.notfound__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  list-style: none;
+  padding: 0;
+  margin: 34px 0 96px;
+  font: 500 16px/1.3 var(--sans);
+}
+
+@media (max-width: 1060px) {
+  .detail {
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 720px) {
+  .detail {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 32px 0;
+  }
+
+  /* Nothing to stick to once the row is a single column. */
+  .detail__aside {
+    position: static;
+  }
+
+  .header__cta-full {
+    display: none;
+  }
+
+  .header__cta-short {
+    display: inline;
+  }
+
+  .header__cta {
+    margin-left: 0;
+  }
+
+  .header__tel {
+    margin-left: auto;
+  }
+
+  .footer__nap {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .footer__nap .footer__copy {
+    margin-left: 0;
+  }
+}
+
+/* Four items, so a 3-up grid would strand one on its own row. */
+.principles {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px 56px;
+  margin-top: 56px;
+  max-width: 900px;
+}
+
+@media (max-width: 720px) {
+  .principles {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .factors {
+    margin-top: 34px;
   }
 }

@@ -18,3 +18,4 @@ export function render(url: string): string {
  * hand into index.html; going through here means they cannot drift.
  */
 export { CONTACT, FAQS, SERVICES, TIERS } from './content/site';
+export { ROUTES, REDIRECTS, NOT_FOUND_META } from './content/routes';

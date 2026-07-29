@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import Anchor from '../Anchor';
 import { TIERS } from '../../content/site';
 import { revealDelay } from '../useScrollReveal';
@@ -12,6 +13,9 @@ const Pricing: React.FC = () => (
         <p className="lede lede--paper intro__p" style={{ fontSize: '17px' }}>
           Pick the plan that matches your transaction volume. If you are not sure, guess low and we
           will tell you in the quote.
+        </p>
+        <p className="lede lede--paper intro__p" style={{ fontSize: '17px' }}>
+          <Link to="/pricing">How the number is put together, and what the market charges →</Link>
         </p>
       </div>
 

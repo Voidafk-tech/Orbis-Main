@@ -26,45 +26,6 @@ import { pathToFileURL } from 'node:url';
 const SITE = 'https://www.orbisaccounting.ca';
 
 /**
- * Every indexable route. `faq` marks the routes whose visible content actually
- * carries the FAQ — the FAQPage JSON-LD is only emitted there, because markup
- * describing content the visitor cannot see is a guidelines violation.
- */
-const ROUTES = [
-  {
-    path: '/',
-    title: 'Bookkeeping for BC Small Business | Orbis Accounting',
-    description:
-      'Fixed monthly bookkeeping for BC small business, from West Vancouver. GST and PST both filed. Three plans sized to your transaction volume, with a written quote in one business day.',
-    priority: '1.0',
-    changefreq: 'monthly',
-    faq: true,
-  },
-  {
-    path: '/contact',
-    title: 'Get a Plan and a Quote | Orbis Accounting',
-    description:
-      'Tell us where your books stand and get a written plan and a fixed monthly price within one business day. No sales call, no obligation.',
-    priority: '0.9',
-    changefreq: 'monthly',
-  },
-  {
-    path: '/privacy-policy',
-    title: 'Privacy Policy | Orbis Accounting',
-    description: 'How Orbis Accounting collects, uses and protects your information.',
-    priority: '0.2',
-    changefreq: 'yearly',
-  },
-  {
-    path: '/terms-of-service',
-    title: 'Terms of Service | Orbis Accounting',
-    description: 'The terms that apply to bookkeeping engagements with Orbis Accounting.',
-    priority: '0.2',
-    changefreq: 'yearly',
-  },
-];
-
-/**
  * Cities named individually in the structured data. Google matches a query's
  * implied location against these, so "serving all of BC" on its own leaves the
  * metro areas we actually want to appear in unstated.
@@ -82,9 +43,16 @@ const AREAS_SERVED = [
 
 const dist = path.resolve('dist');
 const template = await readFile(path.join(dist, 'index.html'), 'utf-8');
-const { render, CONTACT, FAQS, SERVICES, TIERS } = await import(
-  pathToFileURL(path.resolve('dist-ssr/entry-server.js')).href
-);
+const {
+  render,
+  ROUTES,
+  REDIRECTS,
+  NOT_FOUND_META,
+  CONTACT,
+  FAQS,
+  SERVICES,
+  TIERS,
+} = await import(pathToFileURL(path.resolve('dist-ssr/entry-server.js')).href);
 
 const ROOT_PLACEHOLDER = '<div id="root"></div>';
 const SCHEMA_PLACEHOLDER = '<!--structured-data-->';
@@ -104,6 +72,14 @@ for (const [placeholder, what] of [
  * 301s `/contact` to. A canonical without it points at a redirect.
  */
 const urlFor = (routePath) => (routePath === '/' ? `${SITE}/` : `${SITE}${routePath}/`);
+
+/** Titles and descriptions go straight into markup, so `&` and quotes must not ride in raw. */
+const escapeHtml = (value) =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 
 /** JSON-LD sits inside a <script>, so a literal `</script>` in copy would end it early. */
 const jsonLd = (data) =>
@@ -215,26 +191,29 @@ for (const route of ROUTES) {
   const schema = [organisation, ...(route.faq ? [faqPage] : [])];
   html = html.replace(SCHEMA_PLACEHOLDER, schema.map(jsonLd).join('\n\n    '));
 
+  const title = escapeHtml(route.title);
+  const description = escapeHtml(route.description);
+
   const tags = [
     {
       what: 'title',
       match: /<title>[\s\S]*?<\/title>/,
-      replacement: `<title>${route.title}</title>`,
+      replacement: `<title>${title}</title>`,
     },
     {
       what: 'description',
       match: metaPattern('name', 'description'),
-      replacement: `<meta name="description" content="${route.description}" />`,
+      replacement: `<meta name="description" content="${description}" />`,
     },
     {
       what: 'og:title',
       match: metaPattern('property', 'og:title'),
-      replacement: `<meta property="og:title" content="${route.title}" />`,
+      replacement: `<meta property="og:title" content="${title}" />`,
     },
     {
       what: 'og:description',
       match: metaPattern('property', 'og:description'),
-      replacement: `<meta property="og:description" content="${route.description}" />`,
+      replacement: `<meta property="og:description" content="${description}" />`,
     },
     {
       what: 'og:url',
@@ -256,6 +235,64 @@ for (const route of ROUTES) {
   await mkdir(outDir, { recursive: true });
   await writeFile(path.join(outDir, 'index.html'), html);
   console.log(`prerendered ${route.path}`);
+}
+
+/**
+ * The 404, rendered through the same app so it carries the header, footer and
+ * styling. GitHub Pages serves this file with a real 404 status for any path
+ * that was not prerendered, which is what Google needs to see — the previous
+ * arrangement bounced unknown URLs to the home page, making them soft 404s.
+ */
+{
+  const notFoundPath = '/__not-found__';
+  let html = template.replace(ROOT_PLACEHOLDER, `<div id="root">${render(notFoundPath)}</div>`);
+
+  html = html.replace(SCHEMA_PLACEHOLDER, jsonLd(organisation));
+  html = setTag(html, {
+    what: 'title',
+    match: /<title>[\s\S]*?<\/title>/,
+    replacement: `<title>${escapeHtml(NOT_FOUND_META.title)}</title>`,
+  });
+  html = setTag(html, {
+    what: 'description',
+    match: metaPattern('name', 'description'),
+    replacement: `<meta name="description" content="${escapeHtml(NOT_FOUND_META.description)}" />`,
+  });
+
+  // A 404 has no canonical URL of its own, and must not claim one.
+  html = setTag(html, {
+    what: 'canonical',
+    match: /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/,
+    replacement: '<meta name="robots" content="noindex" />',
+  });
+
+  await writeFile(path.join(dist, '404.html'), html);
+  console.log('prerendered 404');
+}
+
+for (const redirect of REDIRECTS) {
+  const target = redirect.to.startsWith('/#')
+    ? `${SITE}/${redirect.to.slice(1)}`
+    : urlFor(redirect.to);
+
+  const stub = `<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0; url=${target}" />
+    <link rel="canonical" href="${target}" />
+    <title>Redirecting to ${target}</title>
+  </head>
+  <body>
+    <p>This page has moved to <a href="${target}">${target}</a>.</p>
+  </body>
+</html>
+`;
+
+  const outDir = path.join(dist, redirect.from);
+  await mkdir(outDir, { recursive: true });
+  await writeFile(path.join(outDir, 'index.html'), stub);
+  console.log(`redirect ${redirect.from} -> ${redirect.to}`);
 }
 
 const lastmod = new Date().toISOString().slice(0, 10);

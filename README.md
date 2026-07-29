@@ -1,11 +1,18 @@
 # Orbis Accounting — marketing site
 
-A single-page marketing and lead-generation site for Orbis Accounting, a
-bookkeeping practice in West Vancouver, BC, serving all of British Columbia.
-Built to the design in `design_handoff_orbis_site` (React + Vite, plain CSS
-with design tokens, no UI framework).
+A marketing and lead-generation site for Orbis Accounting, a bookkeeping
+practice in West Vancouver, BC, serving all of British Columbia. Built to the
+design in `design_handoff_orbis_site` (React + Vite, plain CSS with design
+tokens, no UI framework).
 
-The page has one job: get a qualified small-business owner to fill in the
+The home page carries the whole argument end to end and is where most visitors
+convert. `/services` and `/pricing` are separate pages rather than sections of
+it, because they are the URLs people search for and link to, and because one
+page cannot rank for a portfolio of queries. Each goes deeper than the matching
+home-page section rather than repeating it — two URLs carrying the same copy
+compete with each other instead of ranking.
+
+Every page has one job: get a qualified small-business owner to fill in the
 intake form. A few choices look unusual and are deliberate:
 
 - **Plans are published, prices are not.** Three named tiers with their
@@ -50,14 +57,23 @@ The prerender step matters: this is an SEO-driven local-service page, so the
 plans table, the GST/PST explainer and the FAQ have to be in the initial HTML
 payload. The client entry hydrates that markup rather than replacing it.
 
-`ROUTES` in `scripts/prerender.mjs` is the one list to edit when adding a route
-— it drives the prerendering, the head tags, the sitemap entry and which routes
-carry which structured data. The head-tag rewrite throws if a tag it expects is
-missing, rather than letting a route inherit the home page's metadata.
+`ROUTES` in `content/routes.ts` is the one list to edit when adding a route. It
+drives the prerendering, the head tags, the sitemap entry, which routes carry
+which structured data, and the `document.title` the app sets on client-side
+navigation. The head-tag rewrite throws if a tag it expects is missing, rather
+than letting a route inherit the home page's metadata.
+
+`REDIRECTS` in the same file covers paths that used to exist and aliases people
+type. GitHub Pages cannot issue a 301 and a client-side redirect only runs after
+a 404 has already been served, so each one is written out as a stub carrying a
+canonical to its destination and a zero-delay meta refresh.
 
 GitHub Actions publishes `dist/` to GitHub Pages on every push to `main`
-(`.github/workflows/deploy.yml`). `public/404.html` keeps deep links working for
-any path that was not prerendered.
+(`.github/workflows/deploy.yml`). `dist/404.html` is the app's own 404 page,
+rendered through the same layout, and GitHub Pages serves it with a real 404
+status for any path that was not prerendered. It replaced a redirect script that
+bounced unknown URLs to the home page — that made every dead link a soft 404,
+which Google reports as an error and which hides genuinely broken links.
 
 ### The canonical hostname
 
@@ -78,9 +94,12 @@ afterwards.
 | Path | What it is |
 |---|---|
 | `index.css` | The whole design system: tokens, components, responsive rules |
+| `content/routes.ts` | Every route with its title, description and sitemap hints — read by both the app and the prerender step |
 | `content/site.ts` | Copy and figures — the plans, FAQ, form options, the tax-rate date stamp |
+| `content/pages.ts` | Copy for the `/services` and `/pricing` pages |
 | `content/legal.ts` | Privacy and terms copy |
-| `components/sections/` | One file per block of the page, in page order |
+| `components/sections/` | One file per block of the home page, in page order |
+| `pages/` | One file per route |
 | `components/IntakeForm.tsx` | The form, its validation, and the Web3Forms submission |
 | `index.html` | Meta tags and the site icons. The structured data is injected here at build time, not written by hand |
 | `scripts/prerender.mjs` | Routes, head tags, the JSON-LD, the sitemap and robots.txt |

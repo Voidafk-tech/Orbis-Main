@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Anchor from './Anchor';
 import { LogoMark } from './Logo';
+import { CONTACT } from '../content/site';
 
 const SiteHeader: React.FC = () => (
   <header className="header">
@@ -11,21 +12,29 @@ const SiteHeader: React.FC = () => (
         <span className="wordmark">ORBIS</span>
       </Link>
 
+      {/* Services and Plans are their own routes now, not anchors on this page. */}
       <ul className="nav">
         <li>
-          <Anchor to="services">Services</Anchor>
+          <Link to="/services">Services</Link>
         </li>
         <li>
-          <Anchor to="pricing">Plans</Anchor>
+          <Link to="/pricing">Plans</Link>
         </li>
         <li>
           <Anchor to="questions">Questions</Anchor>
         </li>
       </ul>
 
-      <Anchor to="start" className="btn btn--primary btn--sm header__cta">
-        Get a plan and a quote
-      </Anchor>
+      {/* Kept at every width, unlike the nav. Someone searching for a bookkeeper
+          on a phone is likelier to call than to fill in a ten-field form. */}
+      <a className="header__tel" href={CONTACT.phoneHref}>
+        {CONTACT.phone}
+      </a>
+
+      <Link to="/contact" className="btn btn--primary btn--sm header__cta">
+        <span className="header__cta-full">Get a plan and a quote</span>
+        <span className="header__cta-short">Get a quote</span>
+      </Link>
     </div>
   </header>
 );
