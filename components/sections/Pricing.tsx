@@ -66,7 +66,8 @@ const Pricing: React.FC = () => {
           <div>
             <p className="micro micro--paper pricing-notes__label">{pricing.oneTimeLabel}</p>
             <p className="pricing-notes__body">
-              <strong>{pricing.catchUpName}</strong> {pricing.catchUpBody}
+              <strong>{pricing.catchUpName}</strong> {pricing.catchUpBody}{' '}
+              <Link to={path('/catch-up-bookkeeping')}>{pricing.catchUpLink}</Link>
             </p>
           </div>
           <div>

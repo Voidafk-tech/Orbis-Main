@@ -8,6 +8,8 @@ import Home from '../pages/Home';
 import ServicesPage from '../pages/ServicesPage';
 import PricingPage from '../pages/PricingPage';
 import RemoteBookkeepingPage from '../pages/RemoteBookkeepingPage';
+import GstPstPage from '../pages/GstPstPage';
+import CatchUpPage from '../pages/CatchUpPage';
 import ContactPage from '../pages/ContactPage';
 import LegalPage from '../pages/LegalPage';
 import NotFoundPage from '../pages/NotFoundPage';
@@ -25,6 +27,8 @@ const PAGE_FOR: Record<string, React.ReactElement> = {
   '/services': <ServicesPage />,
   '/pricing': <PricingPage />,
   '/remote-bookkeeping': <RemoteBookkeepingPage />,
+  '/gst-pst-bc': <GstPstPage />,
+  '/catch-up-bookkeeping': <CatchUpPage />,
   '/contact': <ContactPage />,
   '/privacy-policy': <LegalPage page="privacy" />,
   '/terms-of-service': <LegalPage page="terms" />,

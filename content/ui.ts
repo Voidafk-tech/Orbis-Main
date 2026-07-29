@@ -24,6 +24,8 @@ export const UI = {
     services: 'Services',
     plans: 'Plans',
     remote: 'Remote',
+    gstPst: 'GST & PST',
+    catchUp: 'Catch-up',
     questions: 'Questions',
     getQuote: 'Get a quote',
     privacy: 'Privacy',
@@ -86,6 +88,7 @@ export const UI = {
     setupName: 'Software setup and migration',
     setupBody:
       '— Quoted once, on QuickBooks Online, Xero or Sage 50. Chart of accounts, bank feeds, integrations, and one training session.',
+    catchUpLink: 'More on catch-up bookkeeping →',
     finePrintLabel: 'The fine print',
     finePrint:
       'All plans are contract based, with the term set per client. Every plan is a fixed monthly figure, quoted in writing before any work starts, in CAD plus GST. No hourly billing. Over 400 transactions a month, ask and we will quote it.',
@@ -98,6 +101,7 @@ export const UI = {
     p: 'This is the thing that catches out almost every business owner in BC.',
     noteBefore:
       'If you have only ever registered for one of the two, you are not unusual, and it is fixable. Say so in the form and we will check both in the quote. Rates current as of ',
+    more: 'How GST and PST actually differ →',
     noteAfter: '.',
     taxes: [
       {
@@ -262,6 +266,37 @@ export const UI = {
     services: 'Bookkeeping services',
     pricing: 'Plans and pricing',
     contact: 'Get a plan and a quote',
+  },
+
+  gstPstPage: {
+    eyebrow: 'GST and PST in British Columbia',
+    headline: 'Two taxes,',
+    headlineEm: 'two sets of rules.',
+    sub: 'GST goes to the CRA. PST goes to the province. They register separately, file separately and disagree about what is taxable — and being signed up for one tells you nothing about whether you should be signed up for the other.',
+    ratesEyebrow: 'The rates',
+    comparisonEyebrow: 'Side by side',
+    comparisonH2: 'Where the two actually differ.',
+    gstLabel: 'GST',
+    pstLabel: 'PST',
+    mistakesEyebrow: 'What goes wrong',
+    mistakesH2: 'Four ways this catches people out.',
+    whatWeDoEyebrow: 'What we do',
+    ctaH2: 'Not sure which you are registered for?',
+    ctaP: 'Say so in the form. We check both against what you actually sell and confirm them in the written quote, before anything is filed.',
+  },
+
+  catchUpPage: {
+    eyebrow: 'Catch-up bookkeeping',
+    headline: 'Behind on your books.',
+    headlineEm: 'It is fixable.',
+    sub: 'Months or years behind is the most common reason anyone gets in touch with us. We look at how far it goes, quote the whole job as one number before starting, then clear it and file what is outstanding.',
+    stagesEyebrow: 'How far behind',
+    stagesH2: 'Where you are on this list.',
+    processEyebrow: 'How it goes',
+    processH2: 'Four steps, one number.',
+    reassuranceEyebrow: 'To be clear',
+    ctaH2: 'Tell us roughly how far behind you are.',
+    ctaP: 'A rough answer is fine, and "not sure" is a valid one. You get a written scope and a single figure for the catch-up within one business day — no sales call, and nothing starts until you agree the number.',
   },
 
   legal: {

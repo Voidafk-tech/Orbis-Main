@@ -31,6 +31,12 @@ const SiteFooter: React.FC = () => {
             <Link to={path('/remote-bookkeeping')}>{footer.remote}</Link>
           </li>
           <li>
+            <Link to={path('/gst-pst-bc')}>{footer.gstPst}</Link>
+          </li>
+          <li>
+            <Link to={path('/catch-up-bookkeeping')}>{footer.catchUp}</Link>
+          </li>
+          <li>
             <Anchor to="questions">{footer.questions}</Anchor>
           </li>
           {/* The standalone intake route is prerendered for ad traffic. Without a

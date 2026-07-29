@@ -1,8 +1,9 @@
 import React from 'react';
-import { useCopy } from '../LocaleContext';
+import { Link } from 'react-router';
+import { useLocale } from '../LocaleContext';
 
 const TaxExplainer: React.FC = () => {
-  const copy = useCopy();
+  const { copy, path } = useLocale();
   const { tax } = copy.ui;
 
   return (
@@ -32,6 +33,10 @@ const TaxExplainer: React.FC = () => {
             {tax.noteBefore}
             {copy.site.RATES_AS_OF}
             {tax.noteAfter}
+          </p>
+
+          <p className="tax-note reveal">
+            <Link to={path('/gst-pst-bc')}>{tax.more}</Link>
           </p>
         </div>
       </div>

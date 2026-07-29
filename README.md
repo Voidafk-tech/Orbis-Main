@@ -6,7 +6,7 @@ design in `design_handoff_orbis_site` (React + Vite, plain CSS with design
 tokens, no UI framework).
 
 The home page carries the whole argument end to end and is where most visitors
-convert. `/services`, `/pricing` and `/remote-bookkeeping` are separate pages
+convert. `/services`, `/pricing`, `/remote-bookkeeping`, `/gst-pst-bc` and `/catch-up-bookkeeping` are separate pages
 rather than sections of it, because they are the URLs people search for and link
 to, and because one page cannot rank for a portfolio of queries. Each goes
 deeper than the matching home-page section rather than repeating it — two URLs

@@ -102,6 +102,36 @@ export const ROUTES: RouteMeta[] = [
     },
   },
   {
+    path: '/gst-pst-bc',
+    title: 'GST and PST in BC: What Small Businesses Must Know',
+    description:
+      'GST goes to the CRA, PST goes to the province. Where the two differ, when each one requires registration, and the four mistakes that catch BC owners out.',
+    priority: '0.9',
+    changefreq: 'monthly',
+    crumb: 'GST and PST in BC',
+    zh: {
+      title: '卑诗省的 GST 与 PST：小型企业须知 | Orbis',
+      description:
+        'GST 交给 CRA，PST 交给省政府。两者的差别在哪里、各自何时必须注册，以及最容易让卑诗省企业主栽跟头的四种情况。',
+      crumb: 'GST 与 PST',
+    },
+  },
+  {
+    path: '/catch-up-bookkeeping',
+    title: 'Catch-Up Bookkeeping in BC | Behind on Your Books?',
+    description:
+      'Months or years behind is the most common reason people call. How far behind you are, what clearing it involves, and one quoted number agreed before work starts.',
+    priority: '0.9',
+    changefreq: 'monthly',
+    crumb: 'Catch-up bookkeeping',
+    zh: {
+      title: '补做旧账 · 卑诗省记账服务 | Orbis Accounting',
+      description:
+        '落后几个月甚至几年，是大多数人来电的原因。你落后到什么程度、清理需要做什么，以及一个在动工前就谈定的单一报价。',
+      crumb: '补做旧账',
+    },
+  },
+  {
     path: '/pricing',
     title: 'What Does a Bookkeeper Cost in BC? Plans & Pricing',
     description:

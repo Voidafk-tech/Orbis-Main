@@ -22,6 +22,8 @@ export const UI: Widen<typeof EnUI> = {
     services: '服务项目',
     plans: '方案',
     remote: '远程记账',
+    gstPst: 'GST 与 PST',
+    catchUp: '补做旧账',
     questions: '常见问题',
     getQuote: '获取报价',
     privacy: '隐私政策',
@@ -82,6 +84,7 @@ export const UI: Widen<typeof EnUI> = {
     setupName: '软件设置与迁移',
     setupBody:
       '——一次性报价，适用于 QuickBooks Online、Xero 或 Sage 50。会计科目表、银行数据自动同步、系统对接，以及一次培训。',
+    catchUpLink: '关于补做旧账的更多说明 →',
     finePrintLabel: '细则',
     finePrint:
       '所有方案均以合约为准，期限按客户约定。每个方案都是固定月费，动工前以书面报价，以加元计并另加 GST。不按小时计费。每月超过 400 笔交易请来询，我们另行报价。',
@@ -94,6 +97,7 @@ export const UI: Widen<typeof EnUI> = {
     p: '这是几乎每一位卑诗省企业主都会栽跟头的地方。',
     noteBefore:
       '如果你只注册了其中一项，你并不特殊，而且这是可以补救的。在表格里说明，我们会在报价中把两项都核对一遍。税率数据截至 ',
+    more: 'GST 与 PST 究竟差在哪里 →',
     noteAfter: '。',
     taxes: [
       {
@@ -255,6 +259,37 @@ export const UI: Widen<typeof EnUI> = {
     services: '记账服务',
     pricing: '方案与价格',
     contact: '获取方案与报价',
+  },
+
+  gstPstPage: {
+    eyebrow: '卑诗省的 GST 与 PST',
+    headline: '两种税，',
+    headlineEm: '两套规则。',
+    sub: 'GST 交给 CRA，PST 交给省政府。两者分别注册、分别申报，对什么应税的看法也不一致——而且注册了其中一项，完全说明不了你是否也该注册另一项。',
+    ratesEyebrow: '税率',
+    comparisonEyebrow: '并排对照',
+    comparisonH2: '两者真正的差别在哪里。',
+    gstLabel: 'GST',
+    pstLabel: 'PST',
+    mistakesEyebrow: '常见的问题',
+    mistakesH2: '四种最容易栽跟头的情况。',
+    whatWeDoEyebrow: '我们会做什么',
+    ctaH2: '不确定自己注册了哪一项？',
+    ctaP: '在表格里说明即可。我们会对照你实际销售的内容核对两项，并在书面报价中确认清楚，然后才会去申报任何东西。',
+  },
+
+  catchUpPage: {
+    eyebrow: '补做旧账',
+    headline: '账目落后了。',
+    headlineEm: '这是可以解决的。',
+    sub: '落后几个月甚至几年，是大多数人来找我们的原因。我们会先看落后到什么程度，在动工之前把整件事报成一个数字，然后清掉积压、补上该报的申报。',
+    stagesEyebrow: '落后多久',
+    stagesH2: '你在这份清单的哪个位置。',
+    processEyebrow: '流程',
+    processH2: '四个步骤，一个数字。',
+    reassuranceEyebrow: '把话说清楚',
+    ctaH2: '告诉我们大概落后多久。',
+    ctaP: '答得粗略没关系，「不确定」也是有效答案。一个工作日内你会收到书面的服务范围和补做旧账的单一金额——没有销售电话，在你同意这个数字之前不会开始任何工作。',
   },
 
   legal: {
