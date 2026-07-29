@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router';
 import Intake from '../components/sections/Intake';
 import { useLocale } from '../components/LocaleContext';
-import { BUSINESS } from '../content/business';
 import { revealDelay } from '../components/useScrollReveal';
 
 /**
@@ -88,14 +87,10 @@ const ContactPage: React.FC = () => {
 
           <div className="reveal" style={revealDelay(180)}>
             <p className="eyebrow intro__eyebrow">{t.whereEyebrow}</p>
-            {/* The visible address has to match the structured data and the Google
-                Business Profile character for character — see content/business.ts.
-                It is not translated: it is what is written on the envelope. */}
-            <address className="contact-detail__p contact-address">
-              {BUSINESS.streetAddress}
-              <br />
-              {BUSINESS.addressLocality}, {BUSINESS.addressRegion} {BUSINESS.postalCode}
-            </address>
+            {/* Locality only — no street address on the rendered page by choice.
+                It stays in the structured data and on the Business Profile,
+                which is what local search actually reads. */}
+            <p className="contact-detail__p contact-locality">{copy.ui.locality}</p>
             <p className="contact-detail__p">{t.whereP}</p>
             <p className="contact-detail__p">
               <Link to={path('/services')}>{t.linkServices}</Link> ·{' '}

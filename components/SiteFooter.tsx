@@ -54,17 +54,15 @@ const SiteFooter: React.FC = () => {
         </ul>
       </div>
 
-      {/* Name, address and phone in crawlable markup on every page. Local search
-          cross-checks this against the Google Business Profile and directory
+      {/* Name, locality and phone in crawlable markup on every page. Local search
+          cross-checks these against the Google Business Profile and directory
           listings, and inconsistency between them suppresses local rankings.
-          The address itself is not translated — it is what is on the envelope. */}
+          The street address is deliberately absent from the rendered page — it
+          stays in the structured data, which is where local search reads it. */}
       <div className="footer__row footer__nap">
         <address className="footer__address">
           <strong>{BUSINESS.name}</strong>
-          <span>{BUSINESS.streetAddress}</span>
-          <span>
-            {BUSINESS.addressLocality}, {BUSINESS.addressRegion} {BUSINESS.postalCode}
-          </span>
+          <span>{copy.ui.locality}</span>
           <span>{footer.serving}</span>
         </address>
 

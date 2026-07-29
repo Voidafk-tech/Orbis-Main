@@ -9,6 +9,9 @@ import type { Widen } from '../i18n';
 import type { UI as EnUI } from '../ui';
 
 export const UI: Widen<typeof EnUI> = {
+  // Full-width comma, per the rest of the Chinese copy.
+  locality: '西温哥华，卑诗省',
+
   header: {
     backToTop: 'Orbis Accounting，回到顶部',
     services: '服务项目',

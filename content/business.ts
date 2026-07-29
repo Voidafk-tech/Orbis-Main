@@ -6,6 +6,18 @@
  * Business Profile character for character — a street abbreviated one way here
  * and another way there is a real, measurable drag on local rankings. If the
  * Business Profile is edited, edit this at the same time.
+ *
+ * `streetAddress` and `postalCode` are deliberately not rendered anywhere on the
+ * site: the footer and the contact page show locality and region only. They are
+ * still emitted in the JSON-LD, because that is what local search reads and
+ * dropping them would break the Business Profile match.
+ *
+ * Note what that does and does not achieve. JSON-LD is page source — "view
+ * source" shows it, and so does any scraper. Not rendering the street address
+ * keeps it off the visible page; it does not make it private. If the goal is
+ * privacy rather than layout, the fields have to come out of the schema here as
+ * well, and the Business Profile has to be switched to a service-area listing
+ * with the address hidden — otherwise Google publishes it regardless.
  */
 
 export const BUSINESS = {
@@ -54,21 +66,6 @@ export const SAME_AS: string[] = [
 ];
 
 /**
- * Certifications held by the practice, described so they are machine-readable
- * rather than only an image with alt text. For a small professional practice a
- * verifiable credential is one of the few hard expertise signals available, and
- * Google's quality guidance leans heavily on demonstrable expertise for
- * anything financial.
- *
- * These are the practice's, not a named individual's. There is deliberately no
- * `Person` entry anywhere in the structured data: the practitioners are not
- * listed on the site, and JSON-LD is published page source, so naming them
- * there would publish them just as surely as printing them in the footer.
- *
- * Only add a credential that is actually held and currently valid. Overstating
- * one is worse than listing none, and certifications lapse.
- */
-/**
  * The people who do the work.
  *
  * Named at the client's direction, and exactly as directed: Tina by first name
@@ -77,11 +74,24 @@ export const SAME_AS: string[] = [
  *
  * They are emitted as `employee` rather than `founder` because that is true
  * regardless of who incorporated the practice; switch it if `founder` is
- * accurate. Certifications stay attached to the practice rather than to a
- * person, since which of them holds which is not recorded here.
+ * accurate.
  */
 export const PEOPLE = [{ name: 'Tina' }, { name: 'Kevin Feng' }] as const;
 
+/**
+ * Certifications held by the practice, described so they are machine-readable
+ * rather than only an image with alt text. For a small professional practice a
+ * verifiable credential is one of the few hard expertise signals available, and
+ * Google's quality guidance leans heavily on demonstrable expertise for
+ * anything financial.
+ *
+ * These are attached to the practice, not to a named individual — which of the
+ * two people above holds which is not recorded here, and guessing would be
+ * publishing a claim about a real person.
+ *
+ * Only add a credential that is actually held and currently valid. Overstating
+ * one is worse than listing none, and certifications lapse.
+ */
 export const CREDENTIALS = [
   { name: 'QuickBooks Online Advanced ProAdvisor', issuer: 'Intuit' },
   { name: 'Intuit Payroll Certification', issuer: 'Intuit' },

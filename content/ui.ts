@@ -11,6 +11,18 @@
  */
 
 export const UI = {
+  /**
+   * Where the practice is, as shown to a reader — footer NAP block and the
+   * contact page. Copy rather than a read of BUSINESS.addressLocality, because
+   * this is the one NAP field that should be translated: on a Chinese page it
+   * reads 西温哥华，卑诗省. The machine-readable form stays English in the JSON-LD,
+   * which is what Google matches against the Business Profile, so translating
+   * the visible string costs no NAP consistency.
+   *
+   * No street or postal code here by design — see content/business.ts.
+   */
+  locality: 'West Vancouver, BC',
+
   header: {
     backToTop: 'Orbis Accounting, back to top',
     services: 'Services',
