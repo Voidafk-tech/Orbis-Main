@@ -4,6 +4,10 @@
    Two backgrounds only (ink / chart), hairline rules instead of shadows.
    ========================================================================= */
 
+/* Self-hosted webfaces. Vite inlines this into the bundled stylesheet, so it
+   costs no extra request — see scripts/fetch-fonts.mjs. */
+@import './fonts.css';
+
 :root {
   /* Color */
   --ink: #0a0c0a;

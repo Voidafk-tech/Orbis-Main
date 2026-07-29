@@ -42,11 +42,16 @@
 
     <link rel="canonical" href="https://www.orbisaccounting.ca/" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fonts are self-hosted (scripts/fetch-fonts.mjs), so there is no
+         third-party stylesheet on the critical path. Only the face used by the
+         largest above-the-fold text is preloaded; the rest load with the CSS.
+         crossorigin is required even same-origin, or the fetch is duplicated. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/instrument-serif-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
 
     <!-- Injected per route by scripts/prerender.mjs. -->

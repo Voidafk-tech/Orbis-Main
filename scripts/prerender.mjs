@@ -35,6 +35,7 @@ const {
   AGGREGATE_RATING,
   AREAS_SERVED,
   BUSINESS,
+  CREDENTIAL,
   SAME_AS,
   CONTACT,
   FAQS,
@@ -165,6 +166,12 @@ const organisation = {
     name: 'Monthly bookkeeping plans',
     itemListElement: [...planOffers, ...oneTimeOffers],
   },
+  hasCredential: {
+    '@type': 'EducationalOccupationalCredential',
+    credentialCategory: 'certification',
+    name: CREDENTIAL.name,
+    recognizedBy: { '@type': 'Organization', name: CREDENTIAL.issuer },
+  },
   // Both are omitted entirely rather than emitted empty: a `sameAs: []` or a
   // zero-count rating is a worse signal than saying nothing.
   ...(SAME_AS.length > 0 ? { sameAs: SAME_AS } : {}),
@@ -177,6 +184,21 @@ const organisation = {
         },
       }
     : {}),
+};
+
+/**
+ * Emitted on the home page only. This is what lets Google show the site name
+ * above a result rather than a bare domain. No `potentialAction` search box:
+ * the site has no search, and claiming one that does not exist is a defect.
+ */
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE}/#website`,
+  url: `${SITE}/`,
+  name: BUSINESS.name,
+  inLanguage: 'en-CA',
+  publisher: { '@id': `${SITE}/#practice` },
 };
 
 /**
@@ -236,6 +258,7 @@ for (const route of ROUTES) {
 
   const schema = [
     organisation,
+    ...(route.path === '/' ? [website] : []),
     ...(route.crumb ? [breadcrumbFor(route)] : []),
     ...(route.faq ? [faqPageFor(route.faq)] : []),
   ];
@@ -350,14 +373,9 @@ const lastmod = new Date().toISOString().slice(0, 10);
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${ROUTES.map((route) =>
-  [
-    '  <url>',
-    `    <loc>${urlFor(route.path)}</loc>`,
-    `    <lastmod>${lastmod}</lastmod>`,
-    `    <changefreq>${route.changefreq}</changefreq>`,
-    `    <priority>${route.priority}</priority>`,
-    '  </url>',
-  ].join('\n'),
+  ['  <url>', `    <loc>${urlFor(route.path)}</loc>`, `    <lastmod>${lastmod}</lastmod>`, '  </url>'].join(
+    '\n',
+  ),
 ).join('\n')}
 </urlset>
 `;

@@ -46,7 +46,22 @@ export const BUSINESS = {
  * Every URL here must genuinely be this business. `sameAs` pointing at
  * something that is not us is a spam signal, not a boost.
  */
-export const SAME_AS: string[] = [];
+export const SAME_AS: string[] = [
+  // Google Business Profile. A share.google shortlink resolves fine, but a
+  // canonical https://www.google.com/maps/place/… URL is more durable — swap it
+  // in if one is to hand, since shortlinks can rot.
+  'https://share.google/AP3Klv3AoRDpdiH51',
+];
+
+/**
+ * The certification, described so it is machine-readable rather than only an
+ * image with alt text. For a solo professional practice a verifiable credential
+ * is one of the few hard expertise signals available.
+ */
+export const CREDENTIAL = {
+  name: 'QuickBooks Online Advanced ProAdvisor',
+  issuer: 'Intuit',
+} as const;
 
 /**
  * Places named individually in the structured data. Google matches a query's

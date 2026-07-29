@@ -98,6 +98,20 @@ status for any path that was not prerendered. It replaced a redirect script that
 bounced unknown URLs to the home page — that made every dead link a soft 404,
 which Google reports as an error and which hides genuinely broken links.
 
+### GitHub Pages constraints
+
+Worth knowing before proposing anything that assumes a server:
+
+- **No server-side redirects.** A URL change needs a prerendered stub carrying a
+  canonical and a meta refresh (see `REDIRECTS`), which passes less signal than a
+  301. Choose URLs carefully the first time; changing them later is expensive.
+- **No custom response headers.** `Cache-Control` cannot be tuned. Vite's content
+  hashing covers the bundles; the files in `public/` are served unhashed, which
+  is why the font filenames are stable and safe to preload.
+- **`404.html` returns a real 404 status**, and prerendered routes return 200.
+  Verify that on the deployed site, not against `npm run preview`, which serves
+  `index.html` with a 200 for unknown paths.
+
 ### The canonical hostname
 
 `public/CNAME` and the `SITE` constant in `scripts/prerender.mjs` must name the
@@ -142,6 +156,28 @@ There is more than one FAQ: the home page answers the questions everyone asks,
 recognise. Set it only on a route that actually renders those questions —
 structured data describing content the visitor cannot see is a guidelines
 violation.
+
+## Fonts
+
+The three families are self-hosted in `public/fonts/`, Latin subset only, and
+declared in the generated `fonts.css` which `index.css` imports. Vite inlines
+that import into the bundled stylesheet, so it costs no extra request.
+
+They used to load from `fonts.googleapis.com`, which put a render-blocking
+stylesheet plus DNS and TLS to a second origin on the critical path before any
+glyph could paint — the most expensive thing on the page for LCP, on a design
+that is almost entirely type.
+
+```bash
+node scripts/fetch-fonts.mjs   # re-run only to add a weight or a family
+```
+
+Archivo and JetBrains Mono are variable fonts: one file each covers their whole
+weight range, which is why there are four files and not eight. Only
+`instrument-serif-latin.woff2` is preloaded — it sets the `h1`, the largest text
+above the fold. Preloading more would compete with it for bandwidth.
+
+All three families are OFL-1.1; see `public/fonts/OFL-NOTICE.txt`.
 
 ## The link-preview image
 

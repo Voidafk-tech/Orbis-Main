@@ -11,7 +11,7 @@
 
 export const CONTACT = {
   email: 'info@orbisaccounting.ca',
-  phone: '604-203-7799',
+  phone: '(604) 203-7799',
   phoneHref: 'tel:+16042037799',
   locality: 'West Vancouver, BC',
   tagline: 'Bookkeeping for BC small business · West Vancouver, BC',

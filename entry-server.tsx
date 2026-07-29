@@ -20,4 +20,4 @@ export function render(url: string): string {
 export { CONTACT, FAQS, SERVICES, TIERS } from './content/site';
 export { REMOTE_FAQS } from './content/pages';
 export { ROUTES, REDIRECTS, NOT_FOUND_META } from './content/routes';
-export { AGGREGATE_RATING, AREAS_SERVED, BUSINESS, SAME_AS } from './content/business';
+export { AGGREGATE_RATING, AREAS_SERVED, BUSINESS, CREDENTIAL, SAME_AS } from './content/business';

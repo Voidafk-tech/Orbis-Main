@@ -20,9 +20,14 @@ export interface RouteMeta {
   priority: string;
   changefreq: 'monthly' | 'yearly';
   /**
-   * Which FAQ set this page renders, if any. Drives the FAQPage JSON-LD, and
-   * must only be set on a route that actually shows those questions —
-   * structured data describing content a visitor cannot see is a violation.
+   * Which FAQ set this page's JSON-LD should declare, if any. Must only be set
+   * on a route that actually shows those questions — structured data describing
+   * content a visitor cannot see is a violation.
+   *
+   * Only the home page sets it, and only because the markup was already there
+   * and is now generated rather than hand-maintained. Do not add it to a new
+   * page: FAQ rich results were withdrawn on 7 May 2026, so it produces no
+   * search feature and is pure weight.
    */
   faq?: 'home' | 'remote';
   /**
@@ -38,7 +43,7 @@ export const ROUTES: RouteMeta[] = [
     path: '/',
     title: 'Bookkeeping Services in Vancouver & BC | Fixed Monthly',
     description:
-      'Fixed monthly bookkeeping for BC small business, from West Vancouver. GST and PST both filed. Three plans sized to your transaction volume, with a written quote in one business day.',
+      'Fixed monthly bookkeeping for BC small business, from West Vancouver. GST and PST both filed, plans sized to your volume, a written quote in one day.',
     priority: '1.0',
     changefreq: 'monthly',
     faq: 'home',
@@ -56,17 +61,19 @@ export const ROUTES: RouteMeta[] = [
     path: '/remote-bookkeeping',
     title: 'Remote & Virtual Bookkeeping in BC | Orbis Accounting',
     description:
-      'Remote bookkeeping for BC small business — no drop-offs, no office visit. How the work actually happens online, what a month looks like, and what it costs you to go remote.',
+      'Remote bookkeeping for BC small business. No drop-offs and no office visit — how the work happens online, what a month looks like, and what it costs you.',
     priority: '0.9',
     changefreq: 'monthly',
     crumb: 'Remote bookkeeping',
-    faq: 'remote',
+    // The page renders its own FAQ, but deliberately carries no FAQPage markup.
+    // Google stopped showing FAQ rich results on 7 May 2026, so adding the
+    // schema to a new page buys nothing; the questions are there for readers.
   },
   {
     path: '/pricing',
     title: 'What Does a Bookkeeper Cost in BC? Plans & Pricing',
     description:
-      'What a bookkeeper costs in BC, what moves the number, and how our fixed monthly plans are scoped. A written quote within one business day, and no hourly billing.',
+      'What a bookkeeper costs in BC, what moves the number, and how our fixed monthly plans are scoped. A written quote in one business day, and no hourly billing.',
     priority: '0.9',
     changefreq: 'monthly',
     crumb: 'Plans and pricing',
@@ -75,7 +82,7 @@ export const ROUTES: RouteMeta[] = [
     path: '/contact',
     title: 'Get a Plan and a Quote | Orbis Accounting',
     description:
-      'Tell us where your books stand and get a written plan and a fixed monthly price within one business day. No sales call, no obligation.',
+      'Tell us where your books stand and get a written plan and a fixed monthly price within one business day. No sales call, and nothing set up until you say yes.',
     priority: '0.9',
     changefreq: 'monthly',
     crumb: 'Contact',
@@ -83,7 +90,8 @@ export const ROUTES: RouteMeta[] = [
   {
     path: '/privacy-policy',
     title: 'Privacy Policy | Orbis Accounting',
-    description: 'How Orbis Accounting collects, uses and protects your information.',
+    description:
+      'How Orbis Accounting collects, uses and protects your information, what the enquiry form does with what you send, and what website analytics records.',
     priority: '0.2',
     changefreq: 'yearly',
     crumb: 'Privacy policy',
@@ -91,7 +99,8 @@ export const ROUTES: RouteMeta[] = [
   {
     path: '/terms-of-service',
     title: 'Terms of Service | Orbis Accounting',
-    description: 'The terms that apply to bookkeeping engagements with Orbis Accounting.',
+    description:
+      'The terms that apply to bookkeeping engagements with Orbis Accounting: scope of work, fees, the responsibilities on both sides, and how an engagement ends.',
     priority: '0.2',
     changefreq: 'yearly',
     crumb: 'Terms of service',
