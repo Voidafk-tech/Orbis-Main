@@ -68,6 +68,12 @@ type. GitHub Pages cannot issue a 301 and a client-side redirect only runs after
 a 404 has already been served, so each one is written out as a stub carrying a
 canonical to its destination and a zero-delay meta refresh.
 
+One thing `npm run preview` does not reproduce: for an unknown path it serves
+`index.html` with a 200, where GitHub Pages serves `404.html` with a real 404.
+Locally that shows up as the home page's markup hydrating into the 404
+component, which logs a hydration warning. It does not happen in production —
+check a deployed URL, not the preview server, when testing 404 behaviour.
+
 GitHub Actions publishes `dist/` to GitHub Pages on every push to `main`
 (`.github/workflows/deploy.yml`). `dist/404.html` is the app's own 404 page,
 rendered through the same layout, and GitHub Pages serves it with a real 404

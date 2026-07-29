@@ -306,10 +306,6 @@ figure {
   padding: 96px var(--pad-x) 0;
 }
 
-.hero__eyebrow {
-  margin-bottom: 26px;
-}
-
 /* Sits inside the h1, so it has to reset the display face it inherits. */
 .h1__eyebrow {
   display: block;

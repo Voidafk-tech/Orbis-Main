@@ -14,6 +14,7 @@ const MarqueeHalf: React.FC<{ hidden?: boolean }> = ({ hidden }) => (
         <img
           key={`${pass}-${logo.alt}`}
           src={logo.src}
+          width={logo.width}
           height={logo.height}
           style={{ height: `${logo.height}px` }}
           alt={hidden || pass === 1 ? '' : logo.alt}

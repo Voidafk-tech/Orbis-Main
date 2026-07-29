@@ -17,13 +17,21 @@ const TITLES: Record<string, string> = Object.fromEntries(
   ROUTES.map((route) => [route.path, route.title]),
 );
 
+/**
+ * Prerendering writes `services/index.html`, so the canonical URL — and the one
+ * GitHub Pages actually serves — is `/services/`. ROUTES keys have no trailing
+ * slash, so looking up the raw pathname misses on every page but the home page
+ * and falls through to the not-found title.
+ */
+const routeKey = (pathname: string) => pathname.replace(/(.)\/+$/, '$1');
+
 const App: React.FC = () => {
   const location = useLocation();
 
   useScrollReveal(location.pathname);
 
   useEffect(() => {
-    document.title = TITLES[location.pathname] ?? NOT_FOUND_META.title;
+    document.title = TITLES[routeKey(location.pathname)] ?? NOT_FOUND_META.title;
   }, [location.pathname]);
 
   // Anchors arriving from another route need scrolling by hand; plain

@@ -106,14 +106,26 @@ const planOffers = TIERS.map((tier) => ({
   },
 }));
 
-/** The two pieces of one-time work, taken from the same list the page renders. */
-const oneTimeOffers = SERVICES.filter((service) =>
-  ['Software setup and migration', 'Catch-up bookkeeping'].includes(service.h),
-).map((service) => ({
-  '@type': 'Offer',
-  name: service.h,
-  itemOffered: { '@type': 'Service', name: service.h, description: service.p },
-}));
+/**
+ * The two pieces of one-time work, taken from the same list the page renders.
+ * Matched by heading text, so this throws rather than silently dropping them
+ * from the catalogue if the wording in content/site.ts is edited.
+ */
+const ONE_TIME_WORK = ['Software setup and migration', 'Catch-up bookkeeping'];
+
+const oneTimeOffers = ONE_TIME_WORK.map((heading) => {
+  const service = SERVICES.find((candidate) => candidate.h === heading);
+  if (!service) {
+    throw new Error(
+      `prerender: no service headed "${heading}" in content/site.ts — update ONE_TIME_WORK to match`,
+    );
+  }
+  return {
+    '@type': 'Offer',
+    name: service.h,
+    itemOffered: { '@type': 'Service', name: service.h, description: service.p },
+  };
+});
 
 /**
  * The practice itself. Emitted on every route — organisation-level markup is

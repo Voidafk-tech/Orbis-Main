@@ -46,8 +46,8 @@ const ServicesPage: React.FC = () => (
 
             <div className="detail__body">
               <p className="detail__summary">{service.summary}</p>
-              {service.detail.map((paragraph) => (
-                <p key={paragraph.slice(0, 40)} className="detail__p">
+              {service.detail.map((paragraph, j) => (
+                <p key={j} className="detail__p">
                   {paragraph}
                 </p>
               ))}
@@ -65,8 +65,8 @@ const ServicesPage: React.FC = () => (
         </div>
 
         <div className="reveal">
-          {SERVICES_BOUNDARY.body.map((paragraph) => (
-            <p key={paragraph.slice(0, 40)} className="detail__p">
+          {SERVICES_BOUNDARY.body.map((paragraph, i) => (
+            <p key={i} className="detail__p">
               {paragraph}
             </p>
           ))}

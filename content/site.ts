@@ -118,13 +118,18 @@ export const SERVICES = [
 /**
  * Platform marquee. Heights are individually tuned for optical balance —
  * they are not meant to be normalized to one value.
+ *
+ * `width` is the rendered height scaled by each file's real aspect ratio. It is
+ * there to reserve the space before the image loads: these are lazy-loaded, and
+ * without a width they occupy nothing and then shove the row sideways on load.
+ * Recalculate it if a logo file is replaced.
  */
 export const PLATFORMS = [
-  { src: '/logos/logo-quickbooks.png', alt: 'QuickBooks', height: 30 },
-  { src: '/logos/logo-xero.png', alt: 'Xero', height: 33 },
-  { src: '/logos/logo-sage50.png', alt: 'Sage 50', height: 27 },
-  { src: '/logos/logo-shopify.png', alt: 'Shopify', height: 25 },
-  { src: '/logos/logo-stripe.png', alt: 'Stripe', height: 23 },
+  { src: '/logos/logo-quickbooks.png', alt: 'QuickBooks', height: 30, width: 137 },
+  { src: '/logos/logo-xero.png', alt: 'Xero', height: 33, width: 33 },
+  { src: '/logos/logo-sage50.png', alt: 'Sage 50', height: 27, width: 77 },
+  { src: '/logos/logo-shopify.png', alt: 'Shopify', height: 25, width: 87 },
+  { src: '/logos/logo-stripe.png', alt: 'Stripe', height: 23, width: 55 },
 ] as const;
 
 export const STEPS = [
