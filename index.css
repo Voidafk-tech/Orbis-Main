@@ -586,6 +586,12 @@ figure {
   .hero-seq.is-live .hero-seq__acts {
     min-height: min(40vh, 300px);
   }
+
+  /* At this width the rail sits half a gutter from the edge, over the content
+     rather than beside it, and a phone gives its own scroll feedback anyway. */
+  .hero-seq.is-live .hero-seq__rail {
+    display: none;
+  }
 }
 
 /* Belt and braces: the effect already declines to add `is-live` under a
@@ -2302,6 +2308,14 @@ figure {
    typo. CJK headlines keep the stack at every width. */
 :lang(zh) .h1--wide em {
   display: block;
+}
+
+/* The act headings need both halves of the same treatment: no synthesised
+   slant, and no Latin space opened up between the two halves by the join in
+   the markup — Chinese sets none, so the gap reads as a typo. */
+:lang(zh) .hero-seq__act-h em {
+  display: block;
+  font-style: normal;
 }
 
 /* ---------- GST/PST comparison -------------------------------------------- */
