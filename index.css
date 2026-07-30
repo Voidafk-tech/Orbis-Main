@@ -144,9 +144,28 @@ figure {
   margin: 0 0 30px;
 }
 
+/*
+ * The green phrase is the back half of the headline and reads as a single unit,
+ * so by default it takes its own line — the two-line stack the design was drawn
+ * to. This replaces the hard <br> that used to sit in the markup: the break is
+ * width-dependent, so it belongs here rather than in six components.
+ */
 .h1 em {
+  display: block;
   font-style: italic;
   color: var(--green);
+}
+
+/*
+ * Headlines short enough to sit on one line at desktop widths opt in with
+ * .h1--wide, which is what reclaims the empty right half of the hero. Below
+ * this the headline stops fitting and free wrapping splits the green phrase
+ * mid-thought, so the block default puts the break back where it belongs.
+ */
+@media (min-width: 1024px) {
+  .h1--wide em {
+    display: inline;
+  }
 }
 
 .h2 {
@@ -304,8 +323,14 @@ figure {
 
 /* ---------- Hero ---------------------------------------------------------- */
 
+/*
+ * The horizontal padding sits *inside* the cap, so the content box resolves to
+ * 1120px — the same column .sec > .inner lands on. Capping the block itself at
+ * 1120px instead leaves a 1040px content box, which inset every hero 40px
+ * further than the trust strip and every section below it.
+ */
 .hero {
-  max-width: 1120px;
+  max-width: calc(1120px + var(--pad-x) * 2);
   margin: 0 auto;
   padding: 96px var(--pad-x) 0;
 }
@@ -318,10 +343,13 @@ figure {
   margin-bottom: 26px;
 }
 
+/* 66ch rather than the handoff's 56ch: at 56ch the subhead stopped barely past
+   the halfway point of the column and left the right side of every hero empty.
+   66ch is still inside the 45–75ch band where line length stays comfortable. */
 .hero__sub {
   font: 400 19.5px/1.56 var(--sans);
   color: var(--slate-light);
-  max-width: 56ch;
+  max-width: 66ch;
 }
 
 .hero__cta {
@@ -330,14 +358,6 @@ figure {
   align-items: center;
   gap: 22px;
   margin-top: 40px;
-}
-
-.hero__reassure {
-  font: 400 11px/1.4 var(--mono);
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--slate);
-  max-width: 22ch;
 }
 
 /*
@@ -931,6 +951,21 @@ figure {
   color: var(--slate-light);
   max-width: 44ch;
   margin-top: 22px;
+}
+
+/*
+ * The one-business-day promise. It used to run under all six page heroes as
+ * 11px uppercase mono in --slate: the strongest commitment on the site set in
+ * its faintest type, three wrapped lines beside the loudest element on the
+ * page. It appears once now, at the point of conversion, in chart.
+ */
+.intake__reassure {
+  font: 500 19px/1.5 var(--sans);
+  color: var(--chart);
+  max-width: 38ch;
+  /* Two evenly weighted lines rather than a full line and an orphaned pair. */
+  text-wrap: balance;
+  margin-top: 20px;
 }
 
 .intake__contact {
@@ -1978,17 +2013,18 @@ figure {
   letter-spacing: 0.04em;
 }
 
-:lang(zh) .hero__reassure {
-  text-transform: none;
-  letter-spacing: 0.04em;
-  max-width: 30ch;
-}
-
 /* Han characters have no italic form, so `font-style: italic` makes the browser
    synthesise a slant — which reads as a rendering fault, not as emphasis. The
    colour already carries the distinction the italic carries in English. */
 :lang(zh) .h1 em {
   font-style: normal;
+}
+
+/* Chinese sets no space between the two halves — the full-width comma already
+   carries the pause — so joining them onto one line opens a gap that reads as a
+   typo. CJK headlines keep the stack at every width. */
+:lang(zh) .h1--wide em {
+  display: block;
 }
 
 /* ---------- GST/PST comparison -------------------------------------------- */

@@ -19,7 +19,7 @@ const ContactPage: React.FC = () => {
 
   return (
     <>
-      <Intake headingLevel="h1" />
+      <Intake headingLevel="h1" reassurance />
 
       <section className="sec sec--rule">
         <div className="inner">

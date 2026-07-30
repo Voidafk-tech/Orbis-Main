@@ -5,9 +5,15 @@ import { useCopy } from '../LocaleContext';
 interface IntakeProps {
   /** The standalone contact route needs this heading to be the page h1. */
   headingLevel?: 'h1' | 'h2';
+  /**
+   * The one-business-day promise. It ran under all six page heroes as faint
+   * mono microcopy; it now appears in exactly one place, on /contact, where
+   * someone is deciding whether to actually send the form.
+   */
+  reassurance?: boolean;
 }
 
-const Intake: React.FC<IntakeProps> = ({ headingLevel = 'h2' }) => {
+const Intake: React.FC<IntakeProps> = ({ headingLevel = 'h2', reassurance = false }) => {
   const copy = useCopy();
   const { intake } = copy.ui;
   const { CONTACT } = copy.site;
@@ -24,6 +30,7 @@ const Intake: React.FC<IntakeProps> = ({ headingLevel = 'h2' }) => {
             {intake.headlineSecond}
           </Heading>
           <p className="intake__p">{intake.p}</p>
+          {reassurance && <p className="intake__reassure">{copy.ui.hero.reassure}</p>}
 
           <div className="intake__contact">
             <div>
