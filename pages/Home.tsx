@@ -1,5 +1,6 @@
 import React from 'react';
-import Hero from '../components/sections/Hero';
+import HeroSequence from '../components/sections/HeroSequence';
+import TrustStrip from '../components/sections/TrustStrip';
 import Pains from '../components/sections/Pains';
 import WhyOrbis from '../components/sections/WhyOrbis';
 import Services from '../components/sections/Services';
@@ -16,7 +17,8 @@ import Intake from '../components/sections/Intake';
  */
 const Home: React.FC = () => (
   <>
-    <Hero />
+    <HeroSequence />
+    <TrustStrip />
     <Pains />
     <WhyOrbis />
     <Services />

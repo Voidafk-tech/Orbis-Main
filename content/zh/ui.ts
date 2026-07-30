@@ -51,6 +51,32 @@ export const UI: Widen<typeof EnUI> = {
     reassure: '一个工作日内提供书面方案与价格',
   },
 
+  /** Eyebrows reuse the existing section translations verbatim, so the acts
+      cannot drift from the sections they preview. */
+  heroSequence: {
+    skip: '跳过开场动画',
+    acts: [
+      {
+        eyebrow: '通常的状况',
+        headline: '两年的单据，',
+        headlineEm: '装在一个箱子里。',
+        p: '记账是经营生意当中，唯一没有人替你事先安排好的部分。',
+      },
+      {
+        eyebrow: '为什么选 Orbis',
+        headline: '每个月，',
+        headlineEm: '都由同一个人处理。',
+        p: '你不必每个季度都向一个新的名字重新解释自己的生意。',
+      },
+      {
+        eyebrow: '我们负责什么',
+        headline: '每一笔交易，',
+        headlineEm: '都归好类。',
+        p: '每个账户都对过账，月度账目按时关账，而不是一直挂着。',
+      },
+    ],
+  },
+
   pains: {
     eyebrow: '通常的状况',
     h2: '四件你多半正在忍受的事。',
