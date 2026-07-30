@@ -30,6 +30,10 @@ export const UI = {
     questions: 'Questions',
     ctaFull: 'Get a plan and a quote',
     ctaShort: 'Get a quote',
+    // Below 480px the phone number collapses to an icon to fit the row. The
+    // number is still announced — this labels the link so it does not read as
+    // a bare image to a screen reader.
+    call: 'Call',
   },
 
   footer: {
