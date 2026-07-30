@@ -21,10 +21,9 @@ const GstPstPage: React.FC = () => {
   return (
     <>
       <div className="hero reveal">
-        <h1 className="h1">
+        <h1 className="h1 h1--wide">
           <span className="eyebrow h1__eyebrow">{t.eyebrow}</span>
-          {t.headline}
-          <br />
+          {t.headline}{' '}
           <em>{t.headlineEm}</em>
         </h1>
 
@@ -34,7 +33,6 @@ const GstPstPage: React.FC = () => {
           <Link to={path('/contact')} className="btn btn--primary">
             {copy.ui.hero.cta}
           </Link>
-          <p className="hero__reassure">{copy.ui.hero.reassure}</p>
         </div>
       </div>
 
