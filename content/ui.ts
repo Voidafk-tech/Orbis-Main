@@ -66,6 +66,37 @@ export const UI = {
     reassure: 'A written plan and a price within one business day',
   },
 
+  /**
+   * The three acts the scroll sequence moves through before it reveals the
+   * hero headline. They are narrative, not navigation — the same ground the
+   * Pains, Why and Services sections cover, compressed to one line each so the
+   * pile on screen has something to be about.
+   */
+  heroSequence: {
+    /** The chevron is a link; this names it for keyboard and screen reader. */
+    cue: 'See how it works',
+    acts: [
+      {
+        eyebrow: 'Where it usually stands',
+        headline: 'Two years of receipts',
+        headlineEm: 'in a box.',
+        p: 'The books are the one part of running a business that nobody set up for you.',
+      },
+      {
+        eyebrow: 'Why Orbis',
+        headline: 'One person does your books,',
+        headlineEm: 'every month.',
+        p: 'You are not re-explaining your business to a new name each quarter.',
+      },
+      {
+        eyebrow: 'What we handle',
+        headline: 'Every transaction',
+        headlineEm: 'categorized.',
+        p: 'Every account reconciled, and the month closed rather than left open indefinitely.',
+      },
+    ],
+  },
+
   pains: {
     eyebrow: 'Where it usually stands',
     h2: 'Four things you are probably already living with.',

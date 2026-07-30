@@ -335,6 +335,289 @@ figure {
   padding: 96px var(--pad-x) 0;
 }
 
+/* ---------- Hero scroll sequence ------------------------------------------
+ *
+ * Everything here is opt-in. Without `is-live` — no script, no 2D context, or
+ * a reduced-motion preference — .hero-seq is an ordinary hero block and the
+ * acts and canvas are not rendered at all. That is the state the prerender
+ * bakes into dist/, so the homepage degrades to precisely what it was.
+ *
+ * Note the class is `hero-seq__reveal`, not `reveal`: `.reveal` is already the
+ * site-wide scroll-reveal hook in useScrollReveal.ts.
+ * ------------------------------------------------------------------------- */
+
+/* Without `is-live` the sequence contributes nothing to the page: Hero above it
+   has already made every point it makes. */
+.hero-seq__acts,
+.hero-seq__scene,
+.hero-seq__rail,
+.hero-seq__reveal {
+  display: none;
+}
+
+/* The chevron at the foot of the first screen. Hidden until its script runs,
+   so it never appears without the behaviour that retires it. */
+.scroll-cue {
+  display: none;
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  z-index: 50;
+  translate: -50% 0;
+  padding: 10px;
+  color: var(--slate);
+  transition: opacity 400ms ease, translate 400ms ease, color 150ms ease;
+}
+
+.scroll-cue.is-live {
+  display: block;
+}
+
+.scroll-cue:hover {
+  color: var(--green-text);
+}
+
+.scroll-cue svg {
+  display: block;
+  width: 22px;
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: cue-nudge 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Gone the moment the reader has scrolled at all — it has made its point. */
+.scroll-cue.is-gone {
+  opacity: 0;
+  translate: -50% 8px;
+  pointer-events: none;
+}
+
+@keyframes cue-nudge {
+  0%,
+  62%,
+  100% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue {
+    display: none;
+  }
+}
+
+.hero-seq.is-live {
+  position: relative;
+  /* Five and a half screens of travel. The act boundaries in
+     heroSequenceScene.ts are fractions of this, so retiming is done there. */
+  height: 560vh;
+}
+
+.hero-seq.is-live .hero-seq__pin {
+  position: sticky;
+  top: var(--header-h);
+  height: calc(100vh - var(--header-h));
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(20px, 4vw, 64px);
+  max-width: calc(1120px + var(--pad-x) * 2);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+
+.hero-seq.is-live .hero-seq__acts {
+  display: block;
+  position: relative;
+  min-height: min(58vh, 420px);
+  z-index: 2;
+  transition: opacity 550ms ease, transform 550ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.hero-seq.is-live .hero-seq__act {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  transition: opacity 500ms ease, transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 500ms;
+}
+
+.hero-seq__act-h {
+  margin-top: 24px;
+}
+
+.hero-seq__act-h em {
+  font-style: italic;
+  color: var(--green);
+}
+
+.hero-seq__act-p {
+  font: 400 clamp(15px, 1.4vw, 18px) / 1.58 var(--sans);
+  color: var(--slate-light);
+  max-width: 44ch;
+  margin-top: 22px;
+}
+
+.hero-seq.is-live .hero-seq__scene {
+  display: block;
+  position: relative;
+  height: min(76vh, 620px);
+  transition: opacity 600ms ease, transform 600ms ease;
+}
+
+.hero-seq__scene canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The progress rail. Reads as an instrument rather than a scrollbar, and
+   exists only while the section is pinned. */
+.hero-seq.is-live .hero-seq__rail {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: calc(var(--pad-x) / 2);
+  translate: 0 -50%;
+  width: 1px;
+  height: min(46vh, 320px);
+  background: var(--hair);
+  z-index: 3;
+}
+
+.hero-seq__rail-fill {
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 3px;
+  height: 0;
+  background: var(--green);
+}
+
+/* Inboard of the rail: outside it there is only the pin's padding, and the pin
+   clips its overflow, which crops the readout to a single digit. */
+.hero-seq__rail-pct {
+  position: absolute;
+  right: 12px;
+  top: 0;
+  font: 400 10px/1 var(--mono);
+  letter-spacing: 0.12em;
+  color: var(--slate);
+  white-space: nowrap;
+  translate: 0 -3px;
+}
+
+/* The payoff sits across the whole pin rather than in the text column, so the
+   line lands as a full-width moment instead of a fourth act. */
+.hero-seq.is-live .hero-seq__reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  max-width: none;
+  margin: 0;
+  padding: 0 var(--pad-x);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(18px);
+  transition: opacity 600ms ease, transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 600ms;
+}
+
+.hero-seq__line {
+  text-wrap: balance;
+}
+
+/* One act on screen at a time, and the reveal only at the end. */
+.hero-seq.is-live .hero-seq__pin[data-act='0'] .hero-seq__act[data-act='0'],
+.hero-seq.is-live .hero-seq__pin[data-act='1'] .hero-seq__act[data-act='1'],
+.hero-seq.is-live .hero-seq__pin[data-act='2'] .hero-seq__act[data-act='2'] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.hero-seq.is-live .hero-seq__pin[data-act='3'] .hero-seq__reveal {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.hero-seq.is-live .hero-seq__pin[data-act='3'] .hero-seq__acts {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* A ghost, not a backdrop: any more and the ledger reads through the headline. */
+.hero-seq.is-live .hero-seq__pin[data-act='3'] .hero-seq__scene {
+  opacity: 0.07;
+  transform: scale(1.06);
+}
+
+@media (max-width: 900px) {
+  .hero-seq.is-live .hero-seq__pin {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    align-content: center;
+    gap: 20px;
+  }
+
+  .hero-seq.is-live .hero-seq__scene {
+    height: min(38vh, 300px);
+    order: -1;
+  }
+
+  .hero-seq.is-live .hero-seq__acts {
+    min-height: min(40vh, 300px);
+  }
+
+  /* At this width the rail sits half a gutter from the edge, over the content
+     rather than beside it, and a phone gives its own scroll feedback anyway. */
+  .hero-seq.is-live .hero-seq__rail {
+    display: none;
+  }
+}
+
+/* Belt and braces: the effect already declines to add `is-live` under a
+   reduced-motion preference, but a preference changed after load must not
+   leave a pinned scroller behind. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-seq.is-live {
+    height: auto;
+  }
+
+  .hero-seq.is-live .hero-seq__pin {
+    position: static;
+    height: auto;
+    display: block;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .hero-seq.is-live .hero-seq__acts,
+  .hero-seq.is-live .hero-seq__scene,
+  .hero-seq.is-live .hero-seq__rail,
+  .hero-seq.is-live .hero-seq__reveal {
+    display: none;
+  }
+}
+
 /* Sits inside the h1, so it has to reset the display face it inherits. */
 .h1__eyebrow {
   display: block;
@@ -2001,6 +2284,14 @@ figure {
    typo. CJK headlines keep the stack at every width. */
 :lang(zh) .h1--wide em {
   display: block;
+}
+
+/* The act headings need both halves of the same treatment: no synthesised
+   slant, and no Latin space opened up between the two halves by the join in
+   the markup — Chinese sets none, so the gap reads as a typo. */
+:lang(zh) .hero-seq__act-h em {
+  display: block;
+  font-style: normal;
 }
 
 /* ---------- GST/PST comparison -------------------------------------------- */
