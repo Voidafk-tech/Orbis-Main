@@ -38,6 +38,7 @@ const ServicesPage: React.FC = () => {
               <div className="detail__aside">
                 <span className="service__n">{service.n}</span>
                 <h2 className="detail__h">{service.h}</h2>
+                <p className="micro detail__who">{service.forWho}</p>
               </div>
 
               <div className="detail__body">

@@ -437,6 +437,13 @@ figure {
   align-items: start;
 }
 
+.why__p {
+  font: 400 17px/1.6 var(--sans);
+  color: var(--paper-intro);
+  max-width: 40ch;
+  margin-top: 22px;
+}
+
 .why-row {
   display: grid;
   grid-template-columns: 34px 1fr;
@@ -705,7 +712,7 @@ figure {
   border-top: 1px solid var(--hair-paper);
   padding-top: 32px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 40px;
   align-items: start;
 }
@@ -724,10 +731,21 @@ figure {
   color: var(--paper-ink);
 }
 
+.fine-print {
+  font: 400 13px/1.6 var(--mono);
+  color: var(--paper-muted);
+}
+
 /* ---------- GST / PST ----------------------------------------------------- */
 
 .split--tax {
   grid-template-columns: 1fr 1.2fr;
+}
+
+.tax__p {
+  font: 400 16.5px/1.6 var(--sans);
+  color: var(--slate-light);
+  margin-top: 22px;
 }
 
 .tax-pair {
@@ -1264,11 +1282,13 @@ figure {
   .services,
   .steps,
   .tiers,
-  .trust {
+  .trust,
+  .pricing-notes {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .trust {
+  .trust,
+  .pricing-notes {
     gap: 40px;
   }
 
@@ -1655,6 +1675,10 @@ figure {
   font: 400 clamp(24px, 2.6vw, 32px) / 1.15 var(--serif);
   letter-spacing: -0.01em;
   margin: 12px 0 10px;
+}
+
+.detail__who {
+  color: var(--slate);
 }
 
 .detail__summary {

@@ -60,6 +60,7 @@ export const UI: Widen<typeof EnUI> = {
   why: {
     eyebrow: '为什么选 Orbis',
     h2: '刻意做得窄。',
+    p: '我们只做卑诗省企业的记账。没有顺带的税务筹划，不跨其他省份，也不会拿你的账来练手。',
   },
 
   services: {
@@ -77,6 +78,7 @@ export const UI: Widen<typeof EnUI> = {
   pricing: {
     eyebrow: '方案',
     h2: '按工作量划分。',
+    lede: '挑选与你交易笔数相符的方案。如果不确定，往低了猜，我们会在报价中告诉你。',
     more: '价格是怎么算出来的，以及市场行情 →',
     mostChosen: '最多人选',
     cta: '获取方案与报价',
@@ -87,12 +89,16 @@ export const UI: Widen<typeof EnUI> = {
     setupBody:
       '——一次性报价，适用于 QuickBooks Online、Xero 或 Sage 50。会计科目表、银行数据自动同步、系统对接，以及一次培训。',
     catchUpLink: '关于补做旧账的更多说明 →',
+    finePrintLabel: '细则',
+    finePrint:
+      '所有方案均以合约为准，期限按客户约定。每个方案都是固定月费，动工前以书面报价，以加元计并另加 GST。不按小时计费。每月超过 400 笔交易请来询，我们另行报价。',
     notSure: '不包含：',
   },
 
   tax: {
     eyebrow: '说白了',
     h2: 'GST 和 PST 是两种不同的税。',
+    p: '这是几乎每一位卑诗省企业主都会栽跟头的地方。',
     noteBefore:
       '如果你只注册了其中一项，你并不特殊，而且这是可以补救的。在表格里说明，我们会在报价中把两项都核对一遍。税率数据截至 ',
     more: 'GST 与 PST 究竟差在哪里 →',
@@ -121,6 +127,7 @@ export const UI: Widen<typeof EnUI> = {
     whoEyebrow: '我们的客户类型',
     commitEyebrow: '我们的承诺',
     commitment: '每一份查询，都会在一个工作日内收到书面方案与价格。',
+    commitP: '如果我们帮不上忙，会在那封回复里直接说明，而不是先约一通电话再告诉你。',
   },
 
   faq: {
