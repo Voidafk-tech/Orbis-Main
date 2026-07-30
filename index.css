@@ -1332,6 +1332,196 @@ figure {
   .trust-strip {
     margin-top: 56px;
   }
+
+  /* Touch, not pointer, from here down.
+
+     16px is not a style choice: iOS Safari zooms the viewport whenever a
+     focused field is under 16px, so at 15px every tap into the form lurched
+     the page sideways and left it zoomed. The difference on screen is one
+     pixel; the difference in behaviour is the whole form.
+
+     The 44px floor is the touch-target minimum, and select in particular was
+     shipping under it. */
+  .form input,
+  .form select,
+  .form textarea {
+    font-size: 16px;
+    min-height: 44px;
+  }
+
+  .form textarea {
+    min-height: 96px;
+  }
+
+  /* 12 links at 13px sat in 14px-tall boxes — the smallest targets on the
+     site. The padding is vertical only, so the row still wraps the same way. */
+  .footer__links a,
+  .footer__contact a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .footer__links {
+    gap: 0 24px;
+  }
+
+  /*
+   * The rest of the standalone targets. These are the links a visitor is most
+   * likely to reach for on a phone — the two contact details beside the form,
+   * the contact page's own list, the language toggle and the lockup — and they
+   * were between 16px and 30px tall.
+   *
+   * Only standalone links are widened. Links inside running prose are left
+   * alone deliberately: padding those would space out the sentences they sit
+   * in, and WCAG 2.5.8 exempts them for exactly that reason.
+   */
+  .intake__email,
+  .intake__phone,
+  .contact-details a,
+  .header__lang,
+  .lockup {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* inline-flex rather than more padding: the button has to clear 44px exactly,
+     and padding alone landed it at 42px. */
+  .header__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+  }
+}
+
+/* ---------- Phones -------------------------------------------------------- */
+
+/*
+ * Everything above stops at 720px, which meant a 375px phone was being served
+ * tablet rules. This block is the one that knows it is on a phone.
+ *
+ * Scoped deliberately narrowly: the desktop and tablet design is signed off,
+ * so nothing here changes a layout — it adjusts type size, the floors on the
+ * fluid type scale, and the one row that did not fit.
+ */
+@media (max-width: 480px) {
+  :root {
+    --pad-x: 18px;
+  }
+
+  /* The phone-number-to-icon swap that buys this row its missing 60px lives
+     with the other header label swaps, below the component styles it has to
+     override — see the 480px block under "Header phone and CTA labels". */
+  .header__row {
+    gap: 12px;
+  }
+
+  /*
+   * The fluid scale never reached its own floor on a phone: 7.8vw does not hit
+   * 48px until about 615px wide, so every phone got the maximum of the minimum
+   * — roughly 14 characters a line. Lowering the floors lets the scale do what
+   * it was meant to do. The vw terms and the ceilings are untouched, so
+   * nothing above 480px moves.
+   */
+  .h1 {
+    font-size: clamp(38px, 10.5vw, 48px);
+    margin-bottom: 24px;
+  }
+
+  .h2 {
+    font-size: clamp(26px, 7.6vw, 34px);
+  }
+
+  .h2--faq {
+    font-size: clamp(26px, 7.4vw, 32px);
+  }
+
+  .h2--intake {
+    font-size: clamp(27px, 7.8vw, 34px);
+  }
+
+  /*
+   * 10.5px uppercase mono with 0.14em tracking is legible on a desktop at
+   * arm's length and not on a phone. The size goes up and the tracking comes
+   * down — tracking is what makes small text hardest to read, and it is also
+   * what was pushing the hero eyebrow and the note under the button onto three
+   * wrapped lines.
+   */
+  .micro {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.07em;
+  }
+
+  .lede {
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  /* The sections were built on a desktop rhythm; on a phone the gaps read as
+     the page having ended. */
+  .sec {
+    padding: 56px var(--pad-x);
+  }
+
+  .intake {
+    padding: 56px var(--pad-x) 72px;
+  }
+
+  .form-shell {
+    padding: 22px 16px 24px;
+  }
+
+  /* Full-width on a phone: a 111px button beside nothing looks unfinished, and
+     a wider target is easier to hit. */
+  .hero .btn,
+  .intake .btn {
+    width: 100%;
+  }
+}
+
+/*
+ * Small phones — 360px covers most of the Android field and the older SE.
+ * The 480px block above gets the row down to 383px, which still overruns
+ * these, so this reclaims the last of it from tracking and padding rather
+ * than from anything structural.
+ */
+@media (max-width: 380px) {
+  :root {
+    --pad-x: 14px;
+  }
+
+  /* 0.24em is a display treatment that costs 12px of a row that has none to
+     spare. Tighter still reads as the same wordmark at this size. */
+  .wordmark {
+    letter-spacing: 0.14em;
+  }
+
+  .header__row {
+    gap: 10px;
+  }
+
+  .header__cta {
+    padding: 12px 14px;
+  }
+}
+
+/*
+ * Below 340px the wordmark cannot be paid for at all, so the lockup falls back
+ * to the mark alone. It is still the same link, and it keeps its aria-label,
+ * so nothing is lost but the repetition of a name that is already in the title
+ * bar, the footer and the page copy.
+ */
+@media (max-width: 340px) {
+  .header .wordmark {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1354,10 +1544,20 @@ figure {
   font: 500 13.5px/1 var(--sans);
   color: var(--chart);
   white-space: nowrap;
+  /* A bare inline link was a 14px-tall tap target. Centring the label in a
+     44px box costs nothing visually and clears the touch minimum. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 .header__tel:hover {
   color: var(--green-text);
+}
+
+/* The number is the label until the row runs out of room; see the 480px block. */
+.header__tel-icon {
+  display: none;
 }
 
 /* The nav collapses below 720px, so the CTA has to share the row with the
@@ -1564,6 +1764,31 @@ figure {
 
   .footer__nap .footer__copy {
     margin-left: 0;
+  }
+}
+
+/*
+ * The phone number collapses to its icon.
+ *
+ * This has to sit after the `.header__tel-icon` component rule rather than up
+ * in the main 480px block: both selectors are a single class, so at equal
+ * specificity the later one wins, and from up there the base `display: none`
+ * would quietly beat it and leave an empty 44px gap in the row. Same reason
+ * the CTA label swap above lives down here rather than with the other
+ * responsive rules.
+ */
+@media (max-width: 480px) {
+  .header__tel-text {
+    display: none;
+  }
+
+  .header__tel-icon {
+    display: block;
+  }
+
+  .header__tel {
+    justify-content: center;
+    min-width: 44px;
   }
 }
 

@@ -19,6 +19,7 @@ export const UI: Widen<typeof EnUI> = {
     questions: '常见问题',
     ctaFull: '获取方案与报价',
     ctaShort: '获取报价',
+    call: '致电',
   },
 
   footer: {
