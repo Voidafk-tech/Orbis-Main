@@ -15,6 +15,9 @@ const Pricing: React.FC = () => {
           <p className="eyebrow eyebrow--paper intro__eyebrow">{pricing.eyebrow}</p>
           <h2 className="h2">{pricing.h2}</h2>
           <p className="lede lede--paper intro__p" style={{ fontSize: '17px' }}>
+            {pricing.lede}
+          </p>
+          <p className="lede lede--paper intro__p" style={{ fontSize: '17px' }}>
             <Link to={path('/pricing')}>{pricing.more}</Link>
           </p>
         </div>
@@ -72,6 +75,10 @@ const Pricing: React.FC = () => {
             <p className="pricing-notes__body">
               <strong>{pricing.setupName}</strong> {pricing.setupBody}
             </p>
+          </div>
+          <div>
+            <p className="micro micro--paper pricing-notes__label">{pricing.finePrintLabel}</p>
+            <p className="fine-print">{pricing.finePrint}</p>
           </div>
         </div>
       </div>

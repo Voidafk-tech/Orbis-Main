@@ -13,6 +13,8 @@ const WhyOrbis: React.FC = () => {
         <div className="reveal">
           <p className="eyebrow eyebrow--paper intro__eyebrow">{why.eyebrow}</p>
           <h2 className="h2">{why.h2}</h2>
+          {/* If the platform or industry counts change anywhere, re-check this line. */}
+          <p className="why__p">{why.p}</p>
         </div>
 
         <div>
