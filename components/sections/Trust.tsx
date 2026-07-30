@@ -63,7 +63,6 @@ const Trust: React.FC = () => {
         <div className="reveal" style={revealDelay(180)}>
           <p className="eyebrow trust__eyebrow">{trust.commitEyebrow}</p>
           <p className="commitment">{trust.commitment}</p>
-          <p className="trust__p">{trust.commitP}</p>
         </div>
       </div>
     </section>

@@ -153,10 +153,6 @@ const PricingPage: React.FC = () => {
                 {t.setupAfter}
               </p>
             </div>
-            <div>
-              <p className="micro micro--paper pricing-notes__label">{pricing.finePrintLabel}</p>
-              <p className="fine-print">{pricing.finePrint}</p>
-            </div>
           </div>
         </div>
       </section>
