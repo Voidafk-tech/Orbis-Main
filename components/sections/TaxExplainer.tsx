@@ -12,7 +12,6 @@ const TaxExplainer: React.FC = () => {
         <div className="reveal">
           <p className="eyebrow intro__eyebrow">{tax.eyebrow}</p>
           <h2 className="h2">{tax.h2}</h2>
-          <p className="tax__p">{tax.p}</p>
         </div>
 
         <div>
