@@ -340,6 +340,13 @@ figure {
   max-width: 22ch;
 }
 
+/*
+ * No horizontal padding: the strip is a sibling of .hero rather than a child,
+ * and on a wide screen the 1120px cap leaves margin either side, so the labels
+ * sit against the edge of the block by design. Below the cap that margin is
+ * gone and they would run into the edge of the screen, so the phone breakpoint
+ * puts the hero's padding back — see the 720px block.
+ */
 .trust-strip {
   max-width: 1120px;
   margin: 76px auto 0;
@@ -1329,8 +1336,14 @@ figure {
     margin-left: 0;
   }
 
+  /* The 1120px cap stops leaving side margin once the viewport is under it, so
+     without this the labels touch the edge of the screen — the one block on the
+     page not on the same left column as everything else. The borders sit outside
+     the padding, so the two rules still run edge to edge; only the text moves. */
   .trust-strip {
     margin-top: 56px;
+    padding-left: var(--pad-x);
+    padding-right: var(--pad-x);
   }
 
   /* Touch, not pointer, from here down.
