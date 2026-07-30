@@ -75,7 +75,6 @@ export const UI = {
   why: {
     eyebrow: 'Why Orbis',
     h2: 'Narrow on purpose.',
-    p: 'Bookkeeping for BC businesses is the only thing we do. No tax planning sideline, no other provinces, no work we are learning on your file.',
   },
 
   services: {
@@ -93,7 +92,6 @@ export const UI = {
   pricing: {
     eyebrow: 'Plans',
     h2: 'Scoped by how much work there is.',
-    lede: 'Pick the plan that matches your transaction volume. If you are not sure, guess low and we will tell you in the quote.',
     more: 'How the number is put together, and what the market charges →',
     mostChosen: 'Most chosen',
     cta: 'Get a plan and a quote',
@@ -105,16 +103,12 @@ export const UI = {
     setupBody:
       '— Quoted once, on QuickBooks Online, Xero or Sage 50. Chart of accounts, bank feeds, integrations, and one training session.',
     catchUpLink: 'More on catch-up bookkeeping →',
-    finePrintLabel: 'The fine print',
-    finePrint:
-      'All plans are contract based, with the term set per client. Every plan is a fixed monthly figure, quoted in writing before any work starts, in CAD plus GST. No hourly billing. Over 400 transactions a month, ask and we will quote it.',
     notSure: 'Not included: ',
   },
 
   tax: {
     eyebrow: 'In plain terms',
     h2: 'GST and PST are two different taxes.',
-    p: 'This is the thing that catches out almost every business owner in BC.',
     noteBefore:
       'If you have only ever registered for one of the two, you are not unusual, and it is fixable. Say so in the form and we will check both in the quote. Rates current as of ',
     more: 'How GST and PST actually differ →',
@@ -142,7 +136,6 @@ export const UI = {
     whoEyebrow: 'Who we work with',
     commitEyebrow: 'What we commit to',
     commitment: 'Every enquiry gets a written plan and a price within one business day.',
-    commitP: 'If we cannot help, we will say so in that reply rather than book a call to tell you.',
   },
 
   faq: {
