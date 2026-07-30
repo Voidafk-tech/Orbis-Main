@@ -18,7 +18,6 @@ export interface ServiceDetail {
   summary: string;
   /** What the work actually involves, in the detail the home page has no room for. */
   detail: string[];
-  forWho: string;
 }
 
 export const SERVICE_DETAIL: ServiceDetail[] = [
@@ -30,7 +29,6 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
       'Your bank accounts and credit cards are reconciled against the statements, so what the books say matches what the bank says. Transactions are categorized against a chart of accounts set up for how your business actually earns and spends, not a generic template.',
       'The month gets closed rather than left open indefinitely. That distinction matters at year end: a closed month is one your accountant does not have to re-open, re-check and bill you for.',
     ],
-    forWho: 'Every plan includes this. It is the base the rest of the work sits on.',
   },
   {
     n: '02',
@@ -40,7 +38,6 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
       'These are two separate taxes with two separate registrations, two sets of deadlines and two different lists of what is taxable. Being registered for one tells you nothing about whether you should be registered for the other, which is why so many BC businesses end up filing one and quietly not the other.',
       'We prepare and file both. GST returns go to the CRA, PST returns to the BC Ministry of Finance. If it turns out you should have registered for one and have not, we will say so plainly and tell you what fixing it involves before doing anything.',
     ],
-    forWho: 'Included from the Standard plan up.',
   },
   {
     n: '03',
@@ -50,7 +47,6 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
       'Payroll runs on your schedule, with source deductions calculated and remitted to the CRA on the remittance schedule your business has been assigned. Records of employment go out when someone leaves, and T4s are prepared and filed at year end.',
       'WorkSafeBC reporting is handled alongside it, because for most employers in BC the two sit on the same set of numbers and separating them just creates a second place for things to go wrong.',
     ],
-    forWho: 'Included in the Complete plan, for businesses with staff on payroll.',
   },
   {
     n: '04',
@@ -60,7 +56,6 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
       'Every month you get a profit and loss statement and a balance sheet, with the figures that actually moved marked so you are not reading a wall of numbers looking for the story.',
       'The point is not the documents. It is that you can answer what your margin is, what you are owed, and what you owe, without waiting until year end to find out.',
     ],
-    forWho: 'Every plan includes this.',
   },
   {
     n: '05',
@@ -70,7 +65,6 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
       'A chart of accounts built around your business, bank feeds connected, and your sales channels wired in so Shopify and Stripe reconcile automatically instead of being re-keyed by hand every month.',
       'If you are moving from another platform, from spreadsheets, or from nothing at all, the migration is part of the setup. It ends with one training session so you can find what you need in the file without calling us to ask.',
     ],
-    forWho: 'One-time work, quoted before it starts. Not part of the monthly plan.',
   },
   {
     n: '06',
@@ -80,7 +74,6 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
       'We look at how far behind the books actually are, then quote the catch-up as a single number agreed before any work starts. The backlog gets cleared, whatever is outstanding gets filed, and the monthly plan starts from a clean position rather than on top of a mess.',
       'You are not the first business to arrive this way and there is no lecture attached. The only thing that makes it worse is waiting longer.',
     ],
-    forWho: 'One-time work, quoted before it starts. Most clients start here.',
   },
 ];
 
