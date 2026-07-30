@@ -346,15 +346,71 @@ figure {
  * site-wide scroll-reveal hook in useScrollReveal.ts.
  * ------------------------------------------------------------------------- */
 
+/* Without `is-live` the sequence contributes nothing to the page: Hero above it
+   has already made every point it makes. */
 .hero-seq__acts,
-.hero-seq__scene {
+.hero-seq__scene,
+.hero-seq__rail,
+.hero-seq__reveal {
   display: none;
 }
 
-.hero-seq__reveal {
-  max-width: calc(1120px + var(--pad-x) * 2);
-  margin: 0 auto;
-  padding: 96px var(--pad-x) 0;
+/* The chevron at the foot of the first screen. Hidden until its script runs,
+   so it never appears without the behaviour that retires it. */
+.scroll-cue {
+  display: none;
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  z-index: 50;
+  translate: -50% 0;
+  padding: 10px;
+  color: var(--slate);
+  transition: opacity 400ms ease, translate 400ms ease, color 150ms ease;
+}
+
+.scroll-cue.is-live {
+  display: block;
+}
+
+.scroll-cue:hover {
+  color: var(--green-text);
+}
+
+.scroll-cue svg {
+  display: block;
+  width: 22px;
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: cue-nudge 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Gone the moment the reader has scrolled at all — it has made its point. */
+.scroll-cue.is-gone {
+  opacity: 0;
+  translate: -50% 8px;
+  pointer-events: none;
+}
+
+@keyframes cue-nudge {
+  0%,
+  62%,
+  100% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue {
+    display: none;
+  }
 }
 
 .hero-seq.is-live {
@@ -428,6 +484,42 @@ figure {
   height: 100%;
 }
 
+/* The progress rail. Reads as an instrument rather than a scrollbar, and
+   exists only while the section is pinned. */
+.hero-seq.is-live .hero-seq__rail {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: calc(var(--pad-x) / 2);
+  translate: 0 -50%;
+  width: 1px;
+  height: min(46vh, 320px);
+  background: var(--hair);
+  z-index: 3;
+}
+
+.hero-seq__rail-fill {
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 3px;
+  height: 0;
+  background: var(--green);
+}
+
+/* Inboard of the rail: outside it there is only the pin's padding, and the pin
+   clips its overflow, which crops the readout to a single digit. */
+.hero-seq__rail-pct {
+  position: absolute;
+  right: 12px;
+  top: 0;
+  font: 400 10px/1 var(--mono);
+  letter-spacing: 0.12em;
+  color: var(--slate);
+  white-space: nowrap;
+  translate: 0 -3px;
+}
+
 /* The payoff sits across the whole pin rather than in the text column, so the
    line lands as a full-width moment instead of a fourth act. */
 .hero-seq.is-live .hero-seq__reveal {
@@ -448,8 +540,7 @@ figure {
     visibility 600ms;
 }
 
-.hero-seq.is-live .hero-seq__reveal .hero__sub {
-  max-width: 52ch;
+.hero-seq__line {
   text-wrap: balance;
 }
 
@@ -514,21 +605,10 @@ figure {
   }
 
   .hero-seq.is-live .hero-seq__acts,
-  .hero-seq.is-live .hero-seq__scene {
-    display: none;
-  }
-
+  .hero-seq.is-live .hero-seq__scene,
+  .hero-seq.is-live .hero-seq__rail,
   .hero-seq.is-live .hero-seq__reveal {
-    position: static;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    text-align: left;
-    justify-items: start;
-    place-content: start;
-    max-width: calc(1120px + var(--pad-x) * 2);
-    margin: 0 auto;
-    padding: 96px var(--pad-x) 0;
+    display: none;
   }
 }
 

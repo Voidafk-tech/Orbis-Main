@@ -8,18 +8,18 @@ import { ACT, createScene } from '../heroSequenceScene';
  * hero headline, after which the page carries on into the trust strip and the
  * rest of the site.
  *
- * Progressive enhancement is the whole architecture here. What renders — and
- * what the prerender bakes into dist/ — is the ordinary hero: h1, subhead, CTA.
- * The acts and the canvas are display:none until the effect below adds
- * `is-live`, which it only does with a working canvas and no reduced-motion
- * preference. So the sequence is strictly additive: if the script fails, if the
- * browser has no 2D context, or if the visitor has asked for less motion, the
- * homepage is exactly the page it was before this existed.
+ * Progressive enhancement is the whole architecture here. Without `is-live` the
+ * whole block collapses to nothing but its closing line — the acts, the canvas
+ * and the rail are display:none, and the effect below only adds the class given
+ * a working 2D context and no reduced-motion preference. So the sequence is
+ * strictly additive: if the script fails, if the browser has no canvas, or if
+ * the visitor has asked for less motion, the homepage is the hero, the trust
+ * strip and the sections, exactly as it was.
  *
- * DOM order puts the h1 first even though it is revealed last. Heading order
- * has to survive — the handoff requires exactly one h1 and the acts are h2s —
- * and the reveal is positioned rather than in flow, so its place in the markup
- * costs nothing visually.
+ * The closing line repeats the hero's headline and is deliberately *not* a
+ * heading. Hero owns the page's only h1; a second copy of the same words as an
+ * h1 would be two h1s, and as an h2 it would put a duplicate in the outline.
+ * The acts are the h2s here.
  */
 const HeroSequence: React.FC = () => {
   const copy = useCopy();
@@ -28,6 +28,8 @@ const HeroSequence: React.FC = () => {
   const rootRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const pctRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -53,10 +55,22 @@ const HeroSequence: React.FC = () => {
     let running = false;
     let frameId = 0;
 
+    /*
+     * Progress runs over the pin's actual travel rather than the block's whole
+     * height. The pin sticks the moment its top meets the header and releases
+     * when its foot meets the bottom of the viewport, so those two moments are
+     * 0 and 1 — measuring from the block's top instead would begin the story a
+     * header's height early and leave it unfinished at the end.
+     *
+     * The pin is sized `100vh - header`, so the header's height is whatever the
+     * viewport has left over. Deriving it beats re-reading the custom property.
+     */
     const measure = () => {
-      const total = root.offsetHeight - window.innerHeight;
-      target =
-        total <= 0 ? 0 : Math.min(Math.max(-root.getBoundingClientRect().top / total, 0), 1);
+      const pinH = pin.offsetHeight;
+      const headerH = window.innerHeight - pinH;
+      const travel = root.offsetHeight - pinH;
+      const passed = headerH - root.getBoundingClientRect().top;
+      target = travel <= 0 ? 0 : Math.min(Math.max(passed / travel, 0), 1);
     };
 
     const actFor = (t: number) =>
@@ -73,6 +87,15 @@ const HeroSequence: React.FC = () => {
       // Written straight to the DOM rather than through state: this runs every
       // frame, and a re-render per frame would cost far more than it buys.
       pin.dataset.act = String(actFor(current));
+
+      // The rail answers "am I stuck, and how much further" — the question that
+      // makes people abandon a pinned section.
+      const pct = Math.round(current * 100);
+      if (railRef.current) railRef.current.style.height = `${pct}%`;
+      if (pctRef.current) {
+        pctRef.current.style.top = `${pct}%`;
+        pctRef.current.textContent = pct < 10 ? `0${pct}` : String(pct);
+      }
 
       if (Math.abs(target - current) > 0.0004) {
         frameId = requestAnimationFrame(frame);
@@ -111,15 +134,14 @@ const HeroSequence: React.FC = () => {
   }, []);
 
   return (
-    <div className="hero-seq" ref={rootRef} id="top">
+    <div className="hero-seq" ref={rootRef} id="story">
       <div className="hero-seq__pin" ref={pinRef}>
-        {/* The payoff, and the page's only h1. */}
+        {/* The payoff. A paragraph, not a heading — Hero owns the only h1 and
+            these are the same words. */}
         <div className="hero-seq__reveal">
-          <h1 className="h1 h1--wide">
-            <span className="eyebrow h1__eyebrow">{hero.eyebrow}</span>
+          <p className="h1 h1--wide hero-seq__line">
             {hero.headline} <em>{hero.headlineEm}</em>
-          </h1>
-          <p className="hero__sub">{hero.sub}</p>
+          </p>
           <div className="hero__cta">
             <Anchor to="start" className="btn btn--primary">
               {hero.cta}
@@ -141,6 +163,13 @@ const HeroSequence: React.FC = () => {
 
         <div className="hero-seq__scene">
           <canvas ref={canvasRef} aria-hidden="true" />
+        </div>
+
+        <div className="hero-seq__rail" aria-hidden="true">
+          <div className="hero-seq__rail-fill" ref={railRef} />
+          <span className="hero-seq__rail-pct" ref={pctRef}>
+            00
+          </span>
         </div>
       </div>
     </div>

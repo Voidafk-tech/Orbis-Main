@@ -1,5 +1,7 @@
 import React from 'react';
+import Hero from '../components/sections/Hero';
 import HeroSequence from '../components/sections/HeroSequence';
+import ScrollCue from '../components/ScrollCue';
 import TrustStrip from '../components/sections/TrustStrip';
 import Pains from '../components/sections/Pains';
 import WhyOrbis from '../components/sections/WhyOrbis';
@@ -17,8 +19,10 @@ import Intake from '../components/sections/Intake';
  */
 const Home: React.FC = () => (
   <>
-    <HeroSequence />
+    <Hero />
     <TrustStrip />
+    <ScrollCue />
+    <HeroSequence />
     <Pains />
     <WhyOrbis />
     <Services />

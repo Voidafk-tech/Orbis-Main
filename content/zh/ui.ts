@@ -54,7 +54,7 @@ export const UI: Widen<typeof EnUI> = {
   /** Eyebrows reuse the existing section translations verbatim, so the acts
       cannot drift from the sections they preview. */
   heroSequence: {
-    skip: '跳过开场动画',
+    cue: '看看具体怎么做',
     acts: [
       {
         eyebrow: '通常的状况',

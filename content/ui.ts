@@ -73,8 +73,8 @@ export const UI = {
    * pile on screen has something to be about.
    */
   heroSequence: {
-    /** Names the control for anyone who reaches it by keyboard or screen reader. */
-    skip: 'Skip the intro animation',
+    /** The chevron is a link; this names it for keyboard and screen reader. */
+    cue: 'See how it works',
     acts: [
       {
         eyebrow: 'Where it usually stands',
