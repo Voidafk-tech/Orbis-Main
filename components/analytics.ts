@@ -32,6 +32,12 @@ export const EVENTS = {
   formError: 'form_error',
   phone: 'click_phone',
   email: 'click_email',
+  /**
+   * Copying the Weixin ID. There is no link to delegate off — the ID is copied
+   * to the clipboard rather than navigated to — so WeChatContact.tsx reports
+   * this one itself. It carries the same `link_location` as the two above.
+   */
+  wechat: 'click_wechat',
 } as const;
 
 export function trackEvent(name: string, params: Params = {}): void {
@@ -66,8 +72,14 @@ const trackContactLinks = (event: MouseEvent) => {
   else if (href.startsWith('mailto:')) trackEvent(EVENTS.email, { link_location: linkArea(link) });
 };
 
-/** Which part of the page the tap came from, so header vs footer is separable. */
-const linkArea = (link: Element): string => {
+/**
+ * Which part of the page the tap came from, so header vs footer is separable.
+ *
+ * Exported for the WeChat copy button, which is not a link and so cannot be
+ * caught by the listener above. It passes its own element in and gets the same
+ * answer a tel: link in the same place would — one convention, not two.
+ */
+export const linkArea = (link: Element): string => {
   if (link.closest('.header')) return 'header';
   if (link.closest('.footer')) return 'footer';
   if (link.closest('.intake')) return 'intake';

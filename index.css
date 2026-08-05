@@ -1255,6 +1255,131 @@ figure {
   color: var(--chart);
 }
 
+/* ---------- WeChat -------------------------------------------------------- */
+
+/*
+ * Used in the intake contact strip (so: the foot of the home page and the head
+ * of /contact) and, without the code, in the contact page's list.
+ *
+ * The ID is set in mono at the same weight as the phone number, because it is
+ * the same kind of thing — a string someone is going to copy character for
+ * character, where a serif or a proportional face costs them accuracy.
+ */
+.wechat {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.wechat__text {
+  flex: 1 1 180px;
+}
+
+.wechat__account {
+  font: 500 15px/1.4 var(--sans);
+  color: var(--chart);
+  margin-bottom: 10px;
+}
+
+.wechat__id-label {
+  margin-bottom: 6px;
+}
+
+.wechat__id-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.wechat__id {
+  font: 500 15px/1.4 var(--mono);
+  color: var(--chart);
+  /* The whole point of the string is that it gets copied by hand when the
+     button is not available, so make selecting it easy rather than fiddly. */
+  user-select: all;
+}
+
+.wechat__copy {
+  background: transparent;
+  border: 1px solid var(--hair);
+  color: var(--slate-light);
+  font: 400 10.5px/1 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.wechat__copy:hover {
+  color: var(--chart);
+  border-color: var(--green);
+}
+
+/* Reserves its own width, so confirming the copy does not shove the button. */
+.wechat__copied {
+  font: 400 10.5px/1.4 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+  min-width: 7ch;
+}
+
+.wechat__qr {
+  flex: 0 0 auto;
+}
+
+/*
+ * A fixed box whether or not the image is in place, so the strip does not
+ * reflow when the file lands. Same treatment as the certification badge.
+ */
+.wechat__qr-box {
+  border: 1px solid var(--hair);
+  padding: 8px;
+  width: 136px;
+  height: 136px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+ * White, not transparent, and not inheriting the page's near-black ground: a
+ * scanner needs the light modules light and the quiet zone clear. The supplied
+ * PNG should carry its own white field, and this backs it up if it does not.
+ */
+.wechat__qr-img {
+  width: 120px;
+  height: 120px;
+  background: #fff;
+  display: block;
+}
+
+.wechat__qr-placeholder {
+  font: 400 10.5px/1.6 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate);
+  text-align: center;
+  max-width: 16ch;
+}
+
+.wechat__scan {
+  font: 400 10.5px/1.4 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-top: 8px;
+  max-width: 136px;
+}
+
+/* In the contact page's list the account name is a plain row, not a heading. */
+.contact-list__wechat .wechat__account {
+  margin-bottom: 8px;
+}
+
 .form-shell {
   border: 1px solid var(--hair);
   padding: 36px 34px 38px;
@@ -1695,6 +1820,15 @@ figure {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
+  }
+
+  /* The copy button is the phone visitor's whole path to the Weixin ID — they
+     cannot scan a code on the screen they are reading it from — so it is the
+     last control on the page that should be a 26px target. */
+  .wechat__copy {
+    min-height: 44px;
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
   /* inline-flex rather than more padding: the button has to clear 44px exactly,

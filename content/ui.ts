@@ -184,6 +184,28 @@ export const UI = {
     phoneLabel: 'Phone',
   },
 
+  /**
+   * The WeChat block, used in the intake contact strip and on the contact page.
+   *
+   * `idLabel` says "Weixin ID" rather than "WeChat ID" on purpose: that is the
+   * wording inside the app in both languages, and it is the string someone
+   * hunting for the field will recognise.
+   *
+   * The account name and the ID itself are not here — they are handles rather
+   * than copy and live in content/site.ts, identical in both languages.
+   */
+  wechat: {
+    label: 'WeChat',
+    idLabel: 'Weixin ID',
+    /** Sits under the code. Only makes sense to someone on a second device. */
+    scan: 'Scan to add us on WeChat',
+    copy: 'Copy',
+    copied: 'Copied',
+    /** Built into an aria-label with the ID appended, for the copy button. */
+    copyAria: 'Copy the Weixin ID',
+    qrPlaceholder: 'WeChat QR code to be supplied',
+  },
+
   form: {
     detailsLegend: 'Your details',
     booksLegend: 'Your books',

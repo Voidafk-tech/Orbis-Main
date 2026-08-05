@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Intake from '../components/sections/Intake';
+import { WeChatId } from '../components/WeChatContact';
 import { useLocale } from '../components/LocaleContext';
 import { revealDelay } from '../components/useScrollReveal';
 
@@ -15,7 +16,7 @@ import { revealDelay } from '../components/useScrollReveal';
 const ContactPage: React.FC = () => {
   const { copy, path } = useLocale();
   const t = copy.ui.contactPage;
-  const { CONTACT } = copy.site;
+  const { CONTACT, WECHAT } = copy.site;
 
   return (
     <>
@@ -76,6 +77,16 @@ const ContactPage: React.FC = () => {
               <li>
                 <span className="micro">{t.phoneLabel}</span>
                 <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+              </li>
+              {/* Email and phone already appear both here and in the intake
+                  block at the top of this page, so repeating the ID matches how
+                  the page treats the other two. The QR is the one thing that is
+                  not repeated — one code per page is enough, and a second would
+                  read as two different codes. */}
+              <li className="contact-list__wechat">
+                <span className="micro">{copy.ui.wechat.label}</span>
+                <span className="wechat__account">{WECHAT.account}</span>
+                <WeChatId />
               </li>
             </ul>
           </div>

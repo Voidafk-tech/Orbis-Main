@@ -17,6 +17,32 @@ export const CONTACT = {
   tagline: 'Bookkeeping for BC small business · West Vancouver, BC',
 } as const;
 
+/**
+ * WeChat, for the Chinese-speaking half of the audience — the channel they
+ * actually use, where the rest of the site offers only email and a phone number.
+ *
+ * The ID is the durable part and the QR is the convenience, which is why the
+ * block leads with the ID. A published QR image can go dead silently: resetting
+ * a personal code in WeChat invalidates every copy of it already in the world,
+ * and nothing tells the site. The ID survives that on its own.
+ *
+ * To replace the code: in WeChat, Me → the QR icon beside the name → ⋯ → save
+ * the image, then overwrite `public/wechat-qr.png`. It has to carry its own
+ * white field, quiet zone included — the page background is near-black and a
+ * transparent PNG will not scan. Until the file is in place the block renders
+ * the name and ID with a neutral placeholder in the QR's box rather than a
+ * broken image, the same arrangement as PROADVISOR_BADGE above.
+ *
+ * `account` and `id` are handles, not copy: they are identical in both
+ * languages and the casing on the ID is significant.
+ */
+export const WECHAT = {
+  account: 'Tina - Orbis',
+  id: 'Online_Bookkeeper',
+  src: '/wechat-qr.png',
+  alt: 'WeChat QR code for Tina - Orbis, Weixin ID Online_Bookkeeper',
+} as const;
+
 /** Date stamp on the published GST/PST rates. Review on a set cadence. */
 export const RATES_AS_OF = 'July 2026';
 
