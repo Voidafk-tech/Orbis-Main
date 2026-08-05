@@ -1,0 +1,36 @@
+# Keeps an eye on the two supply chains this repo actually has: the npm tree
+# that `npm ci` installs during the deploy, and the pinned actions in
+# .github/workflows/.
+#
+# The actions entry is what makes the SHA pinning maintainable — a pinned action
+# never updates itself, so without this the pins would silently rot and the
+# workflows would sit on whatever was current the day they were written.
+# Dependabot reads the version from the trailing comment on each `uses:` line
+# and rewrites both the SHA and the comment together.
+#
+# Minor and patch updates are grouped into one pull request per ecosystem.
+# Ungrouped, a three-dependency site produces a steady trickle of single-line
+# PRs, which is how dependency updates stop being read at all. Majors stay
+# separate: those are the ones that need a human.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        update-types:
+          - minor
+          - patch
