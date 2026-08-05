@@ -13,29 +13,50 @@ export interface LegalPage {
 
 export const PRIVACY: LegalPage = {
   title: 'Privacy Policy',
-  lastUpdated: 'Last updated: July 2026',
+  lastUpdated: 'Last updated: August 2026',
   sections: [
     {
       h: 'Information collection',
       p: 'We collect information necessary to provide accounting services, including financial data and business contact details.',
     },
     {
+      // Naming Web3Forms is not optional politeness. The form claims on the page
+      // that what you send is used to write your quote and nothing else, and
+      // that claim is only true if the service carrying the message is
+      // accounted for. See components/IntakeForm.tsx.
       h: 'Enquiries through this website',
-      p: 'What you send through the form on this site is used to write your quote and to reply to you. It is not added to a mailing list and it is not sold or shared for marketing.',
+      p: 'What you send through the form on this site is used to write your quote and to reply to you. It is not added to a mailing list and it is not sold or shared for marketing. The form itself is delivered to our inbox by Web3Forms, a form-delivery service, which handles the message while it is in transit. Their servers are outside Canada, so what you send crosses a border on the way to us. If you would rather it did not, email or phone us instead — both are on the contact page.',
     },
     {
       // Accurate only while MEASUREMENT_ID in components/analytics.ts is set.
       // The two are meant to be switched on and off together.
       h: 'Website analytics',
-      p: 'We use Google Analytics to see which pages people visit and which of them lead to an enquiry, so we know what is worth keeping on the site. It records pages viewed, whether the enquiry form was submitted, and whether the phone or email link was tapped, along with the general information a browser sends such as approximate location, device type and referring site. It is not used to identify you personally, and what you type into the enquiry form is never sent to it. If you would rather not be counted, any browser-level tracking blocker will stop it.',
+      p: 'We use Google Analytics to see which pages people visit and which of them lead to an enquiry, so we know what is worth keeping on the site. It records pages viewed, whether the enquiry form was submitted, and whether the phone, email or WeChat details were used, along with the general information a browser sends such as approximate location, device type and referring site. That information goes to Google and is held on their servers, which are outside Canada. It is not used to identify you personally, and what you type into the enquiry form is never sent to it. If you would rather not be counted, any browser-level tracking blocker will stop it.',
     },
     {
       h: 'Data protection',
       p: 'Your data is secured using industry-standard encryption and stored in compliant cloud environments like Sage and QuickBooks Online.',
     },
     {
+      // This section used to say information was "only shared with government
+      // bodies as required for compliance", which the site itself contradicted:
+      // every enquiry passes through Web3Forms and every page view reaches
+      // Google. A policy that describes something other than what the software
+      // does is worse than a thin one, because it is relied on.
       h: 'Information sharing',
-      p: 'We do not sell your data. Information is only shared with government bodies as required for compliance.',
+      p: 'We do not sell your data, and we do not share it for marketing. It reaches three kinds of third party and no others: the service providers that run this website and our bookkeeping software, named above and in your engagement letter; the government bodies we file to on your behalf, such as the CRA and the BC Ministry of Finance; and anyone we are required by law to disclose to. Several of those providers operate outside Canada, which means information held with them can be subject to the laws of the country it sits in.',
+    },
+    {
+      // TODO(client): both figures need confirming. Twelve months is a
+      // placeholder for how long unconverted enquiries are actually kept; the
+      // six years is the CRA's own retention requirement and is not ours to
+      // shorten.
+      h: 'How long we keep it',
+      p: 'An enquiry that does not turn into an engagement is kept for twelve months and then deleted. Records belonging to clients are kept for at least six years after the tax year they relate to, because the CRA requires it.',
+    },
+    {
+      h: 'Seeing or correcting what we hold',
+      p: 'You can ask what personal information we hold about you, ask for a copy of it, and ask us to correct anything that is wrong. Write to privacy@orbisaccounting.ca and we will answer within thirty days. If you are not satisfied with how we have handled a privacy question, you can take it to the Office of the Privacy Commissioner of Canada.',
     },
   ],
   note: 'For privacy enquiries, contact privacy@orbisaccounting.ca',
@@ -43,6 +64,17 @@ export const PRIVACY: LegalPage = {
 
 export const TERMS: LegalPage = {
   title: 'Terms of Service',
+  /**
+   * Deliberately still January 2024, two and a half years behind the privacy
+   * policy beside it. That gap looks like neglect and was very nearly "fixed"
+   * by restamping — but this text has not been reviewed since, and a date is a
+   * claim about when someone last read the document. Moving it forward without
+   * that having happened would turn an honestly stale page into a page that
+   * lies about being current, which is the worse of the two.
+   *
+   * The fix is a review, not an edit here: have these three clauses read
+   * against how the practice actually engages clients now, then restamp.
+   */
   lastUpdated: 'Last updated: January 2024',
   sections: [
     {
