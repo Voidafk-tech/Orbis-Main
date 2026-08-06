@@ -1332,14 +1332,35 @@ figure {
 }
 
 /*
- * A fixed box whether or not the image is in place, so the strip does not
- * reflow when the file lands. Same treatment as the certification badge.
+ * Sized so the code inside the card is big enough to scan, which is a bigger
+ * box than it looks like it should need.
+ *
+ * What is in public/wechat-qr.png is the whole WeChat share card, not a crop of
+ * the code: 592x798 portrait, of which the code itself is only 67% of the width
+ * and 50% of the height — the rest is the name row and the "scan to add me"
+ * caption. So the box has to carry roughly double the code to show the code.
+ *
+ * The code measures 37x37 modules (Version 5; the finder pattern's top band is
+ * 7 modules and reads 76px in the source, so a module is 10.86px and
+ * 399/10.86 = 37). Screen scanning wants about 3 css-px per module, so the code
+ * needs ~111px of the ~164px of image that has to be painted to contain it.
+ *
+ * Hence 182 and not the ~166 that arithmetic alone suggests: this padding and
+ * border come out of the width first, so the image only ever gets 18px less
+ * than the number here. Measure the painted image rather than the box when
+ * checking this — the two are not the same, and the difference is most of the
+ * margin between scanning and not. At 120px the code rendered 74px wide and did
+ * not scan at all.
+ *
+ * `aspect-ratio` rather than a fixed height: it is the card's own proportions,
+ * so the frame matches the image exactly and there is no letterboxing to look
+ * at. Keep the two in step if the asset is ever replaced.
  */
 .wechat__qr-box {
   border: 1px solid var(--hair);
   padding: 8px;
-  width: 136px;
-  height: 136px;
+  width: 182px;
+  aspect-ratio: 592 / 798;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1347,20 +1368,25 @@ figure {
 
 /*
  * White, not transparent, and not inheriting the page's near-black ground: a
- * scanner needs the light modules light and the quiet zone clear.
+ * scanner needs the light modules light and the quiet zone clear. No padding
+ * here: the card carries a wide white margin of its own around the code, so a
+ * second one would only shrink the code for nothing — and every pixel of it
+ * came off the part that has to be read.
  *
- * The padding is the quiet zone, and it is here rather than left to the file
- * because the file is cropped by hand off a WeChat share card. A crop that
- * comes in tight against the code's edge scans unreliably or not at all, and
- * that failure is invisible from this side — nobody who fails to scan it
- * reports it. Five pixels inside a white box guarantees the margin whatever
- * lands in public/wechat-qr.png.
+ * `object-fit: contain` is the important line. Without it the default is
+ * `fill`, and `fill` will silently squash a non-square image into whatever box
+ * it is given — which is exactly what happened: a 592x798 portrait card in a
+ * 120px square was compressed 35% horizontally, and a QR whose modules are no
+ * longer square is a QR that does not scan. It reads as a styling nitpick and
+ * it broke the feature. With the box on the card's own aspect ratio there is
+ * nothing for `contain` to letterbox today; it stays as the guard that turns a
+ * future mismatched asset into something visibly wrong instead of quietly
+ * distorted.
  */
 .wechat__qr-img {
-  width: 120px;
-  height: 120px;
-  padding: 5px;
-  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   background: #fff;
   display: block;
 }
@@ -1371,7 +1397,7 @@ figure {
   text-transform: uppercase;
   color: var(--slate);
   margin-top: 8px;
-  max-width: 136px;
+  max-width: 182px;
 }
 
 /* In the contact page's list the account name is a plain row, not a heading. */
