@@ -47,19 +47,22 @@ export const PRIVACY: LegalPage = {
       p: 'We do not sell your data, and we do not share it for marketing. It reaches three kinds of third party and no others: the service providers that run this website and our bookkeeping software, named above and in your engagement letter; the government bodies we file to on your behalf, such as the CRA and the BC Ministry of Finance; and anyone we are required by law to disclose to. Several of those providers operate outside Canada, which means information held with them can be subject to the laws of the country it sits in.',
     },
     {
-      // TODO(client): both figures need confirming. Twelve months is a
-      // placeholder for how long unconverted enquiries are actually kept; the
-      // six years is the CRA's own retention requirement and is not ours to
-      // shorten.
+      // Both figures confirmed by the practice. Twelve months is their own
+      // answer for unconverted enquiries and can be changed if the working
+      // practice changes. The six years is not ours to set: it is the CRA's
+      // retention requirement, so it can be lengthened but never shortened.
       h: 'How long we keep it',
       p: 'An enquiry that does not turn into an engagement is kept for twelve months and then deleted. Records belonging to clients are kept for at least six years after the tax year they relate to, because the CRA requires it.',
     },
     {
       h: 'Seeing or correcting what we hold',
-      p: 'You can ask what personal information we hold about you, ask for a copy of it, and ask us to correct anything that is wrong. Write to privacy@orbisaccounting.ca and we will answer within thirty days. If you are not satisfied with how we have handled a privacy question, you can take it to the Office of the Privacy Commissioner of Canada.',
+      p: 'You can ask what personal information we hold about you, ask for a copy of it, and ask us to correct anything that is wrong. Write to info@orbisaccounting.ca and we will answer within thirty days. If you are not satisfied with how we have handled a privacy question, you can take it to the Office of the Privacy Commissioner of Canada.',
     },
   ],
-  note: 'For privacy enquiries, contact privacy@orbisaccounting.ca',
+  // The practice inbox, deliberately, rather than a privacy@ alias. An alias
+  // nobody monitors is worse than none here: it looks like a route for access
+  // requests while quietly dropping everyone who uses it.
+  note: 'For privacy enquiries, contact info@orbisaccounting.ca',
 };
 
 export const TERMS: LegalPage = {

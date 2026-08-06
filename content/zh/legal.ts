@@ -40,10 +40,10 @@ export const PRIVACY: Widen<typeof En.PRIVACY> = {
     },
     {
       h: '查询或更正我们持有的信息',
-      p: '你可以询问我们持有你哪些个人信息、索取一份副本，并要求我们更正其中有误的内容。请写信至 privacy@orbisaccounting.ca，我们会在三十天内回复。如果你对我们处理隐私问题的方式不满意，可以向加拿大隐私专员公署（Office of the Privacy Commissioner of Canada）提出。',
+      p: '你可以询问我们持有你哪些个人信息、索取一份副本，并要求我们更正其中有误的内容。请写信至 info@orbisaccounting.ca，我们会在三十天内回复。如果你对我们处理隐私问题的方式不满意，可以向加拿大隐私专员公署（Office of the Privacy Commissioner of Canada）提出。',
     },
   ],
-  note: '隐私相关查询请联系 privacy@orbisaccounting.ca。本页为英文版隐私政策的中文译本，仅供参考；如中英文版本有任何不一致，以英文版为准。',
+  note: '隐私相关查询请联系 info@orbisaccounting.ca。本页为英文版隐私政策的中文译本，仅供参考；如中英文版本有任何不一致，以英文版为准。',
 };
 
 export const TERMS: Widen<typeof En.TERMS> = {

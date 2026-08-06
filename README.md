@@ -307,14 +307,19 @@ at 480×480 or larger; it renders at 120px.
 2. **Official vendor logos** — the five platform marks in `public/logos/` were
    derived from screenshots. Replace with vendor-issued SVG or 2× PNG.
 3. **WeChat QR code** — `public/wechat-qr.png` is not in the repo yet, so the
-   block renders its neutral placeholder. See the WeChat section above for what
-   the file has to be. The Weixin ID ships and works without it.
-4. **Privacy policy** — rewritten to name Web3Forms and Google as processors,
-   to say that both hold data outside Canada, and to carry retention and access
-   sections. Two things still need the practice's answer: whether
-   `privacy@orbisaccounting.ca` is a monitored mailbox, and how long enquiries
-   that never become engagements are actually kept — the twelve months in
-   `content/legal.ts` is a placeholder, flagged with a `TODO(client)`.
+   block renders its neutral placeholder. The Weixin ID ships and works without
+   it. The file has to be **the code and a white margin, nothing else**: the
+   share card WeChat exports also carries the account name, a city, and an
+   English "scan to add me as a friend" line, all of which would be wrong here.
+   The page already prints the name, and prints the caption in the reader's own
+   language — a baked-in English one would sit untranslated on `/zh/`. See the
+   WeChat section above for the format.
+4. **WeChat account region** — the exported card reads "Richmond, Canada". Every
+   other statement of where the practice is, on the page and in the structured
+   data Google matches against the Business Profile, says West Vancouver.
+   Cropping keeps it off the site, but anyone who actually adds the account sees
+   it, so change the region on the WeChat account. See `content/business.ts` on
+   why the two should not disagree.
 5. **Terms of service** — still stamped January 2024, deliberately. The date is
    a claim about when someone last read the document, so it stays honest until
    the three clauses are reviewed against how the practice engages clients now.
@@ -324,10 +329,13 @@ at 480×480 or larger; it renders at 120px.
 7. **Rates date stamp** — `RATES_AS_OF` in `content/site.ts`, plus the
    competitor price ranges in FAQ 1, need an owner and a review cadence.
 8. **Mobile below 720px** is built to spec but has not had a design review.
-9. **The Chinese copy added since the last review** — the WeChat labels in
-   `content/zh/ui.ts` and the rewritten privacy sections in
-   `content/zh/legal.ts`. Per `content/zh/glossary.md`, new Chinese copy is read
-   by the client before it goes live.
+
+The privacy policy is done: rewritten to name Web3Forms and Google as
+processors, to say that both hold data outside Canada, and to carry retention
+and access sections. Both figures that needed the practice's answer are
+confirmed — enquiries that do not convert are kept twelve months, and the
+contact for access requests is `info@orbisaccounting.ca` rather than a
+`privacy@` alias nobody monitors.
 
 ## Search visibility — what still needs real data
 

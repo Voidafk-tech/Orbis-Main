@@ -1347,12 +1347,20 @@ figure {
 
 /*
  * White, not transparent, and not inheriting the page's near-black ground: a
- * scanner needs the light modules light and the quiet zone clear. The supplied
- * PNG should carry its own white field, and this backs it up if it does not.
+ * scanner needs the light modules light and the quiet zone clear.
+ *
+ * The padding is the quiet zone, and it is here rather than left to the file
+ * because the file is cropped by hand off a WeChat share card. A crop that
+ * comes in tight against the code's edge scans unreliably or not at all, and
+ * that failure is invisible from this side — nobody who fails to scan it
+ * reports it. Five pixels inside a white box guarantees the margin whatever
+ * lands in public/wechat-qr.png.
  */
 .wechat__qr-img {
   width: 120px;
   height: 120px;
+  padding: 5px;
+  box-sizing: border-box;
   background: #fff;
   display: block;
 }
