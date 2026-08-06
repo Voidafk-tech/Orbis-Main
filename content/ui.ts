@@ -203,7 +203,10 @@ export const UI = {
     copied: 'Copied',
     /** Built into an aria-label with the ID appended, for the copy button. */
     copyAria: 'Copy the Weixin ID',
-    qrPlaceholder: 'WeChat QR code to be supplied',
+    // No string for a missing code. There was one, and it shipped: visitors
+    // read "WeChat QR code to be supplied" on the live site. When the file is
+    // absent the component drops the whole column instead — see
+    // components/WeChatContact.tsx.
   },
 
   form: {

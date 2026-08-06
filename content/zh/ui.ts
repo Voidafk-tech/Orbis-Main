@@ -171,7 +171,6 @@ export const UI: Widen<typeof EnUI> = {
     copy: '复制',
     copied: '已复制',
     copyAria: '复制微信号',
-    qrPlaceholder: '微信二维码待提供',
   },
 
   form: {
