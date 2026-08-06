@@ -1,4 +1,4 @@
-# Orbis Accounting — marketing site
+# Orbis Accounting — Landing site
 
 A marketing and lead-generation site for Orbis Accounting, a bookkeeping
 practice in West Vancouver, BC, serving all of British Columbia. Built to the
