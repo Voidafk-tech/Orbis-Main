@@ -15,11 +15,29 @@ on:
 # grants along that line costs nothing and removes the overlap.
 permissions: {}
 
+# Pages accepts one deployment at a time. Without this, a burst of pushes —
+# uploading a file through the web UI, deleting it, uploading it again — fires
+# overlapping runs that queue against each other, and the failure mode is a run
+# that sits there rather than one that says what is wrong.
+#
+# `cancel-in-progress: false` on purpose: a half-finished deploy-pages should be
+# allowed to land. Killing it mid-publish is how the Pages deployment gets stuck
+# in a state no later run can clear.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    # The real build is about twenty seconds. The default limit is six hours,
+    # which is not a limit — two deploys have already been cancelled after
+    # fifteen minutes without ever being assigned a runner, and a job that never
+    # starts looks identical to one that is merely slow. Ten minutes turns that
+    # into a fast, obvious failure instead of a silent stall.
+    timeout-minutes: 10
     steps:
       # Pinned to a commit, not a tag. A tag is mutable: `@v4` is a promise
       # from whoever can move it rather than a fixed piece of code, and moving
@@ -52,6 +70,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       pages: write
       id-token: write
