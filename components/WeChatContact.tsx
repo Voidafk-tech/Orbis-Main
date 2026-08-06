@@ -84,17 +84,34 @@ export const WeChatId: React.FC = () => {
   );
 };
 
-/**
- * The code itself, degrading to a neutral placeholder if the file is not in
- * place — a broken image next to an invitation to scan is worse than none.
- *
- * The mount check is not redundant with `onError`: this markup is prerendered,
- * so the image can have already finished failing by the time React attaches
- * the handler, and then nothing would ever fire.
- */
-const QrCode: React.FC = () => {
+const WeChatContact: React.FC = () => {
   const copy = useCopy();
+  const t = copy.ui.wechat;
   const { WECHAT } = copy.site;
+
+  /*
+   * Whether the code is on the page at all.
+   *
+   * This used to swap in a caption reading "WeChat QR code to be supplied",
+   * which was written for whoever was building the page and then shipped to
+   * customers, who read it as an unfinished site. The empty frame and the
+   * "scan to add us" line under it were worse than the missing image: they
+   * point at something that is not there.
+   *
+   * So the whole column goes instead. What remains — the account name, the ID
+   * and a button that copies it — is not a degraded version of the feature. It
+   * is the half that actually works on a phone, where nobody can scan a code
+   * shown on the screen they are reading it from. When the file lands the
+   * column comes back with no other change.
+   *
+   * The mount check is not redundant with `onError`: this markup is
+   * prerendered, so the image can finish failing before React attaches the
+   * handler, and then nothing would ever fire. The image is also lazy, so on
+   * the home page — where this sits far below the fold — neither fires until
+   * the visitor scrolls to it. That is why the column is removed rather than
+   * never rendered: at that point it has a fixed-size box and takes nothing
+   * with it when it goes.
+   */
   const [missing, setMissing] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
@@ -102,31 +119,6 @@ const QrCode: React.FC = () => {
     const img = imgRef.current;
     if (img && img.complete && img.naturalWidth === 0) setMissing(true);
   }, []);
-
-  if (missing) {
-    return <p className="wechat__qr-placeholder">{copy.ui.wechat.qrPlaceholder}</p>;
-  }
-
-  return (
-    <img
-      ref={imgRef}
-      className="wechat__qr-img"
-      src={WECHAT.src}
-      alt={WECHAT.alt}
-      // Reserves the box before the file arrives, so the row does not shift
-      // sideways when it does.
-      width={120}
-      height={120}
-      loading="lazy"
-      onError={() => setMissing(true)}
-    />
-  );
-};
-
-const WeChatContact: React.FC = () => {
-  const copy = useCopy();
-  const t = copy.ui.wechat;
-  const { WECHAT } = copy.site;
 
   return (
     <div className="wechat">
@@ -137,12 +129,25 @@ const WeChatContact: React.FC = () => {
         <WeChatId />
       </div>
 
-      <div className="wechat__qr">
-        <div className="wechat__qr-box">
-          <QrCode />
+      {!missing && (
+        <div className="wechat__qr">
+          <div className="wechat__qr-box">
+            <img
+              ref={imgRef}
+              className="wechat__qr-img"
+              src={WECHAT.src}
+              alt={WECHAT.alt}
+              // Reserves the box before the file loads, so the row does not
+              // shift sideways when it does.
+              width={120}
+              height={120}
+              loading="lazy"
+              onError={() => setMissing(true)}
+            />
+          </div>
+          <p className="wechat__scan">{t.scan}</p>
         </div>
-        <p className="wechat__scan">{t.scan}</p>
-      </div>
+      )}
     </div>
   );
 };
