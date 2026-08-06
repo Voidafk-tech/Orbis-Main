@@ -23,6 +23,18 @@ export const CONTACT: Widen<typeof En.CONTACT> = {
   tagline: '卑诗省小型企业记账服务 · 西温哥华',
 };
 
+/**
+ * Only `alt` is translated. The account name and the Weixin ID are handles —
+ * they are what a visitor types into WeChat's search box, so they have to match
+ * the account character for character in both languages.
+ */
+export const WECHAT: Widen<typeof En.WECHAT> = {
+  account: En.WECHAT.account,
+  id: En.WECHAT.id,
+  src: En.WECHAT.src,
+  alt: '微信二维码：Tina - Orbis，微信号 Online_Bookkeeper',
+};
+
 export const RATES_AS_OF = '2026 年 7 月';
 
 export const PROADVISOR_BADGE: Widen<typeof En.PROADVISOR_BADGE> = {

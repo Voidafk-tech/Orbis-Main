@@ -4,20 +4,33 @@ on:
   push:
     branches: [main]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+# Nothing by default; each job takes only what it needs.
+#
+# This used to be one block granting `pages: write` and `id-token: write` to
+# both jobs, which meant the build job held them while running `npm ci` —
+# and `npm ci` executes whatever install scripts the dependency tree carries.
+# A single compromised transitive package could have used that token to mint an
+# OIDC identity or publish to Pages. The build job installs and produces an
+# artifact; the deploy job publishes it and installs nothing. Splitting the
+# grants along that line costs nothing and removes the overlap.
+permissions: {}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
+      # Pinned to a commit, not a tag. A tag is mutable: `@v4` is a promise
+      # from whoever can move it rather than a fixed piece of code, and moving
+      # one is how a compromised action reaches every workflow using it. The
+      # version in the trailing comment is what Dependabot reads when it bumps
+      # these — see .github/dependabot.yml.
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           # react-router 8 requires >=22.22.0.
           node-version: 22
@@ -32,17 +45,20 @@ jobs:
         run: npm run build
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
           path: dist
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

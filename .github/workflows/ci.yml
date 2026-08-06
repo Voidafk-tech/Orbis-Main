@@ -1,0 +1,49 @@
+name: Checks
+
+# Runs on every pull request, and again on main after a merge.
+#
+# The point is not only catching a type error. scripts/prerender.mjs throws by
+# design when the site drifts — a head tag it expects to rewrite has gone, a
+# route names an FAQ set that does not exist, a service heading was reworded out
+# from under ONE_TIME_WORK. Without a check before merge, the first anyone hears
+# of that is the deploy failing on main, and the symptom is not a broken page:
+# it is the site quietly staying on the previous build while everyone assumes
+# the change shipped.
+#
+# So this runs the real build, not just the typecheck.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      # Pinned to a commit for the same reason as the deploy workflow — see the
+      # note in deploy.yml.
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          # Matches deploy.yml. react-router 8 requires >=22.22.0.
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # This is where a missing or misshapen Chinese translation fails: every
+      # content/zh module is typed against its English counterpart, so a dropped
+      # key is a type error rather than `undefined` on a page nobody checked.
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build

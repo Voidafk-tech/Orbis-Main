@@ -34,12 +34,12 @@ intake form. A few choices look unusual and are deliberate:
   both alone.
 
   **One deliberate exception**, added on request: `priceRange` in
-  `content/business.ts` publishes a band — currently `$499-$1499` — in the
-  structured data. It is a rough affordability signal for local search, not a
-  quote, and it is the only figure of ours anywhere on the site. The per-plan
-  numbers stay out, and the generated `Offer` entries still carry no `price` or
-  `priceCurrency`. Note the band is visible to anyone reading the page source,
-  so treat it as public even though nothing renders it.
+  `content/business.ts` publishes an affordability band in the structured data.
+  It is currently the coarse `$$` rather than a figure range, precisely so that
+  no number of ours appears even in page source. The per-plan numbers stay out,
+  and the generated `Offer` entries carry no `price` or `priceCurrency`. If it
+  is ever changed back to a range, note that the band is visible to anyone
+  reading the page source — treat it as published even though nothing renders it.
 - **There is no "book a call" CTA.** The single conversion action is the
   asynchronous intake form, and the promise is a written reply within one
   business day. No scheduler widget.
@@ -184,6 +184,7 @@ afterwards.
 | `components/sections/` | One file per block of the home page, in page order |
 | `pages/` | One file per route |
 | `components/IntakeForm.tsx` | The form, its validation, and the Web3Forms submission |
+| `components/WeChatContact.tsx` | The WeChat block — account name, Weixin ID with a copy button, and the QR code |
 | `index.html` | Meta tags and the site icons. The structured data is injected here at build time, not written by hand |
 | `scripts/prerender.mjs` | Routes, head tags, the JSON-LD, the sitemap and robots.txt |
 | `scripts/og-card.mjs` | Regenerates `public/og-card.png`, the link-preview image |
@@ -253,6 +254,48 @@ validation (a false rejection costs a lead), a visible failure message that
 keeps everything the visitor typed, and a confirmation state that moves focus
 to its heading.
 
+Worth being clear about what the honeypot does and does not cover. The access
+key is public and the honeypot is client-side, so anything posting to
+`api.web3forms.com/submit` directly skips both and can flood the practice inbox.
+That bound has to be set on the Web3Forms side — their spam protection plus
+hCaptcha or Turnstile. If a captcha widget is ever added, its origin has to go
+into `script-src`, `frame-src` and `connect-src` in `vite.config.ts` or the
+browser drops it with nothing but a console error.
+
+## WeChat
+
+`components/WeChatContact.tsx` renders the account name, the Weixin ID with a
+copy button, and the QR code. It appears in two places, and the reason only one
+of them carries the code is worth knowing before editing either:
+
+- `components/sections/Intake.tsx` gets the **whole block**. That section is
+  rendered twice — the foot of the home page and the head of `/contact` — so
+  putting it there is what puts it on both.
+- `pages/ContactPage.tsx` adds **just the ID** to its "reach us directly" list,
+  matching how email and phone already appear twice on that page. No second QR:
+  one page showing the same code twice reads as two different codes.
+
+Two details it has to get right, both of which are easy to break by
+simplifying:
+
+- **The copy button's availability is decided in an effect, not while
+  rendering.** Routes are prerendered, where `navigator` does not exist, so a
+  check during render puts a button in the client's first render that is absent
+  from the server's markup — a hydration mismatch, which React resolves by
+  discarding the server markup.
+- **The QR falls back on `onError` *and* on a mount check.** The markup is
+  prerendered, so a missing image can finish failing before React attaches the
+  handler, and then nothing would ever fire. Same arrangement as the
+  certification badge in `components/sections/Trust.tsx`.
+
+The account name and the ID are handles rather than copy: they live in
+`content/site.ts` and are identical in both languages. Only the QR's alt text
+and the surrounding labels are translated.
+
+`public/wechat-qr.png` must carry **its own white field, quiet zone included**.
+The page background is near-black and a transparent PNG will not scan. Supply it
+at 480×480 or larger; it renders at 120px.
+
 ## Before launch
 
 1. **QuickBooks Advanced ProAdvisor badge** — in place at
@@ -263,11 +306,36 @@ to its heading.
    back to 186px.
 2. **Official vendor logos** — the five platform marks in `public/logos/` were
    derived from screenshots. Replace with vendor-issued SVG or 2× PNG.
-3. **Privacy policy** — the form claims your details are "used to write your
-   quote and nothing else". The policy page should be reviewed to back that.
-4. **Rates date stamp** — `RATES_AS_OF` in `content/site.ts`, plus the
+3. **WeChat QR code** — `public/wechat-qr.png` is not in the repo yet, so the
+   block renders its neutral placeholder. The Weixin ID ships and works without
+   it. The file has to be **the code and a white margin, nothing else**: the
+   share card WeChat exports also carries the account name, a city, and an
+   English "scan to add me as a friend" line, all of which would be wrong here.
+   The page already prints the name, and prints the caption in the reader's own
+   language — a baked-in English one would sit untranslated on `/zh/`. See the
+   WeChat section above for the format.
+4. **WeChat account region** — the exported card reads "Richmond, Canada". Every
+   other statement of where the practice is, on the page and in the structured
+   data Google matches against the Business Profile, says West Vancouver.
+   Cropping keeps it off the site, but anyone who actually adds the account sees
+   it, so change the region on the WeChat account. See `content/business.ts` on
+   why the two should not disagree.
+5. **Terms of service** — still stamped January 2024, deliberately. The date is
+   a claim about when someone last read the document, so it stays honest until
+   the three clauses are reviewed against how the practice engages clients now.
+   Review, then restamp.
+6. **Web3Forms spam protection** — turn on their spam filter and a captcha in
+   the dashboard. See the note under "The intake form".
+7. **Rates date stamp** — `RATES_AS_OF` in `content/site.ts`, plus the
    competitor price ranges in FAQ 1, need an owner and a review cadence.
-5. **Mobile below 720px** is built to spec but has not had a design review.
+8. **Mobile below 720px** is built to spec but has not had a design review.
+
+The privacy policy is done: rewritten to name Web3Forms and Google as
+processors, to say that both hold data outside Canada, and to carry retention
+and access sections. Both figures that needed the practice's answer are
+confirmed — enquiries that do not convert are kept twelve months, and the
+contact for access requests is `info@orbisaccounting.ca` rather than a
+`privacy@` alias nobody monitors.
 
 ## Search visibility — what still needs real data
 
@@ -277,18 +345,27 @@ supply, and each one is a real ranking or measurement gap until it lands:
 1. **Google Search Console** — verify the property, submit
    `https://www.orbisaccounting.ca/sitemap.xml`. Until then there is no data on
    which queries the site appears for, and indexing problems are invisible.
-2. **Analytics** — wired but switched off. `components/analytics.ts` sends a
-   `page_view` on every route change, `generate_lead` when the intake form
-   succeeds, and `click_phone` / `click_email` from a delegated listener that
-   catches those links anywhere on the site. All of it is inert until
-   `MEASUREMENT_ID` in that file is set to the GA4 property's ID, and no script
-   is loaded until then — a half-configured tag is worse than none, because it
-   looks like it is recording when it is not.
+2. **Analytics** — wired and **live**. `MEASUREMENT_ID` in
+   `components/analytics.ts` is set, so the tag loads and records.
+   `components/analytics.ts` sends a `page_view` on every route change,
+   `generate_lead` when the intake form succeeds, `click_phone` / `click_email`
+   from a delegated listener that catches those links anywhere on the site, and
+   `click_wechat` when the Weixin ID is copied. Blanking `MEASUREMENT_ID` turns
+   all of it off and loads no script at all — a half-configured tag is worse
+   than none, because it looks like it is recording when it is not.
 
-   Switching it on means switching on the **Website analytics** section of the
-   privacy policy in `content/legal.ts` at the same time. That section describes
-   collection that does not happen while the ID is blank, so the two belong in
-   the same change in both directions.
+   The **Website analytics** section of the privacy policy in
+   `content/legal.ts` describes exactly this collection, so the two belong in
+   the same change in both directions: switching the tag off means softening
+   that section, and adding a new event means adding it there.
+
+   Still to do on the Google side: confirm there are no CSP violations in the
+   browser console on the deployed site. `script-src` allows
+   `*.googletagmanager.com` and `connect-src` allows the `*.google-analytics.com`
+   endpoints, which covers a plain GA4 install — but if **Google Signals** is
+   enabled on the property, gtag also reaches `stats.g.doubleclick.net`, which
+   the policy blocks. Turning Signals off is the better answer than widening the
+   policy.
 3. **Google Business Profile** — the single biggest factor for "bookkeeper near
    me" style searches, and entirely outside this repo. Nothing on the site can
    substitute for it.

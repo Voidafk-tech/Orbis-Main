@@ -164,6 +164,16 @@ export const UI: Widen<typeof EnUI> = {
     phoneLabel: '电话',
   },
 
+  wechat: {
+    label: '微信',
+    idLabel: '微信号',
+    scan: '扫码添加我们的微信',
+    copy: '复制',
+    copied: '已复制',
+    copyAria: '复制微信号',
+    qrPlaceholder: '微信二维码待提供',
+  },
+
   form: {
     detailsLegend: '你的资料',
     booksLegend: '你的账务',

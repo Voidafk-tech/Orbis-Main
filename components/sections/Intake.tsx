@@ -1,5 +1,6 @@
 import React from 'react';
 import IntakeForm from '../IntakeForm';
+import WeChatContact from '../WeChatContact';
 import { useCopy } from '../LocaleContext';
 
 interface IntakeProps {
@@ -45,6 +46,12 @@ const Intake: React.FC<IntakeProps> = ({ headingLevel = 'h2', reassurance = fals
                 {CONTACT.phone}
               </a>
             </div>
+
+            {/* This section is rendered twice — at the foot of the home page and
+                at the head of /contact — so putting WeChat here is what puts it
+                on both, and is why the contact page's own list carries the ID
+                without a second copy of the code. */}
+            <WeChatContact />
           </div>
         </div>
 
