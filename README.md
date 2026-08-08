@@ -135,10 +135,18 @@ alternates plus `x-default`.
 used to be the build date, which meant all eighteen URLs claimed to change on
 every deploy, including deploys that only touched a README. Google's guidance is
 explicit that it discounts `lastmod` once the values stop being credible, so
-that was worse than sending nothing. Each route now reports the last commit
-touching the sources that decide what it says.
+that was worse than sending nothing. Each route now reports the last commit that
+**changed** the sources deciding what it says.
 
-Two things about that are easy to break:
+"Changed" is doing real work in that sentence. Comments and formatting are
+discounted, because the first version of this counted them and immediately
+proved why that fails: the commit that introduced the feature edited one comment
+in `content/routes.ts` — a file every route reads — and restamped all eighteen
+URLs to that day. The sitemap announcing that every page had changed *was* the
+change. So each route's history is walked until a commit is found that altered
+something outside a comment.
+
+Three things about that are easy to break:
 
 - **The build needs full git history.** `actions/checkout` fetches depth 1 by
   default, and over one commit every file reports the same date — eighteen
@@ -147,6 +155,11 @@ Two things about that are easy to break:
   setting fails the build instead of quietly degrading it.
 - **Adding a route means adding its sources** to `PAGE_SOURCES` and
   `CONTENT_SOURCES`. An unmapped route throws.
+- **The comment stripper leaves string literals alone**, and has to. This
+  codebase is mostly copy, and that copy contains things that look like comment
+  syntax — a URL has `//` in it. A regex-based stripper would delete the rest of
+  that line and turn a genuine copy change into an invisible one, so it walks
+  characters and copies quoted spans through verbatim.
 
 `content/ui.ts` is deliberately not counted, and `index.css` is not either.
 Every page reads `ui.ts`, so counting it flattened all eighteen dates back to

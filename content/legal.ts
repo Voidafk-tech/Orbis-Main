@@ -30,8 +30,17 @@ export const PRIVACY: LegalPage = {
     {
       // Accurate only while MEASUREMENT_ID in components/analytics.ts is set.
       // The two are meant to be switched on and off together.
+      //
+      // The four dropdown answers named below are the exact params passed to
+      // the `generate_lead` event in components/IntakeForm.tsx. This paragraph
+      // used to end "what you type into the enquiry form is never sent to it",
+      // which was true of the typed fields and false of the page as a whole:
+      // volume, software, behind and industry were already going to Google
+      // when it was written. Adding a param there means amending this list —
+      // the distinction the sentence now draws is between what you *type* and
+      // what you *pick*, and it only holds while that stays true.
       h: 'Website analytics',
-      p: 'We use Google Analytics to see which pages people visit and which of them lead to an enquiry, so we know what is worth keeping on the site. It records pages viewed, whether the enquiry form was submitted, and whether the phone, email or WeChat details were used, along with the general information a browser sends such as approximate location, device type and referring site. That information goes to Google and is held on their servers, which are outside Canada. It is not used to identify you personally, and what you type into the enquiry form is never sent to it. If you would rather not be counted, any browser-level tracking blocker will stop it.',
+      p: 'We use Google Analytics to see which pages people visit and which of them lead to an enquiry, so we know what is worth keeping on the site. It records pages viewed, whether the enquiry form was submitted, and whether the phone, email or WeChat details were used, along with the general information a browser sends such as approximate location, device type and referring site. When the form is submitted it also records four of the answers you picked from its dropdown lists — roughly how many transactions a month, what software you use now, how current the books are, and your industry — so we can see which kinds of enquiry the site actually brings in. Nothing you type is sent: not your name, your business name, your email, your phone number, nor anything you wrote in your own words. That information goes to Google and is held on their servers, which are outside Canada. It is not used to identify you personally. If you would rather not be counted, any browser-level tracking blocker will stop it.',
     },
     {
       h: 'Data protection',
