@@ -29,7 +29,14 @@ export interface RouteMeta {
   title: string;
   /** Aim for about 150 characters. */
   description: string;
-  /** Sitemap hints. */
+  /**
+   * Not emitted, and not a mistake. Google has said for years that it ignores
+   * both `<priority>` and `<changefreq>`, so scripts/prerender.mjs leaves them
+   * out of the sitemap rather than publishing values nothing reads. They are
+   * kept here only because they cost nothing and would be needed by a crawler
+   * that does honour them; the sitemap's one real hint is `lastmod`, which
+   * comes from git — see scripts/lastmod.mjs.
+   */
   priority: string;
   changefreq: 'monthly' | 'yearly';
   /**

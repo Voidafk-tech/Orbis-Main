@@ -16,6 +16,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { lastmodFor } from './lastmod.mjs';
 
 /**
  * Must match public/CNAME. GitHub Pages serves the host named there and
@@ -442,12 +443,14 @@ for (const redirect of REDIRECTS) {
   console.log(`redirect ${redirect.from} -> ${redirect.to}`);
 }
 
-const lastmod = new Date().toISOString().slice(0, 10);
-
 /**
  * Every route in every language, each entry declaring its alternates. The
  * xhtml:link elements say the same thing the in-page hreflang tags do; Google
  * accepts either, and having both is the belt-and-braces recommendation.
+ *
+ * `lastmod` comes from git, not the clock — see scripts/lastmod.mjs. Stamping
+ * the build date meant every page claimed to change on every deploy, which is
+ * how a site teaches Google to ignore the field.
  */
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
@@ -464,7 +467,7 @@ ${ALL_ROUTES.map((route) => {
   return [
     '  <url>',
     `    <loc>${escapeHtml(urlFor(route.path))}</loc>`,
-    `    <lastmod>${lastmod}</lastmod>`,
+    `    <lastmod>${lastmodFor(route)}</lastmod>`,
     ...alternates,
     `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeHtml(urlFor(route.englishPath))}" />`,
     '  </url>',

@@ -119,6 +119,39 @@ The prerender step matters: this is an SEO-driven local-service page, so the
 plans table, the GST/PST explainer and the FAQ have to be in the initial HTML
 payload. The client entry hydrates that markup rather than replacing it.
 
+## The sitemap
+
+There is no `sitemap.xml` in the repo, and there should not be. It is generated
+into `dist/` by the prerender step from the same `ROUTES` list the pages come
+from, so it cannot list a page that does not exist or miss one that does. The
+deployed copy is at `https://www.orbisaccounting.ca/sitemap.xml` — that is the
+URL to give Google Search Console — and `robots.txt` points at it. Searching the
+repo for the file and finding nothing is expected.
+
+Eighteen URLs: nine routes in two languages, each declaring its `hreflang`
+alternates plus `x-default`.
+
+`lastmod` comes from **git**, not from the clock — see `scripts/lastmod.mjs`. It
+used to be the build date, which meant all eighteen URLs claimed to change on
+every deploy, including deploys that only touched a README. Google's guidance is
+explicit that it discounts `lastmod` once the values stop being credible, so
+that was worse than sending nothing. Each route now reports the last commit
+touching the sources that decide what it says.
+
+Two things about that are easy to break:
+
+- **The build needs full git history.** `actions/checkout` fetches depth 1 by
+  default, and over one commit every file reports the same date — eighteen
+  identical dates that look real. Both workflows set `fetch-depth: 0`, and the
+  script refuses to run shallow in CI rather than publish that, so removing the
+  setting fails the build instead of quietly degrading it.
+- **Adding a route means adding its sources** to `PAGE_SOURCES` and
+  `CONTENT_SOURCES`. An unmapped route throws.
+
+`content/ui.ts` is deliberately not counted, and `index.css` is not either.
+Every page reads `ui.ts`, so counting it flattened all eighteen dates back to
+one; styling is not a content change. Both are noted in the script.
+
 `ROUTES` in `content/routes.ts` is the one list to edit when adding a route. It
 drives the prerendering, the head tags, the sitemap entry, which routes carry
 which structured data, and the `document.title` the app sets on client-side
@@ -176,7 +209,7 @@ afterwards.
 | Path | What it is |
 |---|---|
 | `index.css` | The whole design system: tokens, components, responsive rules |
-| `content/routes.ts` | Every route with its title, description, breadcrumb label and sitemap hints — read by both the app and the prerender step |
+| `content/routes.ts` | Every route with its title, description and breadcrumb label — read by both the app and the prerender step |
 | `content/site.ts` | Copy and figures — the plans, FAQ, form options, the tax-rate date stamp |
 | `content/pages.ts` | Copy for the `/services`, `/pricing`, `/contact` and `/remote-bookkeeping` pages |
 | `content/business.ts` | Address, coordinates, service areas and price band — must match the Google Business Profile |
@@ -187,6 +220,7 @@ afterwards.
 | `components/WeChatContact.tsx` | The WeChat block — account name, Weixin ID with a copy button, and the QR code |
 | `index.html` | Meta tags and the site icons. The structured data is injected here at build time, not written by hand |
 | `scripts/prerender.mjs` | Routes, head tags, the JSON-LD, the sitemap and robots.txt |
+| `scripts/lastmod.mjs` | Maps each route to the sources that decide its content, so the sitemap's `lastmod` is a real date |
 | `scripts/og-card.mjs` | Regenerates `public/og-card.png`, the link-preview image |
 | `public/favicon.*` | The site icon — `favicon.svg` is the source, the PNG and ICO files are rendered from it |
 
