@@ -158,6 +158,13 @@ const IntakeForm: React.FC = () => {
       }
 
       // The one action on the site that is worth measuring.
+      //
+      // These four go to Google, so the privacy policy names them — see the
+      // "Website analytics" section in content/legal.ts. It draws the line at
+      // what the visitor *types*: the typed fields above (name, business,
+      // email, phone, notes) are deliberately absent here and must stay that
+      // way. Adding a param means amending that paragraph in both languages,
+      // or the policy stops describing the software.
       trackEvent(EVENTS.lead, {
         volume: values.volume,
         software: values.software,
