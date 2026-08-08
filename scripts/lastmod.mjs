@@ -124,10 +124,142 @@ const contentPath = (module, locale) =>
   locale === 'en' ? `content/${module}.ts` : `content/${locale}/${module}.ts`;
 
 /**
- * The date for one resolved route, as YYYY-MM-DD.
+ * Strips comments, leaving string literals alone.
  *
- * `git log -1` over several paths already returns the most recent commit
- * touching any of them, so there is no max() to take by hand.
+ * The literals are the whole reason this is a character walk rather than a
+ * regex: this codebase is mostly copy, and that copy is full of things that
+ * look like comment syntax. `'https://orbisaccounting.ca'` contains `//`, and
+ * a regex-based stripper deletes the rest of that line — silently turning a
+ * genuine copy change into an invisible one. Quoted spans are copied through
+ * verbatim, escapes included, so the `//` inside a URL is never even examined.
+ */
+const stripComments = (source) => {
+  let out = '';
+  let i = 0;
+  const n = source.length;
+
+  while (i < n) {
+    const c = source[i];
+    const next = source[i + 1];
+
+    if (c === '/' && next === '/') {
+      while (i < n && source[i] !== '\n') i++;
+      continue;
+    }
+    if (c === '/' && next === '*') {
+      i += 2;
+      while (i < n && !(source[i] === '*' && source[i + 1] === '/')) i++;
+      i += 2;
+      continue;
+    }
+    if (c === '"' || c === "'" || c === '`') {
+      const quote = c;
+      out += c;
+      i++;
+      while (i < n) {
+        if (source[i] === '\\') {
+          out += source.slice(i, i + 2);
+          i += 2;
+          continue;
+        }
+        out += source[i];
+        if (source[i] === quote) {
+          i++;
+          break;
+        }
+        i++;
+      }
+      continue;
+    }
+
+    out += c;
+    i++;
+  }
+
+  return out;
+};
+
+/** Comments and whitespace removed, so only a change in substance registers. */
+const normalize = (source) => stripComments(source).replace(/\s+/g, ' ').trim();
+
+/** File contents at a commit, or null where the file did not exist. */
+const blobAt = (commit, path) => {
+  try {
+    return git(['show', `${commit}:${path}`]);
+  } catch {
+    return null;
+  }
+};
+
+const SOURCE_FILE = /\.(ts|tsx|js|jsx|mjs)$/;
+
+/**
+ * Whether a commit changed anything a reader could see, within `paths`.
+ *
+ * Only comments and formatting are discounted, and only in source files;
+ * anything else — an added file, a deleted one, a `.png` — counts by its bytes.
+ */
+const changesSubstance = (commit, paths) => {
+  let changed;
+  try {
+    changed = git(['diff', '--name-only', `${commit}^`, commit, '--', ...paths])
+      .split('\n')
+      .filter(Boolean);
+  } catch {
+    // No parent: the root commit created everything it touched.
+    return true;
+  }
+
+  return changed.some((file) => {
+    const before = blobAt(`${commit}^`, file);
+    const after = blobAt(commit, file);
+    // Added or deleted.
+    if (before === null || after === null) return true;
+    if (!SOURCE_FILE.test(file)) return before !== after;
+    return normalize(before) !== normalize(after);
+  });
+};
+
+/**
+ * How far back to look for a real change before giving up and taking the most
+ * recent commit at face value. Reached only if a route's sources have seen this
+ * many consecutive cosmetic commits, which has not happened and would be its
+ * own smell; the cap is here so a pathological history cannot make the build
+ * walk the whole repo.
+ */
+const MAX_WALK = 40;
+
+/**
+ * The last commit that changed what `paths` actually say.
+ *
+ * This is the part that was missing, and its absence had already produced the
+ * exact bug this module exists to prevent. `content/routes.ts` is read by every
+ * route, and the commit that introduced this file edited a comment in it and
+ * nothing else — which restamped all eighteen URLs to that day. The sitemap
+ * announcing that every page had changed was itself the change. Taking
+ * `git log -1` at face value cannot tell those apart, so it walks instead.
+ */
+const lastSubstantiveDate = (paths) => {
+  const commits = git(['log', `-${MAX_WALK}`, '--format=%H', '--', ...paths])
+    .split('\n')
+    .filter(Boolean);
+
+  if (commits.length === 0) return null;
+
+  for (const commit of commits) {
+    if (changesSubstance(commit, paths)) {
+      return git(['show', '-s', '--format=%cI', commit]).slice(0, 10);
+    }
+  }
+
+  return git(['show', '-s', '--format=%cI', commits[0]]).slice(0, 10);
+};
+
+/** Routes share sources, so the same path set is asked about repeatedly. */
+const cache = new Map();
+
+/**
+ * The date for one resolved route, as YYYY-MM-DD.
  */
 export function lastmodFor(route) {
   const pages = PAGE_SOURCES[route.englishPath];
@@ -146,7 +278,9 @@ export function lastmodFor(route) {
     ...content.map((module) => contentPath(module, route.locale)),
   ];
 
-  const iso = git(['log', '-1', '--format=%cI', '--', ...paths]);
+  const key = paths.join('\0');
+  if (!cache.has(key)) cache.set(key, lastSubstantiveDate(paths));
+
   // A path that has never been committed yields no commit at all.
-  return iso ? iso.slice(0, 10) : BUILD_DATE;
+  return cache.get(key) ?? BUILD_DATE;
 }
