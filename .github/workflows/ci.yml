@@ -27,7 +27,7 @@ jobs:
       # Pinned to a commit for the same reason as the deploy workflow — see the
       # note in deploy.yml.
       - name: Checkout
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # This job runs the real build, and the build reads git history to
           # date the sitemap. Depth 1 makes scripts/lastmod.mjs throw in CI by
