@@ -21,4 +21,7 @@ export { REMOTE_FAQS } from './content/pages';
 export { FAQS as ZH_FAQS } from './content/zh/site';
 export { REMOTE_FAQS as ZH_REMOTE_FAQS } from './content/zh/pages';
 export { ROUTES, ALL_ROUTES, REDIRECTS, NOT_FOUND_META } from './content/routes';
+// PEOPLE is exported but no longer imported by scripts/prerender.mjs: the names
+// are deliberately not published in the JSON-LD. The export is kept so restoring
+// them is a one-line change there — see the note in content/business.ts.
 export { AGGREGATE_RATING, AREAS_SERVED, BUSINESS, CREDENTIALS, PEOPLE, SAME_AS } from './content/business';

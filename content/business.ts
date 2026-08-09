@@ -63,18 +63,35 @@ export const SAME_AS: string[] = [
   // canonical https://www.google.com/maps/place/… URL is more durable — swap it
   // in if one is to hand, since shortlinks can rot.
   'https://share.google/AP3Klv3AoRDpdiH51',
+  // Add each directory profile here as it goes live — Bing Places, Apple
+  // Business Connect, the Facebook page, Find-a-ProAdvisor, Yellow Pages,
+  // Yelp, LinkedIn. This list is what turns those listings from unconnected
+  // records into citations pointing at this entity, so a profile that exists
+  // and is not listed here is doing a fraction of the work it could.
 ];
 
 /**
- * The people who do the work.
+ * The people who do the work. **Currently not published anywhere.**
+ *
+ * This used to be emitted as `employee` in the AccountingService JSON-LD, which
+ * meant both names appeared in the page source of all eighteen URLs — "view
+ * source" showed them, and so did every scraper. That is not what a reader sees,
+ * but it is unambiguously public, and the practice asked for the names to stay
+ * off the site. scripts/prerender.mjs no longer reads this.
+ *
+ * It is kept, rather than deleted, because the decision is about publication and
+ * not about the facts: if a named bio and a `Person` block are wanted later,
+ * this is the source and re-enabling it is one line in prerender.mjs. Do not
+ * re-enable it without asking.
  *
  * Named at the client's direction, and exactly as directed: Tina by first name
- * only, Kevin Feng in full. Do not expand or abbreviate either without asking —
- * this is published page source and it concerns real people.
+ * only, Kevin Feng in full. Do not expand or abbreviate either — it concerns
+ * real people.
  *
- * They are emitted as `employee` rather than `founder` because that is true
- * regardless of who incorporated the practice; switch it if `founder` is
- * accurate.
+ * Note this is not the only place a name can reach the page: WECHAT.account in
+ * content/site.ts renders "Tina - Orbis" in the WeChat block on the home page
+ * and /contact. That one is a handle on a public account rather than a
+ * disclosure, which is why it stays.
  */
 export const PEOPLE = [{ name: 'Tina' }, { name: 'Kevin Feng' }] as const;
 
