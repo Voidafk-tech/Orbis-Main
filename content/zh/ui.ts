@@ -43,7 +43,8 @@ export const UI: Widen<typeof EnUI> = {
   },
 
   hero: {
-    eyebrow: '卑诗省小型企业记账服务 · 西温哥华',
+    // 第三段是主要差异点，原本整个首屏都没有提到。见 content/ui.ts 的说明。
+    eyebrow: '卑诗省小型企业记账服务 · 西温哥华 · 中英双语',
     headline: '账目清楚，',
     headlineEm: '按时申报。',
     sub: 'GST 交给 CRA，PST 交给省政府，每月还有一份你真的读得懂的报表。每个月由同一个人处理你的账，你不必反复解释自己的生意。',

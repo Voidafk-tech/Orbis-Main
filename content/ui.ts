@@ -58,7 +58,18 @@ export const UI = {
   },
 
   hero: {
-    eyebrow: 'Bookkeeping for BC small business · West Vancouver, BC',
+    /**
+     * The third segment is the practice's main differentiator and used to be
+     * absent from the first screen entirely — the only sign the site was
+     * bilingual was the 中文 toggle in the header, which a visitor reading
+     * English has no reason to look at.
+     *
+     * It sits in the eyebrow rather than the paragraph because Hero.tsx renders
+     * the eyebrow as a span *inside* the h1, so this is the strongest on-page
+     * signal available. Deliberately not the same string as CONTACT.tagline in
+     * content/site.ts, which is the shorter form used away from the hero.
+     */
+    eyebrow: 'Bookkeeping for BC small business · West Vancouver, BC · English and Mandarin',
     headline: 'Clean books,',
     headlineEm: 'filed on time.',
     sub: 'GST to the CRA, PST to the province, and monthly reports you can actually read. The same person does your books every month, so you are never re-explaining your business.',
