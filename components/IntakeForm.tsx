@@ -33,9 +33,10 @@ const TEXT_DEFAULTS: Values = {
  *
  * Worth being clear about the scope: this constrains the form, not the
  * endpoint. The Web3Forms access key is public by design, so anything posting
- * to the endpoint directly skips this and the honeypot both. Capping the
- * fields is what can be done from here; a captcha on the Web3Forms side is
- * what would bound the rest.
+ * to the endpoint directly skips this and both honeypots. Capping the fields
+ * is what can be done from here; a captcha on the Web3Forms side is what would
+ * bound the rest, and it is deliberately not enabled — see the note on
+ * `botcheck` below.
  */
 const MAX_LENGTHS: Record<string, number> = {
   name: 100,
@@ -44,6 +45,28 @@ const MAX_LENGTHS: Record<string, number> = {
   phone: 40,
   notes: 2000,
 };
+
+/**
+ * Web3Forms' own honeypot, and the second of two — which is the point.
+ *
+ * `company_url` above is checked here, in this file, and a bot that drives a
+ * real browser can simply not run this code: override the submit handler, call
+ * fetch itself, and the check never happens. `botcheck` is checked by Web3Forms
+ * after the request arrives, so passing it through means the rejection happens
+ * somewhere the client cannot reach. That is the only reason to carry both.
+ *
+ * It has to be *sent* to do anything. This form builds a JSON payload by hand
+ * rather than posting the form element, so a hidden input nobody reads is
+ * inert — the field is only a honeypot if its value rides along. Hence the
+ * state below and the entry in the payload.
+ *
+ * Honest about the ceiling: this catches bots that fill the DOM and submit.
+ * It does nothing about a script posting straight to api.web3forms.com with
+ * the public key, which is the case that can burn a monthly submission quota
+ * and take the contact channel down with it. Only a captcha or domain
+ * restriction, both enabled on the Web3Forms side, bound that one.
+ */
+const BOTCHECK_FIELD = 'botcheck';
 
 type Selects = ReturnType<typeof useCopy>['site']['FORM_SELECTS'];
 
@@ -86,6 +109,9 @@ const IntakeForm: React.FC = () => {
   const { CONTACT, FORM_SELECTS } = copy.site;
   const t = copy.ui.form;
   const [values, setValues] = useState<Values>(() => initialValues(FORM_SELECTS));
+  // Boolean rather than another entry in `values`, because Web3Forms tests it
+  // for truthiness and a checkbox is what a form-filling bot ticks.
+  const [botcheck, setBotcheck] = useState(false);
   const [err, setErr] = useState('');
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
@@ -125,8 +151,11 @@ const IntakeForm: React.FC = () => {
     setErr('');
     setSending(true);
 
-    const payload: Record<string, string> = {
+    const payload: Record<string, string | boolean> = {
       access_key: WEB3FORMS_ACCESS_KEY,
+      // Always present, normally false. Web3Forms rejects the submission when
+      // it is true, which is the whole mechanism — see BOTCHECK_FIELD.
+      [BOTCHECK_FIELD]: botcheck,
       subject: `New enquiry from ${business} (${name})`,
       from_name: 'Orbis Accounting website',
       replyto: email,
@@ -173,6 +202,7 @@ const IntakeForm: React.FC = () => {
       });
 
       setValues(initialValues(FORM_SELECTS));
+      setBotcheck(false);
       setErr('');
       setSent(true);
       window.setTimeout(() => {
@@ -318,6 +348,21 @@ const IntakeForm: React.FC = () => {
                 autoComplete="off"
                 value={values.company_url}
                 onChange={set('company_url')}
+              />
+            </label>
+            {/* The name is Web3Forms' and cannot be changed — it is the field
+                their endpoint looks for. Kept off-screen with the other
+                honeypot rather than `display: none`, since a bot skipping
+                undisplayed inputs is exactly the bot worth catching. */}
+            <label>
+              Leave this checkbox alone
+              <input
+                type="checkbox"
+                name={BOTCHECK_FIELD}
+                tabIndex={-1}
+                autoComplete="off"
+                checked={botcheck}
+                onChange={(event) => setBotcheck(event.target.checked)}
               />
             </label>
           </div>

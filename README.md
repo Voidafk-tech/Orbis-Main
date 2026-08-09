@@ -296,18 +296,32 @@ field, and once inside a composed `message` body, so the whole picture is
 readable in the email regardless of how the template renders. The subject line
 includes the business name so enquiries are sortable.
 
-Also in there: a honeypot field that aborts silently, deliberately loose email
-validation (a false rejection costs a lead), a visible failure message that
-keeps everything the visitor typed, and a confirmation state that moves focus
-to its heading.
+Also in there: deliberately loose email validation (a false rejection costs a
+lead), a visible failure message that keeps everything the visitor typed, and a
+confirmation state that moves focus to its heading.
 
-Worth being clear about what the honeypot does and does not cover. The access
-key is public and the honeypot is client-side, so anything posting to
-`api.web3forms.com/submit` directly skips both and can flood the practice inbox.
-That bound has to be set on the Web3Forms side — their spam protection plus
-hCaptcha or Turnstile. If a captcha widget is ever added, its origin has to go
-into `script-src`, `frame-src` and `connect-src` in `vite.config.ts` or the
-browser drops it with nothing but a console error.
+**Two honeypots, and the difference between them matters.** `company_url` is
+checked in `IntakeForm.tsx`, so a bot that overrides the submit handler and
+calls `fetch` itself never runs that check. `botcheck` is Web3Forms' own field:
+it is passed through in the payload and tested after the request lands, where
+the client cannot reach the decision. The field name is theirs and cannot be
+changed. Both sit off-screen at `left: -9999px` rather than `display: none`,
+because a bot that skips undisplayed inputs is exactly the bot worth catching.
+
+`botcheck` only works because it is *sent*. This form builds its JSON payload by
+hand rather than posting the form element, so a hidden input nobody reads would
+be inert — if you refactor the payload, the field has to stay in it.
+
+Worth being blunt about the ceiling. The access key is public by design, so a
+script posting straight to `api.web3forms.com/submit` runs none of this. On the
+free plan that matters more than it first appears: the cap is 250 submissions a
+month, so a flood does not merely fill the inbox, it exhausts the quota and
+genuine enquiries stop arriving. Only a captcha or domain restriction — both
+enabled on the Web3Forms side, and Turnstile and domain restriction are Pro —
+bound that case. If a captcha widget is ever added, its origin has to go into
+`script-src`, `frame-src` and `connect-src` in `vite.config.ts`; the CSP
+currently sets `frame-src 'none'`, which blocks hCaptcha and Turnstile alike,
+and the browser drops the widget with nothing but a console error.
 
 ## WeChat
 
@@ -371,8 +385,12 @@ at 480×480 or larger; it renders at 120px.
    a claim about when someone last read the document, so it stays honest until
    the three clauses are reviewed against how the practice engages clients now.
    Review, then restamp.
-6. **Web3Forms spam protection** — turn on their spam filter and a captcha in
-   the dashboard. See the note under "The intake form".
+6. **Web3Forms spam protection** — the `botcheck` honeypot is wired up, but it
+   is only half of the pair: the toggle in the Web3Forms dashboard has to be on
+   for their end to test it. That is a one-click change and it is the last free
+   thing available here. Beyond it, bounding a direct post to the endpoint means
+   a captcha (hCaptcha is free and zero-config; Turnstile and domain restriction
+   are Pro). See the note under "The intake form".
 7. **Rates date stamp** — `RATES_AS_OF` in `content/site.ts`, plus the
    competitor price ranges in FAQ 1, need an owner and a review cadence.
 8. **Mobile below 720px** is built to spec but has not had a design review.
