@@ -217,6 +217,45 @@ re-issue the TLS certificate, which takes a few minutes; expect a certificate
 warning in that window and re-check "Enforce HTTPS" under Settings → Pages
 afterwards.
 
+## IndexNow
+
+`scripts/indexnow.mjs` tells IndexNow which URLs a deploy changed. Bing, Yandex,
+Seznam, Naver and Yep all read from the one endpoint; Google does not
+participate, which is why nothing in that file mentions it.
+
+It exists because discovery is the slow step for a site with little inbound link
+signal. Bing found the home page on its own and then sat on it — "discovered but
+not crawled" — and a static host has no other way to say "this changed now".
+What a submission buys is **awareness, not indexing**: Microsoft is explicit
+that it moves the URL up the crawl queue and nothing more. A successful run
+means Bing has been told, never that the page is in Bing.
+
+Three decisions worth not undoing:
+
+- **It runs after the deploy**, as its own `notify` job. The protocol proves
+  ownership by fetching `public/66abc15747df11992a4ac33f930e2eaf.txt` from the
+  site, so announcing before the files are live validates against the previous
+  deploy. The job also installs nothing and holds no Pages or OIDC token —
+  same reasoning that splits `build` from `deploy`, and the script reads the
+  deployed `sitemap.xml` over HTTPS rather than the build artifact so that it
+  can.
+- **It submits only what changed**, matched against the sitemap's `lastmod` —
+  so "changed" means here what it means everywhere else on this site, and a
+  README tweak announces nothing. Re-announcing all eighteen URLs on every
+  deploy is how a site teaches the endpoint to discount it, the same failure
+  the `lastmod` work exists to avoid.
+- **The key is committed, not a repository secret.** It is published at the site
+  root by design — that is how ownership is proven — so a secret would add
+  indirection and hide nothing. Anyone holding it can ask Bing to crawl a URL
+  on this host, which is what the script does on purpose.
+
+Adding the script changed no route's `lastmod`, so the first deploy after it
+landed announced nothing. Bootstrapping is a manual run:
+
+**Actions → Deploy to GitHub Pages → Run workflow → tick "Announce every
+sitemap URL"**, which passes `--all` and submits all eighteen. Run it once.
+After that, leave it alone and let the `lastmod` filter do the work.
+
 ## Where things live
 
 | Path | What it is |
@@ -234,6 +273,7 @@ afterwards.
 | `index.html` | Meta tags and the site icons. The structured data is injected here at build time, not written by hand |
 | `scripts/prerender.mjs` | Routes, head tags, the JSON-LD, the sitemap and robots.txt |
 | `scripts/lastmod.mjs` | Maps each route to the sources that decide its content, so the sitemap's `lastmod` is a real date |
+| `scripts/indexnow.mjs` | Announces the URLs a deploy changed to IndexNow, after the files are live |
 | `scripts/og-card.mjs` | Regenerates `public/og-card.png`, the link-preview image |
 | `public/favicon.*` | The site icon — `favicon.svg` is the source, the PNG and ICO files are rendered from it |
 
@@ -392,6 +432,21 @@ supply, and each one is a real ranking or measurement gap until it lands:
 1. **Google Search Console** — verify the property, submit
    `https://www.orbisaccounting.ca/sitemap.xml`. Until then there is no data on
    which queries the site appears for, and indexing problems are invisible.
+   Google is indexing the rebuilt pages, so this is a measurement gap rather
+   than an indexing one — but it is the gap that makes every future indexing
+   problem visible on the day it happens instead of weeks later.
+
+   **Bing Webmaster Tools** is verified and the sitemap is submitted and
+   accepted. Two things there are worth knowing. Confirm the verified property
+   is `https://www.orbisaccounting.ca` and not the bare apex — BWT treats those
+   as separate sites, and the apex only redirects here. And **Reports & Data →
+   Crawl Information** is the report that matters: it says whether Bingbot has
+   actually requested anything. "Discovered but not crawled" with the
+   accompanying "some issues which are preventing indexation" text is Bing's
+   generic wording for any URL it has not yet fetched — the identical string is
+   reported across unrelated sites with unrelated causes — so it is not a
+   finding about this site and should not be read as one. Zero crawl requests
+   several weeks after discovery would be.
 2. **Analytics** — wired and **live**. `MEASUREMENT_ID` in
    `components/analytics.ts` is set, so the tag loads and records.
    `components/analytics.ts` sends a `page_view` on every route change,
@@ -415,13 +470,23 @@ supply, and each one is a real ranking or measurement gap until it lands:
    policy.
 3. **Google Business Profile** — the single biggest factor for "bookkeeper near
    me" style searches, and entirely outside this repo. Nothing on the site can
-   substitute for it.
-4. **`sameAs`** — the one structured-data field still empty. It is what ties
+   substitute for it. **Bing Places for Business** is the direct counterpart and
+   a separate system from web indexing, so it is worth claiming whatever the
+   crawl status of the site happens to be.
+4. **Inbound links** — the constraint nothing in this repo can lift. Bing
+   weights link-based trust heavily when deciding what to crawl and how often,
+   more so than Google, and a domain with none is low priority by definition.
+   IndexNow shortens the wait for a URL Bing already knows about; it does not
+   substitute for the site being worth crawling. Directory listings that are
+   already true — CPA and bookkeeper directories, BC business listings, the
+   QuickBooks ProAdvisor directory behind the badge in `public/` — are the
+   honest version of this.
+5. **`sameAs`** — the one structured-data field still empty. It is what ties
    this site and the Google Business Profile together as one entity in Google's
    index, and `content/business.ts` has step-by-step instructions for getting
    the URL. The address, coordinates, price band and service areas are all in
    place.
-5. **`aggregateRating`** — only once there are real reviews behind it, and only
+6. **`aggregateRating`** — only once there are real reviews behind it, and only
    with the reviews shown on the page. Two things make inventing them a bad
    trade rather than a shortcut: Google has not rendered review stars from a
    site's own `LocalBusiness` markup since 2019, because self-serving ratings

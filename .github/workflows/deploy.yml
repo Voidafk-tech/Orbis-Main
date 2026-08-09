@@ -3,6 +3,16 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Manual runs exist for one job: announcing every URL to IndexNow rather than
+  # only the ones this commit changed. See the `notify` job, and the note on
+  # `--all` in scripts/indexnow.mjs. Re-deploying in order to do it is harmless
+  # — the build is deterministic and Pages accepts the same artifact again.
+  workflow_dispatch:
+    inputs:
+      submit_all:
+        description: 'Announce every sitemap URL to IndexNow, not just changed ones'
+        type: boolean
+        default: false
 
 # Nothing by default; each job takes only what it needs.
 #
@@ -89,3 +99,43 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+
+  # Tells IndexNow — Bing, Yandex, Seznam, Naver, Yep — which URLs this deploy
+  # changed. Not Google, which does not participate in the protocol.
+  #
+  # A third job rather than a step on either of the two above, for reasons that
+  # are the same ones that split those two in the first place:
+  #
+  #   - It has to run *after* the files are live, because the protocol verifies
+  #     ownership by fetching the key file from the site. That rules out the
+  #     build job.
+  #   - It must not run inside the job holding `pages: write` and
+  #     `id-token: write`. Announcing to a third-party endpoint from a job with
+  #     publish rights is the overlap the permissions split exists to avoid.
+  #
+  # It installs nothing — no `npm ci`, no dependencies — and reads the deployed
+  # sitemap over HTTPS instead of the build artifact, so `contents: read` for
+  # the script itself is the whole of what it needs.
+  notify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      # Pinned to a commit for the same reason as the jobs above.
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        # Depth 1 on purpose, unlike the build job: this reads only
+        # scripts/indexnow.mjs, public/CNAME, the key file, and HEAD's own
+        # commit date. None of that needs history, and the sitemap dates it
+        # compares against were already written by a full-history build.
+
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+        # No `cache: npm`: nothing is installed, so there is nothing to cache.
+
+      - name: Notify IndexNow
+        run: node scripts/indexnow.mjs ${{ inputs.submit_all && '--all' || '' }}
