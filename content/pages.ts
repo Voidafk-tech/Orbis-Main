@@ -78,11 +78,23 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
 ];
 
 /** What we do not do, said plainly. Being clear about the edge saves both sides a call. */
+/**
+ * Says the same thing FAQ 2 in content/site.ts says, at more length. The two
+ * are read by the same person in the same session and have to agree.
+ *
+ * This used to close "We do not file your corporate return and we do not do tax
+ * planning", which was a flat no. The practice does not advertise that work, but
+ * it will quote anyone who asks for it, so the flat no was turning enquiries
+ * away on a claim that was not accurate. The section now describes the general
+ * division of labour and leaves the question open, without advertising year-end
+ * filing as a service. Keep it that way in both directions: do not put the
+ * refusal back, and do not add corporate returns to the service list.
+ */
 export const SERVICES_BOUNDARY = {
   h: 'Where a bookkeeper stops and an accountant starts.',
   body: [
-    'A bookkeeper handles the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. An accountant steps in for corporate tax returns and higher level planning.',
-    'Most BC small businesses work with a bookkeeper all year and bring in an accountant at year end. We do not file your corporate return and we do not do tax planning. What we do is hand your accountant a clean, closed set of books, which makes their bill smaller than it would otherwise be.',
+    'A bookkeeper handles the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. An accountant steps in for year-end filing and higher level planning.',
+    "Most BC small businesses work with a bookkeeper all year and bring someone in at year end. Our plans cover the monthly work, and what that work leaves behind is a clean, closed set of books, which makes whatever happens at year end smaller than it would otherwise be. If you want to know what we can handle at year end, ask in the form and we'll tell you in the quote.",
   ],
 };
 

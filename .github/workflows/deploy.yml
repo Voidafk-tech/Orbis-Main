@@ -32,6 +32,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    # The IndexNow payload is computed here, where the repo and its git history
+    # are checked out, and POSTed from the deploy job, which has neither. Passing
+    # it as a job output is what avoids a second checkout and a second npm ci
+    # just to send one request.
+    outputs:
+      indexnow: ${{ steps.indexnow.outputs.payload }}
     # The real build is about twenty seconds. The default limit is six hours,
     # which is not a limit — two deploys have already been cancelled after
     # fifteen minutes without ever being assigned a runner, and a job that never
@@ -70,6 +76,18 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Reads dist/sitemap.xml, so it has to follow the build. Prints nothing at
+      # all when no route changed in this commit, which leaves the job output
+      # empty and skips the submission step below.
+      - name: Collect changed URLs for IndexNow
+        id: indexnow
+        env:
+          # The commit this push started from. The script needs the whole range,
+          # not just HEAD, because a merge commit is dated later than the branch
+          # commits it brings in — see the note on deployDates() in the script.
+          INDEXNOW_SINCE: ${{ github.event.before }}
+        run: node scripts/indexnow.mjs >> "$GITHUB_OUTPUT"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
@@ -89,3 +107,26 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+
+      # After the deploy, never before it. The API fetches the key file from the
+      # live site to prove we control the domain, so submitting first means
+      # submitting against whatever the previous deploy published — and on the
+      # very first run, against a key file that does not exist yet.
+      #
+      # Skipped entirely when the build job found no changed route, which is the
+      # normal case for a deploy that only touched the README.
+      #
+      # continue-on-error because by this point the site is already published:
+      # Bing being down is not a reason to paint a successful deploy red. It
+      # still surfaces as a failed step, so a genuinely broken key does not go
+      # unnoticed.
+      - name: Submit changed URLs to IndexNow
+        if: needs.build.outputs.indexnow != ''
+        continue-on-error: true
+        env:
+          PAYLOAD: ${{ needs.build.outputs.indexnow }}
+        run: |
+          curl --fail-with-body --silent --show-error --max-time 30 \
+            -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d "$PAYLOAD"

@@ -11,7 +11,16 @@
 
 export const CONTACT = {
   email: 'info@orbisaccounting.ca',
-  phone: '(604) 203-7799',
+  /**
+   * Hyphens, no parentheses, no spaces. This is the canonical NAP string, and it
+   * has to be character-identical to the Google Business Profile and to every
+   * directory listing — a phone written two ways is two citations as far as
+   * local search is concerned, and the signal splits between them. Directories
+   * that reformat it themselves are fine; what cannot happen is a second variant
+   * being typed anywhere. Rendered in the header, footer, intake block and
+   * contact page, and emitted as `telephone` in the JSON-LD, all from here.
+   */
+  phone: '604-203-7799',
   phoneHref: 'tel:+16042037799',
   locality: 'West Vancouver, BC',
   tagline: 'Bookkeeping for BC small business · West Vancouver, BC',
@@ -241,7 +250,16 @@ export const FAQS = [
   },
   {
     q: 'What is the difference between a bookkeeper and an accountant, and which do I need?',
-    a: 'A bookkeeper handles the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. An accountant steps in for corporate tax returns and higher level planning. Most BC small businesses work with a bookkeeper all year and bring in an accountant at year end. We hand your accountant a clean, closed set of books, which makes their bill smaller.',
+    // Rewritten to stop assigning year-end filing to an outside accountant and
+    // assuming the reader already has one. The practice does not advertise
+    // corporate returns or tax planning, but it will quote anyone who asks, so
+    // this states the general division of labour and leaves the question open
+    // rather than answering it with a "no" that is not true.
+    //
+    // SERVICES_BOUNDARY in content/pages.ts makes the same point at length on
+    // /services and has to keep saying the same thing as this. Edit the two
+    // together, in both languages.
+    a: "A bookkeeper handles the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. An accountant steps in for year-end filing and higher level planning. Most BC small businesses work with a bookkeeper all year and bring someone in at year end. Our plans cover the monthly work. If you want to know what we can handle at year end, ask in the form and we'll tell you in the quote.",
   },
   {
     q: 'Do I have to register for PST in BC?',

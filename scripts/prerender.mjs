@@ -17,6 +17,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { lastmodFor } from './lastmod.mjs';
+import { INDEXNOW_KEY, KEY_FILE, indexNowEnabled } from './indexnow.mjs';
 
 /**
  * Must match public/CNAME. GitHub Pages serves the host named there and
@@ -41,7 +42,9 @@ const {
   AREAS_SERVED,
   BUSINESS,
   CREDENTIALS,
-  PEOPLE,
+  // PEOPLE is deliberately not imported — see the `employee` note on the
+  // organisation object below. The export chain is left intact so re-enabling it
+  // is a one-line change.
   SAME_AS,
   CONTACT,
   FAQS,
@@ -186,7 +189,18 @@ const organisation = {
     longitude: BUSINESS.longitude,
   },
   areaServed: AREAS_SERVED.map((name) => ({ '@type': 'AdministrativeArea', name })),
-  availableLanguage: LOCALE_TAGS,
+  // An array, not LOCALE_TAGS itself. Passing the map emitted
+  // {"en":"en-CA","zh":"zh-Hans-CA"} into the markup, where schema.org expects
+  // Text or Language — a shape no consumer reads, so the languages were being
+  // published and understood by nothing.
+  //
+  // Both properties are here because they answer different questions and Google
+  // reads them in different places: availableLanguage is the language you can be
+  // served in, knowsLanguage is the language the practice speaks. Bilingual
+  // service is the practice's main differentiator, so it is worth stating twice
+  // in the form each field expects.
+  availableLanguage: Object.values(LOCALE_TAGS),
+  knowsLanguage: ['en', 'zh-Hans'],
   description:
     'Bookkeeping for BC small business, based in West Vancouver and serving all of British Columbia. Monthly bookkeeping, GST and PST filing, payroll and T4s, financial reporting, software setup and catch-up work, at a fixed monthly price.',
   openingHoursSpecification: {
@@ -200,10 +214,18 @@ const organisation = {
     name: 'Monthly bookkeeping plans',
     itemListElement: [...planOffers, ...oneTimeOffers],
   },
-  // A named, credentialled human is one of the strongest expertise signals a
-  // small professional practice has, and Google's quality guidance leans on it
-  // hard for anything financial.
-  employee: PEOPLE.map((person) => ({ '@type': 'Person', name: person.name })),
+  // No `employee`. A named, credentialled human is one of the strongest
+  // expertise signals a small practice has, and this used to emit PEOPLE as
+  // Person entries — but JSON-LD is page source, so that published two real
+  // people's names on all eighteen URLs, readable by anyone viewing source and
+  // by every scraper. The practice asked for the names not to be public, and
+  // this was the only thing publishing them.
+  //
+  // The credentials below carry the expertise signal at practice level instead,
+  // which is where Google reads it for an organisation anyway. PEOPLE and its
+  // re-export in entry-server.tsx are kept so restoring this is one line — do
+  // not restore it without asking, and note that adding `jobTitle` or a photo
+  // publishes more, not less.
   hasCredential: CREDENTIALS.map((credential) => ({
     '@type': 'EducationalOccupationalCredential',
     credentialCategory: 'certification',
@@ -488,3 +510,17 @@ Sitemap: ${SITE}/sitemap.xml
 
 await writeFile(path.join(dist, 'robots.txt'), robots);
 console.log('wrote robots.txt');
+
+/**
+ * The IndexNow ownership proof: the key, as plain text, at the site root. The
+ * API fetches it and refuses the submission if it does not match the key sent.
+ *
+ * Generated rather than committed to public/ for the same reason the sitemap is
+ * — one constant in scripts/indexnow.mjs feeds both this file and the payload
+ * the deploy workflow POSTs, so the two cannot drift. A committed copy would be
+ * a second place to remember on a key rotation.
+ */
+if (indexNowEnabled()) {
+  await writeFile(path.join(dist, KEY_FILE), INDEXNOW_KEY);
+  console.log(`wrote ${KEY_FILE}`);
+}
