@@ -1,0 +1,55 @@
+{
+  "shape": "package",
+  "pkg": "orbis-accounting-landing-page",
+  "globalName": "Orbis",
+  "srcDir": "components",
+  "tsconfig": ".design-sync/tsconfig.json",
+  "readmeHeader": ".design-sync/conventions.md",
+
+  "provider": {
+    "component": "MemoryRouter",
+    "inner": { "component": "LocaleProvider" }
+  },
+
+  "storyImports": {
+    "loaders": { ".css": "css" }
+  },
+
+  "overrides": {
+    "HeroSequence": { "cardMode": "single", "viewport": "1280x800" },
+    "ScrollCue": { "cardMode": "single", "viewport": "760x240" },
+    "Intake": { "cardMode": "column" }
+  },
+
+  "componentSrcMap": {
+    "Anchor": "components/Anchor.tsx",
+    "IntakeForm": "components/IntakeForm.tsx",
+    "LogoMark": "components/Logo.tsx",
+    "SatelliteBullet": "components/Logo.tsx",
+    "ScrollCue": "components/ScrollCue.tsx",
+    "SiteFooter": "components/SiteFooter.tsx",
+    "SiteHeader": "components/SiteHeader.tsx",
+    "WeChatContact": "components/WeChatContact.tsx",
+    "WeChatId": "components/WeChatContact.tsx",
+
+    "Faq": "components/sections/Faq.tsx",
+    "Hero": "components/sections/Hero.tsx",
+    "HeroSequence": "components/sections/HeroSequence.tsx",
+    "Intake": "components/sections/Intake.tsx",
+    "Pains": "components/sections/Pains.tsx",
+    "Pricing": "components/sections/Pricing.tsx",
+    "Services": "components/sections/Services.tsx",
+    "Steps": "components/sections/Steps.tsx",
+    "TaxExplainer": "components/sections/TaxExplainer.tsx",
+    "Trust": "components/sections/Trust.tsx",
+    "TrustStrip": "components/sections/TrustStrip.tsx",
+    "WhyOrbis": "components/sections/WhyOrbis.tsx"
+  },
+
+  "dtsPropsFor": {
+    "Anchor": "/** Target element id on the home page, e.g. \"start\". */\n  to: string;\n  className?: string;\n  children: React.ReactNode;",
+    "Intake": "/** The standalone contact route needs this heading to be the page h1. */\n  headingLevel?: 'h1' | 'h2';\n  /** Shows the one-business-day reply promise under the form. */\n  reassurance?: boolean;",
+    "LogoMark": "/** Rendered size in px. Defaults to 22. */\n  size?: number;\n  className?: string;",
+    "SatelliteBullet": "/** Rendered size in px. Defaults to 18. */\n  size?: number;"
+  }
+}

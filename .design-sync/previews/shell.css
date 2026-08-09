@@ -1,0 +1,26 @@
+/* Preview-card ground for Orbis Accounting.
+ *
+ * index.css paints the site's ground on <body> (background: var(--ink), a
+ * near-black), but the preview harness emits `body{background:#fff}` in an
+ * inline <style> that comes after the linked stylesheets, so on default cards
+ * the dark-ground sections render near-white text on white and disappear.
+ * `html body` is a two-element selector and outranks the harness's single
+ * `body`, which restores the ground these components are designed against.
+ *
+ * The light sections are unaffected: .sec--paper paints var(--chart) over this,
+ * exactly as it does on the site.
+ */
+html body {
+  background: var(--ink);
+}
+
+/* The harness's own cell chrome is light-on-white — retone it to the ink
+ * ground and the site's hairline colour so the card reads as one surface. */
+.ds-cell {
+  background: var(--ink);
+  border-color: var(--hair-2);
+}
+
+.ds-cell > h4 {
+  color: var(--slate-light);
+}
