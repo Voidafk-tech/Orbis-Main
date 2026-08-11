@@ -13,6 +13,7 @@ export const UI: Widen<typeof EnUI> = {
   locality: '西温哥华，卑诗省',
 
   header: {
+    skipToContent: '跳到主要内容',
     backToTop: 'Orbis Accounting，回到顶部',
     services: '服务项目',
     plans: '方案',

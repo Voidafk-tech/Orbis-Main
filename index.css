@@ -25,7 +25,13 @@
   --paper-intro: #414a3f;
   --paper-body: #4a5348;
   --paper-muted: #5a6358;
-  --paper-excluded: #6b7469;
+  /* The excluded features in a pricing tier, at 14.5px on --chart. Was #6b7469,
+     which measured 4.39:1 against that ground — under the 4.5:1 WCAG AA floor
+     for normal text. This is the smallest step that clears it, at 4.52:1: two
+     values per channel, chosen so the greyed-out rows read no darker than they
+     did. Darkening further would start closing the gap against --paper-body,
+     which is what tells the included rows from the excluded ones. */
+  --paper-excluded: #697267;
 
   /* Hairlines */
   --hair: rgba(109, 198, 79, 0.2);
@@ -1663,6 +1669,55 @@ figure {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/*
+ * Skip to the content, for anyone driving the page from the keyboard.
+ *
+ * Without it the first six stops on every one of the eighteen pages are the
+ * header — logo, three nav links, language toggle, phone, CTA — before a reader
+ * reaches anything the page is actually about.
+ *
+ * It carries .visually-hidden in the markup and undoes it here on focus, so it
+ * occupies no space and is invisible to everyone else. `position: fixed` rather
+ * than absolute because the header is sticky at z-index 60: an absolutely
+ * positioned link scrolls under it.
+ *
+ * `clip-path: none` and the rest are needed because .visually-hidden clips the
+ * box to nothing; unsetting only `width` and `height` would reveal an empty
+ * outline with the text still clipped away.
+ */
+.skip-link:focus {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  padding: 12px 18px;
+  background: var(--ink);
+  border: 1px solid var(--green);
+  border-radius: var(--radius);
+  font: 500 13px/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green-text);
+  text-decoration: none;
+}
+
+/*
+ * The skip link's target takes focus (see the tabIndex note in App.tsx) but is
+ * a container rather than a control, and the global :focus-visible rule would
+ * otherwise draw a 2px outline around the entire page content the moment
+ * someone used the link. Suppressed here only: every actual control on the site
+ * keeps its indicator, and the reader's confirmation that the skip worked is
+ * that the next Tab lands in the content.
+ */
+main:focus {
+  outline: none;
 }
 
 /* ---------- Scroll reveal -------------------------------------------------
