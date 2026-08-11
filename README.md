@@ -367,20 +367,40 @@ at 480×480 or larger; it renders at 120px.
    back to 186px.
 2. **Official vendor logos** — the five platform marks in `public/logos/` were
    derived from screenshots. Replace with vendor-issued SVG or 2× PNG.
-3. **WeChat QR code** — `public/wechat-qr.png` is not in the repo yet, so the
-   block renders its neutral placeholder. The Weixin ID ships and works without
-   it. The file has to be **the code and a white margin, nothing else**: the
-   share card WeChat exports also carries the account name, a city, and an
-   English "scan to add me as a friend" line, all of which would be wrong here.
-   The page already prints the name, and prints the caption in the reader's own
-   language — a baked-in English one would sit untranslated on `/zh/`. See the
-   WeChat section above for the format.
-4. **WeChat account region** — the exported card reads "Richmond, Canada". Every
-   other statement of where the practice is, on the page and in the structured
-   data Google matches against the Business Profile, says West Vancouver.
-   Cropping keeps it off the site, but anyone who actually adds the account sees
-   it, so change the region on the WeChat account. See `content/business.ts` on
-   why the two should not disagree.
+3. **WeChat QR code — the uncropped share card is live.** This item used to say
+   the file was not in the repo yet and that the format had to be *the code and
+   a white margin, nothing else*. `public/wechat-qr.png` was committed without
+   that crop, and `index.css` was then sized to display the whole card, so what
+   is on the home page and `/contact` today is the full WeChat export. Three
+   consequences, all currently shipping, and all of them fixed by one crop:
+
+   - It reads **"Vancouver, Canada"**. Every other statement of location — the
+     footer, `/contact`, and the `PostalAddress` in the structured data Google
+     matches against the Business Profile — says West Vancouver. See
+     `content/business.ts` on why the two must not disagree; this is the NAP
+     inconsistency that note is about, and it is on the page, not just on the
+     account.
+   - It carries a baked-in English **"Scan QR code to add me as a friend."**,
+     which sits untranslated on `/zh/` directly above the page's own translated
+     caption (`wechat.scan` in `content/zh/ui.ts`). Two captions, one in the
+     wrong language.
+   - It repeats the **account name and avatar** that `WeChatContact.tsx` already
+     prints beside it.
+
+   It is also a JPEG carrying a `.png` extension — `file public/wechat-qr.png`
+   reports JPEG/JFIF — 592×798 and 108 KB, which makes it the largest asset on
+   the site, for a box about 166px wide, in a lossy format for a QR code.
+
+   Cropping to the code plus its quiet zone fixes all four at once and takes the
+   file to a few KB. It changes what the block looks like, so it needs a
+   deliberate decision rather than a drive-by commit: revert the
+   `aspect-ratio: 592 / 798` on `.wechat__qr-box` and the sizing note above it
+   in `index.css`, and the intrinsic `width`/`height` on the image in
+   `components/WeChatContact.tsx`, back to square.
+4. **WeChat account region** — the account itself is set to a city that is not
+   West Vancouver, which is what puts that city on the exported card. Cropping
+   the card (item 3) keeps it off the site, but anyone who actually adds the
+   account still sees it, so change the region on the WeChat account as well.
 5. **Terms of service** — still stamped January 2024, deliberately. The date is
    a claim about when someone last read the document, so it stays honest until
    the three clauses are reviewed against how the practice engages clients now.

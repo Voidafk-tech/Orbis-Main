@@ -137,10 +137,18 @@ const WeChatContact: React.FC = () => {
               className="wechat__qr-img"
               src={WECHAT.src}
               alt={WECHAT.alt}
-              // Reserves the box before the file loads, so the row does not
-              // shift sideways when it does.
-              width={120}
-              height={120}
+              // The file's real pixel dimensions, which are not square: what is
+              // in public/wechat-qr.png is the whole WeChat share card rather
+              // than a crop of the code. These said 120x120 for a while, which
+              // declared an aspect ratio the file does not have.
+              //
+              // Nothing rendered differently either way — .wechat__qr-img sets
+              // width and height to 100% and the box carries the matching
+              // `aspect-ratio`, so CSS decides the shape and reserves the space.
+              // These are the pre-CSS hint, and a wrong one is worth no more
+              // than a right one.
+              width={592}
+              height={798}
               loading="lazy"
               onError={() => setMissing(true)}
             />
