@@ -24,6 +24,10 @@ export const UI = {
   locality: 'West Vancouver, BC',
 
   header: {
+    // First stop in the tab order on every page, and invisible until it is
+    // focused. Says where it goes, not "skip navigation" — the useful half of
+    // the sentence is the destination.
+    skipToContent: 'Skip to content',
     backToTop: 'Orbis Accounting, back to top',
     services: 'Services',
     plans: 'Plans',

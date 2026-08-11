@@ -30,6 +30,20 @@ const SITE = 'https://www.orbisaccounting.ca';
 /** Matches content/i18n.ts. Duplicated here only because this file is plain JS. */
 const LOCALE_TAGS = { en: 'en-CA', zh: 'zh-Hans-CA' };
 
+/**
+ * The same two languages again, in the shape Open Graph wants, which is not the
+ * shape everything else wants. `og:locale` takes `language_TERRITORY` with an
+ * underscore, drawn from a fixed list of supported values — so the BCP 47 tags
+ * above cannot be reused here. There is no `zh_CA` on that list; `zh_CN` is the
+ * Simplified Chinese entry, and the territory in it says which variant of the
+ * written language this is rather than where the practice sits.
+ *
+ * Without this the Chinese URLs inherited the `en_CA` from index.html, which
+ * told Facebook, LinkedIn, WhatsApp and iMessage that nine pages of Simplified
+ * Chinese were Canadian English.
+ */
+const OG_LOCALES = { en: 'en_CA', zh: 'zh_CN' };
+
 const dist = path.resolve('dist');
 const template = await readFile(path.join(dist, 'index.html'), 'utf-8');
 const {
@@ -377,6 +391,24 @@ for (const route of ALL_ROUTES) {
       what: 'og:url',
       match: metaPattern('property', 'og:url'),
       replacement: `<meta property="og:url" content="${url}" />`,
+    },
+    {
+      // One rewrite emits two tags, because index.html only carries the first
+      // of them and there is nothing for an `og:locale:alternate` rule to match
+      // on. Going through setTag anyway keeps the guarantee the others have: if
+      // the og:locale tag is ever removed from index.html, the build throws
+      // rather than quietly shipping the wrong language on nine URLs again.
+      //
+      // The alternates are derived rather than written as the other language,
+      // so adding a third locale needs nothing here.
+      what: 'og:locale',
+      match: metaPattern('property', 'og:locale'),
+      replacement: [
+        `<meta property="og:locale" content="${OG_LOCALES[route.locale]}" />`,
+        ...Object.keys(OG_LOCALES)
+          .filter((locale) => locale !== route.locale)
+          .map((locale) => `<meta property="og:locale:alternate" content="${OG_LOCALES[locale]}" />`),
+      ].join('\n    '),
     },
     {
       what: 'canonical',

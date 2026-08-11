@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router';
 import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
-import { LocaleProvider } from './LocaleContext';
+import { LocaleProvider, useCopy } from './LocaleContext';
 import { useScrollReveal } from './useScrollReveal';
 import Home from '../pages/Home';
 import ServicesPage from '../pages/ServicesPage';
@@ -47,6 +47,24 @@ const TITLES: Record<string, string> = Object.fromEntries(
  */
 const routeKey = (pathname: string) => pathname.replace(/(.)\/+$/, '$1');
 
+/**
+ * The keyboard bypass for the header, and the first thing in the tab order.
+ *
+ * A component rather than markup inline below, because it needs the locale and
+ * App is what renders the provider — a hook call in App itself would be outside
+ * it. It is four lines; the styling that keeps it invisible until focused is
+ * `.visually-hidden` plus `.skip-link:focus` in index.css.
+ */
+const SkipLink: React.FC = () => {
+  const copy = useCopy();
+
+  return (
+    <a className="skip-link visually-hidden" href="#main">
+      {copy.ui.header.skipToContent}
+    </a>
+  );
+};
+
 const App: React.FC = () => {
   const location = useLocation();
 
@@ -78,8 +96,15 @@ const App: React.FC = () => {
   return (
     <LocaleProvider>
       <div className="page">
+        <SkipLink />
         <SiteHeader />
-        <main>
+        {/* `tabIndex={-1}` so the skip link actually moves focus and not only
+            the scroll position: Chrome and Safari both leave focus where it was
+            when a fragment link points at an element that cannot hold it, which
+            drops the reader straight back into the header on the next Tab.
+            Clearing the sticky header is handled by the global `[id]`
+            scroll-margin rule in index.css. */}
+        <main id="main" tabIndex={-1}>
           <Routes>
             {ALL_ROUTES.map((route) => (
               <Route key={route.path} path={route.path} element={PAGE_FOR[route.englishPath]} />
