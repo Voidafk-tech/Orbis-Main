@@ -77,14 +77,14 @@ export const ROUTES: RouteMeta[] = [
   },
   {
     path: '/services',
-    title: 'Bookkeeping Services: GST, PST, Payroll, Catch-Up | Orbis',
+    title: 'Bookkeeping Services in BC: GST, PST, Payroll, Catch-Up',
     description:
       'Monthly bookkeeping, GST and PST filing, payroll and T4s, reporting, software setup and catch-up work for BC small business, at a fixed monthly price.',
     priority: '0.9',
     changefreq: 'monthly',
     crumb: 'Services',
     zh: {
-      title: '记账服务：GST、PST、薪资、补做旧账 | Orbis',
+      title: '卑诗省记账服务：GST、PST、薪资、补做旧账 | Orbis',
       description:
         '每月记账、GST 与 PST 申报、薪资与 T4、财务报表、软件设置与补做旧账，服务卑诗省小型企业，固定月费。',
       crumb: '服务项目',
@@ -124,6 +124,21 @@ export const ROUTES: RouteMeta[] = [
     },
   },
   {
+    path: '/bc-pst-registration',
+    title: 'BC PST Registration: Do You Need to Register?',
+    description:
+      'Whether you have to register for PST in BC, what the province needs from you, and what changes once you do. It turns on what you sell, not on revenue.',
+    priority: '0.9',
+    changefreq: 'monthly',
+    crumb: 'PST registration',
+    zh: {
+      title: '卑诗省 PST 注册：你需要注册吗？| Orbis',
+      description:
+        '你在卑诗省是否必须注册 PST、省政府需要哪些资料，以及注册之后有什么不同。它取决于你卖什么，而不是营业额。',
+      crumb: 'PST 注册',
+    },
+  },
+  {
     path: '/catch-up-bookkeeping',
     title: 'Catch-Up Bookkeeping in BC | Behind on Your Books?',
     description:
@@ -155,7 +170,7 @@ export const ROUTES: RouteMeta[] = [
   },
   {
     path: '/contact',
-    title: 'Get a Plan and a Quote | Orbis Accounting',
+    title: 'Get a Bookkeeping Quote in BC | Orbis Accounting',
     description:
       'Tell us where your books stand and get a written plan and a fixed monthly price within one business day. No sales call, and nothing set up until you say yes.',
     priority: '0.9',

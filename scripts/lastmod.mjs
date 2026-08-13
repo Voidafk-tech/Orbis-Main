@@ -34,7 +34,8 @@ const PAGE_SOURCES = {
   '/': ['pages/Home.tsx', 'components/sections'],
   '/services': ['pages/ServicesPage.tsx'],
   '/remote-bookkeeping': ['pages/RemoteBookkeepingPage.tsx'],
-  '/gst-pst-bc': ['pages/GstPstPage.tsx'],
+  '/gst-pst-bc': ['pages/GstPstPage.tsx', 'components/TaxCalculator.tsx'],
+  '/bc-pst-registration': ['pages/BcPstRegistrationPage.tsx'],
   '/catch-up-bookkeeping': ['pages/CatchUpPage.tsx'],
   '/pricing': ['pages/PricingPage.tsx'],
   '/contact': [
@@ -73,6 +74,7 @@ const CONTENT_SOURCES = {
   '/services': ['pages', 'site'],
   '/remote-bookkeeping': ['pages'],
   '/gst-pst-bc': ['pages', 'site'],
+  '/bc-pst-registration': ['pages'],
   '/catch-up-bookkeeping': ['pages'],
   '/pricing': ['pages', 'site'],
   '/contact': ['pages', 'site'],

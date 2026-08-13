@@ -42,6 +42,7 @@ export const UI = {
     plans: 'Plans',
     remote: 'Remote',
     gstPst: 'GST & PST',
+    pstRegistration: 'PST registration',
     catchUp: 'Catch-up',
     questions: 'Questions',
     getQuote: 'Get a quote',
@@ -338,8 +339,13 @@ export const UI = {
     tradeoffH2: 'What you gain, and what you give up.',
     areasEyebrow: 'Where this works',
     areasH2: 'All of British Columbia, at the same price.',
+    /* Named cities, deliberately. The page was chasing national terms —
+       "online bookkeeping services canada" is 20 searches a month at difficulty
+       43 — while "bookkeeper vancouver" is 480 a month at difficulty 3. Naming
+       the places the work actually happens is the cheapest way to point the
+       page at the province instead of the country. */
     areasLede:
-      'Because nothing depends on being nearby, where your business sits does not change the scope or the number. We are based in West Vancouver and work across the province.',
+      'Because nothing depends on being nearby, where your business sits does not change the scope or the number. We work with businesses in Vancouver, Surrey, Burnaby and Richmond, out to Victoria and Kelowna, and well beyond the highway — the Interior, the Island and the north included. We are based in West Vancouver, and for a remote engagement that is a fact about us rather than a constraint on you.',
     faqEyebrow: 'Questions',
     faqH2: 'The ones remote raises.',
     faqIntroA: 'The rest are on the ',
@@ -392,9 +398,41 @@ export const UI = {
     pstLabel: 'PST',
     mistakesEyebrow: 'What goes wrong',
     mistakesH2: 'Four ways this catches people out.',
+    exemptEyebrow: 'What is taxable',
+    exemptH2: 'What carries PST, and what does not.',
+    registrationEyebrow: 'Registering',
+    fin400Eyebrow: 'The return',
+    deadlinesEyebrow: 'Deadlines',
+    deadlinesH2: 'How often you file, and by when.',
+    /* Column labels for the deadlines table, which reuses the comparison
+       table's markup — hence the same two-column shape as gstLabel/pstLabel. */
+    whoLabel: 'Who it applies to',
+    dueLabel: 'When it is due',
+    selfAssessEyebrow: 'Self-assessment',
+    servicesLink: 'What we file, and what that includes →',
+    catchUpLink: 'If you are already behind on this →',
+    faqEyebrow: 'Questions',
+    faqH2: 'What people ask about PST.',
     whatWeDoEyebrow: 'What we do',
     ctaH2: 'Not sure which you are registered for?',
     ctaP: 'Say so in the form. We check both against what you actually sell and confirm them in the written quote, before anything is filed.',
+  },
+
+  pstRegistrationPage: {
+    eyebrow: 'PST registration in BC',
+    headline: 'Registering for PST',
+    headlineEm: 'in British Columbia.',
+    sub: 'Whether you have to, what the province needs from you, and what changes once you are on their books. There is no revenue threshold with PST — it turns on what you sell.',
+    explainerLink: 'How GST and PST differ →',
+    whoEyebrow: 'Who it applies to',
+    whoH2: 'Which side of the line you are on.',
+    stepsEyebrow: 'How to register',
+    stepsH2: 'Five steps, once you know the answer.',
+    afterEyebrow: 'After registration',
+    servicesLink: 'What we file, and what that includes →',
+    lateEyebrow: 'Late registration',
+    ctaH2: 'Not sure whether you need to register?',
+    ctaP: 'Tell us what you sell in the form. We check it against both registrations and confirm the answer in the written quote, before anything is filed.',
   },
 
   catchUpPage: {

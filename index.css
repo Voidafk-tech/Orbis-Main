@@ -1046,6 +1046,36 @@ figure {
   color: var(--slate-light);
 }
 
+/* The exemption columns reuse .tax-cell, which was built for a figure and a
+   paragraph. These are lists instead, so they need their own rhythm. */
+.tax-cell__list {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+
+.tax-cell__list li {
+  font: 400 14.5px/1.6 var(--sans);
+  color: var(--slate-light);
+  padding: 9px 0 9px 18px;
+  border-bottom: 1px solid var(--hair-2);
+  position: relative;
+}
+
+.tax-cell__list li:last-child {
+  border-bottom: 0;
+}
+
+.tax-cell__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 17px;
+  width: 6px;
+  height: 1px;
+  background: var(--green);
+}
+
 .tax-note {
   margin-top: 36px;
   border-top: 1px solid var(--hair);
@@ -1053,6 +1083,11 @@ figure {
   font: 400 15px/1.65 var(--sans);
   color: var(--slate-light);
   max-width: 78ch;
+}
+
+/* Sits directly under the hero, which already carries bottom space. */
+.sec--calc {
+  padding-top: 0;
 }
 
 /* ---------- BC sales tax calculator --------------------------------------

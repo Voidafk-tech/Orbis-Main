@@ -368,6 +368,266 @@ export const GST_PST_WHAT_WE_DO = {
   ],
 };
 
+/**
+ * What tends to carry PST and what tends not to.
+ *
+ * Illustrative, and it says so. An exhaustive list is exactly what the note at
+ * the top of this section warns against: the categories are defined narrowly,
+ * they have been changed before, and a business reading a list here and
+ * concluding it is exempt has been misled by us rather than helped.
+ *
+ * Note what is deliberately *not* said. There is no claim that services as a
+ * class are outside PST — the taxable-services list is specific and has been
+ * widened before, so a sentence like "services are exempt" would be a hostage
+ * to the next change rather than a fact. The examples on the exempt side are
+ * long-standing goods exemptions for that reason.
+ */
+export const GST_PST_EXEMPT = {
+  intro: [
+    'The two lists do not line up, and neither one follows a rule you can guess from first principles. PST has its own definition of what is taxable, and it is narrower than GST in some places and wider in others.',
+    'What follows is the shape of it rather than the whole of it. The categories are drawn tightly, they have been redrawn before, and the only version that matters for your business is the one that covers what you actually sell.',
+  ],
+  columns: [
+    {
+      h: 'Usually carries PST',
+      items: [
+        'Goods sold or leased in BC — stock, equipment, furniture, tools, vehicles',
+        'Software, and telecommunication services',
+        'Work performed on goods: repairs, maintenance, restoration',
+        'Legal services',
+        'Accommodation',
+        'Goods bought outside BC and brought in for use here',
+      ],
+    },
+    {
+      h: 'Usually does not',
+      items: [
+        'Food for human consumption',
+        'Books, newspapers and magazines',
+        "Children's clothing and footwear",
+        'Bicycles',
+        'Prescription medications',
+        'Labour to improve real property — though the materials are a different question',
+      ],
+    },
+  ],
+  caveat:
+    'That last one catches contractors in particular. Improving real property is generally not something you charge PST on, but you are usually the one paying PST on the materials that go into it, which makes them a cost rather than something you collect and pass along. It is the single most common place a trades business prices a job wrong.',
+  close:
+    'If you are not certain which side your work falls on, that is a reasonable position to be in and a bad one to guess at. Say what you sell in the form and we will tell you in the quote.',
+};
+
+/**
+ * Registration, kept short here on purpose: /bc-pst-registration covers it
+ * properly and this section exists to hand the reader over rather than to
+ * compete with it. Two pages saying the same thing at half the depth is worse
+ * than one saying it once.
+ */
+export const GST_PST_REGISTRATION = {
+  h: 'Whether you have to register at all.',
+  body: [
+    'The GST test is about size: broadly, once you pass $30,000 in revenue over four consecutive quarters you are required to register, and you can choose to register before that.',
+    'PST does not work that way. It turns on what you sell rather than how much of it you sell, so a small business can be required to register from its first sale while a much larger one is not required to at all. There is no revenue figure to wait for, which is why so many people find out late.',
+  ],
+  linkText: 'How to register for PST in BC →',
+};
+
+/**
+ * The return itself. Naming the form is the point — a competitor holds position
+ * 12 for "pst bc" on essentially nothing but FIN 400 coverage, because it is
+ * what people search once they have the obligation and not before.
+ */
+export const GST_PST_FIN400 = {
+  h: 'Filing the return: the FIN 400.',
+  body: [
+    'The PST return is form FIN 400, and for most businesses it is filed online through eTaxBC rather than on paper. You report what you sold, what PST you collected, and any PST you owe on things you bought without paying it, and you pay the balance with the return.',
+    'The return itself is not the hard part. What makes it go wrong is filing it from books that were not reconciled first — the figure on the return has to be the figure in the bank, and if the month was never closed there is nothing to check it against. A return filed on unreconciled books is a number you will be defending later without knowing where it came from.',
+    'There is no input credit to reduce it, either, which is the other half of why PST surprises people. Unlike GST, what you collected is what you remit; PST you paid on your own purchases does not come off it.',
+  ],
+};
+
+/**
+ * Deadlines. Reported as the province actually operates it — it assigns the
+ * period and tells you — rather than by publishing the dollar bands that decide
+ * which one you get. Those are exactly the kind of figure that moves.
+ */
+export const GST_PST_DEADLINES = {
+  intro: [
+    'You do not choose your reporting period. The province assigns one when you register, based on how much PST it expects you to collect, and tells you what it is. It can be changed later, and it changes on their initiative as often as yours.',
+    'Whichever one you are on, the due date rule is the same: the return and the payment have to be received on or before the last day of the month after the period ends.',
+  ],
+  rows: [
+    {
+      label: 'Monthly',
+      who: 'The highest collection volumes.',
+      due: 'Last day of the following month — so January is due 28 February.',
+    },
+    {
+      label: 'Quarterly',
+      who: 'The band most small businesses that collect PST land in.',
+      due: 'Last day of the month after the quarter ends.',
+    },
+    {
+      label: 'Semi-annual',
+      who: 'Lower volumes, assigned at the province’s discretion.',
+      due: 'Last day of the month after the six months end.',
+    },
+    {
+      label: 'Annual',
+      who: 'The smallest collectors.',
+      due: 'Last day of the month after the year ends.',
+    },
+  ],
+  close:
+    'The trap is assuming this lines up with GST. It generally does not — the CRA assigns your GST period and the province assigns your PST period, independently, using different information. A business filing GST quarterly can easily be on a monthly PST cycle, and a calendar built around one of them will miss the other.',
+};
+
+/**
+ * PST self-assessment. There is written demand and almost no written supply —
+ * a YouTube video holds position 18 for "pst bc" on this topic, which is what
+ * an unanswered question looks like in a search result.
+ */
+export const GST_PST_SELF_ASSESSMENT = {
+  h: 'When you owe PST nobody charged you.',
+  body: [
+    'PST is not only something you collect. It is also something you can owe on your own purchases, and this is the part almost nobody knows about until it comes up in a review.',
+    'The principle is straightforward: if you buy something for use in BC and PST should have applied but was not charged, you are the one who has to report and pay it. That is self-assessment, and it goes on the same return.',
+    'In practice it shows up in three places. Buying equipment or supplies from an out-of-province seller who is not registered here. Importing goods for use in the business. And taking something out of your own resale stock to use yourself, which is a sale to you as far as PST is concerned even though no money moved.',
+    'None of those feel like taxable events while they are happening, which is precisely the problem. They are ordinary purchases that arrive without PST on the invoice, and the obligation sits with the buyer rather than the seller.',
+  ],
+};
+
+/**
+ * Questions taken from the search terms this page already receives impressions
+ * for, answered at the length the question deserves.
+ *
+ * Rendered as visible content only. There is deliberately no FAQPage markup
+ * here: FAQ rich results were withdrawn on 7 May 2026, so the schema produces
+ * no search feature and is pure weight — see the note on the `faq` field in
+ * content/routes.ts. The questions are here for readers.
+ */
+export const GST_PST_FAQS = [
+  {
+    q: 'What is GST and PST in BC?',
+    a: 'Two separate sales taxes that both apply in British Columbia. GST is federal, 5%, and goes to the Canada Revenue Agency. PST is provincial, 7%, and goes to the BC Ministry of Finance. On most goods you charge both, for a combined 12%. They have separate registrations, separate returns, separate deadlines and different rules about what is taxable.',
+  },
+  {
+    q: 'What is the difference between GST and PST?',
+    a: 'Three differences matter in practice. Who you register with and file to — the CRA for one, the province for the other. What triggers registration — revenue for GST, what you sell for PST. And whether you get it back: GST you pay on business purchases comes off what you remit as an input tax credit, and PST you pay does not come back at all. It is a cost.',
+  },
+  {
+    q: 'Do I need to register for PST in BC?',
+    a: 'It depends on what you sell rather than how much. Most businesses selling or leasing goods in BC need to register, as do those selling certain specified services. Many service businesses do not. There is no revenue threshold to wait for the way there is with GST, which is why the answer is worth checking properly rather than assuming.',
+  },
+  {
+    q: 'What is a PST number in BC?',
+    a: 'The registration number the province issues once you are registered to collect PST. It is separate from your GST number and from your business number, and it goes on your invoices and on your returns. Having one of the two numbers tells you nothing about whether you should have the other.',
+  },
+  {
+    q: 'How do I file PST in BC?',
+    a: 'On form FIN 400, the Provincial Sales Tax Return, filed online through eTaxBC for most businesses. You report your sales, the PST you collected and any PST you owe on your own purchases, and pay the balance with the return. It is due by the last day of the month after your reporting period ends.',
+  },
+  {
+    q: 'What happens if I should have registered for PST and did not?',
+    a: 'You will owe the PST you should have collected, and interest on it, whether or not you charged it to your customers — and if you did not, it comes out of your own margin because those customers are long gone. It is worth knowing that coming forward voluntarily generally puts you in a better position than being found. Get advice before doing either.',
+  },
+  {
+    q: 'Do GST and PST have the same filing deadline?',
+    a: 'No, and assuming they do is one of the more common ways a return gets missed. The CRA assigns your GST reporting period and the province assigns your PST one, separately and using different information. They frequently do not align.',
+  },
+];
+
+/* ---------------------------------------------------------------------------
+ * /bc-pst-registration
+ *
+ * Navigational intent: someone searching "bc pst registration" wants to do the
+ * thing, not read about it. So the page is short intro, then steps, then the
+ * edge cases — and it does not restate the GST/PST explainer, it links to it.
+ *
+ * Same restraint as /gst-pst-bc on figures. What registration turns on is
+ * described in kind rather than by publishing a threshold table, because the
+ * categories are narrow and have been widened before. The one number here is
+ * the CRA's $30,000 GST threshold, which is stated to draw the contrast.
+ * ------------------------------------------------------------------------- */
+
+export const PST_REG_INTRO = [
+  'Registering for PST is not difficult and it does not take long. The hard part is the question before it — whether you have to at all — because PST does not use the revenue threshold people expect from GST.',
+  'There is no turnover figure to cross. It turns on what you sell, which means the answer can be yes from your very first sale, or no indefinitely at any size.',
+];
+
+export const PST_REG_WHO = {
+  columns: [
+    {
+      h: 'Generally must register',
+      items: [
+        'You sell or lease goods in BC in the ordinary course of business',
+        'You sell software or telecommunication services here',
+        'You provide legal services',
+        'You perform work on goods — repairs, maintenance, restoration',
+        'You provide accommodation in BC',
+        'You are outside BC but sell goods into it above the province’s thresholds',
+      ],
+    },
+    {
+      h: 'Generally need not',
+      items: [
+        'Everything you sell falls in an exempt category',
+        'You only make wholesale sales to registered resellers who give you their number',
+        'You provide services that are not on the taxable list',
+        'You are not carrying on business in BC at all',
+      ],
+    },
+  ],
+  caveat:
+    'The second column is where people get it wrong, because "my work is a service" feels like a complete answer and is not. The taxable-services list is specific, it does not follow an obvious principle, and it has been widened before. Check what you sell against it rather than reasoning from the category.',
+};
+
+export const PST_REG_STEPS = [
+  {
+    n: '1',
+    h: 'Work out whether you have to',
+    p: 'Before anything else, and against what you actually sell rather than what your industry is called. This is the step that decides the other four, and it is the one worth getting a second opinion on.',
+  },
+  {
+    n: '2',
+    h: 'Get your details together',
+    p: 'Your business number, the legal name and structure, what you sell, where you operate from, when you started or expect to start making taxable sales, and your banking details. Nothing exotic — but assembling it first turns the registration into a single sitting.',
+  },
+  {
+    n: '3',
+    h: 'Register through eTaxBC',
+    p: 'Online, through the province’s eTaxBC system, which is the same place you will later file the return. You can register in advance of your first taxable sale rather than waiting for it, and doing so is usually the tidier option.',
+  },
+  {
+    n: '4',
+    h: 'You get a PST number',
+    p: 'A registration number of your own, separate from your GST number and from your business number. It belongs on your invoices, and you will need it to file. Having one of the two tax numbers never implies the other.',
+  },
+  {
+    n: '5',
+    h: 'Start charging, and start tracking',
+    p: 'From your effective date you charge PST on taxable sales, keep it separate from your own money, and file on the reporting period the province assigns you. What you collected is what you remit — there is no input credit to net it down.',
+  },
+];
+
+export const PST_REG_AFTER = {
+  h: 'What changes once you are registered.',
+  body: [
+    'You are collecting money on the province’s behalf from the effective date, not from the date the paperwork clears. That distinction matters if you registered late: the obligation runs from when you should have started.',
+    'A reporting period arrives with the registration — monthly, quarterly, semi-annual or annual — and it will not necessarily match your GST period. Two calendars, kept separately, is the ordinary state of affairs and the most common thing to get caught by.',
+    'The practical advice is dull and it works: move the PST out of the operating account as you collect it. Sales tax that sits in the current account gets spent during a good month, and the shortfall at the deadline is the owner’s to cover.',
+  ],
+};
+
+export const PST_REG_LATE = {
+  h: 'If you should have registered earlier.',
+  body: [
+    'Common, and fixable. What you owe is the PST you should have collected, plus interest — and if you never charged it, that comes out of your own margin rather than your customers’, because they are long gone.',
+    'Coming forward voluntarily generally puts you in a better position than being found. It is worth understanding the options before doing either, which is a conversation rather than a form.',
+  ],
+  linkText: 'How we handle a backlog →',
+};
+
 /* ---------------------------------------------------------------------------
  * /catch-up-bookkeeping
  *
