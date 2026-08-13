@@ -25,6 +25,7 @@
  * failure this replaces was reporting change where there was none at all.
  */
 import { execFileSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 
 /**
  * Page-level sources per route. Adding a route without adding an entry here is
@@ -36,6 +37,7 @@ const PAGE_SOURCES = {
   '/remote-bookkeeping': ['pages/RemoteBookkeepingPage.tsx'],
   '/gst-pst-bc': ['pages/GstPstPage.tsx', 'components/TaxCalculator.tsx'],
   '/bc-pst-registration': ['pages/BcPstRegistrationPage.tsx'],
+  '/bookkeeping-vs-tax-filing': ['pages/BookkeepingVsTaxFilingPage.tsx'],
   '/catch-up-bookkeeping': ['pages/CatchUpPage.tsx'],
   '/pricing': ['pages/PricingPage.tsx'],
   '/contact': [
@@ -75,6 +77,7 @@ const CONTENT_SOURCES = {
   '/remote-bookkeeping': ['pages'],
   '/gst-pst-bc': ['pages', 'site'],
   '/bc-pst-registration': ['pages'],
+  '/bookkeeping-vs-tax-filing': ['pages'],
   '/catch-up-bookkeeping': ['pages'],
   '/pricing': ['pages', 'site'],
   '/contact': ['pages', 'site'],
@@ -121,9 +124,18 @@ const historyAvailable = () => {
 const HAS_HISTORY = historyAvailable();
 const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
-/** `content/site.ts` in English, `content/zh/site.ts` in Chinese. */
-const contentPath = (module, locale) =>
-  locale === 'en' ? `content/${module}.ts` : `content/${locale}/${module}.ts`;
+/**
+ * `content/site.ts` in English, `content/zh/site.ts` in Simplified Chinese.
+ *
+ * Keyed on the locale's slug rather than its id, because the two differ: the
+ * Simplified locale is `zh-hans` but its directory is `zh`, kept from before
+ * there was a second Chinese tree to distinguish it from. LOCALE_SLUG in
+ * content/i18n.ts is the one place that mapping lives; it arrives here on the
+ * resolved route rather than being restated, since this file is plain JS and
+ * runs before the SSR bundle exists.
+ */
+const contentPath = (module, slug) =>
+  slug ? `content/${slug}/${module}.ts` : `content/${module}.ts`;
 
 /**
  * Strips comments, leaving string literals alone.
@@ -277,8 +289,22 @@ export function lastmodFor(route) {
   const paths = [
     ...SHARED_SOURCES,
     ...pages,
-    ...content.map((module) => contentPath(module, route.locale)),
+    ...content.map((module) => contentPath(module, route.slug)),
   ];
+
+  // A path that does not exist has no commits, which `lastSubstantiveDate`
+  // cannot distinguish from a file that has simply never changed — both come
+  // back null and fall through to the build date below. That is this module's
+  // original bug wearing a different hat: every URL claiming to have changed
+  // today. So a source that is not on disk is a build failure, not a fallback.
+  for (const path of paths) {
+    if (!existsSync(path)) {
+      throw new Error(
+        `lastmod: ${route.path} names a source that does not exist: ${path}. ` +
+          'Check PAGE_SOURCES and CONTENT_SOURCES, and that the locale directory matches LOCALE_SLUG.',
+      );
+    }
+  }
 
   const key = paths.join('\0');
   if (!cache.has(key)) cache.set(key, lastSubstantiveDate(paths));

@@ -26,6 +26,13 @@ export const UI = {
 
   header: {
     backToTop: 'Orbis Accounting, back to top',
+    /**
+     * The root of the breadcrumb trail Google prints under a search result.
+     * Not rendered anywhere on the page — the logo is the home link — but it is
+     * read by scripts/prerender.mjs, which used to emit the literal 'Home' on
+     * every page in every language.
+     */
+    home: 'Home',
     services: 'Services',
     plans: 'Plans',
     questions: 'Questions',
@@ -43,6 +50,8 @@ export const UI = {
     remote: 'Remote',
     gstPst: 'GST & PST',
     pstRegistration: 'PST registration',
+    /** Chinese only — the link renders only where the page exists. */
+    vsTax: 'Bookkeeping vs tax filing',
     catchUp: 'Catch-up',
     questions: 'Questions',
     getQuote: 'Get a quote',
@@ -409,6 +418,11 @@ export const UI = {
     whoLabel: 'Who it applies to',
     dueLabel: 'When it is due',
     selfAssessEyebrow: 'Self-assessment',
+    /* Headings for GST_PST_LOCAL_SECTIONS, which is empty in English — so these
+       two strings render nowhere here. They exist because the section list is
+       per-language and the headings above it have to be too. */
+    localEyebrow: 'In practice',
+    localH2: 'Where this comes up most.',
     servicesLink: 'What we file, and what that includes →',
     catchUpLink: 'If you are already behind on this →',
     faqEyebrow: 'Questions',
@@ -416,6 +430,30 @@ export const UI = {
     whatWeDoEyebrow: 'What we do',
     ctaH2: 'Not sure which you are registered for?',
     ctaP: 'Say so in the form. We check both against what you actually sell and confirm them in the written quote, before anything is filed.',
+  },
+
+  /**
+   * /bookkeeping-vs-tax-filing, which is built in Chinese only — so none of
+   * these strings render anywhere in English. They exist because the page's
+   * headings have to be typed somewhere, and the English module is what every
+   * translation is typed against.
+   */
+  vsTaxPage: {
+    eyebrow: 'Bookkeeping vs tax filing',
+    headline: 'Two jobs,',
+    headlineEm: 'two people, two times of year.',
+    sub: 'What a bookkeeper does, what an accountant does, and where we stop. Chinese only — see the note above.',
+    rolesEyebrow: 'Who does what',
+    rolesH2: 'The division of labour.',
+    boundaryEyebrow: 'Where we stop',
+    boundaryH2: 'What we do, and what we do not.',
+    linksBefore: 'More on ',
+    linkServices: 'what the monthly work covers',
+    linksMiddle: ', and ',
+    linkPricing: 'how the plans are scoped',
+    linksAfter: '.',
+    ctaH2: 'Not sure which one you need?',
+    ctaP: 'Tell us where your books stand and we will say so in the written quote.',
   },
 
   pstRegistrationPage: {

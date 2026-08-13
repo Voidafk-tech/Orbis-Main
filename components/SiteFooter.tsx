@@ -4,9 +4,10 @@ import Anchor from './Anchor';
 import { LogoMark } from './Logo';
 import { useLocale } from './LocaleContext';
 import { BUSINESS } from '../content/business';
+import { routeExists } from '../content/routes';
 
 const SiteFooter: React.FC = () => {
-  const { copy, path } = useLocale();
+  const { copy, path, locale } = useLocale();
   const { footer } = copy.ui;
   const { CONTACT } = copy.site;
 
@@ -40,6 +41,14 @@ const SiteFooter: React.FC = () => {
           <li>
             <Link to={path('/bc-pst-registration')}>{footer.pstRegistration}</Link>
           </li>
+          {/* Chinese only, so the link appears only where the page does. The
+              alternative — linking it unconditionally — would hand English
+              readers a 404 and leave the page orphaned for everyone else. */}
+          {routeExists('/bookkeeping-vs-tax-filing', locale) && (
+            <li>
+              <Link to={path('/bookkeeping-vs-tax-filing')}>{footer.vsTax}</Link>
+            </li>
+          )}
           <li>
             <Link to={path('/catch-up-bookkeeping')}>{footer.catchUp}</Link>
           </li>

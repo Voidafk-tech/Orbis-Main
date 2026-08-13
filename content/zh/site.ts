@@ -20,7 +20,7 @@ export const CONTACT: Widen<typeof En.CONTACT> = {
   phone: En.CONTACT.phone,
   phoneHref: En.CONTACT.phoneHref,
   locality: '卑诗省西温哥华',
-  tagline: '卑诗省小型企业记账服务 · 西温哥华',
+  tagline: '卑诗省小生意记账服务 · 西温哥华',
 };
 
 /**
@@ -47,7 +47,7 @@ export const percent = En.percent;
 export const RATES_AS_OF = '2026 年 7 月';
 
 export const OG_IMAGE_ALT: Widen<typeof En.OG_IMAGE_ALT> =
-  'Orbis Accounting — 卑诗省小型企业记账服务，西温哥华';
+  'Orbis Accounting — 卑诗省小生意记账服务，西温哥华';
 
 export const PROADVISOR_BADGE: Widen<typeof En.PROADVISOR_BADGE> = {
   src: En.PROADVISOR_BADGE.src,
@@ -117,7 +117,7 @@ export const SERVICES: Widen<typeof En.SERVICES> = [
   },
   {
     n: '03',
-    h: '薪资与 T4',
+    h: '工资与 T4',
     p: '员工按时发薪、源头扣缴按时汇缴，年终的 T4 表与就业记录表（ROE）一并处理。',
   },
   {
@@ -169,12 +169,12 @@ export const TIERS: Widen<typeof En.TIERS> = [
       { text: '交易分类', included: true },
       { text: '每月损益表、资产负债表', included: true },
       { text: 'GST 与 PST 申报', included: false },
-      { text: '薪资与 T4', included: false },
+      { text: '工资与 T4', included: false },
     ],
   },
   {
     name: 'Standard',
-    audience: '已站稳脚跟的小型企业',
+    audience: '已站稳脚跟的小生意',
     cap: '每月最多 150 笔交易',
     featured: true,
     features: [
@@ -182,7 +182,7 @@ export const TIERS: Widen<typeof En.TIERS> = [
       { text: '向 CRA 申报 GST', included: true },
       { text: '向卑诗省财政厅申报 PST', included: true },
       { text: '销售渠道对账：Shopify、Stripe', included: true },
-      { text: '薪资与 T4', included: false },
+      { text: '工资与 T4', included: false },
     ],
   },
   {
@@ -191,7 +191,7 @@ export const TIERS: Widen<typeof En.TIERS> = [
     cap: '每月最多 400 笔交易',
     features: [
       { text: '包含 Standard 的全部内容', included: true },
-      { text: '薪资、源头扣缴、T4 表与就业记录表（ROE）', included: true },
+      { text: '工资、源头扣缴、T4 表与就业记录表（ROE）', included: true },
       { text: '应付账款管理', included: true },
       { text: 'WorkSafeBC 申报', included: true },
       { text: '每季度一次回顾通话', included: true },
@@ -211,13 +211,13 @@ export const INDUSTRIES_SERVED: Widen<typeof En.INDUSTRIES_SERVED> = [
 export const FAQS: Widen<typeof En.FAQS> = [
   {
     q: '在温哥华请一位记账员要多少钱？',
-    a: '本地按小时计费的事务所通常收费每小时 75 至 150 加元，多数小型企业每月因此落在 600 至 2,000 加元之间。本地的固定月费方案大致在 300 至 2,000 加元，视业务量而定。我们采用固定月费，而不是按小时计费。把你的交易笔数和需要申报的项目告诉我们，一个工作日内你会收到书面报价。',
+    a: '本地按小时计费的事务所通常收费每小时 75 至 150 加元，多数小生意每月因此落在 600 至 2,000 加元之间。本地的固定月费方案大致在 300 至 2,000 加元，视业务量而定。我们采用固定月费，而不是按小时计费。把你的交易笔数和需要申报的项目告诉我们，一个工作日内你会收到书面报价。',
   },
   {
     q: '记账员和会计师有什么区别？我需要哪一种？',
     // 与 content/site.ts 的 FAQ 2 及 content/zh/pages.ts 的 SERVICES_BOUNDARY
     // 保持一致：不宣传公司税表申报，但也不再写死「我们不做」——想问的人照样可以拿到报价。
-    a: '记账员处理日常事务：收据、分类、对账、薪资、GST 与 PST 汇缴，以及你每月的报表。会计师则负责年终申报和更高层面的规划。卑诗省多数小型企业全年由记账员处理账务，年终再请人介入。我们的方案涵盖的是每月的工作。想知道年终我们能接哪些，在表格里问一声，我们会在报价里告诉你。',
+    a: '记账员处理日常事务：收据、分类、对账、工资、GST 与 PST 汇缴，以及你每月的报表。会计师则负责年终申报和更高层面的规划。卑诗省多数小生意全年由记账员处理账务，年终再请人介入。我们的方案涵盖的是每月的工作。想知道年终我们能接哪些，在表格里问一声，我们会在报价里告诉你。',
   },
   {
     q: '我在卑诗省必须注册 PST 吗？',

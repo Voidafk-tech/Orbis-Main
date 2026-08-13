@@ -1,10 +1,30 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { useLocation } from 'react-router';
 import { copyFor, type Copy } from '../content/copy';
-import { hrefFor, localeFromPath, localizePath, stripLocale, type Locale } from '../content/i18n';
+import {
+  LOCALES,
+  LOCALE_LABEL,
+  LOCALE_TAG,
+  hrefFor,
+  localeFromPath,
+  localizePath,
+  stripLocale,
+  type BuiltLocale,
+} from '../content/i18n';
+
+/** One entry in the language switcher: the same page, in another language. */
+export interface LocaleAlternate {
+  locale: BuiltLocale;
+  /** The current page in that language, in href form. */
+  path: string;
+  /** Written in its own script, so a reader recognises it without reading English. */
+  label: string;
+  /** BCP 47, for the link's `hreflang` and `lang`. */
+  tag: string;
+}
 
 interface LocaleValue {
-  locale: Locale;
+  locale: BuiltLocale;
   copy: Copy;
   /**
    * Prefixes a canonical (English) path for the current locale and returns it
@@ -13,9 +33,15 @@ interface LocaleValue {
    * here rather than at each call site. See `hrefFor` in content/i18n.ts.
    */
   path: (englishPath: string) => string;
-  /** The same page in the other language, for the header toggle. */
-  otherLocale: Locale;
-  otherPath: string;
+  /**
+   * Every other language this page exists in, for the switcher.
+   *
+   * A list rather than the single `otherLocale`/`otherPath` pair this used to
+   * expose. That pair was the shape of the assumption rather than of the
+   * problem — with a third language it would have offered a Traditional reader
+   * only English, leaving the Simplified tree unreachable from where they were.
+   */
+  alternates: LocaleAlternate[];
 }
 
 const LocaleContext = createContext<LocaleValue | null>(null);
@@ -31,14 +57,20 @@ export const LocaleProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const value = useMemo<LocaleValue>(() => {
     const locale = localeFromPath(pathname);
     const canonical = stripLocale(pathname);
-    const otherLocale: Locale = locale === 'en' ? 'zh' : 'en';
 
     return {
       locale,
       copy: copyFor(locale),
       path: (englishPath: string) => hrefFor(localizePath(englishPath, locale)),
-      otherLocale,
-      otherPath: hrefFor(localizePath(canonical, otherLocale)),
+      // The same page, not the other home page. Sending a language switch to
+      // the home page is a common and costly bug: it loses the reader's place
+      // and hands every alternate the same href.
+      alternates: LOCALES.filter((candidate) => candidate !== locale).map((candidate) => ({
+        locale: candidate,
+        path: hrefFor(localizePath(canonical, candidate)),
+        label: LOCALE_LABEL[candidate],
+        tag: LOCALE_TAG[candidate],
+      })),
     };
   }, [pathname]);
 

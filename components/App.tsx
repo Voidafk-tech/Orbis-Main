@@ -10,12 +10,13 @@ import PricingPage from '../pages/PricingPage';
 import RemoteBookkeepingPage from '../pages/RemoteBookkeepingPage';
 import GstPstPage from '../pages/GstPstPage';
 import BcPstRegistrationPage from '../pages/BcPstRegistrationPage';
+import BookkeepingVsTaxFilingPage from '../pages/BookkeepingVsTaxFilingPage';
 import CatchUpPage from '../pages/CatchUpPage';
 import ContactPage from '../pages/ContactPage';
 import LegalPage from '../pages/LegalPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import { ALL_ROUTES, NOT_FOUND_META, REDIRECTS } from '../content/routes';
-import { hrefFor, localeFromPath } from '../content/i18n';
+import { LOCALE_TAG, hrefFor, localeFromPath } from '../content/i18n';
 import { trackPageView } from './analytics';
 
 /**
@@ -30,6 +31,9 @@ const PAGE_FOR: Record<string, React.ReactElement> = {
   '/remote-bookkeeping': <RemoteBookkeepingPage />,
   '/gst-pst-bc': <GstPstPage />,
   '/bc-pst-registration': <BcPstRegistrationPage />,
+  // Registered for the Chinese URL only — the route carries `only` in
+  // content/routes.ts, so ALL_ROUTES never resolves an English one.
+  '/bookkeeping-vs-tax-filing': <BookkeepingVsTaxFilingPage />,
   '/catch-up-bookkeeping': <CatchUpPage />,
   '/contact': <ContactPage />,
   '/privacy-policy': <LegalPage page="privacy" />,
@@ -66,8 +70,14 @@ const App: React.FC = () => {
     document.title = title;
     // The lang attribute has to follow client-side navigation too, or a reader
     // switching language keeps the previous one announced to assistive tech.
-    document.documentElement.lang =
-      localeFromPath(location.pathname) === 'zh' ? 'zh-Hans-CA' : 'en-CA';
+    //
+    // Read from LOCALE_TAG rather than a ternary over two literal tags. The
+    // ternary was quietly load-bearing beyond accessibility: every CJK rule in
+    // index.css is a `:lang(zh)` selector, including the font stack, so a
+    // language it did not know about got `en-CA` here and lost its typography
+    // the moment the reader navigated — while the prerendered first paint,
+    // which sets this correctly, looked fine.
+    document.documentElement.lang = LOCALE_TAG[localeFromPath(location.pathname)];
     // GA4's automatic page_view only fires on a full load, so client-side
     // route changes would otherwise be invisible.
     trackPageView(location.pathname, title);

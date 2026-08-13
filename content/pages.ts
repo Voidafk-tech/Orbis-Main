@@ -537,6 +537,51 @@ export const GST_PST_FAQS = [
   },
 ];
 
+/** A prose section with a heading, for content that only some languages carry. */
+export interface LocalSection {
+  h: string;
+  body: readonly string[];
+}
+
+/* ---------------------------------------------------------------------------
+ * /bookkeeping-vs-tax-filing — 记账 vs 报税
+ *
+ * Chinese only, and empty here for the same reason GST_PST_LOCAL_SECTIONS is:
+ * the page answers a confusion this market has and the English one does not.
+ * The Chinese-language mental model is 会计师帮我报税 — "my accountant does my
+ * taxes" — with monthly bookkeeping not established as a separate thing anyone
+ * buys. The English market already draws that line, so an English version would
+ * be a page nobody searches for.
+ *
+ * It is also where the practice's boundary gets stated plainest: monthly books,
+ * GST, PST, T4s and ROEs yes; T1 and T2 income tax returns no. That is a real
+ * limit, and in a market where every firm's copy promises everything, saying it
+ * out loud is the differentiator rather than the disclaimer. See the guard in
+ * scripts/prerender.mjs that stops any title claiming 报税服务.
+ * ------------------------------------------------------------------------- */
+
+export const VS_TAX_INTRO: readonly string[] = [];
+export const VS_TAX_ROLES: readonly LocalSection[] = [];
+export const VS_TAX_BOUNDARY: readonly LocalSection[] = [];
+
+/**
+ * Sections of /gst-pst-bc that exist in one language and not another.
+ *
+ * Empty in English, and deliberately so. Search demand is not a translation of
+ * itself: the Chinese-language audit found queries this market asks that the
+ * English one does not — PST on goods imported from mainland China, sales tax
+ * for the restaurant and retail trades that are the highest-density
+ * Chinese-owned sectors in Metro Vancouver, Shopify and online stores. Writing
+ * the English equivalents would produce pages nobody searches for.
+ *
+ * The type annotation is load-bearing. Declared `as const`, an empty array types
+ * as `readonly []`, and `Widen<>` would then forbid the translation from having
+ * any entries at all — the build would fail with a message about tuple length
+ * that says nothing about the actual problem. Annotating it keeps the element
+ * type and lets each language carry as many as it has.
+ */
+export const GST_PST_LOCAL_SECTIONS: readonly LocalSection[] = [];
+
 /* ---------------------------------------------------------------------------
  * /bc-pst-registration
  *

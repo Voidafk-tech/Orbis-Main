@@ -2565,6 +2565,21 @@ figure {
   border-color: var(--green-text);
 }
 
+/* One chip per other language. There is a single one today; a second Chinese
+   script adds another beside it rather than needing this laid out again. */
+.header__lang + .header__lang {
+  margin-left: 6px;
+}
+
+/* Each chip carries its own `lang`, which is what this selects on. The label is
+   now 简体中文 rather than 中文 — four CJK glyphs where there were two, and at
+   double width that is real space on a row that already sheds the phone number
+   to an icon below 480px. The tighter padding buys most of it back. */
+.header__lang:lang(zh) {
+  padding: 7px 10px;
+  letter-spacing: 0;
+}
+
 /* ---------- CJK ------------------------------------------------------------
    Instrument Serif, Archivo and JetBrains Mono carry no CJK glyphs, so Chinese
    characters fall through to the system stack while Latin ones — brand names,
@@ -2577,6 +2592,21 @@ figure {
   --cjk-sans: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC',
     'Source Han Sans SC', sans-serif;
   --cjk-serif: 'Songti SC', 'Noto Serif CJK SC', 'Source Han Serif SC', 'SimSun', serif;
+}
+
+/* Traditional Chinese needs the TC cuts of the same families, and this override
+   has to exist before the tree does.
+
+   `:lang(zh)` below matches zh-Hant as readily as zh-Hans — the selector tests
+   the primary subtag — so without this a Traditional page would silently take
+   the SC stack above and render a good number of glyphs in the wrong regional
+   form. Wrong-form characters are legible, which is what makes it easy to ship:
+   nothing breaks, it just reads as a site that was converted rather than
+   written. Dead until 'zh-hant' joins LOCALES in content/i18n.ts. */
+:root:lang(zh-Hant) {
+  --cjk-sans: 'PingFang TC', 'Hiragino Sans CNS', 'Microsoft JhengHei', 'Noto Sans CJK TC',
+    'Source Han Sans TC', sans-serif;
+  --cjk-serif: 'Songti TC', 'Noto Serif CJK TC', 'Source Han Serif TC', 'PMingLiU', serif;
 }
 
 :root:lang(zh) {

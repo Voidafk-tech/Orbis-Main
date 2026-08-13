@@ -246,6 +246,36 @@ const GstPstPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Sections some languages have and others do not — empty in English, so
+          this renders nothing there. Chinese search demand is not a translation
+          of English search demand; see GST_PST_LOCAL_SECTIONS in
+          content/pages.ts for what these are and why they exist. */}
+      {copy.pages.GST_PST_LOCAL_SECTIONS.length > 0 && (
+        <section className="sec">
+          <div className="inner">
+            <div className="reveal" style={{ maxWidth: '52ch' }}>
+              <p className="eyebrow intro__eyebrow">{t.localEyebrow}</p>
+              <h2 className="h2">{t.localH2}</h2>
+            </div>
+
+            {copy.pages.GST_PST_LOCAL_SECTIONS.map((section, i) => (
+              <div
+                key={section.h}
+                className="reveal"
+                style={{ ...revealDelay(i * 60), marginTop: '44px', maxWidth: '68ch' }}
+              >
+                <h3 className="detail__h">{section.h}</h3>
+                {section.body.map((paragraph, j) => (
+                  <p key={j} className="detail__p">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Visible questions, no FAQPage markup. FAQ rich results were withdrawn
           on 7 May 2026 — see the note on the `faq` field in content/routes.ts.
           These are here because people ask them. */}

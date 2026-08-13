@@ -17,6 +17,7 @@ export const UI: Widen<typeof EnUI> = {
 
   header: {
     backToTop: 'Orbis Accounting，回到顶部',
+    home: '首页',
     services: '服务项目',
     plans: '方案',
     questions: '常见问题',
@@ -31,6 +32,7 @@ export const UI: Widen<typeof EnUI> = {
     remote: '远程记账',
     gstPst: 'GST 与 PST',
     pstRegistration: 'PST 注册',
+    vsTax: '记账 vs 报税',
     catchUp: '补做旧账',
     questions: '常见问题',
     getQuote: '获取报价',
@@ -48,7 +50,7 @@ export const UI: Widen<typeof EnUI> = {
 
   hero: {
     // 第三段是主要差异点，原本整个首屏都没有提到。见 content/ui.ts 的说明。
-    eyebrow: '卑诗省小型企业记账服务 · 西温哥华 · 中英双语',
+    eyebrow: '卑诗省小生意记账服务 · 西温哥华 · 中英双语',
     headline: '账目清楚，',
     headlineEm: '按时申报。',
     sub: 'GST 交给 CRA，PST 交给省政府，每月还有一份你真的读得懂的报表。每个月由同一个人处理你的账，你不必反复解释自己的生意。',
@@ -144,22 +146,25 @@ export const UI: Widen<typeof EnUI> = {
     ],
   },
 
+  // 计算器界面用词按中文 SEO 手册第 3.2 节。BC省消费税 而不是 卑诗省销售税：
+  // 查税率的人搜的是「BC省税是多少」，而 消费税 是 GST/PST 在本地最自然的说法。
+  // 税种后面补上 联邦税 / 省税，是因为搜索时中英文常常混着用。
   taxCalculator: {
     eyebrow: '算一下',
-    h2: '卑诗省销售税计算器',
-    subBefore: `GST ${percent(TAX_RATES.gst)} 加上 PST ${percent(TAX_RATES.pst)}，`,
+    h2: 'BC省消费税计算器',
+    subBefore: `GST ${percent(TAX_RATES.gst)} + PST ${percent(TAX_RATES.pst)} = `,
     subCombined: `合计 ${percent(COMBINED_TAX_RATE)}`,
-    subAfter: '——这是卑诗省大多数商品适用的税率。',
+    subAfter: '，适用于卑诗省大部分商品。',
     modeLabel: '计算方向',
-    forwardTab: '在价格上加税',
-    reverseTab: '从含税总额倒推',
+    forwardTab: '税前金额算总价',
+    reverseTab: '总价倒推税前金额',
     forwardLabel: '税前金额（加元）',
     reverseLabel: '含税总额（加元）',
     resultsLabel: '计算结果',
     subtotal: '税前小计',
-    gst: `GST（${percent(TAX_RATES.gst)}）`,
-    pst: `PST（${percent(TAX_RATES.pst)}）`,
-    total: '合计',
+    gst: `GST 联邦税（${percent(TAX_RATES.gst)}）`,
+    pst: `PST 省税（${percent(TAX_RATES.pst)}）`,
+    total: '总计',
     noteBefore: '大多数商品两种税都要收。许多服务免收 PST，但仍然要收 GST——',
     noteLink: '看看哪些应税、哪些不应税',
     noteAfter: '。税率数据截至 ',
@@ -233,8 +238,8 @@ export const UI: Widen<typeof EnUI> = {
   servicesPage: {
     eyebrow: '我们负责什么',
     headline: '记账服务，',
-    headlineEm: '专为卑诗省小型企业。',
-    sub: '六件事，从你桌上拿走：每月记账、GST 与 PST 申报、薪资与 T4、财务报表、软件设置，以及补做旧账。全部在西温哥华完成，服务卑诗省各地的企业。',
+    headlineEm: '专为卑诗省小生意。',
+    sub: '六件事，从你桌上拿走：每月记账、GST 与 PST 申报、工资与 T4、财务报表、软件设置，以及补做旧账。全部在西温哥华完成，服务卑诗省各地的企业。',
     boundaryEyebrow: '界线在哪里',
     worksWith: '支持的系统',
     platformsNoteA:
@@ -248,7 +253,7 @@ export const UI: Widen<typeof EnUI> = {
   },
 
   pricingPage: {
-    eyebrow: '卑诗省小型企业的方案与价格',
+    eyebrow: '卑诗省小生意的方案与价格',
     headline: '记账到底',
     headlineEm: '要花多少钱。',
     sub: '我们采用与你交易笔数相符的固定月费，而不是按小时计费。以下说明这个数字是怎么构成的、什么会影响它，以及市场上其他人怎么收费。',
@@ -342,6 +347,8 @@ export const UI: Widen<typeof EnUI> = {
     whoLabel: '适用对象',
     dueLabel: '截止日',
     selfAssessEyebrow: '自我评税',
+    localEyebrow: '实际会遇到的情况',
+    localH2: '进口、餐饮零售与网店。',
     servicesLink: '我们代为申报什么，包含哪些内容 →',
     catchUpLink: '如果这方面已经落下了 →',
     faqEyebrow: '常见问题',
@@ -349,6 +356,24 @@ export const UI: Widen<typeof EnUI> = {
     whatWeDoEyebrow: '我们会做什么',
     ctaH2: '不确定自己注册了哪一项？',
     ctaP: '在表格里说明即可。我们会对照你实际销售的内容核对两项，并在书面报价中确认清楚，然后才会去申报任何东西。',
+  },
+
+  vsTaxPage: {
+    eyebrow: '记账 vs 报税',
+    headline: '两件事，',
+    headlineEm: '两种人，一年当中的两个时间。',
+    sub: '记账员做什么、会计师做什么、两者在哪里交接，以及我们做到哪里为止。写清楚界线，是因为这一行含糊其辞太容易了。',
+    rolesEyebrow: '各自负责什么',
+    rolesH2: '分工是怎么划的。',
+    boundaryEyebrow: '我们的界线',
+    boundaryH2: '我们做什么，不做什么。',
+    linksBefore: '更多内容：',
+    linkServices: '每月的工作具体包含什么',
+    linksMiddle: '，以及',
+    linkPricing: '方案是怎么划分的',
+    linksAfter: '。',
+    ctaH2: '不确定自己需要哪一种？',
+    ctaP: '把你目前的账务状况告诉我们，我们会在书面报价里直接说明。',
   },
 
   pstRegistrationPage: {
