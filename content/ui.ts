@@ -9,6 +9,7 @@
  *
  * The Chinese counterpart is content/zh/ui.ts, typed against this file.
  */
+import { COMBINED_TAX_RATE, TAX_RATES, percent } from './site';
 
 export const UI = {
   /**
@@ -157,18 +158,53 @@ export const UI = {
     noteAfter: '.',
     taxes: [
       {
-        figure: '5%',
+        figure: percent(TAX_RATES.gst),
         name: 'GST',
         authority: 'Goes to the CRA',
         body: 'Federal. You generally must register once you pass $30,000 in revenue over four quarters. You charge it on most sales and you claim back the GST you paid on business purchases.',
       },
       {
-        figure: '7%',
+        figure: percent(TAX_RATES.pst),
         name: 'PST',
         authority: 'Goes to the province',
         body: 'Provincial, and separate. Different registration, different deadlines, and a different list of what is taxable. Many services are exempt while most goods are not. There is no input credit to claim back.',
       },
     ],
+  },
+
+  /**
+   * The calculator on /gst-pst-bc. Every figure in here is derived from
+   * TAX_RATES rather than typed, so the copy cannot state one rate while the
+   * arithmetic uses another.
+   *
+   * `sub` is split around the combined figure so the component can emphasise it
+   * without putting markup in a translatable string. That figure is the point of
+   * the section: three of the pages outranking this one lead with the combined
+   * rate in their title, and this page did not state it anywhere at all.
+   */
+  taxCalculator: {
+    eyebrow: 'Work it out',
+    h2: 'BC sales tax calculator',
+    subBefore: `GST ${percent(TAX_RATES.gst)} plus PST ${percent(TAX_RATES.pst)} is `,
+    subCombined: `${percent(COMBINED_TAX_RATE)} combined`,
+    subAfter: ' on most goods in British Columbia.',
+    modeLabel: 'Which way round',
+    forwardTab: 'Add tax to a price',
+    reverseTab: 'Back tax out of a total',
+    forwardLabel: 'Amount before tax (CAD)',
+    reverseLabel: 'Total including tax (CAD)',
+    resultsLabel: 'Result',
+    subtotal: 'Subtotal',
+    gst: `GST (${percent(TAX_RATES.gst)})`,
+    pst: `PST (${percent(TAX_RATES.pst)})`,
+    total: 'Total',
+    noteBefore:
+      'Most goods carry both. Many services are exempt from PST while still attracting GST — ',
+    noteLink: 'see what is and is not taxable',
+    noteAfter: '. Rates current as of ',
+    noteEnd: '.',
+    noscript:
+      'The calculator needs JavaScript. The figures above are worked out on a $100 purchase, and the arithmetic is the rate times the amount.',
   },
 
   trust: {
@@ -268,7 +304,7 @@ export const UI = {
   },
 
   pricingPage: {
-    eyebrow: 'Plans and pricing',
+    eyebrow: 'Plans and pricing for BC small business',
     headline: 'What bookkeeping',
     headlineEm: 'actually costs.',
     sub: 'We work on a fixed monthly plan sized to your transaction volume, not an hourly rate. Here is how the number is put together, what moves it, and what the rest of the market charges.',
@@ -362,7 +398,7 @@ export const UI = {
   },
 
   catchUpPage: {
-    eyebrow: 'Catch-up bookkeeping',
+    eyebrow: 'Catch-up bookkeeping in British Columbia',
     headline: 'Behind on your books.',
     headlineEm: 'It is fixable.',
     sub: 'Months or years behind is the most common reason anyone gets in touch with us. We look at how far it goes, quote the whole job as one number before starting, then clear it and file what is outstanding.',

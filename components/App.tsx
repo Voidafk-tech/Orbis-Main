@@ -13,8 +13,8 @@ import CatchUpPage from '../pages/CatchUpPage';
 import ContactPage from '../pages/ContactPage';
 import LegalPage from '../pages/LegalPage';
 import NotFoundPage from '../pages/NotFoundPage';
-import { ALL_ROUTES, NOT_FOUND_META } from '../content/routes';
-import { localeFromPath } from '../content/i18n';
+import { ALL_ROUTES, NOT_FOUND_META, REDIRECTS } from '../content/routes';
+import { hrefFor, localeFromPath } from '../content/i18n';
 import { trackPageView } from './analytics';
 
 /**
@@ -46,6 +46,13 @@ const TITLES: Record<string, string> = Object.fromEntries(
  * home page and falls through to the not-found title.
  */
 const routeKey = (pathname: string) => pathname.replace(/(.)\/+$/, '$1');
+
+/**
+ * Where an alias sends the reader. Mirrors the same decision in
+ * scripts/prerender.mjs: a hash target is a section of the home page and is
+ * already in href form, anything else is a route path and needs its slash.
+ */
+const redirectTarget = (to: string) => (to.startsWith('/#') ? to : hrefFor(to));
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -85,14 +92,20 @@ const App: React.FC = () => {
               <Route key={route.path} path={route.path} element={PAGE_FOR[route.englishPath]} />
             ))}
 
-            {/* Aliases. These are also emitted as redirect stubs at build time —
-                see REDIRECTS in content/routes.ts — because a client-side
-                Navigate only runs after a 404 has already been served. They are
-                English-only: they are legacy English URLs. */}
-            <Route path="/plans" element={<Navigate to="/pricing" replace />} />
-            <Route path="/process" element={<Navigate to="/#process" replace />} />
-            <Route path="/about" element={<Navigate to="/#why" replace />} />
-            <Route path="/growth-strategy" element={<Navigate to="/pricing" replace />} />
+            {/* Aliases, from the same list the build reads. These are also
+                emitted as redirect stubs at build time — see REDIRECTS in
+                content/routes.ts — because a client-side Navigate only runs
+                after a 404 has already been served. They were written out by
+                hand here as well until the two copies could disagree about
+                where an alias points. They are English-only: they are legacy
+                English URLs. */}
+            {REDIRECTS.map((redirect) => (
+              <Route
+                key={redirect.from}
+                path={redirect.from}
+                element={<Navigate to={redirectTarget(redirect.to)} replace />}
+              />
+            ))}
 
             {/* A real page, not a bounce to the home page: redirecting every
                 unknown URL to / makes them soft 404s in Google's eyes. */}

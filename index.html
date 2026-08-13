@@ -37,7 +37,13 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.orbisaccounting.ca/" />
     <meta property="og:site_name" content="Orbis Accounting" />
+    <!-- Both are rewritten per route by scripts/prerender.mjs, which swaps them
+         on the /zh/ URLs. The pair has to exist here for that to have something
+         to rewrite — the script throws rather than leave a route carrying the
+         home page's metadata. Facebook's locale list has no zh_CA, so the
+         Chinese pages declare zh_CN. -->
     <meta property="og:locale" content="en_CA" />
+    <meta property="og:locale:alternate" content="zh_CN" />
     <meta property="og:image" content="https://www.orbisaccounting.ca/og-card.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />

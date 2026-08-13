@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { useLocale } from '../components/LocaleContext';
 import { revealDelay } from '../components/useScrollReveal';
+import TaxCalculator from '../components/TaxCalculator';
 
 /**
  * /gst-pst-bc.
@@ -35,6 +36,15 @@ const GstPstPage: React.FC = () => {
           </Link>
         </div>
       </div>
+
+      {/* Above the explainer, and deliberately not carrying `reveal`: this is
+          the first thing below the fold on a phone and it should be on screen
+          when the page arrives, not fading in on scroll. */}
+      <section className="sec sec--calc">
+        <div className="inner">
+          <TaxCalculator />
+        </div>
+      </section>
 
       <section className="sec">
         <div className="inner">

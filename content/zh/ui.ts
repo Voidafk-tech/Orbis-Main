@@ -7,6 +7,9 @@
  */
 import type { Widen } from '../i18n';
 import type { UI as EnUI } from '../ui';
+// Rates are figures, not copy. Both languages render the same numbers from the
+// same constants, so a rate change cannot land in one language and not the other.
+import { COMBINED_TAX_RATE, TAX_RATES, percent } from '../site';
 
 export const UI: Widen<typeof EnUI> = {
   // Full-width comma, per the rest of the Chinese copy.
@@ -126,18 +129,41 @@ export const UI: Widen<typeof EnUI> = {
     noteAfter: '。',
     taxes: [
       {
-        figure: '5%',
+        figure: percent(TAX_RATES.gst),
         name: 'GST',
         authority: '交给 CRA',
         body: '联邦税。一般来说，连续四个季度营业额超过 3 万加元后就必须注册。多数销售都要收取，而你为业务采购所支付的 GST 可以申报抵回。',
       },
       {
-        figure: '7%',
+        figure: percent(TAX_RATES.pst),
         name: 'PST',
         authority: '交给省政府',
         body: '省级税，且完全独立：注册不同、截止日期不同、应税项目清单也不同。许多服务免税，多数商品则不免。它没有可以抵回的进项税额。',
       },
     ],
+  },
+
+  taxCalculator: {
+    eyebrow: '算一下',
+    h2: '卑诗省销售税计算器',
+    subBefore: `GST ${percent(TAX_RATES.gst)} 加上 PST ${percent(TAX_RATES.pst)}，`,
+    subCombined: `合计 ${percent(COMBINED_TAX_RATE)}`,
+    subAfter: '——这是卑诗省大多数商品适用的税率。',
+    modeLabel: '计算方向',
+    forwardTab: '在价格上加税',
+    reverseTab: '从含税总额倒推',
+    forwardLabel: '税前金额（加元）',
+    reverseLabel: '含税总额（加元）',
+    resultsLabel: '计算结果',
+    subtotal: '税前小计',
+    gst: `GST（${percent(TAX_RATES.gst)}）`,
+    pst: `PST（${percent(TAX_RATES.pst)}）`,
+    total: '合计',
+    noteBefore: '大多数商品两种税都要收。许多服务免收 PST，但仍然要收 GST——',
+    noteLink: '看看哪些应税、哪些不应税',
+    noteAfter: '。税率数据截至 ',
+    noteEnd: '。',
+    noscript: '计算器需要 JavaScript。上方数字以 100 加元的消费为例，算法就是税率乘以金额。',
   },
 
   trust: {
@@ -221,7 +247,7 @@ export const UI: Widen<typeof EnUI> = {
   },
 
   pricingPage: {
-    eyebrow: '方案与价格',
+    eyebrow: '卑诗省小型企业的方案与价格',
     headline: '记账到底',
     headlineEm: '要花多少钱。',
     sub: '我们采用与你交易笔数相符的固定月费，而不是按小时计费。以下说明这个数字是怎么构成的、什么会影响它，以及市场上其他人怎么收费。',
@@ -312,7 +338,7 @@ export const UI: Widen<typeof EnUI> = {
   },
 
   catchUpPage: {
-    eyebrow: '补做旧账',
+    eyebrow: '卑诗省的补做旧账',
     headline: '账目落后了。',
     headlineEm: '这是可以解决的。',
     sub: '落后几个月甚至几年，是大多数人来找我们的原因。我们会先看落后到什么程度，在动工之前把整件事报成一个数字，然后清掉积压、补上该报的申报。',

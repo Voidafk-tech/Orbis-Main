@@ -16,9 +16,17 @@ export function render(url: string): string {
  * the page renders. The FAQ answers and the plan list used to be duplicated by
  * hand into index.html; going through here means they cannot drift.
  */
-export { CONTACT, FAQS, SERVICES, TIERS } from './content/site';
+export {
+  COMBINED_TAX_RATE,
+  CONTACT,
+  FAQS,
+  OG_IMAGE_ALT,
+  SERVICES,
+  TIERS,
+  percent,
+} from './content/site';
 export { REMOTE_FAQS } from './content/pages';
-export { FAQS as ZH_FAQS } from './content/zh/site';
+export { FAQS as ZH_FAQS, OG_IMAGE_ALT as ZH_OG_IMAGE_ALT } from './content/zh/site';
 export { REMOTE_FAQS as ZH_REMOTE_FAQS } from './content/zh/pages';
 export { ROUTES, ALL_ROUTES, REDIRECTS, NOT_FOUND_META } from './content/routes';
 // PEOPLE is exported but no longer imported by scripts/prerender.mjs: the names

@@ -1,12 +1,17 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { useLocation } from 'react-router';
 import { copyFor, type Copy } from '../content/copy';
-import { localeFromPath, localizePath, stripLocale, type Locale } from '../content/i18n';
+import { hrefFor, localeFromPath, localizePath, stripLocale, type Locale } from '../content/i18n';
 
 interface LocaleValue {
   locale: Locale;
   copy: Copy;
-  /** Prefixes a canonical (English) path for the current locale. */
+  /**
+   * Prefixes a canonical (English) path for the current locale and returns it
+   * in href form — trailing-slash, the URL GitHub Pages actually serves. Every
+   * internal link on the site is built from this, so the slash is applied once
+   * here rather than at each call site. See `hrefFor` in content/i18n.ts.
+   */
   path: (englishPath: string) => string;
   /** The same page in the other language, for the header toggle. */
   otherLocale: Locale;
@@ -31,9 +36,9 @@ export const LocaleProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     return {
       locale,
       copy: copyFor(locale),
-      path: (englishPath: string) => localizePath(englishPath, locale),
+      path: (englishPath: string) => hrefFor(localizePath(englishPath, locale)),
       otherLocale,
-      otherPath: localizePath(canonical, otherLocale),
+      otherPath: hrefFor(localizePath(canonical, otherLocale)),
     };
   }, [pathname]);
 

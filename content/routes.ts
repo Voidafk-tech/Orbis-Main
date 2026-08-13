@@ -127,7 +127,7 @@ export const ROUTES: RouteMeta[] = [
     path: '/catch-up-bookkeeping',
     title: 'Catch-Up Bookkeeping in BC | Behind on Your Books?',
     description:
-      'Months or years behind is the most common reason people call. How far behind you are, what clearing it involves, and one quoted number agreed before work starts.',
+      'Months or years behind is the most common reason BC owners call. How far behind you are, what clearing it involves, and one number agreed up front.',
     priority: '0.9',
     changefreq: 'monthly',
     crumb: 'Catch-up bookkeeping',

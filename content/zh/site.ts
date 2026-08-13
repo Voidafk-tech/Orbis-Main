@@ -35,7 +35,19 @@ export const WECHAT: Widen<typeof En.WECHAT> = {
   alt: '微信二维码：Tina - Orbis，微信号 Online_Bookkeeper',
 };
 
+/**
+ * Figures and the helper that formats them, re-exported rather than retyped.
+ * A tax rate is not copy: both languages render the same numbers, and a rate
+ * change has to land in both at once or one half of the site is wrong.
+ */
+export const TAX_RATES = En.TAX_RATES;
+export const COMBINED_TAX_RATE = En.COMBINED_TAX_RATE;
+export const percent = En.percent;
+
 export const RATES_AS_OF = '2026 年 7 月';
+
+export const OG_IMAGE_ALT: Widen<typeof En.OG_IMAGE_ALT> =
+  'Orbis Accounting — 卑诗省小型企业记账服务，西温哥华';
 
 export const PROADVISOR_BADGE: Widen<typeof En.PROADVISOR_BADGE> = {
   src: En.PROADVISOR_BADGE.src,

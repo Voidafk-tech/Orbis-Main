@@ -61,6 +61,26 @@ export const localizePath = (path: string, locale: Locale): string => {
   return path === '/' ? '/zh' : `/zh${path}`;
 };
 
+/**
+ * The href form of an internal path: always trailing-slash.
+ *
+ * Route paths are stored without one — they are the key that PAGE_FOR, the
+ * title lookup and scripts/lastmod.mjs all read, and a slash there would have
+ * to be stripped at each of them. But prerendering writes `services/index.html`,
+ * which GitHub Pages serves at `/services/` and 301s `/services` to, so a link
+ * written from the route path points at a redirect. Google was indexing both
+ * forms and splitting the ranking signal between them.
+ *
+ * So the slash is added here, at the point a path becomes an `href`, and
+ * nowhere else. React Router matches `/services/` against the pattern
+ * `/services` either way, which is why the site worked at all before this: the
+ * URL Pages actually serves has always had the slash.
+ *
+ * scripts/prerender.mjs enforces it — a rendered internal href without a
+ * trailing slash fails the build rather than shipping a redirect hop.
+ */
+export const hrefFor = (path: string): string => (path.endsWith('/') ? path : `${path}/`);
+
 /** The inverse: `/zh/services` -> `/services`, `/zh` -> `/`. */
 export const stripLocale = (pathname: string): string => {
   const withoutSlash = pathname.replace(/\/+$/, '') || '/';

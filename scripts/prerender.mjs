@@ -30,6 +30,21 @@ const SITE = 'https://www.orbisaccounting.ca';
 /** Matches content/i18n.ts. Duplicated here only because this file is plain JS. */
 const LOCALE_TAGS = { en: 'en-CA', zh: 'zh-Hans-CA' };
 
+/**
+ * Open Graph locales, which are not the same strings as the hreflang tags above
+ * and cannot be derived from them. Open Graph takes Facebook's
+ * `language_TERRITORY` list, which has no `zh_CA` — `zh_CN` is the Simplified
+ * Chinese entry and the closest true value.
+ *
+ * Every /zh/ page used to declare `en_CA` here, because the tag sat in
+ * index.html and nothing rewrote it: the English-Canadian locale announced on
+ * nine Chinese pages, to every platform that renders a link preview.
+ */
+const OG_LOCALES = { en: 'en_CA', zh: 'zh_CN' };
+
+/** The other language, for `og:locale:alternate`. Two locales, so this is the one that is not `locale`. */
+const otherLocale = (locale) => (locale === 'en' ? 'zh' : 'en');
+
 const dist = path.resolve('dist');
 const template = await readFile(path.join(dist, 'index.html'), 'utf-8');
 const {
@@ -51,9 +66,16 @@ const {
   REMOTE_FAQS,
   ZH_FAQS,
   ZH_REMOTE_FAQS,
+  OG_IMAGE_ALT,
+  ZH_OG_IMAGE_ALT,
+  COMBINED_TAX_RATE,
+  percent,
   SERVICES,
   TIERS,
 } = await import(pathToFileURL(path.resolve('dist-ssr/entry-server.js')).href);
+
+/** Link-preview alt text per locale, from the same copy modules the pages read. */
+const OG_IMAGE_ALTS = { en: OG_IMAGE_ALT, zh: ZH_OG_IMAGE_ALT };
 
 const ROOT_PLACEHOLDER = '<div id="root"></div>';
 const SCHEMA_PLACEHOLDER = '<!--structured-data-->';
@@ -321,6 +343,92 @@ const faqPageFor = (key, locale) => {
 };
 
 /**
+ * Every internal link must point at the URL GitHub Pages actually serves, which
+ * is the trailing-slash one. A link to `/services` is a 301 to `/services/`, and
+ * Google was indexing both forms as separate pages — the ranking signal for the
+ * site's best content page was split roughly in half between them.
+ *
+ * The slash is applied once, by `hrefFor` in content/i18n.ts, on the way out of
+ * the locale context every link is built through. This is the check that it
+ * stays that way, because the failure is silent: the page renders, the link
+ * works, and only a crawler ever sees the extra hop.
+ *
+ * Bare anchors (`#questions`) and cross-page ones (`/#questions`) are fine, as
+ * are `tel:`, `mailto:` and absolute URLs — none of them name a route.
+ *
+ * Files are skipped, and that exclusion is load-bearing rather than defensive:
+ * React 19 hoists a `<link rel="preload" as="image" href="…">` into the render
+ * output for images, so the markup contains asset hrefs this never wrote. A
+ * route path has no extension and an asset always does, which separates them
+ * without having to parse which element each href belongs to.
+ */
+const INTERNAL_HREF = /href="(\/[^"#]*)"/g;
+const IS_FILE = /\.[a-z0-9]+$/i;
+
+const assertInternalHrefs = (markup, routePath) => {
+  const offenders = [
+    ...new Set(
+      [...markup.matchAll(INTERNAL_HREF)]
+        .map((match) => match[1])
+        .filter((href) => !href.endsWith('/') && !IS_FILE.test(href)),
+    ),
+  ];
+
+  if (offenders.length > 0) {
+    throw new Error(
+      `prerender: ${routePath} links to ${offenders.join(', ')} without a trailing slash — ` +
+        'each one is a 301 hop. Build internal links through path() from useLocale(), ' +
+        'or run the path through hrefFor() in content/i18n.ts.',
+    );
+  }
+};
+
+/**
+ * Google truncates a description around 158 characters, and a sentence cut
+ * mid-clause reads worse in the SERP than a shorter complete one. 120 is the
+ * lower bound because below it the description stops doing its job and Google
+ * starts substituting its own text from the page.
+ *
+ * English only. Chinese has no inter-word spaces and truncates by rendered
+ * width rather than character count, so 50–70 characters is correct there and a
+ * length rule written for English would fail every /zh/ route. Site audits make
+ * this mistake too — they flag all nine Chinese pages as "meta description too
+ * short" on every run, and they are wrong every time.
+ */
+const DESCRIPTION_BOUNDS = { min: 120, max: 158 };
+
+for (const route of ROUTES) {
+  const { length } = route.description;
+  if (length < DESCRIPTION_BOUNDS.min || length > DESCRIPTION_BOUNDS.max) {
+    throw new Error(
+      `prerender: the description for ${route.path} is ${length} characters — ` +
+        `English descriptions must be ${DESCRIPTION_BOUNDS.min}–${DESCRIPTION_BOUNDS.max}. Rewrite it in content/routes.ts rather than truncating.`,
+    );
+  }
+}
+
+/**
+ * The GST/PST page has to state the combined rate in its own visible copy.
+ *
+ * It is the figure three of the pages outranking it carry in their titles, and
+ * this page did not contain it anywhere — it explained both taxes separately
+ * and left the reader to add them up. The calculator's sub-heading says it now,
+ * and this is the check that it keeps saying it: the string is assembled from
+ * TAX_RATES, so it also fails if a rate changes and the copy does not follow.
+ */
+const COMBINED_RATE_TEXT = percent(COMBINED_TAX_RATE);
+
+const assertCombinedRate = (markup, route) => {
+  if (route.englishPath !== '/gst-pst-bc') return;
+  if (markup.includes(COMBINED_RATE_TEXT)) return;
+
+  throw new Error(
+    `prerender: ${route.path} does not state the combined rate (${COMBINED_RATE_TEXT}) anywhere in its copy. ` +
+      'It is the figure the competing pages lead with — see the calculator sub-heading in content/ui.ts.',
+  );
+};
+
+/**
  * Rewrites one head tag, tolerating the attributes being split across lines.
  * Throws rather than silently leaving a route with the home page's metadata.
  */
@@ -337,7 +445,11 @@ const metaPattern = (attr, value) =>
 for (const route of ALL_ROUTES) {
   const url = escapeHtml(urlFor(route.path));
 
-  let html = inject(template, ROOT_PLACEHOLDER, `<div id="root">${render(route.path)}</div>`);
+  const markup = render(route.path);
+  assertInternalHrefs(markup, route.path);
+  assertCombinedRate(markup, route);
+
+  let html = inject(template, ROOT_PLACEHOLDER, `<div id="root">${markup}</div>`);
 
   const schema = [
     organisation,
@@ -377,6 +489,21 @@ for (const route of ALL_ROUTES) {
       what: 'og:url',
       match: metaPattern('property', 'og:url'),
       replacement: `<meta property="og:url" content="${url}" />`,
+    },
+    {
+      what: 'og:locale',
+      match: metaPattern('property', 'og:locale'),
+      replacement: `<meta property="og:locale" content="${OG_LOCALES[route.locale]}" />`,
+    },
+    {
+      what: 'og:locale:alternate',
+      match: metaPattern('property', 'og:locale:alternate'),
+      replacement: `<meta property="og:locale:alternate" content="${OG_LOCALES[otherLocale(route.locale)]}" />`,
+    },
+    {
+      what: 'og:image:alt',
+      match: metaPattern('property', 'og:image:alt'),
+      replacement: `<meta property="og:image:alt" content="${escapeHtml(OG_IMAGE_ALTS[route.locale])}" />`,
     },
     {
       what: 'canonical',
