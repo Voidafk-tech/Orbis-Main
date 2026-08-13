@@ -16,10 +16,20 @@ export function render(url: string): string {
  * the page renders. The FAQ answers and the plan list used to be duplicated by
  * hand into index.html; going through here means they cannot drift.
  */
-export { CONTACT, FAQS, SERVICES, TIERS } from './content/site';
-export { REMOTE_FAQS } from './content/pages';
-export { FAQS as ZH_FAQS } from './content/zh/site';
-export { REMOTE_FAQS as ZH_REMOTE_FAQS } from './content/zh/pages';
+export { COMBINED_TAX_RATE, CONTACT, SERVICES, TIERS, percent } from './content/site';
+
+/**
+ * The whole copy bundle, indexed by locale, plus the locale tables themselves.
+ *
+ * This replaces a set of `ZH_`-prefixed re-exports — `ZH_FAQS`,
+ * `ZH_REMOTE_FAQS`, `ZH_OG_IMAGE_ALT` — that cost three new exported names, three
+ * new destructured names and three new map entries in scripts/prerender.mjs for
+ * every language added, all of them hand-maintained and none of them checked.
+ * The prerender step builds its per-locale maps by walking LOCALES now, so
+ * adding a language costs it nothing.
+ */
+export { copyFor } from './content/copy';
+export { LOCALES, LOCALE_TAG, LOCALE_OG, DEFAULT_LOCALE, localizePath } from './content/i18n';
 export { ROUTES, ALL_ROUTES, REDIRECTS, NOT_FOUND_META } from './content/routes';
 // PEOPLE is exported but no longer imported by scripts/prerender.mjs: the names
 // are deliberately not published in the JSON-LD. The export is kept so restoring

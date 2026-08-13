@@ -3,10 +3,9 @@ import { Link } from 'react-router';
 import Anchor from './Anchor';
 import { LogoMark } from './Logo';
 import { useLocale } from './LocaleContext';
-import { LOCALE_LABEL, LOCALE_TAG } from '../content/i18n';
 
 const SiteHeader: React.FC = () => {
-  const { copy, path, otherLocale, otherPath } = useLocale();
+  const { copy, path, alternates } = useLocale();
   const { header, languageToggle } = copy.ui;
 
   return (
@@ -30,18 +29,26 @@ const SiteHeader: React.FC = () => {
           </li>
         </ul>
 
-        {/* A real link to the same page in the other language, not a JS toggle:
-            it has to be crawlable, and it has to be shareable. `hreflang` tells
-            Google the two are translations rather than duplicates. */}
-        <Link
-          to={otherPath}
-          className="header__lang"
-          hrefLang={LOCALE_TAG[otherLocale]}
-          lang={LOCALE_TAG[otherLocale]}
-          aria-label={`${languageToggle.label}: ${LOCALE_LABEL[otherLocale]}`}
-        >
-          {LOCALE_LABEL[otherLocale]}
-        </Link>
+        {/* Real links to the same page in each other language, not a JS toggle:
+            they have to be crawlable, and they have to be shareable. `hreflang`
+            tells Google they are translations rather than duplicates.
+
+            A list rather than one chip. With two languages built it renders
+            exactly as it always has; a third adds a chip beside it rather than
+            needing this rewritten. Each label is written in its own script, so
+            a reader finds their language without first reading English. */}
+        {alternates.map((alternate) => (
+          <Link
+            key={alternate.locale}
+            to={alternate.path}
+            className="header__lang"
+            hrefLang={alternate.tag}
+            lang={alternate.tag}
+            aria-label={`${languageToggle.label}: ${alternate.label}`}
+          >
+            {alternate.label}
+          </Link>
+        ))}
 
         {/* Kept at every width, unlike the nav. Someone searching for a bookkeeper
             on a phone is likelier to call than to fill in a ten-field form.

@@ -69,6 +69,40 @@ content/legal.ts     privacy and terms              content/zh/legal.ts
 content/copy.ts      resolves a bundle per locale
 ```
 
+### Adding a language
+
+The locale layer is written for N languages, not two. `content/i18n.ts` holds
+four tables — slug, BCP 47 tag, Open Graph locale, switcher label — covering
+every locale the `Locale` type knows, and `LOCALES` is the subset actually
+built. Adding one is:
+
+1. Add it to `Locale`, then fill in the entry `tsc` demands in each table.
+2. Create `content/<slug>/{site,pages,legal,ui}.ts`.
+3. Add it to `LOCALES`.
+
+Step 3 is the switch, and it is last on purpose: the compiler then names every
+remaining gap — the bundle in `content/copy.ts`, then each route's text in
+`content/routes.ts`. Nothing downstream needs touching. The sitemap, the
+hreflang cluster, the language switcher, the per-locale `og:` tags and the
+breadcrumbs are all derived from `LOCALES`.
+
+A **Traditional Chinese tree is the next one**, and the only thing missing is
+the copy. It needs a translator who reads Vancouver Chinese: converting the
+Simplified text character by character produces something that is technically
+Traditional and reads as machine output, and this audience is unusually
+sensitive to that because so many competing sites are exactly that. The
+`zh-hant` entries are already in the tables, and `index.css` already carries the
+TC font-stack override — `:lang(zh)` matches `zh-Hant` too, so without it a
+Traditional page would inherit the Simplified stack and render a good number of
+glyphs in the wrong regional form.
+
+**A page can exist in some languages and not others.** Set `only` on the route.
+`/zh/bookkeeping-vs-tax-filing/` is Chinese-only because search demand is not a
+translation of itself: 记账 versus 报税 is this market's central confusion and
+has no English equivalent, since the English market already treats the two as
+separate purchases. Such a route gets no hreflang block — a set of one says
+nothing — and navigation to it is guarded by `routeExists`.
+
 Every Chinese module is typed as `Widen<typeof En>` — see `content/i18n.ts`. The
 English copy is declared `as const`, so its type is a tuple of string literals
 that no translation could satisfy; `Widen` relaxes the values to `string` while

@@ -52,8 +52,44 @@ export const WECHAT = {
   alt: 'WeChat QR code for Tina - Orbis, Weixin ID Online_Bookkeeper',
 } as const;
 
+/**
+ * The two sales-tax rates, as numbers, and the only place either is written
+ * down. The explainer's "5%" and "7%" figures and every number the calculator
+ * produces are derived from these, so a rate change is one edit and cannot
+ * leave a stale figure somewhere the reader still sees it.
+ *
+ * Numbers rather than strings for the same reason: a display string cannot be
+ * multiplied, so storing "7%" would mean a second, computable copy existing
+ * somewhere — which is the drift this exists to prevent. Rates are not copy and
+ * are not translated; content/zh/ui.ts renders these same values.
+ *
+ * Change them only against the published rate, and move RATES_AS_OF with them.
+ */
+export const TAX_RATES = { gst: 0.05, pst: 0.07 } as const;
+
+/** GST and PST together — the combined figure competing pages lead with. */
+export const COMBINED_TAX_RATE = TAX_RATES.gst + TAX_RATES.pst;
+
+/**
+ * A rate as a reader sees it: 0.05 becomes "5%". Rounded before formatting
+ * because 0.05 + 0.07 is 0.12000000000000001 in binary floating point, which
+ * would otherwise render as "12.000000000000002%".
+ */
+export const percent = (rate: number): string => `${Number((rate * 100).toFixed(2))}%`;
+
 /** Date stamp on the published GST/PST rates. Review on a set cadence. */
 export const RATES_AS_OF = 'July 2026';
+
+/**
+ * Alt text for the link-preview card (public/og-card.png), read by screen
+ * readers on the platforms that surface it and by anything indexing the image.
+ *
+ * Here rather than in index.html because the card is shared by both languages
+ * and the English string was being served on all nine /zh/ URLs. Emitted as
+ * `og:image:alt` per route by scripts/prerender.mjs.
+ */
+export const OG_IMAGE_ALT =
+  'Orbis Accounting — bookkeeping for BC small business, West Vancouver';
 
 /**
  * The Intuit-issued Advanced ProAdvisor badge, in `public/`. Certification

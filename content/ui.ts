@@ -9,6 +9,7 @@
  *
  * The Chinese counterpart is content/zh/ui.ts, typed against this file.
  */
+import { COMBINED_TAX_RATE, TAX_RATES, percent } from './site';
 
 export const UI = {
   /**
@@ -25,6 +26,13 @@ export const UI = {
 
   header: {
     backToTop: 'Orbis Accounting, back to top',
+    /**
+     * The root of the breadcrumb trail Google prints under a search result.
+     * Not rendered anywhere on the page — the logo is the home link — but it is
+     * read by scripts/prerender.mjs, which used to emit the literal 'Home' on
+     * every page in every language.
+     */
+    home: 'Home',
     services: 'Services',
     plans: 'Plans',
     questions: 'Questions',
@@ -41,6 +49,9 @@ export const UI = {
     plans: 'Plans',
     remote: 'Remote',
     gstPst: 'GST & PST',
+    pstRegistration: 'PST registration',
+    /** Chinese only — the link renders only where the page exists. */
+    vsTax: 'Bookkeeping vs tax filing',
     catchUp: 'Catch-up',
     questions: 'Questions',
     getQuote: 'Get a quote',
@@ -157,18 +168,53 @@ export const UI = {
     noteAfter: '.',
     taxes: [
       {
-        figure: '5%',
+        figure: percent(TAX_RATES.gst),
         name: 'GST',
         authority: 'Goes to the CRA',
         body: 'Federal. You generally must register once you pass $30,000 in revenue over four quarters. You charge it on most sales and you claim back the GST you paid on business purchases.',
       },
       {
-        figure: '7%',
+        figure: percent(TAX_RATES.pst),
         name: 'PST',
         authority: 'Goes to the province',
         body: 'Provincial, and separate. Different registration, different deadlines, and a different list of what is taxable. Many services are exempt while most goods are not. There is no input credit to claim back.',
       },
     ],
+  },
+
+  /**
+   * The calculator on /gst-pst-bc. Every figure in here is derived from
+   * TAX_RATES rather than typed, so the copy cannot state one rate while the
+   * arithmetic uses another.
+   *
+   * `sub` is split around the combined figure so the component can emphasise it
+   * without putting markup in a translatable string. That figure is the point of
+   * the section: three of the pages outranking this one lead with the combined
+   * rate in their title, and this page did not state it anywhere at all.
+   */
+  taxCalculator: {
+    eyebrow: 'Work it out',
+    h2: 'BC sales tax calculator',
+    subBefore: `GST ${percent(TAX_RATES.gst)} plus PST ${percent(TAX_RATES.pst)} is `,
+    subCombined: `${percent(COMBINED_TAX_RATE)} combined`,
+    subAfter: ' on most goods in British Columbia.',
+    modeLabel: 'Which way round',
+    forwardTab: 'Add tax to a price',
+    reverseTab: 'Back tax out of a total',
+    forwardLabel: 'Amount before tax (CAD)',
+    reverseLabel: 'Total including tax (CAD)',
+    resultsLabel: 'Result',
+    subtotal: 'Subtotal',
+    gst: `GST (${percent(TAX_RATES.gst)})`,
+    pst: `PST (${percent(TAX_RATES.pst)})`,
+    total: 'Total',
+    noteBefore:
+      'Most goods carry both. Many services are exempt from PST while still attracting GST — ',
+    noteLink: 'see what is and is not taxable',
+    noteAfter: '. Rates current as of ',
+    noteEnd: '.',
+    noscript:
+      'The calculator needs JavaScript. The figures above are worked out on a $100 purchase, and the arithmetic is the rate times the amount.',
   },
 
   trust: {
@@ -268,7 +314,7 @@ export const UI = {
   },
 
   pricingPage: {
-    eyebrow: 'Plans and pricing',
+    eyebrow: 'Plans and pricing for BC small business',
     headline: 'What bookkeeping',
     headlineEm: 'actually costs.',
     sub: 'We work on a fixed monthly plan sized to your transaction volume, not an hourly rate. Here is how the number is put together, what moves it, and what the rest of the market charges.',
@@ -302,8 +348,13 @@ export const UI = {
     tradeoffH2: 'What you gain, and what you give up.',
     areasEyebrow: 'Where this works',
     areasH2: 'All of British Columbia, at the same price.',
+    /* Named cities, deliberately. The page was chasing national terms —
+       "online bookkeeping services canada" is 20 searches a month at difficulty
+       43 — while "bookkeeper vancouver" is 480 a month at difficulty 3. Naming
+       the places the work actually happens is the cheapest way to point the
+       page at the province instead of the country. */
     areasLede:
-      'Because nothing depends on being nearby, where your business sits does not change the scope or the number. We are based in West Vancouver and work across the province.',
+      'Because nothing depends on being nearby, where your business sits does not change the scope or the number. We work with businesses in Vancouver, Surrey, Burnaby and Richmond, out to Victoria and Kelowna, and well beyond the highway — the Interior, the Island and the north included. We are based in West Vancouver, and for a remote engagement that is a fact about us rather than a constraint on you.',
     faqEyebrow: 'Questions',
     faqH2: 'The ones remote raises.',
     faqIntroA: 'The rest are on the ',
@@ -356,13 +407,74 @@ export const UI = {
     pstLabel: 'PST',
     mistakesEyebrow: 'What goes wrong',
     mistakesH2: 'Four ways this catches people out.',
+    exemptEyebrow: 'What is taxable',
+    exemptH2: 'What carries PST, and what does not.',
+    registrationEyebrow: 'Registering',
+    fin400Eyebrow: 'The return',
+    deadlinesEyebrow: 'Deadlines',
+    deadlinesH2: 'How often you file, and by when.',
+    /* Column labels for the deadlines table, which reuses the comparison
+       table's markup — hence the same two-column shape as gstLabel/pstLabel. */
+    whoLabel: 'Who it applies to',
+    dueLabel: 'When it is due',
+    selfAssessEyebrow: 'Self-assessment',
+    /* Headings for GST_PST_LOCAL_SECTIONS, which is empty in English — so these
+       two strings render nowhere here. They exist because the section list is
+       per-language and the headings above it have to be too. */
+    localEyebrow: 'In practice',
+    localH2: 'Where this comes up most.',
+    servicesLink: 'What we file, and what that includes →',
+    catchUpLink: 'If you are already behind on this →',
+    faqEyebrow: 'Questions',
+    faqH2: 'What people ask about PST.',
     whatWeDoEyebrow: 'What we do',
     ctaH2: 'Not sure which you are registered for?',
     ctaP: 'Say so in the form. We check both against what you actually sell and confirm them in the written quote, before anything is filed.',
   },
 
+  /**
+   * /bookkeeping-vs-tax-filing, which is built in Chinese only — so none of
+   * these strings render anywhere in English. They exist because the page's
+   * headings have to be typed somewhere, and the English module is what every
+   * translation is typed against.
+   */
+  vsTaxPage: {
+    eyebrow: 'Bookkeeping vs tax filing',
+    headline: 'Two jobs,',
+    headlineEm: 'two people, two times of year.',
+    sub: 'What a bookkeeper does, what an accountant does, and where we stop. Chinese only — see the note above.',
+    rolesEyebrow: 'Who does what',
+    rolesH2: 'The division of labour.',
+    boundaryEyebrow: 'Where we stop',
+    boundaryH2: 'What we do, and what we do not.',
+    linksBefore: 'More on ',
+    linkServices: 'what the monthly work covers',
+    linksMiddle: ', and ',
+    linkPricing: 'how the plans are scoped',
+    linksAfter: '.',
+    ctaH2: 'Not sure which one you need?',
+    ctaP: 'Tell us where your books stand and we will say so in the written quote.',
+  },
+
+  pstRegistrationPage: {
+    eyebrow: 'PST registration in BC',
+    headline: 'Registering for PST',
+    headlineEm: 'in British Columbia.',
+    sub: 'Whether you have to, what the province needs from you, and what changes once you are on their books. There is no revenue threshold with PST — it turns on what you sell.',
+    explainerLink: 'How GST and PST differ →',
+    whoEyebrow: 'Who it applies to',
+    whoH2: 'Which side of the line you are on.',
+    stepsEyebrow: 'How to register',
+    stepsH2: 'Five steps, once you know the answer.',
+    afterEyebrow: 'After registration',
+    servicesLink: 'What we file, and what that includes →',
+    lateEyebrow: 'Late registration',
+    ctaH2: 'Not sure whether you need to register?',
+    ctaP: 'Tell us what you sell in the form. We check it against both registrations and confirm the answer in the written quote, before anything is filed.',
+  },
+
   catchUpPage: {
-    eyebrow: 'Catch-up bookkeeping',
+    eyebrow: 'Catch-up bookkeeping in British Columbia',
     headline: 'Behind on your books.',
     headlineEm: 'It is fixable.',
     sub: 'Months or years behind is the most common reason anyone gets in touch with us. We look at how far it goes, quote the whole job as one number before starting, then clear it and file what is outstanding.',

@@ -27,8 +27,14 @@ import { INDEXNOW_KEY, KEY_FILE, indexNowEnabled } from './indexnow.mjs';
  */
 const SITE = 'https://www.orbisaccounting.ca';
 
-/** Matches content/i18n.ts. Duplicated here only because this file is plain JS. */
-const LOCALE_TAGS = { en: 'en-CA', zh: 'zh-Hans-CA' };
+/**
+ * Every language other than this one, for `og:locale:alternate`.
+ *
+ * This was `otherLocale`, singular — "two locales, so this is the one that is
+ * not `locale`" — which is the two-language assumption stated outright. A third
+ * language would have been told its alternate was English and nothing else.
+ */
+const otherLocales = (locale) => LOCALES.filter((candidate) => candidate !== locale);
 
 const dist = path.resolve('dist');
 const template = await readFile(path.join(dist, 'index.html'), 'utf-8');
@@ -47,21 +53,46 @@ const {
   // is a one-line change.
   SAME_AS,
   CONTACT,
-  FAQS,
-  REMOTE_FAQS,
-  ZH_FAQS,
-  ZH_REMOTE_FAQS,
+  COMBINED_TAX_RATE,
+  percent,
   SERVICES,
   TIERS,
+  // The locale layer, read rather than restated. LOCALE_TAGS used to be
+  // duplicated in this file "only because this file is plain JS", which is a
+  // reason to import it through the SSR bundle rather than to keep a second
+  // copy that can disagree with the first.
+  copyFor,
+  LOCALES,
+  LOCALE_TAG,
+  LOCALE_OG,
+  localizePath,
 } = await import(pathToFileURL(path.resolve('dist-ssr/entry-server.js')).href);
+
+/**
+ * Anything this file needs per locale, built by walking LOCALES.
+ *
+ * Each of these was a hand-written object literal with one entry per language.
+ * They are derived now, so adding a language cannot leave one of them behind —
+ * and a missed entry was silent: the lookup returned `undefined`, `escapeHtml`
+ * stringified it, and the page shipped `content="undefined"`.
+ */
+const byLocale = (pick) => Object.fromEntries(LOCALES.map((locale) => [locale, pick(locale)]));
+
+const OG_IMAGE_ALTS = byLocale((locale) => copyFor(locale).site.OG_IMAGE_ALT);
+const FAQ_SETS = byLocale((locale) => ({
+  home: copyFor(locale).site.FAQS,
+  remote: copyFor(locale).pages.REMOTE_FAQS,
+}));
 
 const ROOT_PLACEHOLDER = '<div id="root"></div>';
 const SCHEMA_PLACEHOLDER = '<!--structured-data-->';
 const HREFLANG_PLACEHOLDER = '<!--hreflang-->';
+const OG_ALTERNATES_PLACEHOLDER = '<!--og-alternates-->';
 
 for (const [placeholder, what] of [
   [ROOT_PLACEHOLDER, 'root div'],
   [SCHEMA_PLACEHOLDER, 'structured-data placeholder'],
+  [OG_ALTERNATES_PLACEHOLDER, 'og:locale:alternate placeholder'],
   [HREFLANG_PLACEHOLDER, 'hreflang placeholder'],
 ]) {
   if (!template.includes(placeholder)) {
@@ -199,8 +230,12 @@ const organisation = {
   // served in, knowsLanguage is the language the practice speaks. Bilingual
   // service is the practice's main differentiator, so it is worth stating twice
   // in the form each field expects.
-  availableLanguage: Object.values(LOCALE_TAGS),
-  knowsLanguage: ['en', 'zh-Hans'],
+  //
+  // Both are derived from LOCALES rather than listed. knowsLanguage was a
+  // hand-written array sitting immediately below a derived one, which is the
+  // arrangement where the two quietly stop agreeing.
+  availableLanguage: LOCALES.map((locale) => LOCALE_TAG[locale]),
+  knowsLanguage: LOCALES.map((locale) => LOCALE_TAG[locale]),
   description:
     'Bookkeeping for BC small business, based in West Vancouver and serving all of British Columbia. Monthly bookkeeping, GST and PST filing, payroll and T4s, financial reporting, software setup and catch-up work, at a fixed monthly price.',
   openingHoursSpecification: {
@@ -257,20 +292,28 @@ const websiteFor = (locale) => ({
   '@id': `${SITE}/#website`,
   url: `${SITE}/`,
   name: BUSINESS.name,
-  inLanguage: LOCALE_TAGS[locale],
+  inLanguage: LOCALE_TAG[locale],
   publisher: { '@id': `${SITE}/#practice` },
 });
 
 /**
- * Tells Google the two language versions are translations of one page rather
- * than duplicates competing with each other, and which to show by default.
- * Every page in a set must link to every other one *and to itself*, or Google
- * ignores the whole set.
+ * Tells Google the language versions of a page are translations of one another
+ * rather than duplicates competing for the same query, and which to show when
+ * none of them matches the searcher. Every page in a set must link to every
+ * other one *and to itself*, or Google discards the whole set silently.
  */
 const hreflangFor = (englishPath) => {
-  const alternates = ALL_ROUTES.filter((candidate) => candidate.englishPath === englishPath).map(
+  const siblings = ALL_ROUTES.filter((candidate) => candidate.englishPath === englishPath);
+
+  // A page built in one language only has no translations to declare, and an
+  // hreflang set of one says nothing. It matters that this returns empty rather
+  // than a lone self-reference: x-default below points at the English URL, and
+  // for a route carrying `only` that URL does not exist.
+  if (siblings.length < 2) return '';
+
+  const alternates = siblings.map(
     (candidate) =>
-      `<link rel="alternate" hreflang="${LOCALE_TAGS[candidate.locale]}" href="${escapeHtml(urlFor(candidate.path))}" />`,
+      `<link rel="alternate" hreflang="${LOCALE_TAG[candidate.locale]}" href="${escapeHtml(urlFor(candidate.path))}" />`,
   );
 
   // x-default is what a searcher gets when no language matches theirs.
@@ -290,24 +333,26 @@ const breadcrumbFor = (route) => ({
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+    // The root step is the reader's own home page, named in their own language.
+    // It used to be the literal 'Home' pointing at the English root, on every
+    // page of every language — so a Chinese result carried an English trail
+    // ending at a URL in a language the searcher had not asked for.
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: copyFor(route.locale).ui.header.home,
+      item: urlFor(localizePath('/', route.locale)),
+    },
     { '@type': 'ListItem', position: 2, name: route.crumb, item: urlFor(route.path) },
   ],
 });
 
-/**
- * One FAQ set per page that has one. Keyed by the `faq` field on the route, so
- * a page can only be given questions it actually renders.
- */
-const FAQ_SETS = {
-  en: { home: FAQS, remote: REMOTE_FAQS },
-  zh: { home: ZH_FAQS, remote: ZH_REMOTE_FAQS },
-};
-
 const faqPageFor = (key, locale) => {
   const questions = FAQ_SETS[locale]?.[key];
   if (!questions) {
-    throw new Error(`prerender: no FAQ set named "${key}" — check the route's faq field`);
+    throw new Error(
+      `prerender: no FAQ set named "${key}" for locale "${locale}" — check the route's faq field`,
+    );
   }
   return {
     '@context': 'https://schema.org',
@@ -318,6 +363,173 @@ const faqPageFor = (key, locale) => {
       acceptedAnswer: { '@type': 'Answer', text: item.a },
     })),
   };
+};
+
+/**
+ * Every internal link must point at the URL GitHub Pages actually serves, which
+ * is the trailing-slash one. A link to `/services` is a 301 to `/services/`, and
+ * Google was indexing both forms as separate pages — the ranking signal for the
+ * site's best content page was split roughly in half between them.
+ *
+ * The slash is applied once, by `hrefFor` in content/i18n.ts, on the way out of
+ * the locale context every link is built through. This is the check that it
+ * stays that way, because the failure is silent: the page renders, the link
+ * works, and only a crawler ever sees the extra hop.
+ *
+ * Bare anchors (`#questions`) and cross-page ones (`/#questions`) are fine, as
+ * are `tel:`, `mailto:` and absolute URLs — none of them name a route.
+ *
+ * Files are skipped, and that exclusion is load-bearing rather than defensive:
+ * React 19 hoists a `<link rel="preload" as="image" href="…">` into the render
+ * output for images, so the markup contains asset hrefs this never wrote. A
+ * route path has no extension and an asset always does, which separates them
+ * without having to parse which element each href belongs to.
+ */
+const INTERNAL_HREF = /href="(\/[^"#]*)"/g;
+const IS_FILE = /\.[a-z0-9]+$/i;
+
+const assertInternalHrefs = (markup, routePath) => {
+  const offenders = [
+    ...new Set(
+      [...markup.matchAll(INTERNAL_HREF)]
+        .map((match) => match[1])
+        .filter((href) => !href.endsWith('/') && !IS_FILE.test(href)),
+    ),
+  ];
+
+  if (offenders.length > 0) {
+    throw new Error(
+      `prerender: ${routePath} links to ${offenders.join(', ')} without a trailing slash — ` +
+        'each one is a 301 hop. Build internal links through path() from useLocale(), ' +
+        'or run the path through hrefFor() in content/i18n.ts.',
+    );
+  }
+};
+
+/**
+ * Metadata rules, checked at build time because every one of them is a thing
+ * that reads fine in the file and is wrong in a search result.
+ *
+ * Lengths are measured in **display width**, not characters: a CJK glyph
+ * occupies two columns where a Latin one occupies one, and the SERP truncates
+ * on rendered width. Counting characters is what makes an audit flag every
+ * Chinese page as "meta description too short" — a false positive this repo has
+ * been told to expect on every run. One width rule covers both languages and
+ * matches how Google actually cuts.
+ *
+ * The numbers come out the same as the guidance in either language: ~60 for a
+ * title and ~150 for a description is 60 and 150 Latin characters, and about 30
+ * and 75 Chinese ones.
+ */
+const displayWidth = (value) =>
+  [...value].reduce((total, character) => {
+    const code = character.codePointAt(0);
+    // The CJK, fullwidth-forms and Hangul blocks, which are the double-width
+    // ranges this site can actually produce.
+    const wide =
+      (code >= 0x1100 && code <= 0x115f) ||
+      (code >= 0x2e80 && code <= 0xa4cf) ||
+      (code >= 0xac00 && code <= 0xd7a3) ||
+      (code >= 0xf900 && code <= 0xfaff) ||
+      (code >= 0xfe30 && code <= 0xfe6f) ||
+      (code >= 0xff00 && code <= 0xff60) ||
+      (code >= 0xffe0 && code <= 0xffe6);
+    return total + (wide ? 2 : 1);
+  }, 0);
+
+const TITLE_MAX_WIDTH = 64;
+const DESCRIPTION_WIDTH = { min: 120, max: 168 };
+
+/**
+ * Routes whose metadata is not a sales pitch. A privacy policy has no business
+ * naming a city or advertising bilingual service, so the two content rules
+ * below skip them; the length rules still apply.
+ */
+const NON_COMMERCIAL = new Set(['/privacy-policy', '/terms-of-service']);
+
+/**
+ * Tax-query pages, which lead with BC省 instead of 温哥华 on purpose.
+ *
+ * 卑诗省 is the Vancouver Chinese press standard and is right everywhere else on
+ * the site, but the Chinese-language audit found that on sales-tax queries
+ * specifically the Mainland abbreviation is what gets typed — so these two
+ * titles are aimed at the query rather than at the city.
+ */
+const TAX_QUERY_ROUTES = new Set(['/gst-pst-bc', '/bc-pst-registration']);
+
+for (const route of ROUTES) {
+  for (const locale of LOCALES) {
+    const text = route.text[locale];
+    const where = `${route.path} (${locale})`;
+
+    const titleWidth = displayWidth(text.title);
+    if (titleWidth > TITLE_MAX_WIDTH) {
+      throw new Error(
+        `prerender: the title for ${where} has a display width of ${titleWidth}, over ${TITLE_MAX_WIDTH}. ` +
+          'Google will truncate it. Shorten it in content/routes.ts.',
+      );
+    }
+
+    const descriptionWidth = displayWidth(text.description);
+    if (descriptionWidth < DESCRIPTION_WIDTH.min || descriptionWidth > DESCRIPTION_WIDTH.max) {
+      throw new Error(
+        `prerender: the description for ${where} has a display width of ${descriptionWidth} — ` +
+          `it must be ${DESCRIPTION_WIDTH.min}–${DESCRIPTION_WIDTH.max}. Rewrite it in content/routes.ts rather than truncating.`,
+      );
+    }
+
+    if (locale === 'en' || NON_COMMERCIAL.has(route.path)) continue;
+
+    // The practice files GST, PST, T4s and ROEs. It does not file income tax
+    // returns, and the Chinese-language market's default assumption is that an
+    // accounting firm does — 会计师帮我报税 is the mental model. Claiming 报税
+    // as a service would be the easiest traffic on the site to win and the one
+    // thing that would make the rest of the copy dishonest. A guard rather than
+    // a note, because the temptation recurs every time someone looks at the
+    // search demand.
+    if (text.title.includes('报税服务')) {
+      throw new Error(
+        `prerender: the title for ${where} offers 报税服务. The practice does not file T1 or T2 ` +
+          'returns — capture that intent with content that draws the boundary, not with a service claim.',
+      );
+    }
+
+    if (!TAX_QUERY_ROUTES.has(route.path) && !text.title.includes('温哥华')) {
+      throw new Error(
+        `prerender: the title for ${where} does not name 温哥华. Chinese searches lead with the ` +
+          'city rather than the province — see content/zh/glossary.md.',
+      );
+    }
+
+    // Bilingual service is the practice's strongest differentiator in this
+    // market and appeared nowhere in its metadata.
+    if (!text.description.includes('中英双语')) {
+      throw new Error(
+        `prerender: the description for ${where} does not mention 中英双语.`,
+      );
+    }
+  }
+}
+
+/**
+ * The GST/PST page has to state the combined rate in its own visible copy.
+ *
+ * It is the figure three of the pages outranking it carry in their titles, and
+ * this page did not contain it anywhere — it explained both taxes separately
+ * and left the reader to add them up. The calculator's sub-heading says it now,
+ * and this is the check that it keeps saying it: the string is assembled from
+ * TAX_RATES, so it also fails if a rate changes and the copy does not follow.
+ */
+const COMBINED_RATE_TEXT = percent(COMBINED_TAX_RATE);
+
+const assertCombinedRate = (markup, route) => {
+  if (route.englishPath !== '/gst-pst-bc') return;
+  if (markup.includes(COMBINED_RATE_TEXT)) return;
+
+  throw new Error(
+    `prerender: ${route.path} does not state the combined rate (${COMBINED_RATE_TEXT}) anywhere in its copy. ` +
+      'It is the figure the competing pages lead with — see the calculator sub-heading in content/ui.ts.',
+  );
 };
 
 /**
@@ -337,7 +549,11 @@ const metaPattern = (attr, value) =>
 for (const route of ALL_ROUTES) {
   const url = escapeHtml(urlFor(route.path));
 
-  let html = inject(template, ROOT_PLACEHOLDER, `<div id="root">${render(route.path)}</div>`);
+  const markup = render(route.path);
+  assertInternalHrefs(markup, route.path);
+  assertCombinedRate(markup, route);
+
+  let html = inject(template, ROOT_PLACEHOLDER, `<div id="root">${markup}</div>`);
 
   const schema = [
     organisation,
@@ -347,7 +563,20 @@ for (const route of ALL_ROUTES) {
   ];
   html = inject(html, SCHEMA_PLACEHOLDER, schema.map(jsonLd).join('\n\n    '));
   html = inject(html, HREFLANG_PLACEHOLDER, hreflangFor(route.englishPath));
-  html = inject(html, '<html lang="en-CA">', `<html lang="${LOCALE_TAGS[route.locale]}">`);
+
+  // A placeholder rather than a tag rewrite, because there is one of these per
+  // *other* language and `setTag` replaces exactly one occurrence. With two
+  // languages that distinction never showed; with three, a rewrite would have
+  // declared one alternate and silently dropped the other. Open Graph allows
+  // the property to repeat, which is what this emits.
+  html = inject(
+    html,
+    OG_ALTERNATES_PLACEHOLDER,
+    otherLocales(route.locale)
+      .map((locale) => `<meta property="og:locale:alternate" content="${LOCALE_OG[locale]}" />`)
+      .join('\n    '),
+  );
+  html = inject(html, '<html lang="en-CA">', `<html lang="${LOCALE_TAG[route.locale]}">`);
 
   const title = escapeHtml(route.title);
   const description = escapeHtml(route.description);
@@ -379,6 +608,16 @@ for (const route of ALL_ROUTES) {
       replacement: `<meta property="og:url" content="${url}" />`,
     },
     {
+      what: 'og:locale',
+      match: metaPattern('property', 'og:locale'),
+      replacement: `<meta property="og:locale" content="${LOCALE_OG[route.locale]}" />`,
+    },
+    {
+      what: 'og:image:alt',
+      match: metaPattern('property', 'og:image:alt'),
+      replacement: `<meta property="og:image:alt" content="${escapeHtml(OG_IMAGE_ALTS[route.locale])}" />`,
+    },
+    {
       what: 'canonical',
       match: /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/,
       replacement: `<link rel="canonical" href="${url}" />`,
@@ -406,8 +645,9 @@ for (const route of ALL_ROUTES) {
   let html = inject(template, ROOT_PLACEHOLDER, `<div id="root">${render(notFoundPath)}</div>`);
 
   html = inject(html, SCHEMA_PLACEHOLDER, jsonLd(organisation));
-  // A 404 has no language alternates of its own.
+  // A 404 has no language alternates of its own, in either form.
   html = inject(html, HREFLANG_PLACEHOLDER, '');
+  html = inject(html, OG_ALTERNATES_PLACEHOLDER, '');
   html = setTag(html, {
     what: 'title',
     match: /<title>[\s\S]*?<\/title>/,
@@ -481,7 +721,7 @@ ${ALL_ROUTES.map((route) => {
     (candidate) => candidate.englishPath === route.englishPath,
   ).map(
     (candidate) =>
-      `    <xhtml:link rel="alternate" hreflang="${LOCALE_TAGS[candidate.locale]}" href="${escapeHtml(urlFor(candidate.path))}" />`,
+      `    <xhtml:link rel="alternate" hreflang="${LOCALE_TAG[candidate.locale]}" href="${escapeHtml(urlFor(candidate.path))}" />`,
   );
 
   // Same escaping as the HTML: an unescaped `&` in a URL is not merely unsafe
