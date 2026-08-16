@@ -30,8 +30,12 @@ Mainland-standard ones. These are the BC forms and should not be "corrected".
 | Richmond | 列治文 | 里士满 |
 | Surrey | 素里 | 萨里 |
 | North Shore | 北岸 | — |
-| Metro Vancouver | 大温哥华地区 | — |
+| Metro Vancouver | 大温哥华地区（短形式 大温地区） | — |
 | Lower Mainland | 低陆平原 | — |
+
+The hero eyebrow uses the short form 大温地区 rather than 大温哥华地区: the line
+is set in uppercase mono at `11px` and already carries 西温哥华 and 中英双语, so
+the long form crowds it. Both forms are current in BC's Chinese-language press.
 
 ## Tax and government
 
