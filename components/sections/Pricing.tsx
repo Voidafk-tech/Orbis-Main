@@ -12,7 +12,6 @@ const Pricing: React.FC = () => {
     <section className="sec sec--paper" id="pricing">
       <div className="inner">
         <div className="reveal" style={{ maxWidth: '58ch' }}>
-          <p className="eyebrow eyebrow--paper intro__eyebrow">{pricing.eyebrow}</p>
           <h2 className="h2">{pricing.h2}</h2>
           <p className="lede lede--paper intro__p" style={{ fontSize: '17px' }}>
             <Link to={path('/pricing')}>{pricing.more}</Link>
@@ -71,6 +70,12 @@ const Pricing: React.FC = () => {
             <p className="micro micro--paper pricing-notes__label">{pricing.oneTimeLabel}</p>
             <p className="pricing-notes__body">
               <strong>{pricing.setupName}</strong> {pricing.setupBody}
+            </p>
+          </div>
+          <div>
+            <p className="micro micro--paper pricing-notes__label">{pricing.oneTimeLabel}</p>
+            <p className="pricing-notes__body">
+              <strong>{pricing.taxFilingName}</strong> {pricing.taxFilingBody}
             </p>
           </div>
         </div>

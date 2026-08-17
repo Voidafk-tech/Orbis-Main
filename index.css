@@ -138,7 +138,7 @@ figure {
 /* ---------- Type ---------------------------------------------------------- */
 
 .h1 {
-  font: 400 clamp(48px, 7.8vw, 96px) / 0.98 var(--serif);
+  font: 400 clamp(42px, 5.4vw, 68px) / 1.02 var(--serif);
   letter-spacing: -0.02em;
   text-wrap: pretty;
   margin: 0 0 30px;
@@ -157,37 +157,34 @@ figure {
 }
 
 /*
- * Headlines short enough to sit on one line at desktop widths opt in with
- * .h1--wide, which is what reclaims the empty right half of the hero. Below
- * this the headline stops fitting and free wrapping splits the green phrase
- * mid-thought, so the block default puts the break back where it belongs.
+ * There was a `.h1--wide` modifier here that joined the two halves onto one
+ * line above 1024px. It worked while the first half ended in a comma; now that
+ * display type carries no punctuation it would read as a run-on — "Clean books
+ * filed on time" — on exactly the widest screens. The block default above is
+ * now the only behaviour, in both languages, so the modifier and the matching
+ * `:lang(zh)` override that forced the stack back are both gone.
  */
-@media (min-width: 1024px) {
-  .h1--wide em {
-    display: inline;
-  }
-}
 
 .h2 {
-  font: 400 clamp(30px, 4.2vw, 50px) / 1.05 var(--serif);
+  font: 400 clamp(28px, 3.2vw, 38px) / 1.12 var(--serif);
   letter-spacing: -0.015em;
   text-wrap: pretty;
 }
 
 .h2--faq {
-  font-size: clamp(30px, 4vw, 46px);
+  font-size: clamp(28px, 3vw, 36px);
   letter-spacing: -0.01em;
 }
 
 .h2--intake {
-  font-size: clamp(32px, 4.4vw, 54px);
-  line-height: 1.03;
+  font-size: clamp(30px, 3.4vw, 40px);
+  line-height: 1.1;
   letter-spacing: -0.02em;
 }
 
 .eyebrow {
-  font: 500 11px/1.4 var(--mono);
-  letter-spacing: 0.16em;
+  font: 500 12px/1.4 var(--mono);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--green-text);
 }
@@ -197,8 +194,8 @@ figure {
 }
 
 .micro {
-  font: 400 10.5px/1.4 var(--mono);
-  letter-spacing: 0.14em;
+  font: 400 12px/1.4 var(--mono);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--slate);
 }
@@ -335,294 +332,11 @@ figure {
   padding: 96px var(--pad-x) 0;
 }
 
-/* ---------- Hero scroll sequence ------------------------------------------
- *
- * Everything here is opt-in. Without `is-live` — no script, no 2D context, or
- * a reduced-motion preference — .hero-seq is an ordinary hero block and the
- * acts and canvas are not rendered at all. That is the state the prerender
- * bakes into dist/, so the homepage degrades to precisely what it was.
- *
- * Note the class is `hero-seq__reveal`, not `reveal`: `.reveal` is already the
- * site-wide scroll-reveal hook in useScrollReveal.ts.
- * ------------------------------------------------------------------------- */
-
-/* Without `is-live` the sequence contributes nothing to the page: Hero above it
-   has already made every point it makes. */
-.hero-seq__acts,
-.hero-seq__scene,
-.hero-seq__rail,
-.hero-seq__reveal {
-  display: none;
-}
-
-/* The chevron at the foot of the first screen. Hidden until its script runs,
-   so it never appears without the behaviour that retires it. */
-.scroll-cue {
-  display: none;
-  position: fixed;
-  left: 50%;
-  bottom: 26px;
-  z-index: 50;
-  translate: -50% 0;
-  padding: 10px;
-  color: var(--slate);
-  transition: opacity 400ms ease, translate 400ms ease, color 150ms ease;
-}
-
-.scroll-cue.is-live {
-  display: block;
-}
-
-.scroll-cue:hover {
-  color: var(--green-text);
-}
-
-.scroll-cue svg {
-  display: block;
-  width: 22px;
-  height: auto;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  animation: cue-nudge 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-/* Gone the moment the reader has scrolled at all — it has made its point. */
-.scroll-cue.is-gone {
-  opacity: 0;
-  translate: -50% 8px;
-  pointer-events: none;
-}
-
-@keyframes cue-nudge {
-  0%,
-  62%,
-  100% {
-    transform: translateY(0);
-  }
-  80% {
-    transform: translateY(4px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scroll-cue {
-    display: none;
-  }
-}
-
-.hero-seq.is-live {
-  position: relative;
-  /* Five and a half screens of travel. The act boundaries in
-     heroSequenceScene.ts are fractions of this, so retiming is done there. */
-  height: 560vh;
-}
-
-.hero-seq.is-live .hero-seq__pin {
-  position: sticky;
-  top: var(--header-h);
-  height: calc(100vh - var(--header-h));
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  align-items: center;
-  gap: clamp(20px, 4vw, 64px);
-  max-width: calc(1120px + var(--pad-x) * 2);
-  margin: 0 auto;
-  padding: 0 var(--pad-x);
-}
-
-.hero-seq.is-live .hero-seq__acts {
-  display: block;
-  position: relative;
-  min-height: min(58vh, 420px);
-  z-index: 2;
-  transition: opacity 550ms ease, transform 550ms cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.hero-seq.is-live .hero-seq__act {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(14px);
-  transition: opacity 500ms ease, transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1),
-    visibility 500ms;
-}
-
-.hero-seq__act-h {
-  margin-top: 24px;
-}
-
-.hero-seq__act-h em {
-  font-style: italic;
-  color: var(--green);
-}
-
-.hero-seq__act-p {
-  font: 400 clamp(15px, 1.4vw, 18px) / 1.58 var(--sans);
-  color: var(--slate-light);
-  max-width: 44ch;
-  margin-top: 22px;
-}
-
-.hero-seq.is-live .hero-seq__scene {
-  display: block;
-  position: relative;
-  height: min(76vh, 620px);
-  transition: opacity 600ms ease, transform 600ms ease;
-}
-
-.hero-seq__scene canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* The progress rail. Reads as an instrument rather than a scrollbar, and
-   exists only while the section is pinned. */
-.hero-seq.is-live .hero-seq__rail {
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: calc(var(--pad-x) / 2);
-  translate: 0 -50%;
-  width: 1px;
-  height: min(46vh, 320px);
-  background: var(--hair);
-  z-index: 3;
-}
-
-.hero-seq__rail-fill {
-  position: absolute;
-  top: 0;
-  left: -1px;
-  width: 3px;
-  height: 0;
-  background: var(--green);
-}
-
-/* Inboard of the rail: outside it there is only the pin's padding, and the pin
-   clips its overflow, which crops the readout to a single digit. */
-.hero-seq__rail-pct {
-  position: absolute;
-  right: 12px;
-  top: 0;
-  font: 400 10px/1 var(--mono);
-  letter-spacing: 0.12em;
-  color: var(--slate);
-  white-space: nowrap;
-  translate: 0 -3px;
-}
-
-/* The payoff sits across the whole pin rather than in the text column, so the
-   line lands as a full-width moment instead of a fourth act. */
-.hero-seq.is-live .hero-seq__reveal {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  max-width: none;
-  margin: 0;
-  padding: 0 var(--pad-x);
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  text-align: center;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(18px);
-  transition: opacity 600ms ease, transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1),
-    visibility 600ms;
-}
-
-.hero-seq__line {
-  text-wrap: balance;
-}
-
-/* One act on screen at a time, and the reveal only at the end. */
-.hero-seq.is-live .hero-seq__pin[data-act='0'] .hero-seq__act[data-act='0'],
-.hero-seq.is-live .hero-seq__pin[data-act='1'] .hero-seq__act[data-act='1'],
-.hero-seq.is-live .hero-seq__pin[data-act='2'] .hero-seq__act[data-act='2'] {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-}
-
-.hero-seq.is-live .hero-seq__pin[data-act='3'] .hero-seq__reveal {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-}
-
-.hero-seq.is-live .hero-seq__pin[data-act='3'] .hero-seq__acts {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
-/* A ghost, not a backdrop: any more and the ledger reads through the headline. */
-.hero-seq.is-live .hero-seq__pin[data-act='3'] .hero-seq__scene {
-  opacity: 0.07;
-  transform: scale(1.06);
-}
-
-@media (max-width: 900px) {
-  .hero-seq.is-live .hero-seq__pin {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    align-content: center;
-    gap: 20px;
-  }
-
-  .hero-seq.is-live .hero-seq__scene {
-    height: min(38vh, 300px);
-    order: -1;
-  }
-
-  .hero-seq.is-live .hero-seq__acts {
-    min-height: min(40vh, 300px);
-  }
-
-  /* At this width the rail sits half a gutter from the edge, over the content
-     rather than beside it, and a phone gives its own scroll feedback anyway. */
-  .hero-seq.is-live .hero-seq__rail {
-    display: none;
-  }
-}
-
-/* Belt and braces: the effect already declines to add `is-live` under a
-   reduced-motion preference, but a preference changed after load must not
-   leave a pinned scroller behind. */
-@media (prefers-reduced-motion: reduce) {
-  .hero-seq.is-live {
-    height: auto;
-  }
-
-  .hero-seq.is-live .hero-seq__pin {
-    position: static;
-    height: auto;
-    display: block;
-    overflow: visible;
-    padding: 0;
-  }
-
-  .hero-seq.is-live .hero-seq__acts,
-  .hero-seq.is-live .hero-seq__scene,
-  .hero-seq.is-live .hero-seq__rail,
-  .hero-seq.is-live .hero-seq__reveal {
-    display: none;
-  }
-}
-
 /* Sits inside the h1, so it has to reset the display face it inherits. */
 .h1__eyebrow {
   display: block;
-  font: 500 11px/1.4 var(--mono);
-  letter-spacing: 0.16em;
+  font: 500 12px/1.4 var(--mono);
+  letter-spacing: 0.08em;
   margin-bottom: 26px;
 }
 
@@ -666,7 +380,7 @@ figure {
 }
 
 .trust-strip__value {
-  font: 500 13.5px/1.35 var(--sans);
+  font: 500 15px/1.45 var(--sans);
   color: var(--chart);
 }
 
@@ -694,8 +408,8 @@ figure {
 }
 
 .pain__n {
-  font: 500 11px/1.4 var(--mono);
-  letter-spacing: 0.13em;
+  font: 500 12px/1.4 var(--mono);
+  letter-spacing: 0.08em;
   color: var(--green-text);
   margin-bottom: 14px;
 }
@@ -707,7 +421,7 @@ figure {
 
 .pain__p,
 .card__p {
-  font: 400 14.5px/1.62 var(--sans);
+  font: 400 15.5px/1.62 var(--sans);
   color: var(--slate-light);
 }
 
@@ -770,14 +484,14 @@ figure {
 }
 
 .service__n {
-  font: 500 11px/1.4 var(--mono);
-  letter-spacing: 0.13em;
+  font: 500 12px/1.4 var(--mono);
+  letter-spacing: 0.08em;
   color: var(--slate);
 }
 
 .tag {
-  font: 500 9.5px/1 var(--mono);
-  letter-spacing: 0.14em;
+  font: 500 11px/1 var(--mono);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--green-text);
   border: 1px solid var(--hair);
@@ -900,8 +614,8 @@ figure {
 }
 
 .tier__tag {
-  font: 500 9.5px/1 var(--mono);
-  letter-spacing: 0.14em;
+  font: 500 11px/1 var(--mono);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--green-dark);
   white-space: nowrap;
@@ -916,8 +630,8 @@ figure {
 /* Volume, not price, is what separates the tiers, so it carries the weight the
    monthly figure used to. */
 .tier__cap {
-  font: 500 11px/1.4 var(--mono);
-  letter-spacing: 0.1em;
+  font: 500 12px/1.4 var(--mono);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--paper-ink);
   margin: 0 0 26px;
@@ -983,12 +697,15 @@ figure {
   color: var(--chart);
 }
 
+/* auto-fit rather than a fixed count: the row carries three one-time items now
+   (catch-up, setup, year-end returns) and drops to two and then one as the
+   column narrows, without a breakpoint per count. */
 .pricing-notes {
   margin-top: 56px;
   border-top: 1px solid var(--hair-paper);
   padding-top: 32px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 40px;
   align-items: start;
 }
@@ -1243,38 +960,41 @@ figure {
   margin-bottom: 22px;
 }
 
+/* Holds however many issued marks exist — one today, more when the Xero and
+   Sage artwork lands. The row centres rather than stretching, so a short row
+   reads as deliberate instead of as slots waiting to be filled. */
 .badge-box {
   border: 1px solid var(--hair);
   padding: 18px;
   margin-bottom: 16px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  gap: 24px;
   /* Badge height plus the 18px padding on each side. */
-  height: 141px;
+  min-height: 141px;
 }
 
 /* The design calls for 150px, but the Intuit-issued badge is only 186x210,
    so 105px is the tallest it renders sharp at on a 2x screen. Raise this
-   back to 150px if a larger issued file ever replaces it. */
+   back to 150px if a larger issued file ever replaces it.
+
+   `max-width` rather than `width: 100%`: with more than one mark in the row,
+   a full-width image would push the others out. */
 .badge-box img {
-  width: 100%;
+  max-width: 100%;
   height: 105px;
   object-fit: contain;
 }
 
 .badge-box__placeholder {
-  font: 400 10.5px/1.6 var(--mono);
-  letter-spacing: 0.12em;
+  font: 400 12px/1.6 var(--mono);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--slate);
   text-align: center;
   max-width: 22ch;
-}
-
-.trust__p {
-  font: 400 14.5px/1.62 var(--sans);
-  color: var(--slate-light);
 }
 
 .industry-list {
@@ -1480,8 +1200,8 @@ figure {
   background: transparent;
   border: 1px solid var(--hair);
   color: var(--slate-light);
-  font: 400 10.5px/1 var(--mono);
-  letter-spacing: 0.14em;
+  font: 400 12px/1 var(--mono);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 7px 10px;
   cursor: pointer;
@@ -1495,8 +1215,8 @@ figure {
 
 /* Reserves its own width, so confirming the copy does not shove the button. */
 .wechat__copied {
-  font: 400 10.5px/1.4 var(--mono);
-  letter-spacing: 0.14em;
+  font: 400 12px/1.4 var(--mono);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--green);
   min-width: 7ch;
@@ -1567,8 +1287,8 @@ figure {
 }
 
 .wechat__scan {
-  font: 400 10.5px/1.4 var(--mono);
-  letter-spacing: 0.12em;
+  font: 400 12px/1.4 var(--mono);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--slate);
   margin-top: 8px;
@@ -1601,8 +1321,8 @@ figure {
 .form legend {
   float: left;
   width: 100%;
-  font: 500 10.5px/1.4 var(--mono);
-  letter-spacing: 0.14em;
+  font: 500 12px/1.4 var(--mono);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--slate);
   padding: 0;
@@ -1709,7 +1429,7 @@ figure {
 
 .form__note {
   margin-top: 18px;
-  font: 400 11.5px/1.6 var(--mono);
+  font: 400 12.5px/1.6 var(--mono);
   color: var(--slate);
 }
 
@@ -2064,44 +1784,16 @@ figure {
   }
 
   /*
-   * The fluid scale never reached its own floor on a phone: 7.8vw does not hit
-   * 48px until about 615px wide, so every phone got the maximum of the minimum
-   * — roughly 14 characters a line. Lowering the floors lets the scale do what
-   * it was meant to do. The vw terms and the ceilings are untouched, so
-   * nothing above 480px moves.
+   * There were four display-size overrides here and two mono ones. All six are
+   * gone: the base scale used to top out at 96px with a 48px floor, so a phone
+   * got the floor and it was too big; the floors are now 42/28/28/30px, which
+   * is what these overrides were reaching for. Likewise `.micro` and `.eyebrow`
+   * raised mono to 12px at 0.08em on a phone — which is exactly what the base
+   * rules now say, so the overrides said nothing. Only the headline's spacing
+   * still needs tightening at this width.
    */
   .h1 {
-    font-size: clamp(38px, 10.5vw, 48px);
     margin-bottom: 24px;
-  }
-
-  .h2 {
-    font-size: clamp(26px, 7.6vw, 34px);
-  }
-
-  .h2--faq {
-    font-size: clamp(26px, 7.4vw, 32px);
-  }
-
-  .h2--intake {
-    font-size: clamp(27px, 7.8vw, 34px);
-  }
-
-  /*
-   * 10.5px uppercase mono with 0.14em tracking is legible on a desktop at
-   * arm's length and not on a phone. The size goes up and the tracking comes
-   * down — tracking is what makes small text hardest to read, and it is also
-   * what was pushing the hero eyebrow and the note under the button onto three
-   * wrapped lines.
-   */
-  .micro {
-    font-size: 12px;
-    letter-spacing: 0.08em;
-  }
-
-  .eyebrow {
-    font-size: 12px;
-    letter-spacing: 0.07em;
   }
 
   .lede {
@@ -2643,21 +2335,6 @@ figure {
   font-style: normal;
 }
 
-/* Chinese sets no space between the two halves — the full-width comma already
-   carries the pause — so joining them onto one line opens a gap that reads as a
-   typo. CJK headlines keep the stack at every width. */
-:lang(zh) .h1--wide em {
-  display: block;
-}
-
-/* The act headings need both halves of the same treatment: no synthesised
-   slant, and no Latin space opened up between the two halves by the join in
-   the markup — Chinese sets none, so the gap reads as a typo. */
-:lang(zh) .hero-seq__act-h em {
-  display: block;
-  font-style: normal;
-}
-
 /* ---------- GST/PST comparison -------------------------------------------- */
 
 .compare {
@@ -2680,8 +2357,8 @@ figure {
 }
 
 .compare__label {
-  font: 500 11px/1.4 var(--mono);
-  letter-spacing: 0.16em;
+  font: 500 12px/1.4 var(--mono);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--green-dark);
 }
@@ -2700,8 +2377,8 @@ figure {
    there is nothing to align against, so each cell names itself instead. */
 .compare__inline {
   display: none;
-  font: 500 10.5px/1.4 var(--mono);
-  letter-spacing: 0.14em;
+  font: 500 12px/1.4 var(--mono);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--green-dark);
   margin-bottom: 5px;

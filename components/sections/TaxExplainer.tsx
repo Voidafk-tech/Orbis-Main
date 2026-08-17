@@ -10,7 +10,6 @@ const TaxExplainer: React.FC = () => {
     <section className="sec">
       <div className="inner split split--tax">
         <div className="reveal">
-          <p className="eyebrow intro__eyebrow">{tax.eyebrow}</p>
           <h2 className="h2">{tax.h2}</h2>
         </div>
 

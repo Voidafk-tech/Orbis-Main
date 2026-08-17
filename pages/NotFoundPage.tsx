@@ -17,7 +17,7 @@ const NotFoundPage: React.FC = () => {
 
   return (
     <div className="hero">
-      <h1 className="h1 h1--wide">
+      <h1 className="h1">
         <span className="eyebrow h1__eyebrow">{t.eyebrow}</span>
         {t.headline}{' '}
         <em>{t.headlineEm}</em>

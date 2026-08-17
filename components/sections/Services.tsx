@@ -40,7 +40,6 @@ const Services: React.FC = () => {
     <section className="sec" id="services">
       <div className="inner">
         <div className="reveal" style={{ maxWidth: '56ch' }}>
-          <p className="eyebrow intro__eyebrow">{services.eyebrow}</p>
           <h2 className="h2">{services.h2}</h2>
           <p className="lede intro__p">
             <Link to={path('/services')}>{services.more}</Link>

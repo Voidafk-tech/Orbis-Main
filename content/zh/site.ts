@@ -19,8 +19,8 @@ export const CONTACT: Widen<typeof En.CONTACT> = {
   email: En.CONTACT.email,
   phone: En.CONTACT.phone,
   phoneHref: En.CONTACT.phoneHref,
-  locality: '卑诗省西温哥华',
-  tagline: '卑诗省小生意记账服务 · 西温哥华',
+  locality: 'BC省西温哥华',
+  tagline: 'BC省小型企业代理记账 · 西温哥华',
 };
 
 /**
@@ -47,17 +47,20 @@ export const percent = En.percent;
 export const RATES_AS_OF = '2026 年 7 月';
 
 export const OG_IMAGE_ALT: Widen<typeof En.OG_IMAGE_ALT> =
-  'Orbis Accounting — 卑诗省小生意记账服务，西温哥华';
+  'Orbis Accounting — BC省小型企业代理记账，西温哥华';
 
-export const PROADVISOR_BADGE: Widen<typeof En.PROADVISOR_BADGE> = {
-  src: En.PROADVISOR_BADGE.src,
-  alt: 'Intuit QuickBooks 认证 QuickBooks Online 高级 ProAdvisor',
-};
+/** Only `alt` is translated; the artwork paths are assets, not copy. */
+export const CERTIFICATION_BADGES: Widen<typeof En.CERTIFICATION_BADGES> = [
+  {
+    src: En.CERTIFICATION_BADGES[0].src,
+    alt: 'Intuit QuickBooks 认证 QuickBooks Online 高级 ProAdvisor',
+  },
+];
 
 export const TRUST_STRIP: Widen<typeof En.TRUST_STRIP> = [
   { label: '认证资格', lines: ['QuickBooks Online', '高级 ProAdvisor'] },
-  { label: '所在地', lines: ['卑诗省西温哥华', '服务全卑诗省'] },
-  { label: '销售税', lines: ['GST 与 PST', '两者皆代为申报'] },
+  { label: '所在地', lines: ['BC省西温哥华', '服务全 BC省'] },
+  { label: '销售税', lines: ['GST 与 PST', '两者均代为申报'] },
   // Legally load-bearing: engagements are contract based, never "no contract".
   { label: '合作方式', lines: ['以合约为准', '期限按客户约定'] },
 ];
@@ -65,42 +68,42 @@ export const TRUST_STRIP: Widen<typeof En.TRUST_STRIP> = [
 export const PAINS: Widen<typeof En.PAINS> = [
   {
     n: '01',
-    h: '收据到处都是',
-    p: '鞋盒里、邮箱附件里，还有一份从三月起就没再更新的表格。',
+    h: '单据分散在各处',
+    p: '纸盒、邮箱附件，以及一份自三月起便未再更新的表格。',
   },
   {
     n: '02',
     h: '两种销售税',
-    p: 'GST 交给加拿大税务局（CRA），PST 交给卑诗省财政厅。两次注册、两套截止日期、两套规则。',
+    p: 'GST 交给 CRA，PST 交给 BC省政府。两次注册、两套申报期限、两套规则。',
   },
   {
     n: '03',
-    h: '晚上都搭进去了',
-    p: '每月十个小时花在分类记账上，而不是真正赚钱的事情上。',
+    h: '时间成本被低估',
+    p: '每月约十小时用于交易分类，而非用于真正产生收入的业务。',
   },
   {
     n: '04',
-    h: '看不清全貌',
-    p: '你知道银行账户里有多少钱，却不知道自己的利润率是多少。',
+    h: '缺乏整体判断依据',
+    p: '银行账户余额是清楚的，利润率是多少则无从判断。',
   },
 ];
 
 export const DIFFERENTIATORS: Widen<typeof En.DIFFERENTIATORS> = [
   {
     h: 'QuickBooks Online、Xero 或 Sage 50',
-    p: '三套系统我们都用，并把 Shopify 和 Stripe 接入你正在用的那一套。如果你目前只用表格，我们负责迁移。',
+    p: '三套系统我们均可使用，并将 Shopify 与 Stripe 接入贵公司现用的系统。若目前仅使用电子表格，迁移工作由我们负责。',
   },
   {
-    h: '专为卑诗省，而不是笼统的加拿大',
-    p: 'GST 与 PST 都代为申报。WorkSafeBC 和 CRA 的截止日期由我们盯着，不必你来记。',
+    h: '专为 BC省，而非泛加拿大',
+    p: 'GST 与 PST 均代为申报。WorkSafeBC 与 CRA 的各项期限由我们跟进，无需贵方记录。',
   },
   {
-    h: '每月由同一个人处理你的账',
-    p: '不必每个季度换一个人、重新解释一遍你的生意。没有任何东西需要重新学一次。',
+    h: '全年由同一位专责人员处理',
+    p: '无需每季度更换对接人员并重新说明业务情况，也不存在需要重新熟悉的环节。',
   },
   {
     h: '固定月费，不按小时计费',
-    p: '开始之前你就知道价钱。账目乱一点的月份，不会变成一张意外的账单。',
+    p: '费用在合作开始之前即已确定。账务较为繁杂的月份，不会因此产生额外账单。',
   },
 ];
 
@@ -108,33 +111,43 @@ export const SERVICES: Widen<typeof En.SERVICES> = [
   {
     n: '01',
     h: '每月记账',
-    p: '银行与信用卡对账、每笔交易分类、每月结账。',
+    p: '银行与信用卡对账、逐笔交易分类、每月结账。',
   },
   {
     n: '02',
     h: 'GST 与 PST 申报',
-    p: '两份申报表都按时准备并提交。GST 交给 CRA，PST 交给省政府。',
+    p: '两份申报表均按时编制并提交。GST 交给 CRA，PST 交给 BC省政府。',
   },
   {
     n: '03',
-    h: '工资与 T4',
-    p: '员工按时发薪、源头扣缴按时汇缴，年终的 T4 表与就业记录表（ROE）一并处理。',
+    h: '薪资与 T4',
+    p: '员工按时发薪、源头扣缴按时汇缴，年终的 T4 表与 ROE 一并处理。',
   },
   {
     n: '04',
     h: '财务报表',
-    p: '每月一份损益表和一份资产负债表，用大白话写，并标出真正重要的数字。',
+    p: '每月提供损益表与资产负债表各一份，表述清晰，并标出关键数字。',
   },
   {
     n: '05',
     h: '软件设置与迁移',
-    p: 'QuickBooks Online、Xero 或 Sage 50。会计科目表、银行数据自动同步、接入 Shopify 与 Stripe，另含一次培训。',
+    p: 'QuickBooks Online、Xero 或 Sage 50。会计科目表、接入 Shopify 与 Stripe，另含一次培训。',
   },
   {
     n: '06',
     h: '补做旧账',
-    p: '落后几个月甚至几年，是大多数人来找我们的原因。我们先把积压清掉，再开始按月处理。',
+    p: '账目落后数月甚至数年，是多数客户前来咨询的原因。我们先清理积压，再转入按月处理。',
     tag: '最常见',
+  },
+  {
+    n: '07',
+    h: 'T1 个人所得税申报',
+    p: '面向独资经营与自雇人士的个人所得税申报，依据我们全年记录的账目编制。',
+  },
+  {
+    n: '08',
+    h: 'T2 公司所得税申报',
+    p: '面向 CCPC 的公司所得税申报，从已按月结账的账簿直接编制，无需在年终还原全年。',
   },
 ];
 
@@ -144,57 +157,57 @@ export const PLATFORMS: Widen<typeof En.PLATFORMS> = En.PLATFORMS.map((logo) => 
 export const STEPS: Widen<typeof En.STEPS> = [
   {
     n: '1',
-    h: '告诉我们你的生意情况',
-    p: '填写本页下方的表格。十个简短问题，大约三分钟。',
+    h: '说明贵公司的业务情况',
+    p: '填写本页下方的表格。十个简短问题，约需三分钟。',
   },
   {
     n: '2',
-    h: '收到方案和报价',
-    p: '一个工作日内，你会收到书面的服务范围和固定月费。白纸黑字，方便你拿去和别家比较。',
+    h: '收到方案与报价',
+    p: '一个工作日内，您将收到书面的服务范围与固定月费，便于与其他机构的报价并列比较。',
   },
   {
     n: '3',
-    h: '接下来交给我们',
-    p: '我们接入你的会计软件，清掉积压的账目，之后每月替你结账。',
+    h: '后续工作由我们承接',
+    p: '我们接入贵公司的会计系统，清理积压账目，此后按月结账并办理相应申报。',
   },
 ];
 
 export const TIERS: Widen<typeof En.TIERS> = [
   {
     name: 'Foundation',
-    audience: '账务简单的独资经营者',
+    audience: '账务结构简单的独资经营者',
     cap: '每月最多 50 笔交易',
     features: [
       { text: '银行与信用卡对账', included: true },
       { text: '交易分类', included: true },
-      { text: '每月损益表、资产负债表', included: true },
+      { text: '每月损益表与资产负债表', included: true },
       { text: 'GST 与 PST 申报', included: false },
-      { text: '工资与 T4', included: false },
+      { text: '薪资与 T4', included: false },
     ],
   },
   {
     name: 'Standard',
-    audience: '已站稳脚跟的小生意',
+    audience: '经营已趋稳定的小型企业',
     cap: '每月最多 150 笔交易',
     featured: true,
     features: [
       { text: '包含 Foundation 的全部内容', included: true },
       { text: '向 CRA 申报 GST', included: true },
-      { text: '向卑诗省财政厅申报 PST', included: true },
+      { text: '向 BC省政府申报 PST', included: true },
       { text: '销售渠道对账：Shopify、Stripe', included: true },
-      { text: '工资与 T4', included: false },
+      { text: '薪资与 T4', included: false },
     ],
   },
   {
     name: 'Complete',
-    audience: '有员工需要发薪的企业',
+    audience: '设有员工并需办理薪资的企业',
     cap: '每月最多 400 笔交易',
     features: [
       { text: '包含 Standard 的全部内容', included: true },
-      { text: '工资、源头扣缴、T4 表与就业记录表（ROE）', included: true },
+      { text: '薪资、源头扣缴、T4 表与 ROE', included: true },
       { text: '应付账款管理', included: true },
       { text: 'WorkSafeBC 申报', included: true },
-      { text: '每季度一次回顾通话', included: true },
+      { text: '每季度一次账务回顾通话', included: true },
     ],
   },
 ];
@@ -210,34 +223,35 @@ export const INDUSTRIES_SERVED: Widen<typeof En.INDUSTRIES_SERVED> = [
 
 export const FAQS: Widen<typeof En.FAQS> = [
   {
-    q: '在温哥华请一位记账员要多少钱？',
-    a: '本地按小时计费的事务所通常收费每小时 75 至 150 加元，多数小生意每月因此落在 600 至 2,000 加元之间。本地的固定月费方案大致在 300 至 2,000 加元，视业务量而定。我们采用固定月费，而不是按小时计费。把你的交易笔数和需要申报的项目告诉我们，一个工作日内你会收到书面报价。',
+    q: '在温哥华委托代理记账需要多少费用？',
+    a: '本地按小时计费的事务所通常收费每小时 75 至 150 加元，多数小型企业每月因此支出 600 至 2,000 加元。本地的固定月费方案大致为每月 300 至 2,000 加元，视业务量而定。我们采用固定月费，不按小时计费。请提供贵公司的交易笔数与需要申报的项目，一个工作日内即可收到书面报价。',
   },
   {
-    q: '记账员和会计师有什么区别？我需要哪一种？',
+    q: '记账与报税有什么区别？我需要哪一种？',
     // 与 content/site.ts 的 FAQ 2 及 content/zh/pages.ts 的 SERVICES_BOUNDARY
-    // 保持一致：不宣传公司税表申报，但也不再写死「我们不做」——想问的人照样可以拿到报价。
-    a: '记账员处理日常事务：收据、分类、对账、工资、GST 与 PST 汇缴，以及你每月的报表。会计师则负责年终申报和更高层面的规划。卑诗省多数小生意全年由记账员处理账务，年终再请人介入。我们的方案涵盖的是每月的工作。想知道年终我们能接哪些，在表格里问一声，我们会在报价里告诉你。',
+    // 保持一致：两项业务都承接，年终申报不再交给外部会计师。
+    // 只描述业务范围，不涉及执业资格。
+    a: '这是两项不同的工作，通常发生在一年当中的不同时间。每月的工作指日常账务：单据处理、交易分类、账户对账、薪资、GST 与 PST 汇缴，以及每月的财务报表。年终的工作指所得税申报——未注册公司的，申报 T1 及其营业收支表；已注册公司的，申报 T2 及其附表。两项我们都承接，因此年终申报依据的是全年逐月结账的账簿，而非在次年春季重新还原一整年。若贵公司的年终申报已有他人负责，我们也可只承接每月账务，并向对方移交一套已结账的完整账簿。',
   },
   {
-    q: '我在卑诗省必须注册 PST 吗？',
-    a: '这取决于你卖什么，而不只是卖了多少。在卑诗省销售商品的企业大多需要注册，许多服务类企业则不需要。由于 PST 与 GST 是分开的，不少老板注册了其中一项、却没注册另一项而不自知。告诉我们你卖什么，我们会在报价中把两项都确认清楚。',
+    q: '在 BC省是否必须注册 PST？',
+    a: '这取决于贵公司销售的内容，而不仅仅取决于销售额。在 BC省销售商品的企业多数需要注册，许多服务类企业则不需要。由于 PST 与 GST 相互独立，不少经营者注册了其中一项而未注册另一项，且并未察觉。请说明贵公司销售的内容，我们会在报价中就两项注册一并确认。',
   },
   {
-    q: '如果我的账已经落后一年了怎么办？',
-    a: '这正是最多人来找我们的原因。我们会先看落后到什么程度，在动工之前把补做旧账报成一个数字。我们把积压清掉、把该报的报掉，然后从干净的状态开始按月处理。你不是第一个，也不会有人说教。',
+    q: '账目已经落后一年，应当如何处理？',
+    a: '这正是多数客户前来咨询的原因。我们会先评估落后的程度，在动工之前将补做旧账报成一个金额。积压清理完毕、应申报的项目补报到位后，即从一套干净的账簿转入按月处理。此类情况相当常见，我们不会就此作任何评判。',
   },
   {
-    q: '你们只服务西温哥华以外的企业吗？',
-    a: '我们位于西温哥华，服务遍及整个卑诗省。所有工作都在线上完成，没有东西需要送来，也不需要到办公室见面。',
+    q: '贵司的服务范围仅限西温哥华吗？',
+    a: '我们位于西温哥华，服务范围覆盖整个 BC省。所有工作均在线上完成，无需寄送资料，也无需到访办公室。',
   },
   {
-    q: '我一定要用 QuickBooks Online 吗？',
-    a: '不需要。我们使用 QuickBooks Online、Xero 和 Sage 50，你可以继续用现在这套。如果你在用 Wave、表格，或者什么都还没有，我们会推荐一套，迁移包含在设置服务里。Shopify 和 Stripe 都能接入这三套系统，销售数据会自动对账。',
+    q: '是否必须使用 QuickBooks Online？',
+    a: '不必。我们使用 QuickBooks Online、Xero 与 Sage 50，贵公司可继续沿用现有系统。若目前使用 Wave、电子表格，或尚未使用任何系统，我们会提出建议，迁移工作包含在设置服务之内。Shopify 与 Stripe 均可接入这三套系统，销售数据可与账簿对账。',
   },
   {
-    q: '要怎么从现在的记账员换过来？',
-    a: '你把会计文件的访问权限给我们，我们从下个月开始接手。你不需要事先去谈一场尴尬的对话，也不需要自己搬任何东西。如果交接过程中发现原有账目存在问题，我们会先告诉你发现了什么，再决定是否需要额外的工作。',
+    q: '如何从现有的记账服务机构转出？',
+    a: '贵方授予我们会计文件的访问权限，我们自下月起接手。无需事先进行任何交涉，也无需自行转移资料。若交接过程中发现原有账目存在问题，我们会先说明具体情况，再商定是否需要额外的工作。',
   },
 ];
 
@@ -290,14 +304,14 @@ export const FORM_SELECTS: Widen<typeof En.FORM_SELECTS> = [
       { value: 'Sage 50', label: 'Sage 50' },
       { value: 'Wave', label: 'Wave' },
       { value: 'Spreadsheets', label: '电子表格' },
-      { value: 'Nothing yet', label: '还没有' },
+      { value: 'Nothing yet', label: '尚未使用' },
     ],
   },
   {
     name: 'behind',
-    label: '账目更新到什么程度',
+    label: '账目更新至何时',
     options: [
-      { value: 'Up to date', label: '已是最新' },
+      { value: 'Up to date', label: '已更新至最新' },
       { value: '1 to 3 months behind', label: '落后 1 至 3 个月' },
       { value: '3 to 12 months behind', label: '落后 3 至 12 个月' },
       { value: 'Over a year behind', label: '落后一年以上' },

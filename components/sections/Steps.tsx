@@ -9,7 +9,6 @@ const Steps: React.FC = () => {
     <section className="sec sec--rule" id="process">
       <div className="inner">
         <div className="reveal" style={{ maxWidth: '52ch' }}>
-          <p className="eyebrow intro__eyebrow">{copy.ui.steps.eyebrow}</p>
           <h2 className="h2">{copy.ui.steps.h2}</h2>
         </div>
 

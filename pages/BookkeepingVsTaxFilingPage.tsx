@@ -11,11 +11,11 @@ import { revealDelay } from '../components/useScrollReveal';
  * note on VS_TAX_INTRO in content/pages.ts for why an English version would be
  * a page nobody searches for.
  *
- * The last section is the point of the page. It states plainly that the
- * practice does not file T1 or T2 returns, which is the boundary the whole
- * Chinese-language strategy rests on: this market's default assumption is that
- * an accounting firm does everything, and saying otherwise is what makes the
- * rest of the copy believable.
+ * The page contrasts two kinds of work rather than two kinds of people: the
+ * monthly books and the year-end return. It used to close on a refusal — T1 and
+ * T2 returns stated as out of scope — which the practice has since made plainly
+ * wrong. The last section now sets out what is taken on in each half of the
+ * year, and describes the work rather than who is entitled to sign it.
  */
 const BookkeepingVsTaxFilingPage: React.FC = () => {
   const { copy, path } = useLocale();
@@ -24,7 +24,7 @@ const BookkeepingVsTaxFilingPage: React.FC = () => {
   return (
     <>
       <div className="hero reveal">
-        <h1 className="h1 h1--wide">
+        <h1 className="h1">
           <span className="eyebrow h1__eyebrow">{t.eyebrow}</span>
           {t.headline} <em>{t.headlineEm}</em>
         </h1>
@@ -74,8 +74,9 @@ const BookkeepingVsTaxFilingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* The boundary. Not a disclaimer tucked at the bottom — it is the
-          reason someone finishes this page trusting the rest of the site. */}
+      {/* What is taken on in each half of the year. Concrete rather than a
+          closing pitch — it is the reason someone finishes this page knowing
+          what they would actually be buying. */}
       <section className="sec">
         <div className="inner">
           <div className="reveal" style={{ maxWidth: '52ch' }}>

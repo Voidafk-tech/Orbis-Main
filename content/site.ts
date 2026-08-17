@@ -40,7 +40,7 @@ export const CONTACT = {
  * white field, quiet zone included — the page background is near-black and a
  * transparent PNG will not scan. Until the file is in place the block renders
  * the name and ID with a neutral placeholder in the QR's box rather than a
- * broken image, the same arrangement as PROADVISOR_BADGE above.
+ * broken image, the same arrangement as CERTIFICATION_BADGES below.
  *
  * `account` and `id` are handles, not copy: they are identical in both
  * languages and the casing on the ID is significant.
@@ -92,15 +92,25 @@ export const OG_IMAGE_ALT =
   'Orbis Accounting — bookkeeping for BC small business, West Vancouver';
 
 /**
- * The Intuit-issued Advanced ProAdvisor badge, in `public/`. Certification
- * marks carry usage rules, so this must be the file Intuit issued — never a
- * redrawn copy. Until the file is in place the Trust section falls back to a
- * neutral placeholder rather than showing a broken image.
+ * Issued certification marks, in `public/`, rendered as a row in the Trust
+ * section. Certification marks carry usage rules, so each of these must be the
+ * file the issuer supplied — never a redrawn copy, and never a product logo
+ * standing in for a certification the artwork does not actually assert.
+ *
+ * The list is the whole reason this is an array: Xero and Sage certifications
+ * are held (see CREDENTIALS in content/business.ts, which is what feeds the
+ * `hasCredential` JSON-LD) but the issued artwork is not in the repo yet.
+ * Adding them later is a matter of dropping the files into `public/` and adding
+ * two entries here and in content/zh/site.ts — no component change. Do not add
+ * an entry before its file exists: an entry with no artwork renders as an empty
+ * slot, and an unfinished-looking row is worse than a short one.
  */
-export const PROADVISOR_BADGE = {
-  src: '/badge-quickbooks-advanced-proadvisor.png',
-  alt: 'Intuit QuickBooks Certified Advanced QuickBooks Online ProAdvisor',
-} as const;
+export const CERTIFICATION_BADGES = [
+  {
+    src: '/badge-quickbooks-advanced-proadvisor.png',
+    alt: 'Intuit QuickBooks Certified Advanced QuickBooks Online ProAdvisor',
+  },
+] as const;
 
 export const TRUST_STRIP = [
   { label: 'Certified', lines: ['QuickBooks Online', 'Advanced ProAdvisor'] },
@@ -176,13 +186,23 @@ export const SERVICES = [
   {
     n: '05',
     h: 'Software setup and migration',
-    p: 'QuickBooks Online, Xero or Sage 50. Chart of accounts, bank feeds, Shopify and Stripe connected, one training session with you.',
+    p: 'QuickBooks Online, Xero or Sage 50. Chart of accounts, Shopify and Stripe connected, one training session with you.',
   },
   {
     n: '06',
     h: 'Catch-up bookkeeping',
     p: 'Months or years behind is the most common reason people call. We clear the backlog first, then start monthly.',
     tag: 'Most common',
+  },
+  {
+    n: '07',
+    h: 'T1 personal returns',
+    p: 'Personal income tax for sole proprietors and the self-employed, prepared from the same books we keep all year.',
+  },
+  {
+    n: '08',
+    h: 'T2 corporate returns',
+    p: 'Corporate income tax for CCPCs, filed from a closed set of books rather than reconstructed at year end.',
   },
 ] as const;
 
@@ -286,16 +306,17 @@ export const FAQS = [
   },
   {
     q: 'What is the difference between a bookkeeper and an accountant, and which do I need?',
-    // Rewritten to stop assigning year-end filing to an outside accountant and
-    // assuming the reader already has one. The practice does not advertise
-    // corporate returns or tax planning, but it will quote anyone who asks, so
-    // this states the general division of labour and leaves the question open
-    // rather than answering it with a "no" that is not true.
+    // The monthly work and the year-end return are two different jobs, and this
+    // answer describes both because the practice does both. It used to hand the
+    // year end to an outside accountant, which understated the service list.
+    //
+    // Describe the work, never the designation — this answer must not become a
+    // discussion of who is entitled to sign what.
     //
     // SERVICES_BOUNDARY in content/pages.ts makes the same point at length on
     // /services and has to keep saying the same thing as this. Edit the two
     // together, in both languages.
-    a: "A bookkeeper handles the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. An accountant steps in for year-end filing and higher level planning. Most BC small businesses work with a bookkeeper all year and bring someone in at year end. Our plans cover the monthly work. If you want to know what we can handle at year end, ask in the form and we'll tell you in the quote.",
+    a: 'They are two different jobs, usually done at two different times of year. The monthly work is the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. The year-end work is the income tax return — a T1 with a statement of business activities if you are unincorporated, a T2 with its schedules if you are a corporation. We do both, which means the return is prepared from books that were closed as the year went along rather than reconstructed in the spring. If you already have someone doing your year end, we can do the monthly work alone and hand them a clean, closed set of books.',
   },
   {
     q: 'Do I have to register for PST in BC?',

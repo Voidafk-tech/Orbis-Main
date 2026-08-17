@@ -6,22 +6,39 @@ rather than inferring them from the copy, and so future edits stay consistent.
 
 ## The rule for tax terms
 
-Chinese on first use with the English abbreviation in brackets, then the English
-abbreviation alone. The forms, portals and letters these owners actually receive
-from the CRA and the BC Ministry of Finance are in English, so the English
-abbreviation is the string they will recognise and search for.
+**Use the English abbreviation on its own, everywhere, including first use.**
+The forms, portals and letters these owners actually receive are in English, so
+the abbreviation is the string they recognise and search for; the Chinese
+gloss in brackets added length without adding information.
 
-> 商品及服务税（GST）… 之后直接用 GST
+> GST — not 商品及服务税（GST）
 
-## Place names — BC convention, not Mainland convention
+This reverses an earlier convention. Do not reintroduce the bracketed
+Chinese-first forms.
 
-BC's Chinese-language press and the provincial government's own Chinese
-materials use a settled set of transliterations that differ from the
-Mainland-standard ones. These are the BC forms and should not be "corrected".
+**Three deliberate exceptions,** all on `/zh/gst-pst-bc`, where explaining what
+the abbreviations stand for *is* the page's job: 联邦消费税 GST 5%，加上省销售税
+PST 7% in `GST_PST_INTRO` and the matching FAQ answer, and the official form
+name 省销售税申报表 for the FIN 400. 消费税 is also the term this audience
+searches — see the note above `taxCalculator` in content/zh/ui.ts. These are
+appositives that carry information, not translations of an abbreviation that
+already reads fine on its own.
+
+## Place names
+
+**British Columbia is written BC省**, set with a space after any preceding Han
+character — 服务全 BC省, 在 BC省注册 — the same way every other Latin token in
+this copy is set (交给 CRA, GST 与 PST). 卑诗省 was the earlier convention and
+is no longer used anywhere in the copy.
+
+City names keep their BC transliterations. BC's Chinese-language press and the
+provincial government's own Chinese materials use a settled set that differs
+from the Mainland-standard ones; these are the BC forms and should not be
+"corrected".
 
 | English | Used here | Mainland-standard alternative |
 |---|---|---|
-| British Columbia | 卑诗省 | 不列颠哥伦比亚省 |
+| British Columbia | BC省 | 卑诗省 / 不列颠哥伦比亚省 |
 | West Vancouver | 西温哥华 | — |
 | North Vancouver | 北温哥华 | — |
 | Vancouver | 温哥华 | — |
@@ -41,13 +58,16 @@ the long form crowds it. Both forms are current in BC's Chinese-language press.
 
 | English | Chinese |
 |---|---|
-| GST (Goods and Services Tax) | 商品及服务税（GST） |
-| PST (Provincial Sales Tax) | 省销售税（PST） |
-| CRA (Canada Revenue Agency) | 加拿大税务局（CRA） |
-| BC Ministry of Finance | 卑诗省财政厅 |
-| WorkSafeBC | 卑诗省工伤保险局（WorkSafeBC） |
+| GST (Goods and Services Tax) | GST |
+| PST (Provincial Sales Tax) | PST |
+| CRA (Canada Revenue Agency) | CRA |
+| BC Ministry of Finance | BC省政府 |
+| WorkSafeBC | WorkSafeBC |
 | T4 | T4 表 |
-| ROE (Record of Employment) | 就业记录表（ROE） |
+| ROE (Record of Employment) | ROE |
+| T1 personal return | T1 个人所得税申报 |
+| T2 corporate return | T2 公司所得税申报 |
+| CCPC | CCPC |
 | source deductions | 源头扣缴 |
 | GST registration threshold | GST 注册门槛 |
 
@@ -59,7 +79,6 @@ the long form crowds it. Both forms are current in BC's Chinese-language press.
 | bookkeeper | 记账员 |
 | accountant | 会计师 |
 | reconciliation | 对账 |
-| bank feed | 银行数据自动同步 |
 | chart of accounts | 会计科目表 |
 | profit and loss statement | 损益表 |
 | balance sheet | 资产负债表 |
@@ -76,13 +95,32 @@ the long form crowds it. Both forms are current in BC's Chinese-language press.
 Product and company names are not translated: QuickBooks Online, Xero, Sage 50,
 Shopify, Stripe, Wave, ProAdvisor, WorkSafeBC, Orbis Accounting.
 
+## Punctuation in display type
+
+**Headings carry no punctuation.** Every `h1`, `h2` and eyebrow ends without 。
+and contains no ，. Where a clause break is needed, either rewrite the heading
+so it does not need one (六件事，从你桌上拿走。 became 八项服务 从您的日程中移除)
+or split it across `headline` / `headlineEm`, which render as two lines.
+
+Body copy is unaffected and keeps full punctuation — card paragraphs, FAQ
+answers, legal text and long-form prose all read as properly punctuated
+sentences. The line is display type versus prose, not Chinese versus English:
+the English copy follows the same rule.
+
 ## Tone
 
-The English copy is plain, direct and slightly blunt — "there is no lecture",
-"we will say so rather than book a call to tell you". The Chinese should read as
-a competent professional talking straight, not as marketing brochure language.
-Avoid 我们竭诚为您服务-style filler; it is exactly the register the English
-deliberately avoids.
+**书面语 throughout — the register of a professional services firm.** Direct
+address is 您 or 贵公司; 你 does not appear anywhere in the copy. Sentences stay
+short and claims stay concrete.
+
+Out: colloquialisms (大白话, 烂摊子, 手忙脚乱, 说教, 栽跟头), rhetorical asides,
+and second-person chattiness. Also out, and for the same reason: 我们竭诚为您服务
+-style filler. Formalising the register is not licence to pad it — the copy
+should read as competent and specific, not as a brochure.
+
+This reverses the earlier convention, which deliberately mirrored the blunt
+English register ("there is no lecture"). The English copy still reads that way;
+the Chinese no longer does, and the two are allowed to differ here.
 
 ## Review status
 

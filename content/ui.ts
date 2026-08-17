@@ -16,7 +16,7 @@ export const UI = {
    * Where the practice is, as shown to a reader — footer NAP block and the
    * contact page. Copy rather than a read of BUSINESS.addressLocality, because
    * this is the one NAP field that should be translated: on a Chinese page it
-   * reads 西温哥华，卑诗省. The machine-readable form stays English in the JSON-LD,
+   * reads 西温哥华，BC省. The machine-readable form stays English in the JSON-LD,
    * which is what Google matches against the Business Profile, so translating
    * the visible string costs no NAP consistency.
    *
@@ -82,70 +82,38 @@ export const UI = {
      */
     eyebrow:
       'Bookkeeping for Metro Vancouver small business · West Vancouver, BC · English and Mandarin',
-    headline: 'Clean books,',
-    headlineEm: 'filed on time.',
+    headline: 'Clean books',
+    headlineEm: 'filed on time',
     sub: 'GST to the CRA, PST to the province, and monthly reports you can actually read. The same person does your books every month, so you are never re-explaining your business.',
     cta: 'Get a plan and a quote',
     reassure: 'A written plan and a price within one business day',
   },
 
-  /**
-   * The three acts the scroll sequence moves through before it reveals the
-   * hero headline. They are narrative, not navigation — the same ground the
-   * Pains, Why and Services sections cover, compressed to one line each so the
-   * pile on screen has something to be about.
-   */
-  heroSequence: {
-    /** The chevron is a link; this names it for keyboard and screen reader. */
-    cue: 'See how it works',
-    acts: [
-      {
-        eyebrow: 'Where it usually stands',
-        headline: 'Two years of receipts',
-        headlineEm: 'in a box.',
-        p: 'The books are the one part of running a business that nobody set up for you.',
-      },
-      {
-        eyebrow: 'Why Orbis',
-        headline: 'One person does your books,',
-        headlineEm: 'every month.',
-        p: 'You are not re-explaining your business to a new name each quarter.',
-      },
-      {
-        eyebrow: 'What we handle',
-        headline: 'Every transaction',
-        headlineEm: 'categorized.',
-        p: 'Every account reconciled, and the month closed rather than left open indefinitely.',
-      },
-    ],
-  },
-
   pains: {
-    eyebrow: 'Where it usually stands',
-    h2: 'Four things you are probably already living with.',
-    lede: 'The books are the one part of running a business that nobody set up for you.',
+    h2: 'Four things you are probably already living with',
+    lede: 'The books are the one part of running a business that nobody set up for you',
   },
 
   why: {
     eyebrow: 'Why Orbis',
-    h2: 'Narrow on purpose.',
+    // Replaced 'Narrow on purpose.' — the practice is not narrow. It keeps the
+    // monthly books and files the year-end returns, and the section under this
+    // heading is what makes that worth buying from one place.
+    h2: 'One practice for the books and the returns',
   },
 
   services: {
-    eyebrow: 'What we handle',
-    h2: 'Six things, off your desk.',
+    h2: 'Eight things off your desk',
     more: 'What each of these actually involves →',
     worksWith: 'Works with',
   },
 
   steps: {
-    eyebrow: 'How it works',
-    h2: 'Three steps, and no sales call.',
+    h2: 'Three steps and no sales call',
   },
 
   pricing: {
-    eyebrow: 'Plans',
-    h2: 'Scoped by how much work there is.',
+    h2: 'How the plans are scoped',
     more: 'How the number is put together, and what the market charges →',
     mostChosen: 'Most chosen',
     cta: 'Get a plan and a quote',
@@ -155,14 +123,16 @@ export const UI = {
       '— Quoted after we see how far behind you are. One number, agreed before any work starts.',
     setupName: 'Software setup and migration',
     setupBody:
-      '— Quoted once, on QuickBooks Online, Xero or Sage 50. Chart of accounts, bank feeds, integrations, and one training session.',
+      '— Quoted once, on QuickBooks Online, Xero or Sage 50. Chart of accounts, integrations, and one training session.',
+    taxFilingName: 'Year-end returns',
+    taxFilingBody:
+      '— T1 for sole proprietors and the self-employed, T2 for corporations. Quoted separately from the monthly plan.',
     catchUpLink: 'More on catch-up bookkeeping →',
     notSure: 'Not included: ',
   },
 
   tax: {
-    eyebrow: 'In plain terms',
-    h2: 'GST and PST are two different taxes.',
+    h2: 'GST and PST are two different taxes',
     noteBefore:
       'If you have only ever registered for one of the two, you are not unusual, and it is fixable. Say so in the form and we will check both in the quote. Rates current as of ',
     more: 'How GST and PST actually differ →',
@@ -219,8 +189,11 @@ export const UI = {
   },
 
   trust: {
+    // The paragraph that used to sit under the badge is gone. The marks say
+    // what they say; describing them in prose alongside read as a claim being
+    // argued rather than a credential being shown. What the practice holds
+    // stays machine-readable through CREDENTIALS in content/business.ts.
     certEyebrow: 'Certification',
-    certP: 'QuickBooks Online Advanced ProAdvisor — the level above the standard certification — plus Intuit payroll certification. Certified in Xero and Sage 50 as well, not just working in them.',
     badgePlaceholder: 'QuickBooks Advanced ProAdvisor badge to be supplied',
     whoEyebrow: 'Who we work with',
     commitEyebrow: 'What we commit to',
@@ -228,15 +201,14 @@ export const UI = {
   },
 
   faq: {
-    eyebrow: 'Questions',
-    h2: 'The ones people actually ask.',
+    h2: 'The questions people actually ask',
     intro: 'If yours is not here, put it in the form and we will answer it in the reply.',
   },
 
   intake: {
     eyebrow: 'Get a plan and a quote',
     headline: 'Tell us where things',
-    headlineSecond: 'actually stand.',
+    headlineSecond: 'actually stand',
     p: 'About three minutes. No sales call, and nothing gets set up until you say yes.',
     emailLabel: 'Or email us directly',
     phoneLabel: 'Phone',
@@ -300,9 +272,9 @@ export const UI = {
   servicesPage: {
     eyebrow: 'What we handle',
     headline: 'Bookkeeping services',
-    headlineEm: 'for BC small business.',
-    sub: 'Six things, off your desk. Monthly bookkeeping, GST and PST filing, payroll and T4s, reporting, software setup and catch-up work — all of it done from West Vancouver, for businesses anywhere in British Columbia.',
-    boundaryEyebrow: 'The boundary',
+    headlineEm: 'for BC small business',
+    sub: 'Eight things, off your desk. Monthly bookkeeping, GST and PST filing, payroll and T4s, reporting, software setup, catch-up work, and the T1 and T2 returns at year end — all of it done from West Vancouver, for businesses anywhere in British Columbia.',
+    boundaryEyebrow: 'How the year fits together',
     worksWith: 'Works with',
     platformsNoteA:
       'We work in QuickBooks Online, Xero and Sage 50, so you can stay on whichever one you already use. Shopify and Stripe connect to all three, and ',
@@ -317,16 +289,16 @@ export const UI = {
   pricingPage: {
     eyebrow: 'Plans and pricing for BC small business',
     headline: 'What bookkeeping',
-    headlineEm: 'actually costs.',
+    headlineEm: 'actually costs',
     sub: 'We work on a fixed monthly plan sized to your transaction volume, not an hourly rate. Here is how the number is put together, what moves it, and what the rest of the market charges.',
     howEyebrow: 'How it works',
-    howH2: 'Four things that are always true.',
+    howH2: 'Four things that are always true',
     marketEyebrow: 'What the market charges',
-    marketH2: 'The honest answer to what this costs.',
+    marketH2: 'The honest answer to what this costs',
     factorsEyebrow: 'What moves the number',
-    factorsH2: 'Five things we look at.',
+    factorsH2: 'Five things we look at',
     plansEyebrow: 'The plans',
-    plansH2: 'Scoped by how much work there is.',
+    plansH2: 'Scoped by how much work there is',
     plansLede:
       'Three plans, sized to your transaction volume. If you are not sure which one you are, guess low and we will tell you in the quote.',
     setupBody: '— Quoted once, on QuickBooks Online, Xero or Sage 50. ',
@@ -336,19 +308,19 @@ export const UI = {
 
   remotePage: {
     eyebrow: 'Remote and virtual bookkeeping',
-    headline: 'Remote bookkeeping,',
-    headlineEm: 'anywhere in BC.',
+    headline: 'Remote bookkeeping',
+    headlineEm: 'anywhere in BC',
     sub: 'Nothing to drop off, no office visit, no envelope of receipts sitting in the truck. Your books are done online by the same person every month — whether you are two blocks away in West Vancouver or six hours up the highway.',
     howEyebrow: 'How it actually works',
-    howH2: 'Four things that make the drop-off unnecessary.',
+    howH2: 'Four things that make the drop-off unnecessary',
     howLede:
       '“Remote” is not a compromise arrangement bolted onto an in-person process. Almost every part of modern bookkeeping already happens online.',
     monthEyebrow: 'What a month looks like',
-    monthH2: 'Nothing piles up.',
+    monthH2: 'Nothing piles up',
     tradeoffEyebrow: 'Remote or local',
-    tradeoffH2: 'What you gain, and what you give up.',
+    tradeoffH2: 'What you gain and what you give up',
     areasEyebrow: 'Where this works',
-    areasH2: 'All of British Columbia, at the same price.',
+    areasH2: 'All of British Columbia at the same price',
     /* Named cities, deliberately. The page was chasing national terms —
        "online bookkeeping services canada" is 20 searches a month at difficulty
        43 — while "bookkeeper vancouver" is 480 a month at difficulty 3. Naming
@@ -357,11 +329,11 @@ export const UI = {
     areasLede:
       'Because nothing depends on being nearby, where your business sits does not change the scope or the number. We work with businesses in Vancouver, Surrey, Burnaby and Richmond, out to Victoria and Kelowna, and well beyond the highway — the Interior, the Island and the north included. We are based in West Vancouver, and for a remote engagement that is a fact about us rather than a constraint on you.',
     faqEyebrow: 'Questions',
-    faqH2: 'The ones remote raises.',
+    faqH2: 'The ones remote raises',
     faqIntroA: 'The rest are on the ',
     faqIntroLink: 'main page',
     faqIntroB: ', or put yours in the form and we will answer it in the reply.',
-    ctaH2: 'Tell us where things stand.',
+    ctaH2: 'Tell us where things stand',
     ctaP: 'Ten short questions, about three minutes. You get a written scope and a fixed monthly price within one business day — no sales call, and nothing gets set up until you say yes.',
     ctaLinkServices: 'What we handle',
     ctaLinkPricing: 'How the plans are scoped',
@@ -369,9 +341,9 @@ export const UI = {
 
   contactPage: {
     stepsEyebrow: 'What happens next',
-    stepsH2: 'Three steps, and no sales call.',
+    stepsH2: 'Three steps and no sales call',
     expectEyebrow: 'What to expect',
-    expectH2: 'A written reply, not a calendar invite.',
+    expectH2: 'A written reply rather than a calendar invite',
     reachEyebrow: 'Reach us directly',
     emailLabel: 'Email',
     phoneLabel: 'Phone',
@@ -388,7 +360,7 @@ export const UI = {
   notFound: {
     eyebrow: '404',
     headline: 'That page',
-    headlineEm: 'is not here.',
+    headlineEm: 'is not here',
     sub: 'The link may be out of date, or the page may have moved. Everything the site has is one of these.',
     home: 'Home',
     services: 'Bookkeeping services',
@@ -398,22 +370,22 @@ export const UI = {
 
   gstPstPage: {
     eyebrow: 'GST and PST in British Columbia',
-    headline: 'Two taxes,',
-    headlineEm: 'two sets of rules.',
+    headline: 'Two taxes',
+    headlineEm: 'two sets of rules',
     sub: 'GST goes to the CRA. PST goes to the province. They register separately, file separately and disagree about what is taxable — and being signed up for one tells you nothing about whether you should be signed up for the other.',
     ratesEyebrow: 'The rates',
     comparisonEyebrow: 'Side by side',
-    comparisonH2: 'Where the two actually differ.',
+    comparisonH2: 'Where the two actually differ',
     gstLabel: 'GST',
     pstLabel: 'PST',
     mistakesEyebrow: 'What goes wrong',
-    mistakesH2: 'Four ways this catches people out.',
+    mistakesH2: 'Four ways this catches people out',
     exemptEyebrow: 'What is taxable',
-    exemptH2: 'What carries PST, and what does not.',
+    exemptH2: 'What carries PST and what does not',
     registrationEyebrow: 'Registering',
     fin400Eyebrow: 'The return',
     deadlinesEyebrow: 'Deadlines',
-    deadlinesH2: 'How often you file, and by when.',
+    deadlinesH2: 'How often you file and by when',
     /* Column labels for the deadlines table, which reuses the comparison
        table's markup — hence the same two-column shape as gstLabel/pstLabel. */
     whoLabel: 'Who it applies to',
@@ -423,11 +395,11 @@ export const UI = {
        two strings render nowhere here. They exist because the section list is
        per-language and the headings above it have to be too. */
     localEyebrow: 'In practice',
-    localH2: 'Where this comes up most.',
+    localH2: 'Where this comes up most',
     servicesLink: 'What we file, and what that includes →',
     catchUpLink: 'If you are already behind on this →',
     faqEyebrow: 'Questions',
-    faqH2: 'What people ask about PST.',
+    faqH2: 'What people ask about PST',
     whatWeDoEyebrow: 'What we do',
     ctaH2: 'Not sure which you are registered for?',
     ctaP: 'Say so in the form. We check both against what you actually sell and confirm them in the written quote, before anything is filed.',
@@ -441,13 +413,13 @@ export const UI = {
    */
   vsTaxPage: {
     eyebrow: 'Bookkeeping vs tax filing',
-    headline: 'Two jobs,',
-    headlineEm: 'two people, two times of year.',
-    sub: 'What a bookkeeper does, what an accountant does, and where we stop. Chinese only — see the note above.',
-    rolesEyebrow: 'Who does what',
-    rolesH2: 'The division of labour.',
-    boundaryEyebrow: 'Where we stop',
-    boundaryH2: 'What we do, and what we do not.',
+    headline: 'Two jobs',
+    headlineEm: 'two times of year',
+    sub: 'What the monthly work covers, what the year-end return covers, and where the two meet. Chinese only — see the note above.',
+    rolesEyebrow: 'What each one covers',
+    rolesH2: 'How the work divides',
+    boundaryEyebrow: 'What we take on',
+    boundaryH2: 'Monthly and at year end',
     linksBefore: 'More on ',
     linkServices: 'what the monthly work covers',
     linksMiddle: ', and ',
@@ -460,13 +432,13 @@ export const UI = {
   pstRegistrationPage: {
     eyebrow: 'PST registration in BC',
     headline: 'Registering for PST',
-    headlineEm: 'in British Columbia.',
+    headlineEm: 'in British Columbia',
     sub: 'Whether you have to, what the province needs from you, and what changes once you are on their books. There is no revenue threshold with PST — it turns on what you sell.',
     explainerLink: 'How GST and PST differ →',
     whoEyebrow: 'Who it applies to',
-    whoH2: 'Which side of the line you are on.',
+    whoH2: 'Which side of the line you are on',
     stepsEyebrow: 'How to register',
-    stepsH2: 'Five steps, once you know the answer.',
+    stepsH2: 'Five steps once the answer is clear',
     afterEyebrow: 'After registration',
     servicesLink: 'What we file, and what that includes →',
     lateEyebrow: 'Late registration',
@@ -476,15 +448,15 @@ export const UI = {
 
   catchUpPage: {
     eyebrow: 'Catch-up bookkeeping in British Columbia',
-    headline: 'Behind on your books.',
-    headlineEm: 'It is fixable.',
+    headline: 'Behind on your books',
+    headlineEm: 'It is fixable',
     sub: 'Months or years behind is the most common reason anyone gets in touch with us. We look at how far it goes, quote the whole job as one number before starting, then clear it and file what is outstanding.',
     stagesEyebrow: 'How far behind',
-    stagesH2: 'Where you are on this list.',
+    stagesH2: 'Where you are on this list',
     processEyebrow: 'How it goes',
-    processH2: 'Four steps, one number.',
+    processH2: 'Four steps to one number',
     reassuranceEyebrow: 'To be clear',
-    ctaH2: 'Tell us roughly how far behind you are.',
+    ctaH2: 'Tell us roughly how far behind you are',
     ctaP: 'A rough answer is fine, and "not sure" is a valid one. You get a written scope and a single figure for the catch-up within one business day — no sales call, and nothing starts until you agree the number.',
   },
 
