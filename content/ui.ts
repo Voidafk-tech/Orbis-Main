@@ -103,7 +103,7 @@ export const UI = {
   },
 
   services: {
-    h2: 'Eight things off your desk',
+    h2: 'Nine things off your desk',
     more: 'What each one involves →',
     worksWith: 'Works with',
   },
@@ -273,7 +273,7 @@ export const UI = {
     eyebrow: 'What we handle',
     headline: 'Bookkeeping services',
     headlineEm: 'for BC small business',
-    sub: 'Monthly bookkeeping, GST and PST filing, payroll and T4s, reporting, software setup, catch-up work, and your T1 or T2 return at year end. We do all of it from West Vancouver, for businesses anywhere in British Columbia.',
+    sub: 'Monthly bookkeeping, GST and PST filing, payroll and T4s, reporting, software setup, catch-up work, business number and tax account registration, and your T1 or T2 return at year end. We do all of it from West Vancouver, for businesses anywhere in British Columbia.',
     boundaryEyebrow: 'How the year fits together',
     worksWith: 'Works with',
     platformsNoteA:

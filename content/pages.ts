@@ -93,6 +93,15 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
       'Where it makes sense we prepare the corporate return and the owners’ personal returns together, so salary, dividends and shareholder accounts line up across both. No reconciling after the fact.',
     ],
   },
+  {
+    n: '09',
+    h: 'Business number and tax accounts',
+    summary: 'Your CRA business number, GST and PST accounts, and WorkSafeBC if you have staff.',
+    detail: [
+      'A business number from the CRA sits underneath everything else. The GST account is opened under it, and so is a PST account with the province if your business needs one. We register what applies to you and skip what does not.',
+      'If you have staff, a WorkSafeBC account goes on the same list. This is separate from software setup: QuickBooks Online, Xero and Sage 50 are their own job. It happens first, before the numbers are needed on an invoice, a payroll remittance or a return.',
+    ],
+  },
 ];
 
 /**

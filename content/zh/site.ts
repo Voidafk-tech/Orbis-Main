@@ -149,6 +149,11 @@ export const SERVICES: Widen<typeof En.SERVICES> = [
     h: 'T2 公司所得税申报',
     p: '面向 CCPC 的公司所得税申报，从已按月结账的账簿直接编制，无需在年终还原全年。',
   },
+  {
+    n: '09',
+    h: '商业号码与税务账户',
+    p: '开设 CRA 商业号码、GST 与 PST 账户，如有员工则一并开设 WorkSafeBC 账户，业务开始前一次办妥。',
+  },
 ];
 
 /** Brand marks and their dimensions are not copy. */
