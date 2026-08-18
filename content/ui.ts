@@ -84,14 +84,14 @@ export const UI = {
       'Bookkeeping for Metro Vancouver small business · West Vancouver, BC · English and Mandarin',
     headline: 'Clean books',
     headlineEm: 'filed on time',
-    sub: 'GST to the CRA, PST to the province, and monthly reports you can actually read. The same person does your books every month, so you are never re-explaining your business.',
+    sub: 'We file your GST with the CRA and your PST with the province, and send you monthly reports in plain English. The same person handles your books all year, so you explain your business once.',
     cta: 'Get a plan and a quote',
     reassure: 'A written plan and a price within one business day',
   },
 
   pains: {
     h2: 'Four things you are probably already living with',
-    lede: 'The books are the one part of running a business that nobody set up for you',
+    lede: 'Every other part of running a business came with instructions. The books did not',
   },
 
   why: {
@@ -104,7 +104,7 @@ export const UI = {
 
   services: {
     h2: 'Eight things off your desk',
-    more: 'What each of these actually involves →',
+    more: 'What each one involves →',
     worksWith: 'Works with',
   },
 
@@ -120,13 +120,13 @@ export const UI = {
     oneTimeLabel: 'One-time work',
     catchUpName: 'Catch-up bookkeeping',
     catchUpBody:
-      '— Quoted after we see how far behind you are. One number, agreed before any work starts.',
+      '— One number, agreed before we start, once we have seen how far behind you are.',
     setupName: 'Software setup and migration',
     setupBody:
-      '— Quoted once, on QuickBooks Online, Xero or Sage 50. Chart of accounts, integrations, and one training session.',
+      '— One fee, on QuickBooks Online, Xero or Sage 50. Chart of accounts, integrations and a training session.',
     taxFilingName: 'Year-end returns',
     taxFilingBody:
-      '— T1 for sole proprietors and the self-employed, T2 for corporations. Quoted separately from the monthly plan.',
+      '— T1 for sole proprietors and the self-employed, T2 for corporations. Priced separately from the monthly plan.',
     catchUpLink: 'More on catch-up bookkeeping →',
     notSure: 'Not included: ',
   },
@@ -134,21 +134,21 @@ export const UI = {
   tax: {
     h2: 'GST and PST are two different taxes',
     noteBefore:
-      'If you have only ever registered for one of the two, you are not unusual, and it is fixable. Say so in the form and we will check both in the quote. Rates current as of ',
-    more: 'How GST and PST actually differ →',
+      'Plenty of owners have only ever registered for one of the two. It is fixable. Say so in the form and we will check both in your quote. Rates current as of ',
+    more: 'How GST and PST differ →',
     noteAfter: '.',
     taxes: [
       {
         figure: percent(TAX_RATES.gst),
         name: 'GST',
         authority: 'Goes to the CRA',
-        body: 'Federal. You generally must register once you pass $30,000 in revenue over four quarters. You charge it on most sales and you claim back the GST you paid on business purchases.',
+        body: 'Federal. You usually have to register once you pass $30,000 in revenue over four quarters. You charge it on most sales, and you claim back the GST you paid on business purchases.',
       },
       {
         figure: percent(TAX_RATES.pst),
         name: 'PST',
         authority: 'Goes to the province',
-        body: 'Provincial, and separate. Different registration, different deadlines, and a different list of what is taxable. Many services are exempt while most goods are not. There is no input credit to claim back.',
+        body: 'Provincial, and completely separate. Its own registration, its own deadlines, its own list of what is taxable. Most goods are taxable and many services are exempt. You cannot claim any of it back.',
       },
     ],
   },
@@ -201,15 +201,15 @@ export const UI = {
   },
 
   faq: {
-    h2: 'The questions people actually ask',
-    intro: 'If yours is not here, put it in the form and we will answer it in the reply.',
+    h2: 'The questions people ask most',
+    intro: 'If yours is not here, put it in the form and we will answer it when we reply.',
   },
 
   intake: {
     eyebrow: 'Get a plan and a quote',
     headline: 'Tell us where things',
-    headlineSecond: 'actually stand',
-    p: 'About three minutes. No sales call, and nothing gets set up until you say yes.',
+    headlineSecond: 'really stand',
+    p: 'About three minutes. No sales call, and we set nothing up until you say yes.',
     emailLabel: 'Or email us directly',
     phoneLabel: 'Phone',
   },
@@ -256,7 +256,7 @@ export const UI = {
     notesPlaceholder: 'Two years of receipts in a box and a GST return I have not filed.',
     submit: 'Send my details',
     sending: 'Sending…',
-    note: 'We reply within one business day. Your details are used to write your quote and nothing else. No newsletter, no mailing list.',
+    note: 'We reply within one business day. We use your details to write your quote and nothing else. No newsletter, no mailing list.',
     errorName: 'We need a name to address the reply to.',
     errorBusiness: 'What is the business called? It goes on the quote.',
     errorEmail: 'That email address does not look right. Check for a typo?',
@@ -273,16 +273,16 @@ export const UI = {
     eyebrow: 'What we handle',
     headline: 'Bookkeeping services',
     headlineEm: 'for BC small business',
-    sub: 'Eight things, off your desk. Monthly bookkeeping, GST and PST filing, payroll and T4s, reporting, software setup, catch-up work, and the T1 and T2 returns at year end — all of it done from West Vancouver, for businesses anywhere in British Columbia.',
+    sub: 'Monthly bookkeeping, GST and PST filing, payroll and T4s, reporting, software setup, catch-up work, and your T1 or T2 return at year end. We do all of it from West Vancouver, for businesses anywhere in British Columbia.',
     boundaryEyebrow: 'How the year fits together',
     worksWith: 'Works with',
     platformsNoteA:
       'We work in QuickBooks Online, Xero and Sage 50, so you can stay on whichever one you already use. Shopify and Stripe connect to all three, and ',
     platformsLinkRemote: 'all of it is done remotely',
-    platformsNoteB: ' — there is nothing to drop off. ',
+    platformsNoteB: ', so there is nothing to drop off. ',
     platformsLinkPricing: 'See how the plans are scoped',
     platformsNoteC: ', or ',
-    platformsLinkQuestions: 'read the questions people actually ask',
+    platformsLinkQuestions: 'read the questions people ask most',
     platformsNoteD: '.',
   },
 
@@ -290,17 +290,17 @@ export const UI = {
     eyebrow: 'Plans and pricing for BC small business',
     headline: 'What bookkeeping',
     headlineEm: 'actually costs',
-    sub: 'We work on a fixed monthly plan sized to your transaction volume, not an hourly rate. Here is how the number is put together, what moves it, and what the rest of the market charges.',
+    sub: 'We charge a fixed monthly fee based on your transaction volume, not an hourly rate. Below: how we build that number, what moves it, and what everyone else charges.',
     howEyebrow: 'How it works',
     howH2: 'Four things that are always true',
     marketEyebrow: 'What the market charges',
-    marketH2: 'The honest answer to what this costs',
+    marketH2: 'What this actually costs',
     factorsEyebrow: 'What moves the number',
     factorsH2: 'Five things we look at',
     plansEyebrow: 'The plans',
     plansH2: 'Scoped by how much work there is',
     plansLede:
-      'Three plans, sized to your transaction volume. If you are not sure which one you are, guess low and we will tell you in the quote.',
+      'Three plans, sized to your transaction volume. If you are not sure which one fits, guess low and we will tell you in the quote.',
     setupBody: '— Quoted once, on QuickBooks Online, Xero or Sage 50. ',
     setupLink: 'See what setup covers',
     setupAfter: '.',
@@ -310,11 +310,11 @@ export const UI = {
     eyebrow: 'Remote and virtual bookkeeping',
     headline: 'Remote bookkeeping',
     headlineEm: 'anywhere in BC',
-    sub: 'Nothing to drop off, no office visit, no envelope of receipts sitting in the truck. Your books are done online by the same person every month — whether you are two blocks away in West Vancouver or six hours up the highway.',
-    howEyebrow: 'How it actually works',
+    sub: 'Nothing to drop off, no office visit, no envelope of receipts sitting in the truck. The same person does your books online every month, whether you are two blocks away in West Vancouver or six hours up the highway.',
+    howEyebrow: 'How it works',
     howH2: 'Four things that make the drop-off unnecessary',
     howLede:
-      '“Remote” is not a compromise arrangement bolted onto an in-person process. Almost every part of modern bookkeeping already happens online.',
+      'Almost every part of bookkeeping already happens online. Working remotely is not a compromise on an in-person process, it is how the work is done now.',
     monthEyebrow: 'What a month looks like',
     monthH2: 'Nothing piles up',
     tradeoffEyebrow: 'Remote or local',
@@ -327,14 +327,14 @@ export const UI = {
        the places the work actually happens is the cheapest way to point the
        page at the province instead of the country. */
     areasLede:
-      'Because nothing depends on being nearby, where your business sits does not change the scope or the number. We work with businesses in Vancouver, Surrey, Burnaby and Richmond, out to Victoria and Kelowna, and well beyond the highway — the Interior, the Island and the north included. We are based in West Vancouver, and for a remote engagement that is a fact about us rather than a constraint on you.',
+      'Nothing here depends on being nearby, so where your business sits does not change the scope or the price. We work with businesses in Vancouver, Surrey, Burnaby and Richmond, out to Victoria and Kelowna, and well past the highway into the Interior, the Island and the north. We are based in West Vancouver. That is a fact about us, not a limit on you.',
     faqEyebrow: 'Questions',
     faqH2: 'The ones remote raises',
     faqIntroA: 'The rest are on the ',
     faqIntroLink: 'main page',
     faqIntroB: ', or put yours in the form and we will answer it in the reply.',
     ctaH2: 'Tell us where things stand',
-    ctaP: 'Ten short questions, about three minutes. You get a written scope and a fixed monthly price within one business day — no sales call, and nothing gets set up until you say yes.',
+    ctaP: 'Ten short questions, about three minutes. You get a written scope and a fixed monthly price within one business day. No sales call, and we set nothing up until you say yes.',
     ctaLinkServices: 'What we handle',
     ctaLinkPricing: 'How the plans are scoped',
   },
@@ -343,7 +343,7 @@ export const UI = {
     stepsEyebrow: 'What happens next',
     stepsH2: 'Three steps and no sales call',
     expectEyebrow: 'What to expect',
-    expectH2: 'A written reply rather than a calendar invite',
+    expectH2: 'We reply in writing',
     reachEyebrow: 'Reach us directly',
     emailLabel: 'Email',
     phoneLabel: 'Phone',
@@ -352,7 +352,7 @@ export const UI = {
       'Monday to Friday, 9am to 5pm Pacific. Enquiries sent outside those hours are answered on the next business day.',
     whereEyebrow: 'Where we work',
     whereP:
-      'We work with businesses across British Columbia and everything is done online — there is nothing to drop off and no office visit required.',
+      'We work with businesses across British Columbia. Everything happens online, so there is nothing to drop off and no office to visit.',
     linkServices: 'What we handle',
     linkPricing: 'How the plans are scoped',
   },
@@ -361,7 +361,7 @@ export const UI = {
     eyebrow: '404',
     headline: 'That page',
     headlineEm: 'is not here',
-    sub: 'The link may be out of date, or the page may have moved. Everything the site has is one of these.',
+    sub: 'The link may be out of date, or the page may have moved. Here is everything else on the site.',
     home: 'Home',
     services: 'Bookkeeping services',
     pricing: 'Plans and pricing',
@@ -372,10 +372,10 @@ export const UI = {
     eyebrow: 'GST and PST in British Columbia',
     headline: 'Two taxes',
     headlineEm: 'two sets of rules',
-    sub: 'GST goes to the CRA. PST goes to the province. They register separately, file separately and disagree about what is taxable — and being signed up for one tells you nothing about whether you should be signed up for the other.',
+    sub: 'GST goes to the CRA. PST goes to the province. They register separately, file separately, and disagree about what is taxable. Being signed up for one tells you nothing about whether you need the other.',
     ratesEyebrow: 'The rates',
     comparisonEyebrow: 'Side by side',
-    comparisonH2: 'Where the two actually differ',
+    comparisonH2: 'Where the two differ',
     gstLabel: 'GST',
     pstLabel: 'PST',
     mistakesEyebrow: 'What goes wrong',
@@ -402,7 +402,7 @@ export const UI = {
     faqH2: 'What people ask about PST',
     whatWeDoEyebrow: 'What we do',
     ctaH2: 'Not sure which you are registered for?',
-    ctaP: 'Say so in the form. We check both against what you actually sell and confirm them in the written quote, before anything is filed.',
+    ctaP: 'Say so in the form. We check both against what you sell and confirm them in your written quote, before we file anything.',
   },
 
   /**
@@ -426,14 +426,14 @@ export const UI = {
     linkPricing: 'how the plans are scoped',
     linksAfter: '.',
     ctaH2: 'Not sure which one you need?',
-    ctaP: 'Tell us where your books stand and we will say so in the written quote.',
+    ctaP: 'Tell us where your books stand and we will say which you need in your written quote.',
   },
 
   pstRegistrationPage: {
     eyebrow: 'PST registration in BC',
     headline: 'Registering for PST',
     headlineEm: 'in British Columbia',
-    sub: 'Whether you have to, what the province needs from you, and what changes once you are on their books. There is no revenue threshold with PST — it turns on what you sell.',
+    sub: 'Whether you have to, what the province needs from you, and what changes once you are on their books. PST has no revenue threshold. It turns on what you sell.',
     explainerLink: 'How GST and PST differ →',
     whoEyebrow: 'Who it applies to',
     whoH2: 'Which side of the line you are on',
@@ -443,21 +443,21 @@ export const UI = {
     servicesLink: 'What we file, and what that includes →',
     lateEyebrow: 'Late registration',
     ctaH2: 'Not sure whether you need to register?',
-    ctaP: 'Tell us what you sell in the form. We check it against both registrations and confirm the answer in the written quote, before anything is filed.',
+    ctaP: 'Tell us what you sell in the form. We check it against both registrations and confirm the answer in your written quote, before we file anything.',
   },
 
   catchUpPage: {
     eyebrow: 'Catch-up bookkeeping in British Columbia',
     headline: 'Behind on your books',
     headlineEm: 'It is fixable',
-    sub: 'Months or years behind is the most common reason anyone gets in touch with us. We look at how far it goes, quote the whole job as one number before starting, then clear it and file what is outstanding.',
+    sub: 'Being months or years behind is the most common reason people get in touch. We look at how far it goes, price the whole job as one number before we start, then clear it and file what is outstanding.',
     stagesEyebrow: 'How far behind',
     stagesH2: 'Where you are on this list',
     processEyebrow: 'How it goes',
     processH2: 'Four steps to one number',
     reassuranceEyebrow: 'To be clear',
     ctaH2: 'Tell us roughly how far behind you are',
-    ctaP: 'A rough answer is fine, and "not sure" is a valid one. You get a written scope and a single figure for the catch-up within one business day — no sales call, and nothing starts until you agree the number.',
+    ctaP: 'A rough answer is fine, and "not sure" is a valid one. You get a written scope and a single figure for the catch-up within one business day. No sales call, and nothing starts until you agree the number.',
   },
 
   legal: {
