@@ -112,6 +112,10 @@ shape fails the build**, rather than rendering `undefined` on a page nobody
 checked. `content/copy.ts` applies the same check at module level, so a
 translation file that forgets an export fails too.
 
+`content/STYLE.en.md` is the English copy style guide — the constructions that
+made the copy read as machine-generated, and what to write instead. Read it
+before editing `content/ui.ts`, `content/site.ts` or `content/pages.ts`.
+
 `content/zh/glossary.md` records the terminology decisions — that British
 Columbia is written BC省, that tax and agency terms are the bare English
 abbreviation (GST, PST, CRA, ROE, WorkSafeBC), that headings carry no

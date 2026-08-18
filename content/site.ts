@@ -134,7 +134,7 @@ export const PAINS = [
   {
     n: '03',
     h: 'Evenings gone',
-    p: 'Ten hours a month on categorization instead of on the work that actually pays.',
+    p: 'Ten hours a month sorting transactions instead of doing the work that pays.',
   },
   {
     n: '04',
@@ -146,19 +146,19 @@ export const PAINS = [
 export const DIFFERENTIATORS = [
   {
     h: 'QuickBooks Online, Xero or Sage 50',
-    p: 'We work in all three and connect Shopify and Stripe into whichever one you use. If you are on spreadsheets, we migrate you.',
+    p: 'We work in all three, and we connect Shopify and Stripe to whichever one you use. If you are on spreadsheets, we move you across.',
   },
   {
     h: 'Built for BC, not for Canada in general',
-    p: 'GST and PST both filed. WorkSafeBC and CRA deadlines tracked so you are not the one remembering them.',
+    p: 'We file both GST and PST. We track the WorkSafeBC and CRA deadlines so you do not have to.',
   },
   {
     h: 'One person does your books every month',
-    p: 'You are not re-explaining your business to a new name each quarter. Nothing gets re-learned.',
+    p: 'You explain your business once. Nobody hands it to a new person next quarter.',
   },
   {
     h: 'Fixed monthly price, no hourly billing',
-    p: 'You know the number before you start. A messy month does not turn into a surprise invoice.',
+    p: 'You know the number before we start, and a messy month costs the same as a quiet one.',
   },
 ] as const;
 
@@ -181,7 +181,7 @@ export const SERVICES = [
   {
     n: '04',
     h: 'Financial reporting',
-    p: 'A profit and loss and a balance sheet each month, in plain language, with the numbers that matter marked.',
+    p: 'A profit and loss and a balance sheet every month, with the numbers that moved marked for you.',
   },
   {
     n: '05',
@@ -191,18 +191,18 @@ export const SERVICES = [
   {
     n: '06',
     h: 'Catch-up bookkeeping',
-    p: 'Months or years behind is the most common reason people call. We clear the backlog first, then start monthly.',
+    p: 'Being months or years behind is the most common reason people call. We clear the backlog, then start monthly.',
     tag: 'Most common',
   },
   {
     n: '07',
     h: 'T1 personal returns',
-    p: 'Personal income tax for sole proprietors and the self-employed, prepared from the same books we keep all year.',
+    p: 'Personal income tax for sole proprietors and the self-employed, prepared from the books we keep all year.',
   },
   {
     n: '08',
     h: 'T2 corporate returns',
-    p: 'Corporate income tax for CCPCs, filed from a closed set of books rather than reconstructed at year end.',
+    p: 'Corporate income tax for CCPCs, filed from books we closed month by month as the year went.',
   },
 ] as const;
 
@@ -232,7 +232,7 @@ export const STEPS = [
   {
     n: '2',
     h: 'Get a plan and a quote',
-    p: 'Within one business day you get a written scope and a fixed monthly price. In writing, so you can compare it to anyone else.',
+    p: 'Within one business day you get a written scope and a fixed monthly price you can compare against anyone else.',
   },
   {
     n: '3',
@@ -302,7 +302,7 @@ export const INDUSTRIES_SERVED = [
 export const FAQS = [
   {
     q: 'How much does a bookkeeper cost in Vancouver?',
-    a: 'Local firms billing hourly are usually $75 to $150 an hour, which lands most small businesses between $600 and $2,000 in a typical month. Flat monthly plans in this market run roughly $300 to $2,000 depending on volume. We work on a fixed monthly plan rather than hourly billing. Tell us your transaction volume and what you need filed, and your number comes back in writing within one business day.',
+    a: 'Local firms billing hourly charge $75 to $150 an hour, which puts most small businesses between $600 and $2,000 in a typical month. Flat monthly plans here run roughly $300 to $2,000 depending on volume. We charge a fixed monthly fee, not an hourly rate. Tell us your transaction volume and what you need filed, and we will send your number in writing within one business day.',
   },
   {
     q: 'What is the difference between a bookkeeper and an accountant, and which do I need?',
@@ -316,27 +316,27 @@ export const FAQS = [
     // SERVICES_BOUNDARY in content/pages.ts makes the same point at length on
     // /services and has to keep saying the same thing as this. Edit the two
     // together, in both languages.
-    a: 'They are two different jobs, usually done at two different times of year. The monthly work is the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. The year-end work is the income tax return — a T1 with a statement of business activities if you are unincorporated, a T2 with its schedules if you are a corporation. We do both, which means the return is prepared from books that were closed as the year went along rather than reconstructed in the spring. If you already have someone doing your year end, we can do the monthly work alone and hand them a clean, closed set of books.',
+    a: 'They are two different jobs, usually done at two different times of year. The monthly work is the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. The year-end work is the income tax return. If you are unincorporated that means a T1 with a statement of business activities. If you are a corporation it means a T2 and its schedules. We do both, so your return comes from books we closed month by month as the year went. If someone else already does your year end, we can handle the monthly work alone and hand them a clean, closed set of books.',
   },
   {
     q: 'Do I have to register for PST in BC?',
-    a: 'It depends on what you sell, not just on how much. Most businesses selling goods in BC need to register. Many service businesses do not. Because PST is separate from GST, plenty of owners register for one and not the other without realising. Tell us what you sell and we will confirm both in your quote.',
+    a: 'It depends on what you sell, not just how much. Most businesses selling goods in BC need to register. Many service businesses do not. PST is separate from GST, so plenty of owners register for one and never realise they missed the other. Tell us what you sell and we will confirm both in your quote.',
   },
   {
     q: 'What if my books are a year behind?',
-    a: 'That is the most common reason people get in touch. We look at how far behind you are and quote the catch-up as one number before starting. We clear it, file whatever is outstanding, then start the monthly plan from a clean position. You are not the first and there is no lecture.',
+    a: 'That is the most common reason people get in touch. We look at how far behind you are and quote the whole catch-up as one number before we start. We clear it, file whatever is outstanding, then begin the monthly plan from a clean set of books. You are not the first, and we will not lecture you about it.',
   },
   {
     q: 'Do you work with businesses outside West Vancouver?',
-    a: 'Yes. We are based in West Vancouver and work with businesses across British Columbia. Everything is done online, so there is nothing to drop off and no office visit required.',
+    a: 'Yes. We are based in West Vancouver and work with businesses across British Columbia. Everything happens online, so there is nothing to drop off and no office to visit.',
   },
   {
     q: 'Do I need to use QuickBooks Online?',
-    a: 'No. We work in QuickBooks Online, Xero and Sage 50, so you can stay on whichever one you already use. If you are on Wave, spreadsheets or nothing at all, we will recommend one and the migration is part of setup. Shopify and Stripe connect to all three, so your sales reconcile automatically.',
+    a: 'No. We work in QuickBooks Online, Xero and Sage 50, so you can stay on whichever one you already use. If you are on Wave, spreadsheets or nothing at all, we will recommend one and move you across as part of setup. Shopify and Stripe connect to all three, so your sales reconcile automatically.',
   },
   {
     q: 'How do I switch from my current bookkeeper?',
-    a: 'You give us access to your accounting file and we take it from the next month. You do not need to have an awkward conversation first, and you do not need to move anything yourself. If the handover reveals problems in the existing books, we will tell you what we found before doing extra work.',
+    a: 'You give us access to your accounting file and we take over from the next month. There is no awkward conversation to have first and nothing for you to move. If we find problems in the existing books during handover, we will tell you what we found before doing any extra work.',
   },
 ] as const;
 

@@ -26,8 +26,8 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     h: 'Monthly bookkeeping',
     summary: 'Every transaction categorized, every account reconciled, books closed each month.',
     detail: [
-      'Your bank accounts and credit cards are reconciled against the statements, so what the books say matches what the bank says. Transactions are categorized against a chart of accounts set up for how your business actually earns and spends, not a generic template.',
-      'The month gets closed rather than left open indefinitely. That distinction matters at year end: a closed month is one nobody has to re-open, re-check and bill you for before the return can be prepared.',
+      'We reconcile your bank accounts and credit cards against the statements, so the books match the bank. We categorize transactions against a chart of accounts built for how your business earns and spends, not a generic template.',
+      'We close each month instead of leaving it open. At year end that saves you money: nobody has to re-open a closed month, re-check it and bill you before the return can be prepared.',
     ],
   },
   {
@@ -35,8 +35,8 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     h: 'GST and PST filing',
     summary: 'Both returns prepared and filed on schedule. GST to the CRA, PST to the province.',
     detail: [
-      'These are two separate taxes with two separate registrations, two sets of deadlines and two different lists of what is taxable. Being registered for one tells you nothing about whether you should be registered for the other, which is why so many BC businesses end up filing one and quietly not the other.',
-      'We prepare and file both. GST returns go to the CRA, PST returns to the BC Ministry of Finance. If it turns out you should have registered for one and have not, we will say so plainly and tell you what fixing it involves before doing anything.',
+      'Two separate taxes, two registrations, two sets of deadlines, two lists of what is taxable. Being registered for one tells you nothing about the other. That is how so many BC businesses end up filing one and quietly missing the other.',
+      'We prepare and file both. GST returns go to the CRA, PST returns to the BC Ministry of Finance. If you should have registered for one and have not, we tell you straight away and explain what fixing it takes before we do anything.',
     ],
   },
   {
@@ -44,8 +44,8 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     h: 'Payroll and T4s',
     summary: 'Staff paid on time, source deductions remitted, T4s and ROEs handled at year end.',
     detail: [
-      'Payroll runs on your schedule, with source deductions calculated and remitted to the CRA on the remittance schedule your business has been assigned. Records of employment go out when someone leaves, and T4s are prepared and filed at year end.',
-      'WorkSafeBC reporting is handled alongside it, because for most employers in BC the two sit on the same set of numbers and separating them just creates a second place for things to go wrong.',
+      'We run payroll on your schedule and remit source deductions to the CRA on the schedule they assigned you. We issue records of employment when someone leaves, and prepare and file T4s at year end.',
+      'We handle WorkSafeBC reporting alongside it. For most BC employers the two run off the same numbers, and splitting them just creates a second place for things to go wrong.',
     ],
   },
   {
@@ -53,8 +53,8 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     h: 'Financial reporting',
     summary: 'A profit and loss and a balance sheet each month, in plain language.',
     detail: [
-      'Every month you get a profit and loss statement and a balance sheet, with the figures that actually moved marked so you are not reading a wall of numbers looking for the story.',
-      'The point is not the documents. It is that you can answer what your margin is, what you are owed, and what you owe, without waiting until year end to find out.',
+      'Every month you get a profit and loss statement and a balance sheet, with the figures that moved marked, so you are not hunting through a wall of numbers.',
+      'What that buys you is the ability to answer three questions at any time: what your margin is, what you are owed, and what you owe. You should not have to wait until year end to know.',
     ],
   },
   {
@@ -62,8 +62,8 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     h: 'Software setup and migration',
     summary: 'QuickBooks Online, Xero or Sage 50 — set up properly, once.',
     detail: [
-      'A chart of accounts built around your business, and your sales channels wired in so Shopify and Stripe reconcile against the books instead of being re-keyed by hand every month.',
-      'If you are moving from another platform, from spreadsheets, or from nothing at all, the migration is part of the setup. It ends with one training session so you can find what you need in the file without calling us to ask.',
+      'We build a chart of accounts around your business and wire in your sales channels, so Shopify and Stripe reconcile against the books instead of being re-keyed by hand every month.',
+      'Moving from another platform, from spreadsheets, or from nothing at all, we handle the migration as part of setup. It ends with a training session so you can find things in the file without calling to ask.',
     ],
   },
   {
@@ -71,8 +71,8 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     h: 'Catch-up bookkeeping',
     summary: 'Months or years behind is the most common reason people get in touch.',
     detail: [
-      'We look at how far behind the books actually are, then quote the catch-up as a single number agreed before any work starts. The backlog gets cleared, whatever is outstanding gets filed, and the monthly plan starts from a clean position rather than on top of a mess.',
-      'You are not the first business to arrive this way and there is no lecture attached. The only thing that makes it worse is waiting longer.',
+      'We look at how far behind the books are, then quote the catch-up as one number, agreed before we start. We clear the backlog, file whatever is outstanding, and begin the monthly plan on clean books instead of on top of a mess.',
+      'You are not the first business to arrive this way, and we will not lecture you about it. Waiting longer is the only thing that makes it worse.',
     ],
   },
   {
@@ -80,8 +80,8 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     h: 'T1 personal returns',
     summary: 'Personal income tax for sole proprietors and the self-employed.',
     detail: [
-      'If you run an unincorporated business, your business income is reported on your personal return as part of the T1. We prepare the statement of business activities from the books we have already kept, so the figures on the return are the figures in the file rather than a separate reconstruction of the year.',
-      'Business use of home, vehicle expenses and capital cost allowance are worked out against what the books already show. Where the treatment of something is genuinely open, we tell you what the options are before the return is filed, not after.',
+      'If you run an unincorporated business, your business income goes on your personal return as part of the T1. We prepare the statement of business activities from the books we already keep, so the figures on the return are the figures in the file. Nothing gets reconstructed.',
+      'We work out business use of home, vehicle expenses and capital cost allowance from what the books already show. Where the treatment of something is genuinely open, we give you the options before we file, not after.',
     ],
   },
   {
@@ -89,8 +89,8 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     h: 'T2 corporate returns',
     summary: 'Corporate income tax for Canadian-controlled private corporations.',
     detail: [
-      'For an incorporated small business, we prepare and file the T2 along with the schedules it carries, from a set of books that has already been closed month by month. That is the whole argument for having the same practice do both: the year end is a filing rather than an excavation.',
-      'The corporate return and the personal returns of the owners are prepared together where that makes sense, so salary, dividends and shareholder accounts line up across the two rather than being reconciled after the fact.',
+      'For an incorporated small business, we prepare and file the T2 and its schedules from books we already closed month by month. That is the case for having one practice do both: year end becomes a filing, not an excavation.',
+      'Where it makes sense we prepare the corporate return and the owners’ personal returns together, so salary, dividends and shareholder accounts line up across both. No reconciling after the fact.',
     ],
   },
 ];
@@ -113,7 +113,7 @@ export const SERVICES_BOUNDARY = {
   h: 'The monthly work and the year-end work',
   body: [
     'The monthly side is the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. The year-end side is the return — a T1 with a statement of business activities if you are unincorporated, a T2 with its schedules if you are a corporation.',
-    'Most practices do one or the other, which is why so many owners spend December handing a year of records to someone who has never seen them. We do both, so the return is prepared from books that were closed month by month as the year went along. If your accountant already handles your year end, that is fine too — we hand over a clean, closed set of books and the reconciliations they will ask for.',
+    'Most practices do one or the other. That is why so many owners spend December handing a year of records to someone who has never seen them. We do both, so your return comes from books we closed month by month as the year went. If your accountant already handles year end, that works too. We hand over clean, closed books and the reconciliations they will ask for.',
   ],
 };
 
@@ -121,7 +121,7 @@ export const SERVICES_BOUNDARY = {
 export const PRICE_FACTORS = [
   {
     h: 'How many transactions you run',
-    p: 'The single biggest factor. A business putting through 40 lines a month is a different amount of work from one putting through 400, and the plans are sized accordingly.',
+    p: 'The single biggest factor. Forty lines a month is a different job from 400, and the plans are sized to match.',
   },
   {
     h: 'How many accounts there are to reconcile',
@@ -137,14 +137,14 @@ export const PRICE_FACTORS = [
   },
   {
     h: 'How far behind the books are',
-    p: 'Catch-up is quoted separately from the monthly plan, as one number agreed before it starts. It does not roll into the monthly figure or turn up later as a surprise.',
+    p: 'We quote catch-up separately from the monthly plan, as one number agreed before it starts. It never rolls into the monthly figure or shows up later as a surprise.',
   },
 ];
 
 export const PRICING_PRINCIPLES = [
   {
     h: 'Fixed monthly, not hourly',
-    p: 'You know the number before the work starts. A messy month does not become a bigger invoice, which also means you are never deciding whether a question is worth the phone call.',
+    p: 'You know the number before the work starts. A messy month does not become a bigger invoice, so you never have to weigh up whether a question is worth the phone call.',
   },
   {
     h: 'Quoted in writing, within one business day',
@@ -178,7 +178,7 @@ export const CONTACT_STEPS = [
   {
     n: '2',
     h: 'We read it properly',
-    p: 'We look at your transaction volume, what needs filing, which software you are on and how far behind the books are. If something in your answers changes the scope, we ask before quoting rather than guessing.',
+    p: 'We look at your transaction volume, what needs filing, which software you are on and how far behind the books are. If something in your answers changes the scope, we ask before quoting. We do not guess.',
   },
   {
     n: '3',
@@ -194,11 +194,11 @@ export const CONTACT_EXPECT = [
   },
   {
     h: 'A real answer, including no',
-    p: 'If we are not the right fit for your business, we say so in that first reply rather than booking a call to tell you.',
+    p: 'If we are not the right fit for your business, we say so in that first reply. We will not book a call to tell you.',
   },
   {
     h: 'Nothing added to a list',
-    p: 'What you send is used to write your quote and to reply to you. It is not added to a mailing list and it is not sold or shared for marketing.',
+    p: 'We use what you send to write your quote and reply to you. We do not add it to a mailing list, and we do not sell or share it for marketing.',
   },
 ] as const;
 
@@ -219,12 +219,12 @@ export const REMOTE_MECHANICS = [
   {
     n: '01',
     h: 'You grant access, not paperwork',
-    p: 'We work inside your accounting file as an invited user, the same way you would add an employee. You control that access from your own account and can withdraw it at any time, and your records stay in your platform rather than being copied into ours.',
+    p: 'We work inside your accounting file as an invited user, the same way you would add an employee. You control that access from your own account and can withdraw it any time. Your records stay in your platform. We never copy them into ours.',
   },
   {
     n: '02',
     h: 'The file is the single copy',
-    p: 'Everything is done inside your accounting file rather than in a working copy that has to be sent back and forth. There is one version of your books, it is the one you can open yourself, and it is current rather than as of whenever the last exchange happened.',
+    p: 'We work inside your accounting file, not in a copy that gets sent back and forth. There is one version of your books, you can open it yourself, and it is current as of today, not as of the last time someone emailed a file.',
   },
   {
     n: '03',
@@ -242,12 +242,12 @@ export const REMOTE_MONTH = [
   {
     n: '1',
     h: 'Through the month',
-    p: 'Transactions are categorized as they come in rather than piling up into a month-end scramble. If something is ambiguous we ask about it while you still remember what it was.',
+    p: 'We categorize transactions as they come in, so nothing piles up into a month-end scramble. If something is unclear we ask while you still remember what it was.',
   },
   {
     n: '2',
     h: 'At month end',
-    p: 'Accounts are reconciled against the statements, the month is closed, and you get a profit and loss and a balance sheet with the figures that actually moved marked.',
+    p: 'We reconcile the accounts against the statements, close the month, and send you a profit and loss and a balance sheet with the figures that moved marked.',
   },
   {
     n: '3',
@@ -265,7 +265,7 @@ export const REMOTE_TRADEOFF = {
   gains: [
     {
       h: 'The same person every month',
-      p: 'Not whoever is free at the local firm this quarter. You are not re-explaining how your business works each time something changes hands.',
+      p: 'Not whoever is free at the local firm this quarter. You explain how your business works once.',
     },
     {
       h: 'Questions answered when they come up',
@@ -278,7 +278,7 @@ export const REMOTE_TRADEOFF = {
   ],
   gives_up: {
     h: 'What you give up',
-    p: 'Sitting across a desk. If a face-to-face meeting each month is the part you value most, a local firm is a reasonable choice and we will say so rather than talk you out of it. What we would push back on is paying a premium for proximity you never actually use — for most owners the drop-off visit was the worst part of the arrangement, not the point of it.',
+    p: 'Sitting across a desk. If a monthly face-to-face is the part you value most, a local firm is the right choice and we will tell you so. What we would question is paying extra for proximity you never use. For most owners the drop-off visit was the worst part of the arrangement, not the point of it.',
   },
 } as const;
 
@@ -286,15 +286,15 @@ export const REMOTE_TRADEOFF = {
 export const REMOTE_FAQS = [
   {
     q: 'Is remote bookkeeping secure?',
-    a: 'Your financial records stay in your own accounting platform — QuickBooks Online, Xero or Sage 50 — rather than being copied somewhere else. We work inside that file as an invited user, which is access you grant from your own account and can revoke yourself at any time, and every action taken in the file is attributed to that user. That is a tighter arrangement than emailing spreadsheets back and forth, which is what the alternative usually looks like in practice.',
+    a: 'Your financial records stay in your own accounting platform, whether that is QuickBooks Online, Xero or Sage 50. We never copy them elsewhere. We work inside that file as an invited user: you grant the access from your own account, you can revoke it yourself at any time, and every action in the file is logged against that user. Compare that with emailing spreadsheets back and forth, which is what the alternative usually means in practice.',
   },
   {
     q: 'How do I get my receipts and documents to you?',
-    a: 'Whichever way suits you. Email them as they arrive, forward them in a batch, or photograph and attach them to the transaction in your accounting app while you are standing there. QuickBooks Online, Xero and Sage 50 all support attachments against a transaction, which also means the receipt stays with the entry rather than in a folder somewhere.',
+    a: 'Whichever way suits you. Email them as they arrive, forward them in a batch, or photograph and attach them to the transaction in your accounting app while you are standing there. QuickBooks Online, Xero and Sage 50 all support attachments against a transaction, which keeps the receipt attached to the entry instead of sitting in a folder somewhere.',
   },
   {
     q: 'What if I want to talk to someone?',
-    a: 'You can call or email, and you get the same person rather than a queue. What we do not do is require a meeting before answering a question. If your plan includes a quarterly review call, that is scheduled; everything else is answered as it comes up.',
+    a: 'Call or email and you get the same person, not a queue. We will never make you sit through a meeting to get an answer. If your plan includes a quarterly review call, that one is scheduled. Everything else we answer as it comes up.',
   },
   {
     q: 'Does this work if my business is outside Metro Vancouver?',
@@ -336,7 +336,7 @@ export const GST_PST_COMPARISON = [
   {
     label: 'When you must register',
     gst: 'Generally once you pass $30,000 in revenue over four consecutive quarters. You can register earlier by choice.',
-    pst: 'It turns on what you sell rather than how much. Most businesses selling goods in BC need to register; many service businesses do not.',
+    pst: 'It turns on what you sell, not how much. Most businesses selling goods in BC need to register; many service businesses do not.',
   },
   {
     label: 'What it applies to',
@@ -374,16 +374,16 @@ export const GST_PST_MISTAKES = [
   {
     n: '04',
     h: 'Leaving the money in the operating account',
-    p: 'Sales tax collected is not revenue — it is money held on behalf of a government. Businesses that spend it during a good month and find it missing at the deadline are extremely common, and the shortfall is the owner’s to cover.',
+    p: 'Sales tax you collect is not revenue. It is money you are holding for a government. Spending it in a good month and finding it gone at the deadline is extremely common, and the shortfall comes out of the owner’s pocket.',
   },
 ];
 
 export const GST_PST_WHAT_WE_DO = {
-  h: 'What we actually do about it',
+  h: 'What we do about it',
   body: [
-    'We confirm both registrations at the start, not at the first deadline. If you should be registered for something and are not, you hear it in the written quote rather than a year later.',
-    'From there both returns are prepared and filed on schedule — GST to the CRA, PST to the BC Ministry of Finance — and the deadlines sit with us rather than with you. The amounts owing come out of books that were reconciled during the month, so the figure on the return matches the figure in the bank.',
-    'If it turns out you should have registered earlier than you did, we will tell you what that involves before doing anything about it. Voluntary disclosure is usually a better position than being found, and either way you should hear the options from your bookkeeper rather than from a letter.',
+    'We confirm both registrations at the start, not at the first deadline. If you should be registered for something and are not, you hear it in the written quote, not a year later.',
+    'From there we prepare and file both returns on schedule, GST to the CRA and PST to the BC Ministry of Finance, and we hold the deadlines. The amounts owing come out of books reconciled during the month, so the figure on the return matches the figure in the bank.',
+    'If you should have registered earlier than you did, we explain what that involves before we do anything about it. Coming forward voluntarily usually puts you in a better position than being found. Either way you should hear the options from your bookkeeper, not from a letter.',
   ],
 };
 
@@ -404,7 +404,7 @@ export const GST_PST_WHAT_WE_DO = {
 export const GST_PST_EXEMPT = {
   intro: [
     'The two lists do not line up, and neither one follows a rule you can guess from first principles. PST has its own definition of what is taxable, and it is narrower than GST in some places and wider in others.',
-    'What follows is the shape of it rather than the whole of it. The categories are drawn tightly, they have been redrawn before, and the only version that matters for your business is the one that covers what you actually sell.',
+    'What follows is the shape of it, not the whole of it. The categories are drawn tightly and have been redrawn before, and the only version that matters is the one covering what you sell.',
   ],
   columns: [
     {
@@ -431,7 +431,7 @@ export const GST_PST_EXEMPT = {
     },
   ],
   caveat:
-    'That last one catches contractors in particular. Improving real property is generally not something you charge PST on, but you are usually the one paying PST on the materials that go into it, which makes them a cost rather than something you collect and pass along. It is the single most common place a trades business prices a job wrong.',
+    'That last one catches contractors in particular. You generally do not charge PST on improving real property, but you usually do pay PST on the materials that go into it. Those materials are a cost to you, not something you collect and pass along. It is the single most common place a trades business prices a job wrong.',
   close:
     'If you are not certain which side your work falls on, that is a reasonable position to be in and a bad one to guess at. Say what you sell in the form and we will tell you in the quote.',
 };
@@ -446,7 +446,7 @@ export const GST_PST_REGISTRATION = {
   h: 'Whether you have to register at all',
   body: [
     'The GST test is about size: broadly, once you pass $30,000 in revenue over four consecutive quarters you are required to register, and you can choose to register before that.',
-    'PST does not work that way. It turns on what you sell rather than how much of it you sell, so a small business can be required to register from its first sale while a much larger one is not required to at all. There is no revenue figure to wait for, which is why so many people find out late.',
+    'PST does not work that way. It turns on what you sell, not how much, so a small business can be required to register from its first sale while a much larger one never is. There is no revenue figure to wait for. That is why so many people find out late.',
   ],
   linkText: 'How to register for PST in BC →',
 };
@@ -459,7 +459,7 @@ export const GST_PST_REGISTRATION = {
 export const GST_PST_FIN400 = {
   h: 'Filing the return: the FIN 400',
   body: [
-    'The PST return is form FIN 400, and for most businesses it is filed online through eTaxBC rather than on paper. You report what you sold, what PST you collected, and any PST you owe on things you bought without paying it, and you pay the balance with the return.',
+    'The PST return is form FIN 400. Most businesses file it online through eTaxBC instead of on paper. You report what you sold, what PST you collected, and any PST you owe on things you bought without paying it, then pay the balance with the return.',
     'The return itself is not the hard part. What makes it go wrong is filing it from books that were not reconciled first — the figure on the return has to be the figure in the bank, and if the month was never closed there is nothing to check it against. A return filed on unreconciled books is a number you will be defending later without knowing where it came from.',
     'There is no input credit to reduce it, either, which is the other half of why PST surprises people. Unlike GST, what you collected is what you remit; PST you paid on your own purchases does not come off it.',
   ],
@@ -512,7 +512,7 @@ export const GST_PST_SELF_ASSESSMENT = {
     'PST is not only something you collect. It is also something you can owe on your own purchases, and this is the part almost nobody knows about until it comes up in a review.',
     'The principle is straightforward: if you buy something for use in BC and PST should have applied but was not charged, you are the one who has to report and pay it. That is self-assessment, and it goes on the same return.',
     'In practice it shows up in three places. Buying equipment or supplies from an out-of-province seller who is not registered here. Importing goods for use in the business. And taking something out of your own resale stock to use yourself, which is a sale to you as far as PST is concerned even though no money moved.',
-    'None of those feel like taxable events while they are happening, which is precisely the problem. They are ordinary purchases that arrive without PST on the invoice, and the obligation sits with the buyer rather than the seller.',
+    'None of those feel like taxable events while they are happening, and that is the problem. They are ordinary purchases that arrive without PST on the invoice, and the obligation sits with the buyer, not the seller.',
   ],
 };
 
@@ -536,7 +536,7 @@ export const GST_PST_FAQS = [
   },
   {
     q: 'Do I need to register for PST in BC?',
-    a: 'It depends on what you sell rather than how much. Most businesses selling or leasing goods in BC need to register, as do those selling certain specified services. Many service businesses do not. There is no revenue threshold to wait for the way there is with GST, which is why the answer is worth checking properly rather than assuming.',
+    a: 'It depends on what you sell, not how much. Most businesses selling or leasing goods in BC need to register, as do those selling certain specified services. Many service businesses do not. There is no revenue threshold to wait for the way there is with GST, so this is worth checking properly instead of assuming.',
   },
   {
     q: 'What is a PST number in BC?',
@@ -643,14 +643,14 @@ export const PST_REG_WHO = {
     },
   ],
   caveat:
-    'The second column is where people get it wrong, because "my work is a service" feels like a complete answer and is not. The taxable-services list is specific, it does not follow an obvious principle, and it has been widened before. Check what you sell against it rather than reasoning from the category.',
+    'The second column is where people get it wrong. "My work is a service" feels like a complete answer and is not. The taxable-services list is specific, follows no obvious principle, and has been widened before. Check what you sell against the list instead of reasoning from your industry.',
 };
 
 export const PST_REG_STEPS = [
   {
     n: '1',
     h: 'Work out whether you have to',
-    p: 'Before anything else, and against what you actually sell rather than what your industry is called. This is the step that decides the other four, and it is the one worth getting a second opinion on.',
+    p: 'Before anything else, and against what you sell, not what your industry is called. This step decides the other four, and it is the one worth a second opinion.',
   },
   {
     n: '2',
@@ -660,7 +660,7 @@ export const PST_REG_STEPS = [
   {
     n: '3',
     h: 'Register through eTaxBC',
-    p: 'Online, through the province’s eTaxBC system, which is the same place you will later file the return. You can register in advance of your first taxable sale rather than waiting for it, and doing so is usually the tidier option.',
+    p: 'Online, through the province’s eTaxBC system, which is where you will file the return later. You can register before your first taxable sale instead of waiting for it, and that is usually tidier.',
   },
   {
     n: '4',
@@ -677,7 +677,7 @@ export const PST_REG_STEPS = [
 export const PST_REG_AFTER = {
   h: 'What changes once you are registered',
   body: [
-    'You are collecting money on the province’s behalf from the effective date, not from the date the paperwork clears. That distinction matters if you registered late: the obligation runs from when you should have started.',
+    'You are collecting money for the province from the effective date, not from the date the paperwork clears. If you registered late, the obligation still runs from when you should have started.',
     'A reporting period arrives with the registration — monthly, quarterly, semi-annual or annual — and it will not necessarily match your GST period. Two calendars, kept separately, is the ordinary state of affairs and the most common thing to get caught by.',
     'The practical advice is dull and it works: move the PST out of the operating account as you collect it. Sales tax that sits in the current account gets spent during a good month, and the shortfall at the deadline is the owner’s to cover.',
   ],
@@ -686,8 +686,8 @@ export const PST_REG_AFTER = {
 export const PST_REG_LATE = {
   h: 'If you should have registered earlier',
   body: [
-    'Common, and fixable. What you owe is the PST you should have collected, plus interest — and if you never charged it, that comes out of your own margin rather than your customers’, because they are long gone.',
-    'Coming forward voluntarily generally puts you in a better position than being found. It is worth understanding the options before doing either, which is a conversation rather than a form.',
+    'Common, and fixable. You owe the PST you should have collected, plus interest. If you never charged it, that comes out of your own margin, because those customers are long gone.',
+    'Coming forward voluntarily generally puts you in a better position than being found. Understand the options before you do either. That takes a conversation, not a form.',
   ],
   linkText: 'How we handle a backlog →',
 };
@@ -718,7 +718,7 @@ export const CATCH_UP_STAGES = [
   {
     n: '02',
     h: 'Most of a year behind',
-    p: 'Still routine, but there is more of it, and there is usually at least one filing deadline already gone. We work out what is outstanding before quoting, so the number covers the whole job rather than the easy part of it.',
+    p: 'Still routine, but there is more of it, and usually at least one filing deadline has already gone. We work out what is outstanding before quoting, so the number covers the whole job, not just the easy part.',
   },
   {
     n: '03',
@@ -746,12 +746,12 @@ export const CATCH_UP_PROCESS = [
   {
     n: '3',
     h: 'We clear it and file what is outstanding',
-    p: 'The backlog gets reconciled and closed, and whatever is owed to the CRA or the province gets filed. You will know what the liability is before it lands rather than after.',
+    p: 'We reconcile and close the backlog, then file whatever is owed to the CRA or the province. You will know the liability before it lands, not after.',
   },
   {
     n: '4',
     h: 'Monthly starts from a clean position',
-    p: 'From then on it is the ordinary monthly plan, on books that are actually correct. The point of clearing the backlog is that it never rebuilds.',
+    p: 'From then on it is the ordinary monthly plan, on books that are correct. Clearing the backlog is what stops it rebuilding.',
   },
 ];
 
@@ -759,7 +759,7 @@ export const CATCH_UP_REASSURANCE = {
   h: 'What this is not',
   body: [
     'It is not a lecture. We have not yet met the business that got behind on purpose, and telling you it should have been done sooner helps nobody.',
-    'It is not a bigger job because you waited — it is a bigger job than it would have been, which is different, and the number reflects the work in front of us rather than a penalty for the delay.',
+    'Waiting did make the job bigger than it would have been. But the number reflects the work in front of us, not a penalty for the delay.',
     'And it is not a commitment to anything else. Some people have the backlog cleared and take the monthly plan; some have it cleared, get handed clean books, and carry on alone. Both are fine, and the quote does not change based on which one you are.',
   ],
 };
