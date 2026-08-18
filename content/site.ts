@@ -204,6 +204,11 @@ export const SERVICES = [
     h: 'T2 corporate returns',
     p: 'Corporate income tax for CCPCs, filed from books we closed month by month as the year went.',
   },
+  {
+    n: '09',
+    h: 'Business number and tax accounts',
+    p: 'Your CRA business number, GST and PST accounts, and a WorkSafeBC account if you have staff. Set up once, before anything else starts.',
+  },
 ] as const;
 
 /**

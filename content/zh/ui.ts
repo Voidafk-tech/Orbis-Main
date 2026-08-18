@@ -80,7 +80,7 @@ export const UI: Widen<typeof EnUI> = {
   },
 
   services: {
-    h2: '八项服务 从您的日程中移除',
+    h2: '九项服务 从您的日程中移除',
     more: '每一项具体包含什么 →',
     worksWith: '支持的系统',
   },
@@ -219,7 +219,7 @@ export const UI: Widen<typeof EnUI> = {
     eyebrow: '我们负责什么',
     headline: '代理记账服务',
     headlineEm: '专为 BC省小型企业',
-    sub: '八项服务，从您的日程中移除：每月记账、GST 与 PST 申报、薪资与 T4、财务报表、软件设置、补做旧账，以及年终的 T1 与 T2 申报。全部于西温哥华完成，服务 BC省各地的企业。',
+    sub: '九项服务，从您的日程中移除：每月记账、GST 与 PST 申报、薪资与 T4、财务报表、软件设置、补做旧账、商业号码与税务账户注册，以及年终的 T1 与 T2 申报。全部于西温哥华完成，服务 BC省各地的企业。',
     boundaryEyebrow: '一年是怎么衔接的',
     worksWith: '支持的系统',
     platformsNoteA:

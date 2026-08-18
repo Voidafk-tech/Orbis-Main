@@ -157,13 +157,28 @@ figure {
 }
 
 /*
- * There was a `.h1--wide` modifier here that joined the two halves onto one
- * line above 1024px. It worked while the first half ended in a comma; now that
- * display type carries no punctuation it would read as a run-on — "Clean books
- * filed on time" — on exactly the widest screens. The block default above is
- * now the only behaviour, in both languages, so the modifier and the matching
- * `:lang(zh)` override that forced the stack back are both gone.
+ * The block default above is the general rule: most of the headline/em pairs
+ * across the site are two full clauses (catchUpPage's "Behind on your books" /
+ * "It is fixable"), and running those together with no punctuation between
+ * them reads as a typo, not a design. The homepage hero is the exception —
+ * "filed on time" is a participle completing "Clean books", one phrase, not
+ * two sentences — and at 1024px+ it had the whole width of the row to do it
+ * in, which is why "Clean books" alone read as squeezed into the left third
+ * with the rest sitting empty. Scoped to `#top` rather than `.hero` generally,
+ * since every sub-page reuses the same hero markup for pairs that are not
+ * safe to join.
  */
+@media (min-width: 1024px) {
+  #top .h1 em {
+    display: inline;
+  }
+}
+
+/* Chinese keeps the two-line stack — this mirrors the original design, from
+   before the English side lost its comma, of joining only the English hero. */
+:lang(zh) #top .h1 em {
+  display: block;
+}
 
 .h2 {
   font: 400 clamp(28px, 3.2vw, 38px) / 1.12 var(--serif);

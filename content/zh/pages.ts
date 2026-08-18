@@ -80,6 +80,15 @@ export const SERVICE_DETAIL: Widen<typeof En.SERVICE_DETAIL> = [
       '在适用的情况下，公司申报表与股东个人申报表一并编制，使薪酬、股息与股东往来账在两者之间保持一致，无需事后再作调节。',
     ],
   },
+  {
+    n: '09',
+    h: '商业号码与税务账户',
+    summary: 'CRA 商业号码、GST 与 PST 账户，如有员工则加上 WorkSafeBC 账户。',
+    detail: [
+      'CRA 商业号码是其他一切的基础：GST 账户在其下开设，若贵公司需要，PST 账户也在其下与省政府一并开设。我们按贵公司实际需要注册，不需要的项目不会多开。',
+      '如有员工，WorkSafeBC 账户一并列入。这与软件设置是两件事：QuickBooks Online、Xero 与 Sage 50 属于另一项工作。这一步最先完成，在发票、薪资汇缴或申报表需要用到这些号码之前。',
+    ],
+  },
 ];
 
 export const SERVICES_BOUNDARY: Widen<typeof En.SERVICES_BOUNDARY> = {
