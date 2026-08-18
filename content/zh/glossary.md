@@ -122,6 +122,87 @@ This reverses the earlier convention, which deliberately mirrored the blunt
 English register ("there is no lecture"). The English copy still reads that way;
 the Chinese no longer does, and the two are allowed to differ here.
 
+## 机器味 — the constructions not to write
+
+The Chinese counterpart of `content/STYLE.en.md`. Every rule is here because
+the copy actually broke it, with the count at the time.
+
+**The 互联网黑话 vocabulary scores zero and should stay at zero.** 赋能, 抓手,
+闭环, 沉淀, 打通, 打造, 助力, 全方位, 一站式, 深度赋能, 全流程, 一体化 — none
+of it has ever appeared here. Worth recording, because it means a word-swap
+pass over this copy finds nothing and proves nothing. What read as generated
+was sentence shape, exactly as on the English side.
+
+**1. X，而非 Y (was: 32; plus 而不是 ×6, 并非 ×12).** The loudest tic by a wide
+margin, and the direct analogue of the English "rather than". Say the positive
+thing and stop, or use the plain 不是 / 不 when the contrast is real.
+
+> ~~交易随到随分类，而非堆积至月底集中处理。~~
+> 交易随到随分类，不堆到月底集中处理。
+
+Three uses survive, all correcting a belief the reader actually holds — for
+instance 代收的销售税并非营业收入，而是代政府保管的款项. That is a real
+correction of a real misconception, not the reflex.
+
+**2. 破折号 —— as a universal connector (was: 48, now 17).** Fine as glue
+between a bolded name and its note, as a list-to-clause connector, or as a
+matched pair around a genuine interruption. Not as the default way to bolt one
+complete clause onto another — that is a 。 or a ：.
+
+**3. The mechanical connective chain (因此 ×15, 同时 ×9, 此外 ×2).** Generated
+Chinese uses connectives at roughly 40% above the human rate. Most of these
+carried no logic: the causal relation was already obvious from the order of the
+sentences. Keep the ones doing real work.
+
+**4. Explaining your own last sentence (值得注意的是, 其成因大抵如此,
+这正是…的原因, 关键在于).** Announcing that a point is coming, instead of
+making it. 其成因大抵如此 was deleted outright — the paragraph had already
+said it.
+
+**5. 其一 / 其二 / 其三 and other enumerated triplets.** Three parallel items
+with matched grammar and matched rhythm is the most reliable structural tell.
+Real lists are the length they are. Where the three points were genuine, the
+enumeration markers still came out and the colons did the work.
+
+**6. 一般而言 / 大致而言 / 通常情况下 as hedges.** A threshold is a threshold.
+If the rule has real exceptions, name them; if it does not, state it.
+
+**7. 贵方 (was: 26, now 0).** This is the register of contracts, not of a
+bookkeeper writing to an owner. Direct address is 您, or 贵公司 where the
+sentence genuinely means the company rather than the reader. 您 is fully
+书面语, so this does not reopen the 你 question — 你 remains at zero.
+
+## Numbers to write to
+
+Measured across the four Chinese modules, in Han characters per sentence:
+
+| | Target | Currently |
+|---|---|---|
+| Mean sentence | 14–18 chars | 16.0 |
+| Median | ≤ 14 | 12 |
+| Standard deviation | ≥ 10 — this is the burstiness | 12.5 |
+| Over 45 chars | under 3% | 2% |
+| 而非 / 而不是 / 并非 | under 5 combined | 3 |
+| 破折号 —— | under 20 | 17 |
+
+The spread matters more than the mean. Generated Chinese holds a narrow band of
+sentence lengths; a person writes a twelve-character sentence and then a
+forty-character one. When a paragraph reads flat, cut one sentence hard and let
+the next one run.
+
+## Cut length that carries nothing
+
+书面语 is not the same as long. If the sentence can be shorter without losing
+information, the shorter version is better — that is a gain on its own. The
+usual sources of slack:
+
+- **Nominalised throat-clearing.** 报表本身并非目的。其意义在于贵方可随时判断…
+  became 报表不是目的。有了它，您随时能判断…
+- **A closing clause restating the opening one.** If deleting the last clause
+  loses nothing, delete it.
+- **Stiff verbs where a plain one exists.** 予以确认 → 确认；再行报价 → 再报价；
+  须自行承担 → 只能自己补.
+
 ## Review status
 
 The translation was produced by an AI, checked for terminology consistency and
