@@ -480,19 +480,12 @@ for (const route of ROUTES) {
 
     if (locale === 'en' || NON_COMMERCIAL.has(route.path)) continue;
 
-    // The practice files GST, PST, T4s and ROEs. It does not file income tax
-    // returns, and the Chinese-language market's default assumption is that an
-    // accounting firm does — 会计师帮我报税 is the mental model. Claiming 报税
-    // as a service would be the easiest traffic on the site to win and the one
-    // thing that would make the rest of the copy dishonest. A guard rather than
-    // a note, because the temptation recurs every time someone looks at the
-    // search demand.
-    if (text.title.includes('报税服务')) {
-      throw new Error(
-        `prerender: the title for ${where} offers 报税服务. The practice does not file T1 or T2 ` +
-          'returns — capture that intent with content that draws the boundary, not with a service claim.',
-      );
-    }
+    // There used to be a guard here rejecting any Chinese title that offered
+    // 报税服务, on the grounds that the practice filed GST, PST, T4s and ROEs
+    // but not income tax returns. That is no longer true: T1 returns for the
+    // self-employed and T2 returns for CCPCs are services, so the claim the
+    // guard existed to block is now an accurate one. Removed rather than
+    // inverted — nothing needs enforcing in its place.
 
     if (!TAX_QUERY_ROUTES.has(route.path) && !text.title.includes('温哥华')) {
       throw new Error(

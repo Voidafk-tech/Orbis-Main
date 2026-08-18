@@ -90,7 +90,7 @@ export const ROUTES: RouteMeta[] = [
       'zh-hans': {
         title: '温哥华记账服务 | 小生意固定月费 · GST/PST申报 | Orbis',
         description:
-          '西温出发，服务温哥华及全卑诗省的小生意记账。GST 与 PST 都代为申报，工资 T4 一并处理，中英双语沟通，按交易量定价，一个工作日内出书面报价。',
+          '西温出发，服务温哥华及全 BC省的小生意记账。GST 与 PST 都代为申报，工资 T4 一并处理，中英双语沟通，按交易量定价，一个工作日内出书面报价。',
       },
     },
   },
@@ -108,7 +108,7 @@ export const ROUTES: RouteMeta[] = [
       'zh-hans': {
         title: '温哥华记账服务内容：对账、GST/PST申报、工资 T4、补做旧账 | Orbis',
         description:
-          '每月对账结账、GST 与 PST 申报、工资与 T4、财务报表、软件设置，以及补做旧账。服务温哥华及全卑诗省的小生意，中英双语，固定月费，不按小时计费。',
+          '每月对账结账、GST 与 PST 申报、工资与 T4、财务报表、软件设置，以及补做旧账。服务温哥华及全 BC省的小生意，中英双语，固定月费，不按小时计费。',
         crumb: '服务项目',
       },
     },
@@ -132,9 +132,9 @@ export const ROUTES: RouteMeta[] = [
       // 温哥华 and nothing else, and the URL is not touched at all. Verify the
       // position holds for four weeks before changing anything further here.
       'zh-hans': {
-        title: '远程线上记账服务 · 全卑诗省 · 温哥华 | Orbis Accounting',
+        title: '远程线上记账服务 · 全 BC省 · 温哥华 | Orbis Accounting',
         description:
-          '面向温哥华及全卑诗省小生意的远程线上记账。没有东西要送来，也不必到访办公室——线上怎么运作、一个月是什么样子，以及你放弃了什么。中英双语。',
+          '面向温哥华及全 BC省小生意的远程线上记账。没有东西要送来，也不必到访办公室——线上怎么运作、一个月是什么样子，以及你放弃了什么。中英双语。',
         crumb: '远程记账',
       },
     },
@@ -150,7 +150,7 @@ export const ROUTES: RouteMeta[] = [
           'GST goes to the CRA, PST goes to the province. Where the two differ, when each one requires registration, and the four mistakes that catch BC owners out.',
         crumb: 'GST and PST in BC',
       },
-      // BC省 rather than 卑诗省, and deliberately so. 卑诗省 is the Vancouver
+      // BC省 rather than BC省, and deliberately so. BC省 is the Vancouver
       // Chinese press standard and is right everywhere else on the site, but on
       // tax queries specifically the Mainland abbreviation is what gets typed.
       // The structure mirrors the forum thread currently holding position 19 for
@@ -257,17 +257,17 @@ export const ROUTES: RouteMeta[] = [
     text: {
       en: {
         // Not built. Kept because RouteText is required per locale, and because
-        // an English version is a real option later if the boundary ever needs
-        // stating in both languages.
+        // an English version is a real option later if the split between the
+        // monthly work and the year-end return needs stating in both languages.
         title: 'Bookkeeping vs tax filing',
         description:
-          'What a bookkeeper does, what an accountant does, and why most small businesses need both. Not built in English — see the `only` field above.',
+          'What the monthly work covers, what the year-end return covers, and why a small business needs both. Not built in English — see the `only` field above.',
         crumb: 'Bookkeeping vs tax filing',
       },
       'zh-hans': {
         title: '记账和报税有什么区别？温哥华小生意必读 | Orbis',
         description:
-          '记账员做什么，会计师做什么，为什么大部分小生意两个都需要，以及账目干净能省下多少年终费用。中英双语，我们不做 T1/T2 报税。',
+          '每月账务包含什么，年终申报包含什么，为什么两项都不能省，以及账目完整对年终费用的影响。面向温哥华及全 BC省的小型企业，中英双语，T1 与 T2 申报均可承接。',
         crumb: '记账与报税',
       },
     },

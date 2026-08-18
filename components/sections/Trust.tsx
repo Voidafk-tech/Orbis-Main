@@ -3,10 +3,19 @@ import { useCopy } from '../LocaleContext';
 import { revealDelay } from '../useScrollReveal';
 
 /**
- * Shows the issued certification badge, and degrades to a neutral placeholder
- * if the file is not in place yet — a broken image would be worse than none.
+ * One issued certification mark. Renders nothing at all if the file is missing:
+ * a broken image is worse than none, and so is an empty slot holding space for
+ * artwork that has not been supplied. The row is sized by what exists.
+ *
+ * The placeholder text is kept for the single-badge case — if the one mark the
+ * row has fails to load, the section would otherwise be an eyebrow over
+ * nothing, which reads as a rendering fault rather than as a short row.
  */
-const CertificationBadge: React.FC = () => {
+const CertificationBadge: React.FC<{ src: string; alt: string; only: boolean }> = ({
+  src,
+  alt,
+  only,
+}) => {
   const copy = useCopy();
   const [missing, setMissing] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -19,17 +28,10 @@ const CertificationBadge: React.FC = () => {
   }, []);
 
   if (missing) {
-    return <p className="badge-box__placeholder">{copy.ui.trust.badgePlaceholder}</p>;
+    return only ? <p className="badge-box__placeholder">{copy.ui.trust.badgePlaceholder}</p> : null;
   }
 
-  return (
-    <img
-      ref={imgRef}
-      src={copy.site.PROADVISOR_BADGE.src}
-      alt={copy.site.PROADVISOR_BADGE.alt}
-      onError={() => setMissing(true)}
-    />
-  );
+  return <img ref={imgRef} src={src} alt={alt} onError={() => setMissing(true)} />;
 };
 
 /**
@@ -46,9 +48,15 @@ const Trust: React.FC = () => {
         <div className="reveal">
           <p className="eyebrow trust__eyebrow">{trust.certEyebrow}</p>
           <div className="badge-box">
-            <CertificationBadge />
+            {copy.site.CERTIFICATION_BADGES.map((badge) => (
+              <CertificationBadge
+                key={badge.src}
+                src={badge.src}
+                alt={badge.alt}
+                only={copy.site.CERTIFICATION_BADGES.length === 1}
+              />
+            ))}
           </div>
-          <p className="trust__p">{trust.certP}</p>
         </div>
 
         <div className="reveal" style={revealDelay(90)}>

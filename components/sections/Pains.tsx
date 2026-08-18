@@ -10,7 +10,6 @@ const Pains: React.FC = () => {
     <section className="sec">
       <div className="inner">
         <div className="reveal">
-          <p className="eyebrow intro__eyebrow">{pains.eyebrow}</p>
           <h2 className="h2" style={{ maxWidth: '22ch' }}>
             {pains.h2}
           </h2>

@@ -27,7 +27,7 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     summary: 'Every transaction categorized, every account reconciled, books closed each month.',
     detail: [
       'Your bank accounts and credit cards are reconciled against the statements, so what the books say matches what the bank says. Transactions are categorized against a chart of accounts set up for how your business actually earns and spends, not a generic template.',
-      'The month gets closed rather than left open indefinitely. That distinction matters at year end: a closed month is one your accountant does not have to re-open, re-check and bill you for.',
+      'The month gets closed rather than left open indefinitely. That distinction matters at year end: a closed month is one nobody has to re-open, re-check and bill you for before the return can be prepared.',
     ],
   },
   {
@@ -62,7 +62,7 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     h: 'Software setup and migration',
     summary: 'QuickBooks Online, Xero or Sage 50 — set up properly, once.',
     detail: [
-      'A chart of accounts built around your business, bank feeds connected, and your sales channels wired in so Shopify and Stripe reconcile automatically instead of being re-keyed by hand every month.',
+      'A chart of accounts built around your business, and your sales channels wired in so Shopify and Stripe reconcile against the books instead of being re-keyed by hand every month.',
       'If you are moving from another platform, from spreadsheets, or from nothing at all, the migration is part of the setup. It ends with one training session so you can find what you need in the file without calling us to ask.',
     ],
   },
@@ -75,26 +75,45 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
       'You are not the first business to arrive this way and there is no lecture attached. The only thing that makes it worse is waiting longer.',
     ],
   },
+  {
+    n: '07',
+    h: 'T1 personal returns',
+    summary: 'Personal income tax for sole proprietors and the self-employed.',
+    detail: [
+      'If you run an unincorporated business, your business income is reported on your personal return as part of the T1. We prepare the statement of business activities from the books we have already kept, so the figures on the return are the figures in the file rather than a separate reconstruction of the year.',
+      'Business use of home, vehicle expenses and capital cost allowance are worked out against what the books already show. Where the treatment of something is genuinely open, we tell you what the options are before the return is filed, not after.',
+    ],
+  },
+  {
+    n: '08',
+    h: 'T2 corporate returns',
+    summary: 'Corporate income tax for Canadian-controlled private corporations.',
+    detail: [
+      'For an incorporated small business, we prepare and file the T2 along with the schedules it carries, from a set of books that has already been closed month by month. That is the whole argument for having the same practice do both: the year end is a filing rather than an excavation.',
+      'The corporate return and the personal returns of the owners are prepared together where that makes sense, so salary, dividends and shareholder accounts line up across the two rather than being reconciled after the fact.',
+    ],
+  },
 ];
 
-/** What we do not do, said plainly. Being clear about the edge saves both sides a call. */
 /**
- * Says the same thing FAQ 2 in content/site.ts says, at more length. The two
- * are read by the same person in the same session and have to agree.
+ * How the monthly work and the year-end work fit together. Says the same thing
+ * FAQ 2 in content/site.ts says, at more length. The two are read by the same
+ * person in the same session and have to agree.
  *
- * This used to close "We do not file your corporate return and we do not do tax
- * planning", which was a flat no. The practice does not advertise that work, but
- * it will quote anyone who asks for it, so the flat no was turning enquiries
- * away on a claim that was not accurate. The section now describes the general
- * division of labour and leaves the question open, without advertising year-end
- * filing as a service. Keep it that way in both directions: do not put the
- * refusal back, and do not add corporate returns to the service list.
+ * History, so this does not get reverted by someone reading an old draft: this
+ * section used to be a boundary — first a flat "we do not file your corporate
+ * return", later a softer "our plans cover the monthly work". Both understated
+ * what the practice does. T1 returns for the self-employed and T2 returns for
+ * CCPCs are now services in their own right, in SERVICE_DETAIL and in SERVICES.
+ *
+ * What this section must not do is turn into a discussion of professional
+ * designations. Describe the work, not who is allowed to sign it.
  */
 export const SERVICES_BOUNDARY = {
-  h: 'Where a bookkeeper stops and an accountant starts.',
+  h: 'The monthly work and the year-end work',
   body: [
-    'A bookkeeper handles the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. An accountant steps in for year-end filing and higher level planning.',
-    "Most BC small businesses work with a bookkeeper all year and bring someone in at year end. Our plans cover the monthly work, and what that work leaves behind is a clean, closed set of books, which makes whatever happens at year end smaller than it would otherwise be. If you want to know what we can handle at year end, ask in the form and we'll tell you in the quote.",
+    'The monthly side is the day to day: receipts, categorization, reconciliation, payroll, GST and PST remittances, and your monthly reports. The year-end side is the return — a T1 with a statement of business activities if you are unincorporated, a T2 with its schedules if you are a corporation.',
+    'Most practices do one or the other, which is why so many owners spend December handing a year of records to someone who has never seen them. We do both, so the return is prepared from books that were closed month by month as the year went along. If your accountant already handles your year end, that is fine too — we hand over a clean, closed set of books and the reconciliations they will ask for.',
   ],
 };
 
@@ -204,8 +223,8 @@ export const REMOTE_MECHANICS = [
   },
   {
     n: '02',
-    h: 'Bank feeds do the fetching',
-    p: 'QuickBooks Online, Xero and Sage 50 all pull transactions from your bank and credit card accounts directly. Nobody is keying in a statement, which is where a lot of the errors in manual bookkeeping come from in the first place.',
+    h: 'The file is the single copy',
+    p: 'Everything is done inside your accounting file rather than in a working copy that has to be sent back and forth. There is one version of your books, it is the one you can open yourself, and it is current rather than as of whenever the last exchange happened.',
   },
   {
     n: '03',
@@ -223,7 +242,7 @@ export const REMOTE_MONTH = [
   {
     n: '1',
     h: 'Through the month',
-    p: 'Transactions come in through the bank feeds and get categorized as they land, rather than piling up into a month-end scramble. If something is ambiguous we ask about it while you still remember what it was.',
+    p: 'Transactions are categorized as they come in rather than piling up into a month-end scramble. If something is ambiguous we ask about it while you still remember what it was.',
   },
   {
     n: '2',
@@ -360,7 +379,7 @@ export const GST_PST_MISTAKES = [
 ];
 
 export const GST_PST_WHAT_WE_DO = {
-  h: 'What we actually do about it.',
+  h: 'What we actually do about it',
   body: [
     'We confirm both registrations at the start, not at the first deadline. If you should be registered for something and are not, you hear it in the written quote rather than a year later.',
     'From there both returns are prepared and filed on schedule — GST to the CRA, PST to the BC Ministry of Finance — and the deadlines sit with us rather than with you. The amounts owing come out of books that were reconciled during the month, so the figure on the return matches the figure in the bank.',
@@ -424,7 +443,7 @@ export const GST_PST_EXEMPT = {
  * than one saying it once.
  */
 export const GST_PST_REGISTRATION = {
-  h: 'Whether you have to register at all.',
+  h: 'Whether you have to register at all',
   body: [
     'The GST test is about size: broadly, once you pass $30,000 in revenue over four consecutive quarters you are required to register, and you can choose to register before that.',
     'PST does not work that way. It turns on what you sell rather than how much of it you sell, so a small business can be required to register from its first sale while a much larger one is not required to at all. There is no revenue figure to wait for, which is why so many people find out late.',
@@ -438,7 +457,7 @@ export const GST_PST_REGISTRATION = {
  * what people search once they have the obligation and not before.
  */
 export const GST_PST_FIN400 = {
-  h: 'Filing the return: the FIN 400.',
+  h: 'Filing the return: the FIN 400',
   body: [
     'The PST return is form FIN 400, and for most businesses it is filed online through eTaxBC rather than on paper. You report what you sold, what PST you collected, and any PST you owe on things you bought without paying it, and you pay the balance with the return.',
     'The return itself is not the hard part. What makes it go wrong is filing it from books that were not reconciled first — the figure on the return has to be the figure in the bank, and if the month was never closed there is nothing to check it against. A return filed on unreconciled books is a number you will be defending later without knowing where it came from.',
@@ -488,7 +507,7 @@ export const GST_PST_DEADLINES = {
  * an unanswered question looks like in a search result.
  */
 export const GST_PST_SELF_ASSESSMENT = {
-  h: 'When you owe PST nobody charged you.',
+  h: 'When you owe PST nobody charged you',
   body: [
     'PST is not only something you collect. It is also something you can owe on your own purchases, and this is the part almost nobody knows about until it comes up in a review.',
     'The principle is straightforward: if you buy something for use in BC and PST should have applied but was not charged, you are the one who has to report and pay it. That is self-assessment, and it goes on the same return.',
@@ -553,11 +572,11 @@ export interface LocalSection {
  * buys. The English market already draws that line, so an English version would
  * be a page nobody searches for.
  *
- * It is also where the practice's boundary gets stated plainest: monthly books,
- * GST, PST, T4s and ROEs yes; T1 and T2 income tax returns no. That is a real
- * limit, and in a market where every firm's copy promises everything, saying it
- * out loud is the differentiator rather than the disclaimer. See the guard in
- * scripts/prerender.mjs that stops any title claiming 报税服务.
+ * The page contrasts two kinds of work, not two kinds of people: the monthly
+ * books and the year-end return, both of which the practice does. It used to
+ * close on a refusal — T1 and T2 returns stated as out of scope — which was
+ * never accurate and is now plainly wrong. Do not reintroduce it, and keep the
+ * page describing the work rather than who is entitled to sign it.
  * ------------------------------------------------------------------------- */
 
 export const VS_TAX_INTRO: readonly string[] = [];
@@ -656,7 +675,7 @@ export const PST_REG_STEPS = [
 ];
 
 export const PST_REG_AFTER = {
-  h: 'What changes once you are registered.',
+  h: 'What changes once you are registered',
   body: [
     'You are collecting money on the province’s behalf from the effective date, not from the date the paperwork clears. That distinction matters if you registered late: the obligation runs from when you should have started.',
     'A reporting period arrives with the registration — monthly, quarterly, semi-annual or annual — and it will not necessarily match your GST period. Two calendars, kept separately, is the ordinary state of affairs and the most common thing to get caught by.',
@@ -665,7 +684,7 @@ export const PST_REG_AFTER = {
 };
 
 export const PST_REG_LATE = {
-  h: 'If you should have registered earlier.',
+  h: 'If you should have registered earlier',
   body: [
     'Common, and fixable. What you owe is the PST you should have collected, plus interest — and if you never charged it, that comes out of your own margin rather than your customers’, because they are long gone.',
     'Coming forward voluntarily generally puts you in a better position than being found. It is worth understanding the options before doing either, which is a conversation rather than a form.',
@@ -694,7 +713,7 @@ export const CATCH_UP_STAGES = [
   {
     n: '01',
     h: 'A few months behind',
-    p: 'Straightforward. The records still exist, the bank feeds can usually be backfilled, and nothing has been missed that cannot be filed on time or close to it. This is the cheapest version of the problem and the easiest to price.',
+    p: 'Straightforward. The records still exist, the statements can be worked through in order, and nothing has been missed that cannot be filed on time or close to it. This is the cheapest version of the problem and the easiest to price.',
   },
   {
     n: '02',
@@ -737,7 +756,7 @@ export const CATCH_UP_PROCESS = [
 ];
 
 export const CATCH_UP_REASSURANCE = {
-  h: 'What this is not.',
+  h: 'What this is not',
   body: [
     'It is not a lecture. We have not yet met the business that got behind on purpose, and telling you it should have been done sooner helps nobody.',
     'It is not a bigger job because you waited — it is a bigger job than it would have been, which is different, and the number reflects the work in front of us rather than a penalty for the delay.',

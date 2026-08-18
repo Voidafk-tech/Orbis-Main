@@ -8,7 +8,6 @@ const Faq: React.FC = () => {
     <section className="sec sec--paper" id="questions">
       <div className="inner split split--faq">
         <div className="reveal">
-          <p className="eyebrow eyebrow--paper intro__eyebrow">{copy.ui.faq.eyebrow}</p>
           <h2 className="h2 h2--faq">{copy.ui.faq.h2}</h2>
           <p className="faq__intro-p">{copy.ui.faq.intro}</p>
         </div>

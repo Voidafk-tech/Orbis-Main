@@ -24,7 +24,7 @@ const Hero: React.FC = () => {
       {/* The display line carries no search terms, and the h1 is the strongest
           on-page signal there is. The eyebrow is inside it as a block span
           rather than a separate <p>, so what renders is unchanged. */}
-      <h1 className="h1 h1--wide">
+      <h1 className="h1">
         <span className="eyebrow h1__eyebrow">{hero.eyebrow}</span>
         {hero.headline} <em>{hero.headlineEm}</em>
       </h1>
