@@ -158,7 +158,7 @@ export const DIFFERENTIATORS = [
   },
   {
     h: 'Fixed monthly price, no hourly billing',
-    p: 'You know the number before we start, and a messy month costs the same as a quiet one.',
+    p: 'You know the number before you start. A messy month does not turn into a surprise invoice.',
   },
 ] as const;
 

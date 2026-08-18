@@ -294,7 +294,7 @@ export const UI = {
     howEyebrow: 'How it works',
     howH2: 'Four things that are always true',
     marketEyebrow: 'What the market charges',
-    marketH2: 'The honest answer to what this costs',
+    marketH2: 'What this actually costs',
     factorsEyebrow: 'What moves the number',
     factorsH2: 'Five things we look at',
     plansEyebrow: 'The plans',
@@ -352,7 +352,7 @@ export const UI = {
       'Monday to Friday, 9am to 5pm Pacific. Enquiries sent outside those hours are answered on the next business day.',
     whereEyebrow: 'Where we work',
     whereP:
-      'We work with businesses across British Columbia and everything is done online — there is nothing to drop off and no office visit required.',
+      'We work with businesses across British Columbia. Everything happens online, so there is nothing to drop off and no office to visit.',
     linkServices: 'What we handle',
     linkPricing: 'How the plans are scoped',
   },

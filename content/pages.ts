@@ -54,7 +54,7 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     summary: 'A profit and loss and a balance sheet each month, in plain language.',
     detail: [
       'Every month you get a profit and loss statement and a balance sheet, with the figures that moved marked, so you are not hunting through a wall of numbers.',
-      'What that buys you is the ability to answer three questions at any time: what your margin is, what you are owed, and what you owe. You should not have to wait until year end to know.',
+      'So you can answer three questions any time: what your margin is, who owes you, and what you owe. Not just at year end.',
     ],
   },
   {
@@ -62,7 +62,7 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     h: 'Software setup and migration',
     summary: 'QuickBooks Online, Xero or Sage 50 — set up properly, once.',
     detail: [
-      'We build a chart of accounts around your business and wire in your sales channels, so Shopify and Stripe reconcile against the books instead of being re-keyed by hand every month.',
+      'We build a chart of accounts around your business and wire in your sales channels, so Shopify and Stripe reconcile against the books instead of being re-keyed every month.',
       'Moving from another platform, from spreadsheets, or from nothing at all, we handle the migration as part of setup. It ends with a training session so you can find things in the file without calling to ask.',
     ],
   },
@@ -224,7 +224,7 @@ export const REMOTE_MECHANICS = [
   {
     n: '02',
     h: 'The file is the single copy',
-    p: 'We work inside your accounting file, not in a copy that gets sent back and forth. There is one version of your books, you can open it yourself, and it is current as of today, not as of the last time someone emailed a file.',
+    p: 'We work inside your accounting file, not a copy that gets emailed back and forth. One version of your books, open to you, current today rather than as of the last exchange.',
   },
   {
     n: '03',
@@ -286,7 +286,7 @@ export const REMOTE_TRADEOFF = {
 export const REMOTE_FAQS = [
   {
     q: 'Is remote bookkeeping secure?',
-    a: 'Your financial records stay in your own accounting platform, whether that is QuickBooks Online, Xero or Sage 50. We never copy them elsewhere. We work inside that file as an invited user: you grant the access from your own account, you can revoke it yourself at any time, and every action in the file is logged against that user. Compare that with emailing spreadsheets back and forth, which is what the alternative usually means in practice.',
+    a: 'Your records stay in your own platform, whether that is QuickBooks Online, Xero or Sage 50. We never copy them elsewhere. We work in that file as an invited user: you grant the access, you can revoke it any time, and every action is logged against that user. The usual alternative is emailing spreadsheets around.',
   },
   {
     q: 'How do I get my receipts and documents to you?',
@@ -323,7 +323,7 @@ export const REMOTE_FAQS = [
  * ------------------------------------------------------------------------- */
 
 export const GST_PST_INTRO = [
-  'Almost every business owner in BC meets these two taxes in the wrong order: they register for one, assume it covers them, and find out about the other from a letter. They are separate taxes, administered by separate governments, with separate registrations, separate deadlines and separate rules about what is taxable.',
+  'Most BC owners meet these two taxes in the wrong order: they register for one, assume it covers them, then hear about the other from a letter. Two governments, two registrations, two sets of deadlines, two definitions of what is taxable.',
   'Neither one tells you anything about the other. Being registered for GST does not mean you should be registered for PST, and being exempt from PST does not exempt you from GST.',
 ];
 
@@ -364,7 +364,7 @@ export const GST_PST_MISTAKES = [
   {
     n: '02',
     h: 'Charging PST on something exempt, or missing it on something taxable',
-    p: 'Both directions cause problems. Charging tax you should not have collected creates a liability to refund it; missing tax you should have collected leaves you owing it out of your own margin, because the customer has long gone.',
+    p: 'Both directions cause problems. Charge tax you should not have, and you owe your customer a refund. Miss tax you should have charged, and you pay it out of your own margin, because the customer is long gone.',
   },
   {
     n: '03',
@@ -445,7 +445,7 @@ export const GST_PST_EXEMPT = {
 export const GST_PST_REGISTRATION = {
   h: 'Whether you have to register at all',
   body: [
-    'The GST test is about size: broadly, once you pass $30,000 in revenue over four consecutive quarters you are required to register, and you can choose to register before that.',
+    'The GST test is about size: broadly, once you pass $30,000 in revenue over four consecutive quarters you must register. You can register earlier by choice.',
     'PST does not work that way. It turns on what you sell, not how much, so a small business can be required to register from its first sale while a much larger one never is. There is no revenue figure to wait for. That is why so many people find out late.',
   ],
   linkText: 'How to register for PST in BC →',
@@ -460,8 +460,8 @@ export const GST_PST_FIN400 = {
   h: 'Filing the return: the FIN 400',
   body: [
     'The PST return is form FIN 400. Most businesses file it online through eTaxBC instead of on paper. You report what you sold, what PST you collected, and any PST you owe on things you bought without paying it, then pay the balance with the return.',
-    'The return itself is not the hard part. What makes it go wrong is filing it from books that were not reconciled first — the figure on the return has to be the figure in the bank, and if the month was never closed there is nothing to check it against. A return filed on unreconciled books is a number you will be defending later without knowing where it came from.',
-    'There is no input credit to reduce it, either, which is the other half of why PST surprises people. Unlike GST, what you collected is what you remit; PST you paid on your own purchases does not come off it.',
+    'The return itself is not the hard part. Filing it from unreconciled books is. The figure on the return has to match the figure in the bank, and if the month was never closed there is nothing to check it against. You end up defending a number you cannot trace.',
+    'There is no input credit either, which is the other half of why PST catches people out. Unlike GST, what you collect is what you remit. PST you paid on your own purchases does not come off it.',
   ],
 };
 
@@ -473,7 +473,7 @@ export const GST_PST_FIN400 = {
 export const GST_PST_DEADLINES = {
   intro: [
     'You do not choose your reporting period. The province assigns one when you register, based on how much PST it expects you to collect, and tells you what it is. It can be changed later, and it changes on their initiative as often as yours.',
-    'Whichever one you are on, the due date rule is the same: the return and the payment have to be received on or before the last day of the month after the period ends.',
+    'Whichever you are on, the rule is the same: the return and the payment must arrive by the last day of the month after the period ends.',
   ],
   rows: [
     {
@@ -498,7 +498,7 @@ export const GST_PST_DEADLINES = {
     },
   ],
   close:
-    'The trap is assuming this lines up with GST. It generally does not — the CRA assigns your GST period and the province assigns your PST period, independently, using different information. A business filing GST quarterly can easily be on a monthly PST cycle, and a calendar built around one of them will miss the other.',
+    'The trap is assuming this lines up with GST. It generally does not. The CRA assigns your GST period and the province assigns your PST period, independently, using different information. A business filing GST quarterly can easily be on a monthly PST cycle, and a calendar built around one of them will miss the other.',
 };
 
 /**
@@ -509,8 +509,8 @@ export const GST_PST_DEADLINES = {
 export const GST_PST_SELF_ASSESSMENT = {
   h: 'When you owe PST nobody charged you',
   body: [
-    'PST is not only something you collect. It is also something you can owe on your own purchases, and this is the part almost nobody knows about until it comes up in a review.',
-    'The principle is straightforward: if you buy something for use in BC and PST should have applied but was not charged, you are the one who has to report and pay it. That is self-assessment, and it goes on the same return.',
+    'PST also runs the other way. You can owe it on your own purchases, and that is the part almost nobody knows about until a review turns it up.',
+    'The principle is simple: buy something for use in BC where PST should have applied but was not charged, and you have to report and pay it yourself. That is self-assessment, and it goes on the same return.',
     'In practice it shows up in three places. Buying equipment or supplies from an out-of-province seller who is not registered here. Importing goods for use in the business. And taking something out of your own resale stock to use yourself, which is a sale to you as far as PST is concerned even though no money moved.',
     'None of those feel like taxable events while they are happening, and that is the problem. They are ordinary purchases that arrive without PST on the invoice, and the obligation sits with the buyer, not the seller.',
   ],
@@ -532,7 +532,7 @@ export const GST_PST_FAQS = [
   },
   {
     q: 'What is the difference between GST and PST?',
-    a: 'Three differences matter in practice. Who you register with and file to — the CRA for one, the province for the other. What triggers registration — revenue for GST, what you sell for PST. And whether you get it back: GST you pay on business purchases comes off what you remit as an input tax credit, and PST you pay does not come back at all. It is a cost.',
+    a: 'Three differences matter in practice. Who you register and file with: the CRA for GST, the province for PST. What triggers registration: revenue for GST, what you sell for PST. And whether you get it back: GST on business purchases comes off what you remit, PST never does. PST is a cost.',
   },
   {
     q: 'Do I need to register for PST in BC?',
@@ -548,7 +548,7 @@ export const GST_PST_FAQS = [
   },
   {
     q: 'What happens if I should have registered for PST and did not?',
-    a: 'You will owe the PST you should have collected, and interest on it, whether or not you charged it to your customers — and if you did not, it comes out of your own margin because those customers are long gone. It is worth knowing that coming forward voluntarily generally puts you in a better position than being found. Get advice before doing either.',
+    a: 'You owe the PST you should have collected, plus interest, whether or not you charged it. If you did not charge it, it comes out of your own margin, because those customers are long gone. Coming forward voluntarily usually beats being found. Get advice before you do either.',
   },
   {
     q: 'Do GST and PST have the same filing deadline?',
@@ -616,7 +616,7 @@ export const GST_PST_LOCAL_SECTIONS: readonly LocalSection[] = [];
 
 export const PST_REG_INTRO = [
   'Registering for PST is not difficult and it does not take long. The hard part is the question before it — whether you have to at all — because PST does not use the revenue threshold people expect from GST.',
-  'There is no turnover figure to cross. It turns on what you sell, which means the answer can be yes from your very first sale, or no indefinitely at any size.',
+  'There is no turnover figure to cross. It turns on what you sell, so the answer can be yes from your first sale, or no at any size.',
 ];
 
 export const PST_REG_WHO = {
@@ -655,7 +655,7 @@ export const PST_REG_STEPS = [
   {
     n: '2',
     h: 'Get your details together',
-    p: 'Your business number, the legal name and structure, what you sell, where you operate from, when you started or expect to start making taxable sales, and your banking details. Nothing exotic — but assembling it first turns the registration into a single sitting.',
+    p: 'Your business number, the legal name and structure, what you sell, where you operate from, when you started or expect to start making taxable sales, and your banking details. Nothing exotic, but assembling it first turns the registration into a single sitting.',
   },
   {
     n: '3',
@@ -670,7 +670,7 @@ export const PST_REG_STEPS = [
   {
     n: '5',
     h: 'Start charging, and start tracking',
-    p: 'From your effective date you charge PST on taxable sales, keep it separate from your own money, and file on the reporting period the province assigns you. What you collected is what you remit — there is no input credit to net it down.',
+    p: 'From your effective date you charge PST on taxable sales, keep it separate from your own money, and file on the reporting period the province assigns you. What you collect is what you remit. There is no input credit to net it down.',
   },
 ];
 
@@ -705,7 +705,7 @@ export const PST_REG_LATE = {
  * ------------------------------------------------------------------------- */
 
 export const CATCH_UP_INTRO = [
-  'Being behind on your books is not a character defect and it is not rare. It usually starts with one busy month, and then the pile is big enough that starting feels worse than ignoring it. That is the whole mechanism.',
+  'Being behind on your books is not a character defect and it is not rare. It usually starts with one busy month, and then the pile is big enough that starting feels worse than ignoring it.',
   'The only thing that reliably makes it worse is more time. Everything else about it is fixable, and the fixing is routine work.',
 ];
 
