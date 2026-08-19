@@ -93,23 +93,31 @@ export const OG_IMAGE_ALT =
 
 /**
  * Issued certification marks, in `public/`, rendered as a row in the Trust
- * section. Certification marks carry usage rules, so each of these must be the
- * file the issuer supplied — never a redrawn copy, and never a product logo
- * standing in for a certification the artwork does not actually assert.
+ * section. Certification marks carry usage rules, so the standing rule is that
+ * each of these is the file the issuer supplied — never a product logo standing
+ * in for a certification the artwork does not actually assert.
  *
- * The list is the whole reason this is an array: Xero and Sage certifications
- * are held (see CREDENTIALS in content/business.ts, which is what feeds the
- * `hasCredential` JSON-LD) but the issued artwork is not in the repo yet.
- * Adding them later is a matter of dropping the files into `public/` and adding
- * two entries here and in content/zh/site.ts — no component change. Do not add
- * an entry before its file exists: an entry with no artwork renders as an empty
- * slot, and an unfinished-looking row is worse than a short one.
+ * The three Xero marks are the one exception, and it is a temporary one. Xero
+ * issues its badge files through the certificate holder's own Xero Central
+ * profile, so they cannot be fetched into the repo; the `.svg` files here were
+ * rebuilt to match the issued artwork, using the Xero mark already in
+ * `public/logos/`. They assert the levels actually held (see CREDENTIALS in
+ * content/business.ts, which feeds the `hasCredential` JSON-LD) and they are
+ * meant to be overwritten by the real downloads — same filenames, no code
+ * change. Sage is still outstanding for the same reason the Xero files were.
+ *
+ * Do not add an entry before its artwork exists. An entry with no file renders
+ * as nothing at all, and a row that is quietly shorter than the list says it is
+ * hides the omission instead of showing it.
  */
 export const CERTIFICATION_BADGES = [
   {
     src: '/badge-quickbooks-advanced-proadvisor.png',
     alt: 'Intuit QuickBooks Certified Advanced QuickBooks Online ProAdvisor',
   },
+  { src: '/badge-xero-l1-associate.svg', alt: 'Xero L1 Certified Associate' },
+  { src: '/badge-xero-l2-professional.svg', alt: 'Xero L2 Certified Professional' },
+  { src: '/badge-xero-l3-specialist.svg', alt: 'Xero L3 Certified Specialist' },
 ] as const;
 
 export const TRUST_STRIP = [

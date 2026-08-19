@@ -112,7 +112,11 @@ export const PEOPLE = [{ name: 'Tina' }, { name: 'Kevin Feng' }] as const;
 export const CREDENTIALS = [
   { name: 'QuickBooks Online Advanced ProAdvisor', issuer: 'Intuit' },
   { name: 'Intuit Payroll Certification', issuer: 'Intuit' },
-  { name: 'Xero Advisor Certification', issuer: 'Xero' },
+  // Xero's core path is levelled L1 to L3; the two below sit outside it as
+  // subject certifications, which is why holding both is not double counting.
+  { name: 'Xero L1 Certified Associate', issuer: 'Xero' },
+  { name: 'Xero L2 Certified Professional', issuer: 'Xero' },
+  { name: 'Xero L3 Certified Specialist', issuer: 'Xero' },
   { name: 'Xero Payroll Certification', issuer: 'Xero' },
   { name: 'Xero Migration Certification', issuer: 'Xero' },
   { name: 'Sage 50 Certification', issuer: 'Sage' },

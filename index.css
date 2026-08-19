@@ -975,9 +975,10 @@ figure {
   margin-bottom: 22px;
 }
 
-/* Holds however many issued marks exist — one today, more when the Xero and
-   Sage artwork lands. The row centres rather than stretching, so a short row
-   reads as deliberate instead of as slots waiting to be filled. */
+/* Holds however many issued marks exist — four today, more when the Sage
+   artwork lands. The row centres rather than stretching, so a short row
+   reads as deliberate instead of as slots waiting to be filled, and it wraps,
+   since the column is a third of the width and four marks do not fit across. */
 .badge-box {
   border: 1px solid var(--hair);
   padding: 18px;
