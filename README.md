@@ -405,17 +405,26 @@ at 480×480 or larger; it renders at 120px.
    than the 150px the design specifies. If a larger issued file turns up,
    replace it and raise `.badge-box img` back to 150px, with the box height
    back to 186px.
-2. **Xero and Sage certification marks** — held (see `CREDENTIALS` in
+2. **Xero L1/L2/L3 marks — replace with the issued files.** The three badges in
+   the Trust row are rebuilt artwork, not Xero's own:
+   `public/badge-xero-l1-associate.svg`, `-l2-professional.svg` and
+   `-l3-specialist.svg`. Xero hands out its badge files through the certificate
+   holder's Xero Central profile, which is why the real ones are not in the repo.
+   Download them from Xero Central and overwrite these three, keeping the
+   filenames; nothing else has to change. Until that happens the row is showing a
+   copy of a certification mark, which is the one thing the note on
+   `CERTIFICATION_BADGES` in `content/site.ts` otherwise rules out.
+3. **Sage certification mark** — held (see `CREDENTIALS` in
    `content/business.ts`, which is what feeds the `hasCredential` JSON-LD) but
    the issuer-supplied artwork is not in the repo. When it arrives, drop the
-   files into `public/` and add an entry to `CERTIFICATION_BADGES` in
+   file into `public/` and add an entry to `CERTIFICATION_BADGES` in
    `content/site.ts` and `content/zh/site.ts`; the Trust row renders whatever
    the array holds, so no component change is needed. Do not add an entry
    before its file exists, and do not substitute the product logos in
    `public/logos/` — a product logo is not a certification mark.
-3. **Official vendor logos** — the five platform marks in `public/logos/` were
+4. **Official vendor logos** — the five platform marks in `public/logos/` were
    derived from screenshots. Replace with vendor-issued SVG or 2× PNG.
-4. **WeChat QR code** — `public/wechat-qr.png` is not in the repo yet, so the
+5. **WeChat QR code** — `public/wechat-qr.png` is not in the repo yet, so the
    block renders its neutral placeholder. The Weixin ID ships and works without
    it. The file has to be **the code and a white margin, nothing else**: the
    share card WeChat exports also carries the account name, a city, and an
@@ -423,25 +432,25 @@ at 480×480 or larger; it renders at 120px.
    The page already prints the name, and prints the caption in the reader's own
    language — a baked-in English one would sit untranslated on `/zh/`. See the
    WeChat section above for the format.
-5. **WeChat account region** — the exported card reads "Richmond, Canada". Every
+6. **WeChat account region** — the exported card reads "Richmond, Canada". Every
    other statement of where the practice is, on the page and in the structured
    data Google matches against the Business Profile, says West Vancouver.
    Cropping keeps it off the site, but anyone who actually adds the account sees
    it, so change the region on the WeChat account. See `content/business.ts` on
    why the two should not disagree.
-6. **Terms of service** — still stamped January 2024, deliberately. The date is
+7. **Terms of service** — still stamped January 2024, deliberately. The date is
    a claim about when someone last read the document, so it stays honest until
    the three clauses are reviewed against how the practice engages clients now.
    Review, then restamp.
-7. **Web3Forms spam protection** — the `botcheck` honeypot is wired up, but it
+8. **Web3Forms spam protection** — the `botcheck` honeypot is wired up, but it
    is only half of the pair: the toggle in the Web3Forms dashboard has to be on
    for their end to test it. That is a one-click change and it is the last free
    thing available here. Beyond it, bounding a direct post to the endpoint means
    a captcha (hCaptcha is free and zero-config; Turnstile and domain restriction
    are Pro). See the note under "The intake form".
-8. **Rates date stamp** — `RATES_AS_OF` in `content/site.ts`, plus the
+9. **Rates date stamp** — `RATES_AS_OF` in `content/site.ts`, plus the
    competitor price ranges in FAQ 1, need an owner and a review cadence.
-9. **Mobile below 720px** is built to spec but has not had a design review.
+10. **Mobile below 720px** is built to spec but has not had a design review.
 
 The privacy policy is done: rewritten to name Web3Forms and Google as
 processors, to say that both hold data outside Canada, and to carry retention

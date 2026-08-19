@@ -55,6 +55,9 @@ export const CERTIFICATION_BADGES: Widen<typeof En.CERTIFICATION_BADGES> = [
     src: En.CERTIFICATION_BADGES[0].src,
     alt: 'Intuit QuickBooks 认证 QuickBooks Online 高级 ProAdvisor',
   },
+  { src: En.CERTIFICATION_BADGES[1].src, alt: 'Xero L1 认证 Associate' },
+  { src: En.CERTIFICATION_BADGES[2].src, alt: 'Xero L2 认证 Professional' },
+  { src: En.CERTIFICATION_BADGES[3].src, alt: 'Xero L3 认证 Specialist' },
 ];
 
 export const TRUST_STRIP: Widen<typeof En.TRUST_STRIP> = [
