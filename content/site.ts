@@ -97,23 +97,38 @@ export const OG_IMAGE_ALT =
  * each of these is the file the issuer supplied — never a product logo standing
  * in for a certification the artwork does not actually assert.
  *
- * The three Xero marks are the one exception, and it is a temporary one. Xero
- * issues its badge files through the certificate holder's own Xero Central
- * profile, so they cannot be fetched into the repo; the `.svg` files here were
- * rebuilt to match the issued artwork, using the Xero mark already in
- * `public/logos/`. They assert the levels actually held (see CREDENTIALS in
- * content/business.ts, which feeds the `hasCredential` JSON-LD) and they are
+ * The five `.svg` files are the exception, and it is a temporary one. Both Xero
+ * and Intuit hand out badge files through the certificate holder's own profile
+ * on their site, so neither set can be fetched into the repo. The `.svg` files
+ * here were rebuilt to match the issued artwork: the Xero three from the Xero
+ * mark already in `public/logos/`, and the two QuickBooks ones from the issued
+ * Advanced badge, which differs from them only in the colour and wording of its
+ * banner. All five assert certifications actually held (see CREDENTIALS in
+ * content/business.ts, which feeds the `hasCredential` JSON-LD) and all five are
  * meant to be overwritten by the real downloads — same filenames, no code
- * change. Sage is still outstanding for the same reason the Xero files were.
+ * change. Sage is outstanding as well; those certificates are delayed, so the
+ * row runs without them rather than standing something in.
  *
  * Do not add an entry before its artwork exists. An entry with no file renders
  * as nothing at all, and a row that is quietly shorter than the list says it is
  * hides the omission instead of showing it.
+ *
+ * The QuickBooks marks lead, in the order Intuit certifies them, and the Xero
+ * levels follow in their own order. A row that jumps between issuers reads as
+ * unsorted rather than as two sets.
  */
 export const CERTIFICATION_BADGES = [
   {
+    src: '/badge-quickbooks-online-proadvisor.svg',
+    alt: 'Intuit QuickBooks Certified QuickBooks Online ProAdvisor',
+  },
+  {
     src: '/badge-quickbooks-advanced-proadvisor.png',
     alt: 'Intuit QuickBooks Certified Advanced QuickBooks Online ProAdvisor',
+  },
+  {
+    src: '/badge-quickbooks-payroll-proadvisor.svg',
+    alt: 'Intuit QuickBooks Certified QuickBooks Payroll ProAdvisor',
   },
   { src: '/badge-xero-l1-associate.svg', alt: 'Xero L1 Certified Associate' },
   { src: '/badge-xero-l2-professional.svg', alt: 'Xero L2 Certified Professional' },
