@@ -110,6 +110,9 @@ export const PEOPLE = [{ name: 'Tina' }, { name: 'Kevin Feng' }] as const;
  * one is worse than listing none, and certifications lapse.
  */
 export const CREDENTIALS = [
+  // Intuit's core path runs Certified then Advanced, the same shape as Xero's
+  // levels below, so both are listed for the same reason those three are.
+  { name: 'QuickBooks Online ProAdvisor', issuer: 'Intuit' },
   { name: 'QuickBooks Online Advanced ProAdvisor', issuer: 'Intuit' },
   { name: 'Intuit Payroll Certification', issuer: 'Intuit' },
   // Xero's core path is levelled L1 to L3; the two below sit outside it as
